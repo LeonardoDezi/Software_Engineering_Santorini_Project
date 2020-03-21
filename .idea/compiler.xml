@@ -10,8 +10,5 @@
         <module name="AM32" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ing-sw-2020-Dezi-Dami-Bruni" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>
