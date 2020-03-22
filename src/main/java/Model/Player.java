@@ -4,7 +4,7 @@ public class Player {
     private boolean isplayertur;
     //elemento di tipo carta
     private String playerID;
-    private Builder[2] builders;
+    private Builder[] builders;
     private boolean isCardDealer;
 
     public Player(String playerID) {
