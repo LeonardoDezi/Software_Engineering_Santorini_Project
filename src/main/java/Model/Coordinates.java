@@ -1,8 +1,13 @@
 package Model;
 
 public class Coordinates {
-    private int x;
-    private int y;
+    private final int x;   // o public o protected o friendly
+    private final int y;
+
+    public Coordinates(int i, int j){
+        this.x= i;
+        this.y =j;
+    }
 
     public int getX() {
         return x;
