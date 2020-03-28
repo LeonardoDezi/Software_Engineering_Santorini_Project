@@ -15,7 +15,7 @@ public class Board { //nelle classi ho provato a scrivere le cose messe nell'UML
         }
     }
     public Notify(){
-        
+
     }
 
 
