@@ -10,7 +10,7 @@ public class Game {
     private Dealer dealer;
     private Player player;     // si può togliere?
 
-    public void Game(){     //da mettere un identificativo partita?
+    public Game(){     //da mettere un identificativo partita?
         gameBoard = new Board();
         playerList = new ArrayList<>();
         chosenCards = new ArrayList<>();
@@ -33,11 +33,15 @@ public class Game {
 
     public void setDealer(){      //potremmo anche fare senza string
         player = playerList.get(0);    // prende il primo giocatore
-        dealer= new Dealer(player);
+        dealer= new Dealer(player, game);
 
     }
 
     public Deck getDeck(){      // da aggiungere  nell'UML se vogliamo mettere la variabile private
         return deck;
+    }
+
+    public addChoosenCard(Card card){
+        chosenCards.add(card);
     }
 }
