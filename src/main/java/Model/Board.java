@@ -9,19 +9,19 @@ public class Board {
     private ArrayList<Observer> observerList;
 
 
-    public Board(){
+    public Board() {
         fullMap = new Square[5][5];
-        for (int i=0; i<6; i++){ //questa è l'inizializzazione della board, bisogna mettere le torri ai lati ma
-            for(int j=0; j<6; j++){ //finchè non prende il collegamento con square non so come fare
+        for (int i = 0; i < 6; i++) { //questa è l'inizializzazione della board, bisogna mettere le torri ai lati ma
+            for (int j = 0; j < 6; j++) { //finchè non prende il collegamento con square non so come fare
                 fullMap[i][j] = new Square(i, j);
+            }
         }
+
+
+        public void notify(){
+            //TBD
+        }
+
+
     }
-
-
-    public void notify(){
-        //TBD
-    }
-
-
-
 }

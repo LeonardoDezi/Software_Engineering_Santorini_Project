@@ -6,11 +6,12 @@ public class Dealer {
     private Deck deck;
 
 
-    public Dealer(Player player){
-
+    public Dealer(Player player, Game game) {
         this.dealer = player;
-        this.deck = Game.getDeck
+        this.deck = game.getDeck();
+    }
 
-        }
-
+    public void chooseCards(Deck deck, int card1, int card2, int card3){
+        game.
+    }
 }

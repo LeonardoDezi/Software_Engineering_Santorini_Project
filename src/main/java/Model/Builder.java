@@ -34,7 +34,7 @@ public class Builder {
     }
 
     public void move(int x, int y){
-        tmp = fullMap[x][y];
+        tmp = this.position;
         tmp.setValue(1);        // move dovrebbe dirci che ha vinto??
         if(tmp.getLevel() > 0)
             tmp.setLevel(tmp.getLevel() +1);
