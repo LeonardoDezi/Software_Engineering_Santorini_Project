@@ -50,7 +50,7 @@ public class Builder {
     }
 
     public void build(int x, int y, boolean isDome){   // mi sa che ci serve un parametro isDome qua
-        tmp = fullMap(x,y);
+        tmp = fullMap[x][y];
 
         if(isDome == true)
             tmp.setValue(3);   // 3 = cupola
