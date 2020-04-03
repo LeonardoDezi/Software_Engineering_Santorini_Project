@@ -18,11 +18,11 @@ public class Game {
 
     public void addPlayer(String name){
         if(playerList.size() < 3) {
-            player = new Player(name);   // forse posso eliminare la variabile player
+            player = new Player(name);
             playerList.add(player);
             return;
         }else{
-            //bisogna fargli fare qualcosa
+            //TBD
         }
     }
 
@@ -31,17 +31,17 @@ public class Game {
         return;
     }
 
-    public void setDealer(){      //potremmo anche fare senza string
+    public void setDealer(){
         player = playerList.get(0);    // prende il primo giocatore
-        dealer= new Dealer(player, game);
-
+        dealer= new Dealer(player, this);
     }
 
     public Deck getDeck(){      // da aggiungere  nell'UML se vogliamo mettere la variabile private
         return deck;
     }
 
-    public addChoosenCard(Card card){
+    public void addChosenCard(Card card){    // da aggiungere all'UML
         chosenCards.add(card);
+        return;
     }
 }
