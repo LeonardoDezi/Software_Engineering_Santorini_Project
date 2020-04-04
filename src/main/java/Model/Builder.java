@@ -16,13 +16,13 @@ public class Builder {
     }
 
     //il controller avrà già verificato che la posizione è libera e possibile
-    public Builder(int x, int y){
+    public Builder(int x, int y, Board board){
         blocked = false;
 
         // ancora sto colour
         // builderId?
 
-        position = Board.fullMap[x][y];  //problema del fullMap
+        position = board.fullMap[x][y];  //problema del fullMap
         position.setValue(1);   //occupa la casella con la pedina
         position.setBuilder(this);
 
@@ -49,8 +49,9 @@ public class Builder {
         return;
     }
 
-    public void build(int x, int y, boolean isDome){   // mi sa che ci serve un parametro isDome qua
-        tmp = fullMap[x][y];
+    public void build(int x, int y, boolean isDome, Board board){   // mi sa che ci serve un parametro isDome qua
+
+        tmp = board.fullMap[x][y];
 
         if(isDome == true)
             tmp.setValue(3);   // 3 = cupola
