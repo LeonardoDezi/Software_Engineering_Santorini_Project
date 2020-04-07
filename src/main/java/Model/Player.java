@@ -9,17 +9,21 @@ public class Player {
     private ArrayList<Builder> builders;
     private boolean isCardDealer;
     private String colour;
-    private Builder piece;  // da aggiungere all'UML
+    private Builder piece;  // serve solo per getBuilder magari si può togliere
+    //private Game game;  //mi sa che non serve
 
-    public Player(String playerID) {
+    public Player(String playerID /*, Game game*/) {
 
         this.playerID = playerID;
+        //this.game = game;
         builders = new ArrayList<>();
-
+        //come fare colour?
+        isCardDealer = false;
+        isPlayerTurn = false;
 
     }
 
-
+    //serve ancora? si deve vedere come si implementerà Turn
     public void setIsTurn(boolean isPlayerTurn) {
         this.isPlayerTurn = isPlayerTurn;
     }  // aggiungere il parametro nell'UML
@@ -32,42 +36,32 @@ public class Player {
         return playerID;
     }
 
-    public void chooseBuilder(int id, int xMove, int yMove, int xBuild, int yBuild, boolean isDome){
-        if(isPlayerTurn == true){
-            try {
-                piece = builders.get(id);
-            }catch(NullPointerException e) {
-                System.out.println("Error: The player" + playerID + "hasn't deployed his/her pieces yet.");
-            }
+    public Builder getBuilder(int BuilderId){
 
-            piece.play(xMove, yMove, xBuild, yBuild, isDome);
-              // come capire che la partita è finita?
-
-        }else{
-            //TBD
+        try {
+            piece = builders.get(BuilderId);   //forse lo posso scrivere return ma non sono sicuro
+        }catch(NullPointerException e) {
+            System.out.println("Error: The player" + playerID + "hasn't deployed his/her pieces yet.");
         }
+
+        return piece;   //forse si può togliere
 
     }
 
+
+    public int getBuilderSize(){     // o questo o restituiamo direttamente la lista non sono sicuro
+        return builders.size();
+    }
 
     //il controller potrà accedere a size()?
     //come facciamo con il builderid?
-    public void deployBuilder(int x, int y){
-        if(isPlayerTurn == true) {
-            if (builders.size() == 2) {  //ATTENZIONE: DOBBIAMO ACCERTARCI CHE size() sarà sempre o 0 o 2 in qualche modo
-                System.out.println("Error:" + playerID + "has already deployed all the builders");   //non possiamo lasciare questo
-                isPlayerTurn = false;   //compito del controller magari?
-            } else {
-                builders.add(new Builder(x, y));
-                System.out.println("Builder deployed");  //non possiamo lasciare questo
-            }
 
-        } else{
-            // TBD
-        }
-        return;
-    }
 
     public void takeCard(){/* TBD*/}
+
+    public void addBuilder(int x, int y, Square position){
+        builders.add(new Builder(x,y, position));
+        //return builders.size() - 1;  // se magari vogliamo comunicare il numero della pedina che abbiamo appena messo
+    }
 
 }
