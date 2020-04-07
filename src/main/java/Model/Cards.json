@@ -1,0 +1,208 @@
+[
+  {
+    "name": "Apollo",
+    "conditions":[
+      {
+        "movement" : null,
+        "jump_up"  : null,
+        "freespace": null,
+        "jump_down": null
+      }
+    ],
+    "effects" :[
+      {
+        "movement": "swap",
+        "samesquare": null,
+        "building": null,
+        "moveOpponent": "swap",
+        "beforemovement": null,
+        "win": null,
+        "dome": null
+      }
+    ]
+  },
+
+  {
+    "name": "Artemis",
+    "conditions":[
+      {
+        "movement": null,
+        "jump_up": null,
+        "freespace": null,
+        "jump_down": null
+      }
+    ],
+    "effects": [
+      {
+        "movement": "1",
+        "samequare": false,
+        "building": null,
+        "moveOpponent": null,
+        "beforeMovement": null,
+        "win": null,
+        "dome": null
+      }
+    ]
+  },
+
+  {
+    "name": "Athena",
+    "conditions": [
+      {
+        "movement": null,
+        "jump_up": true,
+        "freespace": null,
+        "jump_down": null
+      }
+    ],
+    "effects": [
+      {
+        "movement":null,
+        "samesquare": null,
+        "building": null,
+        "moveOpponent": "samelevel",
+        "beforeMovement": null,
+        "win": null,
+        "dome": null
+      }
+    ]
+  },
+
+  {
+    "name": "Atlas",
+    "conditions": [
+      {
+        "movement": null,
+        "jump_up": null,
+        "freespace": null,
+        "jump_down": null
+      }
+    ],
+    "effects": [
+      {
+        "movement": null,
+        "samesquare": null,
+        "building": 1,
+        "moveOpponent": null,
+        "beforeMovement": null,
+        "win": null,
+        "dome": true
+      }
+    ]
+  },
+
+  {
+    "name": "Demeter",
+    "conditions": [
+      {
+        "movement": null,
+        "jump_up": null,
+        "freespace": null,
+        "jump_down": null
+      }
+    ],
+    "effects": [
+      {
+        "movement": null,
+        "samesquare": false,
+        "building": 1,
+        "moveOpponent": null,
+        "beforeMovement": null,
+        "win": null,
+        "dome": true
+      }
+    ]
+  },
+
+  {
+    "name": "Hephaestus",
+    "conditions": [
+      {
+        "movement": null,
+        "jump_up": null,
+        "freespace": null,
+        "jump_down": null
+      }
+    ],
+    "effects": [
+      {
+        "movement": null,
+        "samesquare": true ,
+        "building": 1,
+        "moveOpponent": null,
+        "beforeMovement": null,
+        "win": null,
+        "dome": false
+      }
+    ]
+  },
+
+  {
+    "name": "Minotaurus",
+    "conditions": [
+      {
+        "movement": null,
+        "jump_up": null,
+        "freespace": true,
+        "jump_down": null
+      }
+    ],
+    "effects": [
+      {
+        "movement": "push",
+        "samesquare": null,
+        "building": null,
+        "moveOpponent": "push",
+        "beforeMovement": null,
+        "win": null,
+        "dome": null
+      }
+    ]
+  },
+
+  {
+    "name": "Pan",
+    "conditions": [
+      {
+        "movement": null,
+        "jump_up": null,
+        "freespace": null,
+        "jump_down": 2
+      }
+    ],
+    "effects": [
+      {
+        "movement": null,
+        "samesquare": null,
+        "building": null,
+        "moveOpponent": null,
+        "beforeMovement": null,
+        "win": true,
+        "dome": null
+      }
+    ]
+  },
+
+  {
+    "name": "Prometheus",
+    "conditions": [
+      {
+        "movement": null,
+        "jump_up": false,
+        "freespace": null,
+        "jump_down": null
+      }
+    ],
+    "effects": [
+      {
+        "movement": null,
+        "samesquare": null,
+        "building": 1,
+        "moveOpponent": null,
+        "beforeMovement": "build",
+        "win": null,
+        "dome": null
+      }
+    ]
+  }
+]
