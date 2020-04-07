@@ -42,10 +42,10 @@ public class BasicRules {
             if (board.fullMap[x][y].getLevel() == 3) {
                 String colour = builder.getColour();
                 int i=0;
-                    while(game.playerList.get(i) != null) {
-                        if (game.playerList.get(i).colour == colour) {
-                            endGame(game.playerList.get(i));
-                        }
+                while(game.playerList.get(i) != null) {
+                    if (game.playerList.get(i).colour.equals(colour)) {
+                        endGame(game.playerList.get(i));
+                    }
                     i++;
                 }
             }
@@ -54,8 +54,8 @@ public class BasicRules {
 
     /**
      * is used to give the player all the available moves.
-     * @param builder is the builder that can move.
-     * @return an ArrayList of all the possible moves of that builder.
+     * @param player is the player that can move.
+     * @return an ArrayList of all the possible moves of all the the builder of a player.
      */
     public ArrayList<Square> getMovementRange(Player player){
         ArrayList<Square> firstPossibleMoves = new ArrayList<>();

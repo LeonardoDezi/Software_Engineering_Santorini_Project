@@ -5,11 +5,12 @@ public class Dealer extends Player {
 
     private Player dealer;
     private Deck deck;
+    private String colour;
     private Game game;
 
 
-    public Dealer(String name, Game game) {
-        super(name);
+    public Dealer(String name, String colour, Game game) {
+        super(name, colour);
         this.deck = game.getDeck();
         this.game = game;
     }

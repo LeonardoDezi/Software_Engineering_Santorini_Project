@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Board {
 
     public Square[][] fullMap;   // per ora lo faccio public, ma forse bisogna metterlo square. in quel caso, modificare deploybuilder
-    /** represents the board, fullmap is an array of squares that represents the cells where the builders can move or build.
+    /** represents the board, fullmap is an array of sqares that rapresents the cells where the builders can move or build.
      */
     private Square pointA;
     /** is the point where the builder that moves is before moving.
@@ -19,7 +19,7 @@ public class Board {
     private Square pointB;
     /** is the point where the builder that moves is moving to.
      */
-    private ArrayList<Observer> observerList;
+    private ArrayList<Model.Observer> observerList;
 
     /** is the list of the observers of the board.
      */
@@ -51,12 +51,12 @@ public class Board {
 
         pointB.setValue(1);        // occupa la casella di arrivo: move dovrebbe dirci che ha vinto??
 
-        if(pointB.getLevel() > 0)
-            pointB.setLevel(pointB.getLevel() +1);  //level corrisponde al livello in cui si trova la pedina
+        if(pointB.getLevel() > 0)  // se nella casella sono presenti costruzioni
+            pointB.setLevel(pointB.getLevel() +1);
 
         pointB.setBuilder(builder);
 
-            //togliamo la pedina
+        //togliamo la pedina
         pointA.setValue(0);
 
         if(pointA.getLevel() > 0)
@@ -74,22 +74,20 @@ public class Board {
      * @param y the y coordinate of the cell where the new building is going to be.
      * @param isDome this boolean is used to signal if the new building is going to be a dome in a level different from the 4th.
      */
-    public void build(Builder builder, int x, int y, boolean isDome){   // mi sa che ci serve un parametro isDome qua
+    public void build(int x, int y, boolean isDome){   // mi sa che ci serve un parametro isDome qua
 
         pointB = fullMap[x][y];
 
         if(isDome == true)   //necessario per via di Atlante o lo modificheremo di conseguenza?
-            pointB.setValue(3);   // 3 = cupola
-        else
-            pointB.setValue(0);   // 0 = casella libera
-
-        pointB.setLevel(pointB.getLevel() + 1); //level corrisponde alla prima casella libera
+            pointB.setValue(2);   // 2 = cupola
+        pointB.setLevel(pointB.getLevel() + 1);
 
         return;
 
     }
 
 }
+
 
 
 

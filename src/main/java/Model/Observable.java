@@ -1,6 +1,8 @@
 package Model;
 
+/**
+ * interface for the observable class board.
+ */
 public interface Observable {
-    void addObserver(Observer);
-    void notify();
+    void addObserver(Model.Observer);
 }
