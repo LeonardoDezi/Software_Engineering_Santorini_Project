@@ -9,9 +9,11 @@ public class BasicRules {
     private int maxHeight;
     private boolean sameSquare;
     private Board board;
+    private Game game;
 
     public BasicRules(Board board, Game game){
-        BasicRules basicRules = new BasicRules(board, game);
+        this.board = board;
+        this.game = game;
     }
 
     /**
@@ -20,8 +22,8 @@ public class BasicRules {
      * @param x is the x coordinate where the builder wants to move.
      * @param y is the y coordinate where the builder wants to move.
      */
-    public void movement(Builder builder, int x, int y, Game game){
-        wincondition(builder, x, y,game);
+    public void movement(Builder builder, int x, int y){
+        winCondition(builder, x, y);
         board.move(builder, x, y);
     }
 
@@ -29,14 +31,12 @@ public class BasicRules {
      * is used to finalize the building of a new level.
      * @param x is the x coordinate where the player wants to build
      * @param y is the y coordinate where the player wants to build
-     * @param isDome signalises if the new level is a dome.
      */
-    public void building(int x, int y, boolean isDome){
-        isDome=false;
-        board.build(x, y, isDome);
+    public void building(int x, int y){
+        board.build(x, y, false);
     }
 
-    public void wincondition(Builder builder, int x, int y, Game game){
+    public void winCondition(Builder builder, int x, int y){
         Square actualPosition = builder.getPosition();
         if (actualPosition.getLevel() == 2) {
             if (board.fullMap[x][y].getLevel() == 3) {
@@ -58,59 +58,51 @@ public class BasicRules {
      * @return an ArrayList of all the possible moves of all the the builder of a player.
      */
     public ArrayList<Square> getMovementRange(Player player){
-        ArrayList<Square> firstPossibleMoves = new ArrayList<>();
-        Square firstPosition = player.builders.get(0).getPosition();
-        maxHeight=1;
-        int i, j;
-        for(i=-1; i<=1; i++)
-        {
-            for(j=-1; j<=1; j++){
-                if(i==0 && j==0){} //non fai niente se sei nella tua casella
-                else{
-                    int playerHeight=firstPosition.getLevel();
-                    int otherHeight=board.fullMap[firstPosition.x + i][firstPosition.y +j].getLevel();
-                    if (playerHeight - otherHeight <= maxHeight){
-                        int newSquareValue=board.fullMap[firstPosition.x + i][firstPosition.y +j].getValue();
-                        if(newSquareValue == 0){
-                            Square square=board.fullMap[firstPosition.x + i][firstPosition.y +j];
-                            firstPossibleMoves.add(square);
-                        }
-                    }
-                }
-            }
-        }
-
-        ArrayList<Square> secondPossibleMoves = new ArrayList<>();
-        Square secondPosition = player.builders.get(0).getPosition();
-        maxHeight=1;
-        int i, j;
-        for(i=-1; i<=1; i++)
-        {
-            for(j=-1; j<=1; j++){
-                if(i==0 && j==0){} //non fai niente se sei nella tua casella
-                else{
-                    int playerHeight=secondPosition.getLevel();
-                    int otherHeight=board.fullMap[secondPosition.x + i][secondPosition.y +j].getLevel();
-                    if (playerHeight - otherHeight <= maxHeight){
-                        int newSquareValue=board.fullMap[secondPosition.x + i][secondPosition.y +j].getValue();
-                        if(newSquareValue == 0){
-                            Square square=board.fullMap[secondPosition.x + i][secondPosition.y +j];
-                            secondPossibleMoves.add(square);
-                        }
-                    }
-                }
-            }
+        ArrayList<Square> firstPossibleMoves;
+        ArrayList<Square> secondPossibleMoves;
+        firstPossibleMoves = getPossibleMoves(player.builders.get(0));
+        try {
+            secondPossibleMoves = getPossibleMoves(player.builders.get(1));
+        }catch(NullPointerException e) {
+            secondPossibleMoves = null;
         }
 
         // capire come ridare tutti e due i valori
 
         if(firstPossibleMoves.isEmpty() && secondPossibleMoves.isEmpty()){
-            losecondition();
-            return firstPossibleMoves;
+            losecondition();  // ci mettiamo un exception da propagare al chiamante
         }
-        else
-            return firstPossibleMoves;
+
+        return firstPossibleMoves;
     }
+
+    public ArrayList<Square> getPossibleMoves(Builder builder) {
+        ArrayList<Square> possibleMoves = new ArrayList<>();
+        Square position = builder.getPosition();
+        maxHeight = 1;
+        int i, j;
+        for (i = -1; i <= 1; i++) {
+            for (j = -1; j <= 1; j++) {
+                if (i == 0 && j == 0) {
+                } //non fai niente se sei nella tua casella
+                else {
+                    int playerHeight = position.getLevel();
+                    int otherHeight = board.fullMap[position.x + i][position.y + j].getLevel();
+                    if (playerHeight - otherHeight <= maxHeight) {
+                        int newSquareValue = board.fullMap[position.x + i][position.y + j].getValue();
+                        if (newSquareValue == 0) {
+                            Square square = board.fullMap[position.x + i][position.y + j];
+                            possibleMoves.add(square);
+                        }
+                    }
+                }
+            }
+        }
+
+        return possibleMoves;
+    }
+
+
 
     /**
      * is used to give the player all the available places to build.
@@ -140,3 +132,14 @@ public class BasicRules {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+

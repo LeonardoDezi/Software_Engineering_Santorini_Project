@@ -11,7 +11,7 @@ public class Builder {
     private boolean blocked;
     private final String colour;
     private int builderId;
-    private Square tmp;   // questa da aggiungere
+
     /**
      * represents a builder.
      */
@@ -40,7 +40,7 @@ public class Builder {
      */
     public Builder(int x, int y, Square position, String colour){
         blocked = false;
-        this.colour = colour;// ancora sto colour
+        this.colour = colour;
         // builderId?
         this.position = position;
         position.setValue(1);   //occupa la casella con la pedina
