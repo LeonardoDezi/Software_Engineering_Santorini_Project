@@ -1,4 +1,4 @@
-package Model;
+package it.polimi.ingsw.Model;
 
 /**
  * represents a builder.
@@ -38,7 +38,7 @@ public class Builder {
      * @param y represents the y coordinate of the square where the builder has been put.
      * @param position is used to store the builder position also inside the builder class.
      */
-    public Builder(int x, int y, Square position, String colour){
+    public Builder(Square position, String colour){
         blocked = false;
         this.colour = colour;
         // builderId?

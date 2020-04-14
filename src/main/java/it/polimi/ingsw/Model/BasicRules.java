@@ -1,4 +1,4 @@
-package Model;
+package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ public class BasicRules {
                 int i=0;
                 while(game.playerList.get(i) != null) {
                     if (game.playerList.get(i).colour.equals(colour)) {
-                        endGame(game.playerList.get(i));
+                     //   endGame(game.playerList.get(i));   SOLO PER TESTARE
                     }
                     i++;
                 }
@@ -70,7 +70,7 @@ public class BasicRules {
         // capire come ridare tutti e due i valori
 
         if(firstPossibleMoves.isEmpty() && secondPossibleMoves.isEmpty()){
-            losecondition();  // ci mettiamo un exception da propagare al chiamante
+           // losecondition();  // ci mettiamo un exception da propagare al chiamante SOLO PER TESTARE
         }
 
         return firstPossibleMoves;

@@ -1,4 +1,4 @@
-package Model;
+package it.polimi.ingsw.Model;
 //dobbiamo modificare l'UML
 //mi sa che non servono più numerosi flag
 public class Dealer extends Player {

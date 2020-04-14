@@ -1,12 +1,10 @@
-package Model;
+package it.polimi.ingsw.Model;
 /*04/04/2020
 Ho sistemato move e build e messo dealer come sottoclasse di player. ho spostato deployBuilder in Game e varie altre funzionalità.
 non ho ancora sistemato takeCard e non ho toccato la logica dei turni. molti attributi e metodi sono csmbiati rispetto all'Uml originale quindi dobbiamo
 cambiarlo.
  */
 
-
-import jdk.nashorn.internal.runtime.regexp.joni.ast.StringNode;
 
 import java.util.ArrayList;
 
@@ -16,7 +14,7 @@ import java.util.ArrayList;
  * @since 1.5
  */
 public class Game {
-    private Model.Board gameBoard;
+    private it.polimi.ingsw.Model.Board gameBoard;
     protected ArrayList<Player> playerList;
     private ArrayList<Card> chosenCards;
     private Deck deck;     //lo lasciamo?
@@ -30,7 +28,7 @@ public class Game {
      * creates a new game.
      */
     public Game(){     //da mettere un identificativo partita?
-        gameBoard = new Model.Board();
+        gameBoard = new Board();
         playerList = new ArrayList<>();
         chosenCards = new ArrayList<>();
         rules = new BasicRules(gameBoard, this);
@@ -129,7 +127,7 @@ public class Game {
             if(position.getValue() == 1)
                 System.out.println("Error: Square already occupied by another player");
             else
-                player.addBuilder(x, y, position , colour);   //aggiungi alla lista dei builder del giocatore
+                player.addBuilder(position , colour);   //aggiungi alla lista dei builder del giocatore
             System.out.println("Builder deployed");  //non possiamo lasciare questo
         }
 

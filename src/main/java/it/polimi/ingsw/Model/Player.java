@@ -1,4 +1,4 @@
-package Model;
+package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 
@@ -90,8 +90,8 @@ public class Player {
      * @param y is the y
      * @param position
      */
-    public void addBuilder(int x, int y, Square position, String colour){
-        builders.add(new Builder(x,y, position, colour));
+    public void addBuilder(Square position, String colour){
+        builders.add(new Builder(position, colour));
         //return builders.size() - 1;  // se magari vogliamo comunicare il numero della pedina che abbiamo appena messo
     }
 

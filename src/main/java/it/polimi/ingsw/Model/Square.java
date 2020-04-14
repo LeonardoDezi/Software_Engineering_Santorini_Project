@@ -1,4 +1,4 @@
-package Model;
+package it.polimi.ingsw.Model;
 
 /**
  * represents a square on the board

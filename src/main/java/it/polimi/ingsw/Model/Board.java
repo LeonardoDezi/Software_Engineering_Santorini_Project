@@ -1,4 +1,4 @@
-package Model;
+package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class Board {
     private Square pointB;
     /** is the point where the builder that moves is moving to.
      */
-    private ArrayList<Model.Observer> observerList;
+   // private ArrayList<it.polimi.ingsw.Model.Observer> observerList;  SOLO PER TESTARE
 
     /** is the list of the observers of the board.
      */
