@@ -49,21 +49,25 @@ public class Board {
         pointA = builder.getPosition();    //posizione iniziale del costruttore
         pointB = fullMap[x][y];            //posizione punto di arrivo
 
-        pointB.setValue(1);        // occupa la casella di arrivo: move dovrebbe dirci che ha vinto??
+        int valueA = pointA.getValue();
+        int valueB = pointB.getValue();
+
+        pointB.setValue(valueA);
+        pointA.setValue(valueB);// occupa la casella di arrivo: move dovrebbe dirci che ha vinto??
 
         if(pointB.getLevel() > 0)  // se nella casella sono presenti costruzioni
             pointB.setLevel(pointB.getLevel() +1);
 
+        Builder tmp = pointB.getBuilder();
+
+        pointA.setBuilder(tmp);
         pointB.setBuilder(builder);
 
-        //togliamo la pedina
-        pointA.setValue(0);
 
         if(pointA.getLevel() > 0)
             pointA.setLevel(pointA.getLevel() - 1);
 
-        pointA.setBuilder(null);   // aggiungere qualcosa in caso di swap?
-        //mettere un flag in caso la mossa porti alla vittoria?
+ 
         return;
 
     }

@@ -3,7 +3,6 @@
     "name": "Apollo",
     "conditions":[
       {
-        "movement" : null,
         "jump_up"  : null,
         "freespace": null,
         "jump_down": null
@@ -26,7 +25,6 @@
     "name": "Artemis",
     "conditions":[
       {
-        "movement": null,
         "jump_up": null,
         "freespace": null,
         "jump_down": null
@@ -49,7 +47,6 @@
     "name": "Athena",
     "conditions": [
       {
-        "movement": null,
         "jump_up": true,
         "freespace": null,
         "jump_down": null
@@ -72,7 +69,6 @@
     "name": "Atlas",
     "conditions": [
       {
-        "movement": null,
         "jump_up": null,
         "freespace": null,
         "jump_down": null
@@ -95,7 +91,6 @@
     "name": "Demeter",
     "conditions": [
       {
-        "movement": null,
         "jump_up": null,
         "freespace": null,
         "jump_down": null
@@ -118,7 +113,6 @@
     "name": "Hephaestus",
     "conditions": [
       {
-        "movement": null,
         "jump_up": null,
         "freespace": null,
         "jump_down": null
@@ -141,7 +135,6 @@
     "name": "Minotaurus",
     "conditions": [
       {
-        "movement": null,
         "jump_up": null,
         "freespace": true,
         "jump_down": null
@@ -164,7 +157,6 @@
     "name": "Pan",
     "conditions": [
       {
-        "movement": null,
         "jump_up": null,
         "freespace": null,
         "jump_down": 2
@@ -187,7 +179,6 @@
     "name": "Prometheus",
     "conditions": [
       {
-        "movement": null,
         "jump_up": false,
         "freespace": null,
         "jump_down": null

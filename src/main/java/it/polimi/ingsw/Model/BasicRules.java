@@ -6,7 +6,7 @@ public class BasicRules {
     private ArrayList<Square> range;
     private int maxNumMove;
     private int maxNumBuild;
-    private int maxHeight;
+    private int maxHeight ;
     private boolean sameSquare;
     private Board board;
     private Game game;
@@ -14,6 +14,15 @@ public class BasicRules {
     public BasicRules(Board board, Game game){
         this.board = board;
         this.game = game;
+        this.maxHeight = 1;
+    }
+
+    public void setMaxHeight(int maxHeight) {
+        this.maxHeight = maxHeight;
+    }
+
+    public int getMaxHeight() {
+        return maxHeight;
     }
 
     /**
@@ -79,7 +88,7 @@ public class BasicRules {
     public ArrayList<Square> getPossibleMoves(Builder builder) {
         ArrayList<Square> possibleMoves = new ArrayList<>();
         Square position = builder.getPosition();
-        maxHeight = 1;
+        //maxHeight = 1;
         int i, j;
         for (i = -1; i <= 1; i++) {
             for (j = -1; j <= 1; j++) {
