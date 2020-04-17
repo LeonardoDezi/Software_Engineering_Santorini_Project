@@ -5,10 +5,15 @@ package it.polimi.ingsw.Model;
  * @version 1.0
  * @since 1.0
  */
+
+
+//Penso che Square non abbia bisogno di Test dato che i suoi metodi sono tutti dei getter e dei setter
+//al massimo il costruttore
+
 public class Square {
 
     private int value;
-    public final int x;
+    public final int x;   //dove ci servivano x e y?
     public final int y;
     private int level;
     private Builder builder;
@@ -19,8 +24,8 @@ public class Square {
      * @param j sets the y coordinate of the square.
      */
     public Square(int i, int j) {
-        x = i;
-        y = j;
+        this.x = i;
+        this.y = j;
         this.level = 0;
         this.builder = null;
         this.value = 0;
@@ -47,6 +52,8 @@ public class Square {
      * is used to change the height of the square.
      * @param level is the new height of the square.
      */
+    /*If the last occupied cell contains a construction, level will represent the highest free cell
+      If the last occupied cell contains a builder, level will represent its position.*/
     public void setLevel(int level){
         this.level = level;
     }
@@ -74,4 +81,5 @@ public class Square {
     public Builder getBuilder(){
         return this.builder;
     }
+
 }

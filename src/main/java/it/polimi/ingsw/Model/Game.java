@@ -1,8 +1,10 @@
 package it.polimi.ingsw.Model;
-/*04/04/2020
-Ho sistemato move e build e messo dealer come sottoclasse di player. ho spostato deployBuilder in Game e varie altre funzionalità.
-non ho ancora sistemato takeCard e non ho toccato la logica dei turni. molti attributi e metodi sono csmbiati rispetto all'Uml originale quindi dobbiamo
-cambiarlo.
+/*17/04/2020
+Ho modificato addPlayer in modo che venissero assegnati direttamente i colori ai vari giocatori. in questo modo non correremo il rischio che due giocatori
+abbiano lo stesso colore assegnato.
+Red = Giocatore 1
+Green = Giocatore 2
+Blue = Giocatore 3
  */
 
 
@@ -14,7 +16,7 @@ import java.util.ArrayList;
  * @since 1.5
  */
 public class Game {
-    private it.polimi.ingsw.Model.Board gameBoard;
+    private Board gameBoard;
     protected ArrayList<Player> playerList;
     private ArrayList<Card> chosenCards;
     private Deck deck;     //lo lasciamo?
@@ -32,24 +34,31 @@ public class Game {
         playerList = new ArrayList<>();
         chosenCards = new ArrayList<>();
         rules = new BasicRules(gameBoard, this);
+        //dobbiamo decidere se togliere o meno deck. Se lo lasciamo lo dobbiamo implementare
     }
 
     /**
      * adds a new player to the game.
      * @param name is the id of the player.
      */
-    public void addPlayer(String name, String colour, Game game){
-        if(playerList.size() < 3) {
+    public void addPlayer(String name){
 
-            if(playerList.size()==0)  //ancora nessun giocatore presente
-                playerList.add(new Dealer(name, colour, game)); //il primo giocatore sarà sempre il dealer
-            else
-                playerList.add(new Player(name, colour));
-            return;
-
-        }else{
-            //TBD
+        switch(playerList.size()){
+            case 0:   //ancora nessun giocatore presente
+                playerList.add(new Dealer(name, "Red", this)); //il primo giocatore sarà sempre il dealer
+                break;
+            case 1:
+                playerList.add(new Player(name, "Green"));
+                break;
+            case 2:
+                playerList.add(new Player(name, "Blue"));
+                break;
+            default:
+                return;   //se playerList.size() >= 3 non fa niente;
         }
+
+        //Il controller dovrà avere un contatore che tenga conto di quanti giocatori sono presenti nella partita/lobby
+
     }
 
     /**
@@ -84,7 +93,7 @@ public class Game {
     }
 
     /**
-     * calls the move metod of the board to build something.
+     * calls the move method of the board to build something.
      * @param playerIndex is the id of the player that is building something.
      * @param x is the x coordinate of the square where the player wants to build.
      * @param y is the y coordinate of the square where the player wants to build.

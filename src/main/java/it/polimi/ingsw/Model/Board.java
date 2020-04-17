@@ -43,29 +43,33 @@ public class Board {
      * @param builder is the builder that is moving.
      * @param x is the x coordinate of the future builders cell.
      * @param y is the y coordinat of the future builders cell.
-     */
+      */
+
+
+
     public void move(Builder builder, int x, int y){
 
-        pointA = builder.getPosition();    //posizione iniziale del costruttore
-        pointB = fullMap[x][y];            //posizione punto di arrivo
+        pointA = builder.getPosition();    //builder's initial position
+        pointB = fullMap[x][y];            //builder's arriving point
 
         int valueA = pointA.getValue();
         int valueB = pointB.getValue();
 
-        pointB.setValue(valueA);
-        pointA.setValue(valueB);// occupa la casella di arrivo: move dovrebbe dirci che ha vinto??
 
-        if(pointB.getLevel() > 0)  // se nella casella sono presenti costruzioni
-            pointB.setLevel(pointB.getLevel() +1);
+        pointB.setValue(valueA);              // value exchange
+        pointA.setValue(valueB);
+
 
         Builder tmp = pointB.getBuilder();
 
-        pointA.setBuilder(tmp);
+        pointA.setBuilder(tmp);     // builder exchange. tmp will be null if the cell had been free
         pointB.setBuilder(builder);
 
 
-        if(pointA.getLevel() > 0)
-            pointA.setLevel(pointA.getLevel() - 1);
+        if(tmp!= null)
+            tmp.setPosition(pointA); // in case of swap
+
+        builder.setPosition(pointB);
 
  
         return;
@@ -84,7 +88,9 @@ public class Board {
 
         if(isDome == true)   //necessario per via di Atlante o lo modificheremo di conseguenza?
             pointB.setValue(2);   // 2 = cupola
-        pointB.setLevel(pointB.getLevel() + 1);
+
+        pointB.setLevel(pointB.getLevel() + 1);   // level in questo modo non indicherà il level della cupola. può dare
+                                                  //  problemi alla GUI?
 
         return;
 
