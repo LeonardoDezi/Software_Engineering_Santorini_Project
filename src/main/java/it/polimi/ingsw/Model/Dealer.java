@@ -3,9 +3,9 @@ package it.polimi.ingsw.Model;
 //mi sa che non servono più numerosi flag
 public class Dealer extends Player {
 
-    private Player dealer;
+    private Player dealer;  // serve?
     private Deck deck;
-    private String colour;
+    private String colour;  // serve?
     private Game game;
 
 
@@ -15,6 +15,7 @@ public class Dealer extends Player {
         this.game = game;
     }
 
+    // bisogna ancora fare test per chooseCards
     public void chooseCards(int card1, int card2, int card3){
 
         game.addChosenCard(deck.getCard(card1));

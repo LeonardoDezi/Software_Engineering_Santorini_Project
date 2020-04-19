@@ -49,6 +49,7 @@ public class Game {
         switch(playerList.size()){
             case 0:   //ancora nessun giocatore presente
                 playerList.add(new Dealer(name, "Red", this)); //il primo giocatore sarà sempre il dealer
+                // dealer = (Dealer) playerList.get(0);  nel caso fosse comodo tenerlo da parte: probabilmente dovremo aggiungere un altro test nel caso
                 break;
             case 1:
                 playerList.add(new Player(name, "Green"));
@@ -57,7 +58,7 @@ public class Game {
                 playerList.add(new Player(name, "Blue"));
                 break;
             default:
-                return;   //se playerList.size() >= 3 non fa niente;
+                //se playerList.size() >= 3 non fa niente forse dovremmo mettere qualcosa;
         }
 
         //Il controller dovrà avere un contatore che tenga conto di quanti giocatori sono presenti nella partita/lobby
@@ -70,11 +71,14 @@ public class Game {
      */
     public void removePlayer(Player player){
 
-        try {
+   //     try {
+            player.removeBuilders();
             playerList.remove(player);
-        }catch(NoSuchElementException e){
+
+            //player = null; necessario?
+/*        }catch(NoSuchElementException e){
             System.out.println("There's no player registered with the name " + player.getPlayerID());
-        }
+        }   mi sa che non servirà*/
 
         return;
 
@@ -98,8 +102,8 @@ public class Game {
      * @param y is the y coordinate where the builder is going to move.
      */
     public void move(int playerIndex, int builderId, int x, int y){
-        Player player = playerList.get(playerIndex);   // recupera giocatore
-        gameBoard.move(player.getBuilder(builderId), x, y);
+        Player player = playerList.get(playerIndex);   // recupera giocatore: è garantito che playerIndex sia un indice valido
+        gameBoard.move(player.getBuilder(builderId), x, y); // stessa cosa qui
     }
 
     /**
@@ -134,7 +138,6 @@ public class Game {
 
 
         //if(isPlayerTurn == true) {   serve?
-        String colour = player.getColour();
 
         if(player.getBuilderSize() == 2){   //ATTENZIONE: DOBBIAMO ACCERTARCI CHE size() sarà sempre o 0 o 2 in qualche modo
             System.out.println("Error:" + player.getPlayerID() + "has already deployed all the builders");   //non possiamo lasciare questo

@@ -20,13 +20,11 @@ public class Player {
      * creates a new player and the array list that is used to save the players builders.
      * @param playerID is the id that identifies the player.
      */
-    public Player(String playerID, String colour /*, Game game*/) {
+    public Player(String playerID, String colour) {
 
         this.playerID = playerID;
         this.colour = colour;
-        //this.game = game;
         builders = new ArrayList<>();
-        //come fare colour?
         isCardDealer = false;    // serve ancora??
         isPlayerTurn = false;    // servirà mai?
 
@@ -56,7 +54,7 @@ public class Player {
      * is used to assign the builders to the player.
      * @param BuilderId is the id of one of the two builders.
      * @return the variable containing the id of the builder.
-     * @throws IndexOutOfBoundsException if the player hasnìt already placed it's builders.
+     * @throws IndexOutOfBoundsException if the player hasn't placed its builders yet.
      */
     public Builder getBuilder(int BuilderId){    //non so se mettere come builderId 0/1 o 1/2 o magari mettere enumerazioni. il problema delle enum è che non cambiano quando un player viene rimosso
 
@@ -93,14 +91,25 @@ public class Player {
         //return builders.size() - 1;  // se magari vogliamo comunicare il numero della pedina che abbiamo appena messo
     }
 
-    // forse conviene togliere entrambi insieme
-    public void removeBuilder(int builderId){
+    public void removeBuilders(){
+
+        Square position1 = builders.get(0).getPosition();
+        Square position2 = builders.get(1).getPosition();
+
+        position1.resetSquare();
+        position2.resetSquare();
+
+        builders = null;   //dovrebbe eliminarsi ogni riferimento ai builders in questo modo
+
+    }
+  /*  public void removeBuilder(int builderId){
         try {
             builders.remove(builderId);
+            //Sì ma dobbiamo anche modificare i value e level dello square di appartenenza ecc....
         }catch(IndexOutOfBoundsException e) {
             System.out.println("The builder " + builderId + " has already been removed");
         }
-    }
+    } mi sa che non serve   */
 
     public String getColour(){
         return this.colour;

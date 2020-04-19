@@ -82,4 +82,9 @@ public class Square {
         return this.builder;
     }
 
+    public void resetSquare(){
+        this.value = 0 ;  //rimetti la casella come libera
+        this.builder = null;  // cancella il riferimento al builder
+    }
+
 }

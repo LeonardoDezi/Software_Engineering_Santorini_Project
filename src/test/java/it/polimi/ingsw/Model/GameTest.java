@@ -17,6 +17,7 @@ public class GameTest {
         game = new Game();
     }
 
+    //DA RILEGGERE
     //addPlayer
     //@requires playerList != null     (controllare)
     //@ensures playerList.size() <=3
@@ -56,3 +57,6 @@ public class GameTest {
 
 
 // bisogna fare Test per removePlayer?
+// non reputo necessario un test di move() dal momento che l'unica cosa che fa è utilizzare metodi già testati di altre classi.
+//Accertarsene.
+//build(): vedi move()
