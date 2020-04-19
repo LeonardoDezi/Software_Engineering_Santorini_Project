@@ -86,11 +86,10 @@ public class Board {
 
         pointB = fullMap[x][y];
 
-        if(isDome == true)   //necessario per via di Atlante o lo modificheremo di conseguenza?
+        if(isDome == true)   //necessario per via di Atlante
             pointB.setValue(2);   // 2 = cupola
-
-        pointB.setLevel(pointB.getLevel() + 1);   // level in questo modo non indicherà il level della cupola. può dare
-                                                  //  problemi alla GUI?
+        else
+            pointB.setLevel(pointB.getLevel() + 1);
 
         return;
 

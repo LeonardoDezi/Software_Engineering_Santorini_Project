@@ -8,7 +8,11 @@ Blue = Giocatore 3
  */
 
 
+//ci manca la rimozione delle pedine
+
+
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
  * represents the game. this class is used as root of the model to connect every entity inside of it.
@@ -21,7 +25,6 @@ public class Game {
     private ArrayList<Card> chosenCards;
     private Deck deck;     //lo lasciamo?
     private Dealer dealer;
-    private Player player;     // si può togliere?
     // identificatore numerico per differenziare le partite?
     private Square position;
     private BasicRules rules;
@@ -42,7 +45,7 @@ public class Game {
      * @param name is the id of the player.
      */
     public void addPlayer(String name){
-
+        // E se mettessimo enumerazioni?
         switch(playerList.size()){
             case 0:   //ancora nessun giocatore presente
                 playerList.add(new Dealer(name, "Red", this)); //il primo giocatore sarà sempre il dealer
@@ -66,8 +69,15 @@ public class Game {
      * @param player is the player id.
      */
     public void removePlayer(Player player){
-        playerList.remove(player);
+
+        try {
+            playerList.remove(player);
+        }catch(NoSuchElementException e){
+            System.out.println("There's no player registered with the name " + player.getPlayerID());
+        }
+
         return;
+
     }
 
     // da rifare
@@ -88,19 +98,17 @@ public class Game {
      * @param y is the y coordinate where the builder is going to move.
      */
     public void move(int playerIndex, int builderId, int x, int y){
-        player = playerList.get(playerIndex);   // recupera giocatore
+        Player player = playerList.get(playerIndex);   // recupera giocatore
         gameBoard.move(player.getBuilder(builderId), x, y);
     }
 
     /**
      * calls the move method of the board to build something.
-     * @param playerIndex is the id of the player that is building something.
      * @param x is the x coordinate of the square where the player wants to build.
      * @param y is the y coordinate of the square where the player wants to build.
      * @param isDome is set to 1 when the player builds a dome that is not on the 4th floor.
      */
-    public void build (int playerIndex, int builderId, int x, int y, boolean isDome){
-        player = playerList.get(playerIndex);   // recupera giocatore
+    public void build ( int x, int y, boolean isDome){
         gameBoard.build(x, y, isDome);
     }
 
@@ -124,7 +132,7 @@ public class Game {
      */
     public void deployBuilder(Player player, int x, int y){
 
-        this.player = player;
+
         //if(isPlayerTurn == true) {   serve?
         String colour = player.getColour();
 
@@ -136,7 +144,7 @@ public class Game {
             if(position.getValue() == 1)
                 System.out.println("Error: Square already occupied by another player");
             else
-                player.addBuilder(position , colour);   //aggiungi alla lista dei builder del giocatore
+                player.addBuilder(position);   //aggiungi alla lista dei builder del giocatore
             System.out.println("Builder deployed");  //non possiamo lasciare questo
         }
 

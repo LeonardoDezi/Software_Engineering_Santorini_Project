@@ -11,7 +11,7 @@ public class Builder {
     private boolean blocked;
     private final String colour;
     private int builderId;
-
+    // forse bisogna indicare anche a quale player appartiene per la GUI
 
 
     /**

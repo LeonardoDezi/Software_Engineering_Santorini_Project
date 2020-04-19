@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Model;
 
 import static org.junit.Assert.*;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,6 +15,8 @@ import org.junit.Test;
   I value degli square vengano aggiornati
   I position dei builders vengano aggiornati ( sia in caso di swap che tradizionale)
  */
+
+//il costruttore?
 
 public class BoardTest {
     Board board;
@@ -45,7 +49,11 @@ public class BoardTest {
         square.setLevel(1);
         builder4 = new Builder(square, "Green");
 
+        square = board.fullMap[0][0];
+        square.setLevel(1);
 
+        square = board.fullMap[0][1];
+        square.setLevel(4);
 
 
     }
@@ -54,11 +62,11 @@ public class BoardTest {
     public void groundToGround(){
         board.move(builder1, 2, 3);
 
-        assertTrue(board.fullMap[2][2].getValue() ==0); //controlla che la casella di partenza adesso risulti libera
-        assertTrue(board.fullMap[2][3].getValue() == 1); //controlla che la casella di arrivo risulti adesso occupata
-        assertTrue(board.fullMap[2][2].getBuilder() == null); // controlla che il campo builder sia ora null
-        assertTrue(board.fullMap[2][3].getBuilder() == builder1); // controlla che il campo builder sia uguale a builder 1
-        assertTrue(builder1.getPosition() == board.fullMap[2][3]);
+        assertEquals(0, board.fullMap[2][2].getValue()); //controlla che la casella di partenza adesso risulti libera
+        assertEquals(1, board.fullMap[2][3].getValue()); //controlla che la casella di arrivo risulti adesso occupata
+        assertNull(board.fullMap[2][2].getBuilder()); // controlla che il campo builder sia ora null
+        assertSame(board.fullMap[2][3].getBuilder(), builder1); // controlla che il campo builder sia uguale a builder 1
+        assertSame(builder1.getPosition(), board.fullMap[2][3]);
     }
 
     //non sono sicuro riguardo la necessità di questo test, dato che il metodo non va a modificare il valore di level
@@ -70,21 +78,45 @@ public class BoardTest {
 
         board.move(builder2, 1, 4);
 
-        assertTrue(board.fullMap[0][4].getLevel() == levelA);
-        assertTrue(board.fullMap[1][4].getLevel() == levelB);
+        assertEquals(board.fullMap[0][4].getLevel(), levelA);
+        assertEquals(board.fullMap[1][4].getLevel(), levelB);
     }
 
     @Test
     public void swap(){
         board.move(builder3, 1, 2);
 
-        assertTrue(board.fullMap[1][2].getBuilder() == builder3);
-        assertTrue(board.fullMap[1][3].getBuilder() == builder4);
+        assertSame(board.fullMap[1][2].getBuilder(), builder3);
+        assertSame(board.fullMap[1][3].getBuilder(), builder4);
 
-        assertTrue(board.fullMap[1][2].getValue() == 1);
-        assertTrue(board.fullMap[1][3].getValue() == 1);
+        assertEquals(1, board.fullMap[1][2].getValue());
+        assertEquals(1, board.fullMap[1][3].getValue());
 
-        assertTrue(builder3.getPosition() == board.fullMap[1][2]);
-        assertTrue(builder4.getPosition() == board.fullMap[1][3]);
+        assertSame(builder3.getPosition(), board.fullMap[1][2]);
+        assertSame(builder4.getPosition(), board.fullMap[1][3]);
     }
+
+    @After  // serve?
+    public void clear(){    // reset everything
+        board = null;
+        builder1 = null;
+        builder2 = null;
+        builder3 = null;
+        square = null;
+    }
+
+    @Test
+    public void createBuilding(){
+        board.build(0 ,0 , false);  // in quella casella era già presente un blocco
+        assertEquals(2, board.fullMap[0][0].getLevel());
+        assertEquals(0, board.fullMap[0][0].getValue());
+    }
+
+    @Test
+    public void createDome(){
+        board.build(0, 1, true);
+        assertEquals(4, board.fullMap[0][1].getLevel());  // decidere quale implementazione usare 4 o 5?
+        assertEquals(2, board.fullMap[0][1].getValue());
+    }
+
 }

@@ -26,29 +26,28 @@ public class GameTest {
 
     @Test
     public void playerListCheck(){
-        assertTrue(game.playerList.size() == 0);
+        assertEquals(0, game.playerList.size());
         game.addPlayer("Marco");
         game.addPlayer("Luca");
         game.addPlayer("Fra");
-        game.addPlayer("errore");
+        game.addPlayer("error");
 
-        assertTrue(game.playerList.get(0).getPlayerID().equals("Marco"));
-        assertTrue(game.playerList.get(0).getColour().equals("Red"));
+        assertEquals("Marco", game.playerList.get(0).getPlayerID());
+        assertEquals("Red", game.playerList.get(0).getColour());
 
 
+        assertEquals("Luca", game.playerList.get(1).getPlayerID());
+        assertEquals("Green", game.playerList.get(1).getColour());
 
-        assertTrue(game.playerList.get(1).getPlayerID().equals("Luca"));
-        assertTrue(game.playerList.get(1).getColour().equals("Green"));
-
-        assertTrue(game.playerList.get(2).getPlayerID().equals("Fra"));
-        assertTrue(game.playerList.get(2).getColour().equals("Blue"));
+        assertEquals("Fra", game.playerList.get(2).getPlayerID());
+        assertEquals("Blue", game.playerList.get(2).getColour());
 
 
     }
 
     @After
     public void maximumThree(){
-        assertTrue(game.playerList.size() == 3);
+        assertEquals(3, game.playerList.size());
     }
 
     // è necessario fare un test anche per quando ci saranno solo due giocatori?
