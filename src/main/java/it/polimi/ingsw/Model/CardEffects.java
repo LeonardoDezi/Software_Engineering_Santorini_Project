@@ -1,12 +1,12 @@
 package it.polimi.ingsw.Model;
 
 public class CardEffects {
-    private String movement;
-    private boolean samesquare;
-    private int building;
-    private String moveOpponent;
-    private String beforeMovement;
-    private boolean win;
-    private boolean dome;
+    protected String movement;
+    protected boolean samesquare;
+    protected int building;
+    protected String moveOpponent;
+    protected String beforeMovement;
+    protected boolean win;
+    protected boolean dome;
 
 }

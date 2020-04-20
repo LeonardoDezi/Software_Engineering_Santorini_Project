@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Model;
 
 public class CardConditions {
-    private boolean jump_up;
-    private boolean freespace;
-    private int jump_down;
+    protected boolean jump_up;
+    protected boolean freespace;
+    protected int jump_down;
 
 
 }

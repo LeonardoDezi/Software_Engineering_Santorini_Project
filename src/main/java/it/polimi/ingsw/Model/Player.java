@@ -40,8 +40,12 @@ public class Player {
     }  // aggiungere il parametro nell'UML
 
 
-    public void getCard(int cardNumber){
+    public void chooseCard(int cardNumber){
         this.card = game.getChoosenCard(cardNumber);
+    }
+
+    public Card getCard(){
+        return this.card;
     }
 
     /**

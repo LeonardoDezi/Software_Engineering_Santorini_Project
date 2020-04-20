@@ -2,12 +2,8 @@ package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 
-public /*abstract*/ class BasicRules {
-    private ArrayList<Square> range;
-    private int maxNumMove;
-    private int maxNumBuild;
+public class BasicRules {
     private int maxHeight ;
-    private boolean sameSquare;
     private Board board;
     private Game game;
 
@@ -88,7 +84,6 @@ public /*abstract*/ class BasicRules {
     public ArrayList<Square> getPossibleMoves(Builder builder) {
         ArrayList<Square> possibleMoves = new ArrayList<>();
         Square position = builder.getPosition();
-        //maxHeight = 1;
         int i, j;
         for (i = -1; i <= 1; i++) {
             for (j = -1; j <= 1; j++) {
@@ -110,6 +105,7 @@ public /*abstract*/ class BasicRules {
 
         return possibleMoves;
     }
+
 
     /**
      * is used to give the player all the available places to build.
@@ -135,11 +131,6 @@ public /*abstract*/ class BasicRules {
         }
         return possibleBuilds;
     }
-
-
-//    public abstract ArrayList<Square>  getSpecialMoves(Builder builder);
-
-
 
 }
 
