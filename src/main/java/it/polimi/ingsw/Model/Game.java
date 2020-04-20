@@ -52,10 +52,10 @@ public class Game {
                 // dealer = (Dealer) playerList.get(0);  nel caso fosse comodo tenerlo da parte: probabilmente dovremo aggiungere un altro test nel caso
                 break;
             case 1:
-                playerList.add(new Player(name, "Green"));
+                playerList.add(new Player(name, "Green", this));
                 break;
             case 2:
-                playerList.add(new Player(name, "Blue"));
+                playerList.add(new Player(name, "Blue", this));
                 break;
             default:
                 //se playerList.size() >= 3 non fa niente forse dovremmo mettere qualcosa;
@@ -83,8 +83,6 @@ public class Game {
         return;
 
     }
-
-    // da rifare
 
     /**
      * is used to get the deck of all the god cards.
@@ -151,6 +149,9 @@ public class Game {
             System.out.println("Builder deployed");  //non possiamo lasciare questo
         }
 
+    }
+    public Card getChoosenCard(int cardNumber){
+        return chosenCards.get(cardNumber);
     }
 
 }

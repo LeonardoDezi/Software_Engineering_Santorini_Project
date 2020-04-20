@@ -10,23 +10,23 @@ import java.util.ArrayList;
  */
 public class Player {
     private boolean isPlayerTurn;
-    //elemento di tipo carta
+    protected Card card;
     private String playerID;
     protected ArrayList<Builder> builders;
-    private boolean isCardDealer;
     public final String colour;
+    protected Game game;
 
     /**
      * creates a new player and the array list that is used to save the players builders.
      * @param playerID is the id that identifies the player.
      */
-    public Player(String playerID, String colour) {
+    public Player(String playerID, String colour, Game game) {
 
         this.playerID = playerID;
         this.colour = colour;
         builders = new ArrayList<>();
-        isCardDealer = false;    // serve ancora??
         isPlayerTurn = false;    // servirà mai?
+        this.game=game;
 
     }
 
@@ -40,7 +40,9 @@ public class Player {
     }  // aggiungere il parametro nell'UML
 
 
-    //metodo getcard
+    public void getCard(int cardNumber){
+        this.card = game.getChoosenCard(cardNumber);
+    }
 
     /**
      * is used to know the player id.

@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 
-public class BasicRules {
+public /*abstract*/ class BasicRules {
     private ArrayList<Square> range;
     private int maxNumMove;
     private int maxNumBuild;
@@ -111,8 +111,6 @@ public class BasicRules {
         return possibleMoves;
     }
 
-
-
     /**
      * is used to give the player all the available places to build.
      * @param builder is the builder thant can build.
@@ -137,6 +135,9 @@ public class BasicRules {
         }
         return possibleBuilds;
     }
+
+
+//    public abstract ArrayList<Square>  getSpecialMoves(Builder builder);
 
 
 

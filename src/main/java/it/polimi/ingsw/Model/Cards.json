@@ -1,5 +1,6 @@
 [
   {
+    "number": 1,
     "name": "Apollo",
     "conditions":[
       {
@@ -22,6 +23,7 @@
   },
 
   {
+    "number": 2,
     "name": "Artemis",
     "conditions":[
       {
@@ -44,6 +46,7 @@
   },
 
   {
+    "number": 3,
     "name": "Athena",
     "conditions": [
       {
@@ -66,6 +69,7 @@
   },
 
   {
+    "number": 4,
     "name": "Atlas",
     "conditions": [
       {
@@ -88,6 +92,7 @@
   },
 
   {
+    "number": 5,
     "name": "Demeter",
     "conditions": [
       {
@@ -110,6 +115,7 @@
   },
 
   {
+    "number": 6,
     "name": "Hephaestus",
     "conditions": [
       {
@@ -132,6 +138,7 @@
   },
 
   {
+    "number": 7,
     "name": "Minotaurus",
     "conditions": [
       {
@@ -154,6 +161,7 @@
   },
 
   {
+    "number": 8,
     "name": "Pan",
     "conditions": [
       {
@@ -176,6 +184,7 @@
   },
 
   {
+    "number": 9,
     "name": "Prometheus",
     "conditions": [
       {
