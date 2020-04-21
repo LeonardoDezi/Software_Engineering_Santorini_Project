@@ -13,7 +13,7 @@ package it.polimi.ingsw.Model;
 public class Square {
 
     private int value;
-    public final int x;   //dove ci servivano x e y?
+    public final int x;
     public final int y;
     private int level;
     private Builder builder;
