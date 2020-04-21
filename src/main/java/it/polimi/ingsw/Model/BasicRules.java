@@ -87,21 +87,32 @@ public class BasicRules {
     }
 
     public ArrayList<Square> getPossibleMoves(Builder builder) {
+
         ArrayList<Square> possibleMoves = new ArrayList<>();
         Square position = builder.getPosition();
+
         int i, j;
+
         for (i = -1; i <= 1; i++) {
+
             for (j = -1; j <= 1; j++) {
-                if (i == 0 && j == 0) {
-                } //non fai niente se sei nella tua casella
-                else {
+
+                if (i != 0 || j != 0) {
+
+
                     int playerHeight = position.getLevel();
-                    int otherHeight = board.fullMap[position.x + i][position.y + j].getLevel();
-                    if (playerHeight - otherHeight <= maxHeight) {
-                        int newSquareValue = board.fullMap[position.x + i][position.y + j].getValue();
-                        if (newSquareValue == 0) {
-                            Square square = board.fullMap[position.x + i][position.y + j];
-                            possibleMoves.add(square);
+
+                    int a = position.x + i;
+                    int b = position.y + j;
+
+                    if (a >= 0 && a <= 5 && b >= 0 && b <= 5) {
+                        int otherHeight = board.fullMap[a][b].getLevel();
+                        if (playerHeight - otherHeight <= maxHeight) {
+                            int newSquareValue = board.fullMap[a][b].getValue();
+                            if (newSquareValue == 0) {
+                                Square square = board.fullMap[a][b];
+                                possibleMoves.add(square);
+                            }
                         }
                     }
                 }
@@ -198,23 +209,31 @@ public class BasicRules {
      * @return an arrayList with all the possible places to build.
      */
     public ArrayList<Square> getBuildingRange(Builder builder){
+
         ArrayList<Square> possibleBuilds = new ArrayList<>();
         Square position = builder.getPosition();
+
         int i, j;
-        for(i=-1; i<=1; i++)
-        {
-            for(j=-1; j<=1; j++){
-                if(i==0 && j==0){}
-                else{
-                    int newSquareValue=board.fullMap[position.x + i][position.y +j].getValue();
-                    if(newSquareValue == 0){
-                        Square square=board.fullMap[position.x + i][position.y +j];
-                        possibleBuilds.add(square);
+        for(i = -1; i <= 1; i++){
+
+            for(j = -1; j <= 1; j++){
+
+                if(i!=0 || j!=0) {
+                    int a = position.x + i;
+                    int b = position.x + j;
+                    if (a >= 0 && a <= 5 && b >= 0 && b <= 5) {
+                        int newSquareValue = board.fullMap[position.x + i][position.y + j].getValue();
+                        if (newSquareValue == 0) {
+                            Square square = board.fullMap[position.x + i][position.y + j];
+                            possibleBuilds.add(square);
+                        }
                     }
                 }
             }
         }
+
         return possibleBuilds;
+
     }
 
 }
