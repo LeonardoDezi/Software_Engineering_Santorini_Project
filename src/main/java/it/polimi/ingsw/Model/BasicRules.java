@@ -160,7 +160,7 @@ public class BasicRules {
                 shiftedBuilder.setPosition(square);
                 getPossibleMoves(shiftedBuilder)
 */
-            }
+        }
         else if(card.effects.movement.equals("push")){
             Square position = builder.getPosition();
             int i, j;
