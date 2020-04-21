@@ -9,5 +9,4 @@ public interface Rules {
     ArrayList<Square> getBuildingRange();
     void winCondition();
     void loseCondition();
-    public ArrayList<Square> getNext(Builder builder, Player player);
 }
