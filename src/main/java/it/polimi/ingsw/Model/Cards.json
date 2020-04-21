@@ -6,7 +6,9 @@
       {
         "jump_up"  : null,
         "freespace": null,
-        "jump_down": null
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": null
       }
     ],
     "effects" :[
@@ -17,7 +19,8 @@
         "moveOpponent": "swap",
         "beforemovement": null,
         "win": null,
-        "dome": null
+        "dome": null,
+        "perimetersquare": null
       }
     ]
   },
@@ -29,7 +32,9 @@
       {
         "jump_up": null,
         "freespace": null,
-        "jump_down": null
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": null
       }
     ],
     "effects": [
@@ -40,7 +45,8 @@
         "moveOpponent": null,
         "beforeMovement": null,
         "win": null,
-        "dome": null
+        "dome": null,
+        "perimetersquare": null
       }
     ]
   },
@@ -52,7 +58,9 @@
       {
         "jump_up": true,
         "freespace": null,
-        "jump_down": null
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": null
       }
     ],
     "effects": [
@@ -63,7 +71,8 @@
         "moveOpponent": "samelevel",
         "beforeMovement": null,
         "win": null,
-        "dome": null
+        "dome": null,
+        "perimetersquare": null
       }
     ]
   },
@@ -75,7 +84,9 @@
       {
         "jump_up": null,
         "freespace": null,
-        "jump_down": null
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": null
       }
     ],
     "effects": [
@@ -86,7 +97,8 @@
         "moveOpponent": null,
         "beforeMovement": null,
         "win": null,
-        "dome": true
+        "dome": true,
+        "perimetersquare": null
       }
     ]
   },
@@ -98,7 +110,9 @@
       {
         "jump_up": null,
         "freespace": null,
-        "jump_down": null
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": null
       }
     ],
     "effects": [
@@ -109,7 +123,8 @@
         "moveOpponent": null,
         "beforeMovement": null,
         "win": null,
-        "dome": true
+        "dome": true,
+        "perimetersquare": null
       }
     ]
   },
@@ -121,7 +136,9 @@
       {
         "jump_up": null,
         "freespace": null,
-        "jump_down": null
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": null
       }
     ],
     "effects": [
@@ -132,7 +149,8 @@
         "moveOpponent": null,
         "beforeMovement": null,
         "win": null,
-        "dome": false
+        "dome": false,
+        "perimetersquare": null
       }
     ]
   },
@@ -144,7 +162,9 @@
       {
         "jump_up": null,
         "freespace": true,
-        "jump_down": null
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": null
       }
     ],
     "effects": [
@@ -155,7 +175,8 @@
         "moveOpponent": "push",
         "beforeMovement": null,
         "win": null,
-        "dome": null
+        "dome": null,
+        "perimetersquare": null
       }
     ]
   },
@@ -167,7 +188,9 @@
       {
         "jump_up": null,
         "freespace": null,
-        "jump_down": 2
+        "jump_down": 2,
+        "tower_number": null,
+        "buildergender": null
       }
     ],
     "effects": [
@@ -178,7 +201,8 @@
         "moveOpponent": null,
         "beforeMovement": null,
         "win": true,
-        "dome": null
+        "dome": null,
+        "perimetersquare": null
       }
     ]
   },
@@ -190,7 +214,9 @@
       {
         "jump_up": false,
         "freespace": null,
-        "jump_down": null
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": null
       }
     ],
     "effects": [
@@ -201,7 +227,138 @@
         "moveOpponent": null,
         "beforeMovement": "build",
         "win": null,
-        "dome": null
+        "dome": null,
+        "perimetersquare": null
+      }
+    ]
+  },
+
+  {
+    "number": 10,
+    "name": "Charon",
+    "conditions": [
+      {
+        "jump_up": null,
+        "freespace": null,
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": null
+      }
+    ],
+    "effects": [
+      {
+        "movement": null,
+        "samesquare": null,
+        "building": null,
+        "moveOpponent": "push",
+        "beforeMovement": true,
+        "win": null,
+        "dome": null,
+        "perimetersquare": null
+      }
+    ]
+  },
+
+  {
+    "number": 11,
+    "name": "Chronus",
+    "conditions": [
+      {
+        "jump_up": null,
+        "freespace": null,
+        "jump_down": null,
+        "tower_number": 5,
+        "buildergender": null
+      }
+    ],
+    "effects": [
+      {
+        "movement": null,
+        "samesquare": null,
+        "building": null,
+        "moveOpponent": null,
+        "beforeMovement": null,
+        "win": true,
+        "dome": null,
+        "perimetersquare": null
+      }
+    ]
+  },
+
+  {
+    "number": 12,
+    "name": "Hestia",
+    "conditions": [
+      {
+        "jump_up": null,
+        "freespace": null,
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": null
+      }
+    ],
+    "effects": [
+      {
+        "movement": null,
+        "samesquare": null,
+        "building": 1,
+        "moveOpponent": null,
+        "beforeMovement": null,
+        "win": null,
+        "dome": null,
+        "perimetersquare": false
+      }
+    ]
+  },
+
+  {
+    "number": 13,
+    "name": "Selene",
+    "conditions": [
+      {
+        "jump_up": null,
+        "freespace": null,
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": "female"
+      }
+    ],
+    "effects": [
+      {
+        "movement": null,
+        "samesquare": null,
+        "building": 1,
+        "moveOpponent": null,
+        "beforeMovement": null,
+        "win": null,
+        "dome": true,
+        "perimetersquare": null
+      }
+    ]
+  },
+
+  {
+    "number": 14,
+    "name": "Zeus",
+    "conditions": [
+      {
+        "jump_up": null,
+        "freespace": null,
+        "jump_down": null,
+        "tower_number": null,
+        "buildergender": null
+      }
+    ],
+    "effects": [
+      {
+        "movement": null,
+        "samesquare": true,
+        "building": null,
+        "moveOpponent": null,
+        "beforeMovement": null,
+        "win": null,
+        "dome": null,
+        "perimetersquare": null
       }
     ]
   }
