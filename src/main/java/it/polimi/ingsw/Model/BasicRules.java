@@ -9,11 +9,26 @@ public class BasicRules {
     private int maxHeight ;
     private Board board;
     private Game game;
+    public boolean testFlag;  // ho messo questo questo flag giusto per testare winCondition
+
+
+    //li ho messi come attributi in questo punto ma dobbiamo accertarci che un giocatore non andrà ad utilizzare
+    //possiblemoves di mosse precedenti o che utilizzi array inizializzati come se fossero del suo turno
+
+    private ArrayList<Square> firstPossibleMoves;   // forse queste vanno messe nel contorller e nei rispettivi metodi ci mettiamo getter e setter
+    private ArrayList<Square> secondPossibleMoves;
+    private ArrayList<Square> firstSpecialMoves;    // e se fondessimo gli array?
+    private ArrayList<Square> secondSpecialMoves;
+
+    public ArrayList<Square> getFirstPossibleMoves() {
+        return firstPossibleMoves;
+    }
 
     public BasicRules(Board board, Game game){
         this.board = board;
         this.game = game;
-        this.maxHeight = 1;
+        this.maxHeight = 1;  // perchè qui e non sopra?
+        this.testFlag = false;
     }
 
     public void setMaxHeight(int maxHeight) {
@@ -30,7 +45,7 @@ public class BasicRules {
      * @param x is the x coordinate where the builder wants to move.
      * @param y is the y coordinate where the builder wants to move.
      */
-    public void movement(Builder builder, int x, int y){
+    public void movement(Builder builder, int x, int y){  //mossa già verificata in questo punto. ATTENZIONE!! le pedine pushate non devono passare per questo punto
         winCondition(builder, x, y);
         board.move(builder, x, y);
     }
@@ -47,17 +62,18 @@ public class BasicRules {
     public void winCondition(Builder builder, int x, int y){
         Square actualPosition = builder.getPosition();
         if (actualPosition.getLevel() == 2) {
-            if (board.fullMap[x][y].getLevel() == 3) {
+            if (board.fullMap[x][y].getLevel() == 3 ) {   // non serve controllare il Value dal momento che se non fosse una mossa valida non sarebbe in possibleMoves
                 String colour = builder.getColour();
-                int i=0;
-                while(game.playerList.get(i) != null) {
+
+                for(int i = 0; i < game.playerList.size() && !testFlag; i++) {
                     if (game.playerList.get(i).colour.equals(colour)) {
-                     //   endGame(game.playerList.get(i));   SOLO PER TESTARE
+                        //   endGame(game.playerList.get(i));   TBD
+                        testFlag = true;
                     }
-                    i++;
                 }
             }
         }
+        // e per quanto riguarda le condizioni speciali?
     }
 
     /**
@@ -65,27 +81,34 @@ public class BasicRules {
      * @param player is the player that can move.
      * @return an ArrayList of all the possible moves of all the the builder of a player.
      */
-    public ArrayList<Square> getMovementRange(Player player){
-        ArrayList<Square> firstPossibleMoves;
-        ArrayList<Square> secondPossibleMoves;
-        ArrayList<Square> firstSpecialMoves;
-        ArrayList<Square> secondSpecialMoves;
+    public void getMovementRange(Player player){
+
         firstPossibleMoves = getPossibleMoves(player.builders.get(0));
+
         try {
             secondPossibleMoves = getPossibleMoves(player.builders.get(1));
-        }catch(NullPointerException e) {
-            secondPossibleMoves = null;
+        }catch(IndexOutOfBoundsException e) {
+            secondPossibleMoves = null;    // alla fine non abbiamo più scelto carte che possono rimuovere pedine ma credo che possiamo comunque lasciarlo
         }
+
         firstSpecialMoves=getSpecialMoves(player.builders.get(0), player);
-        secondSpecialMoves=getSpecialMoves(player.builders.get(1), player);
 
-        if(firstPossibleMoves.isEmpty() && secondPossibleMoves.isEmpty() && firstSpecialMoves.isEmpty() && secondSpecialMoves.isEmpty()){
-           // losecondition();  // ci mettiamo un exception da propagare al chiamante SOLO PER TESTARE
+        try {
+            secondSpecialMoves = getSpecialMoves(player.builders.get(1), player);
+        }catch(IndexOutOfBoundsException e){
+            secondSpecialMoves = null;
         }
 
-        return firstPossibleMoves; //ritornare tutti e 4 gli array
+        if(firstPossibleMoves == null  && firstSpecialMoves == null && secondPossibleMoves == null && secondSpecialMoves == null ){
+
+           // losecondition();  // ci mettiamo un exception da propagare al chiamante SOLO PER TESTARE
+            testFlag = true;
+        }
+
+
     }
 
+    //controllare che se due square hanno le stesse coordinate allora avranno lo stesso indirizzo
     public ArrayList<Square> getPossibleMoves(Builder builder) {
 
         ArrayList<Square> possibleMoves = new ArrayList<>();
@@ -99,13 +122,12 @@ public class BasicRules {
 
                 if (i != 0 || j != 0) {
 
-
-                    int playerHeight = position.getLevel();
-
                     int a = position.x + i;
                     int b = position.y + j;
 
                     if (a >= 0 && a <= 5 && b >= 0 && b <= 5) {
+
+                        int playerHeight = position.getLevel();
                         int otherHeight = board.fullMap[a][b].getLevel();
                         if (playerHeight - otherHeight <= maxHeight) {
                             int newSquareValue = board.fullMap[a][b].getValue();
@@ -119,68 +141,44 @@ public class BasicRules {
             }
         }
 
+        if(possibleMoves.isEmpty())
+            possibleMoves = null;
+
         return possibleMoves;
     }
 
     public ArrayList<Square> getSpecialMoves(Builder builder, Player player){
+
         this.card=player.getCard();
+
         ArrayList<Square> specialMoves = new ArrayList<>();
-        if(card.effects.movement.equals("swap")){
-            Square position = builder.getPosition();
-            int i, j;
-            for (i = -1; i <= 1; i++) {
-                for (j = -1; j <= 1; j++) {
-                    if (i == 0 && j == 0) {
-                    }
-                    else {
-                        int playerHeight = position.getLevel();
-                        int otherHeight = board.fullMap[position.x + i][position.y + j].getLevel();
-                        if (playerHeight - otherHeight <= maxHeight) {
-                            int newSquareValue = board.fullMap[position.x + i][position.y + j].getValue();
-                            if (newSquareValue == 1) {
-                                if(board.fullMap[position.x+i][position.y+j].getBuilder().getColour()==builder.getColour()){} //do nothing
-                                else{
-                                    Square square = board.fullMap[position.x + i][position.y + j];
-                                    specialMoves.add(square);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if(specialMoves.isEmpty()){
-                specialMoves=null;
-            }
-            return specialMoves;
-        }
-        else if(card.effects.movement.equals("1")){
-         /*
-            for (Square square: firstMove) {
-                Builder shiftedBuilder=builder;
-                shiftedBuilder.setPosition(square);
-                getPossibleMoves(shiftedBuilder)
-*/
-        }
-        else if(card.effects.movement.equals("push")){
-            Square position = builder.getPosition();
-            int i, j;
-            for (i = -1; i <= 1; i++) {
-                for (j = -1; j <= 1; j++) {
-                    if (i == 0 && j == 0) {
-                    }
-                    else {
-                        int playerHeight = position.getLevel();
-                        int otherHeight = board.fullMap[position.x + i][position.y + j].getLevel();
-                        if (playerHeight - otherHeight <= maxHeight) {
-                            int newSquareValue = board.fullMap[position.x + i][position.y + j].getValue();
-                            if (newSquareValue == 1) {
-                                if(board.fullMap[position.x+i][position.y+j].getBuilder().getColour()==builder.getColour()){} //do nothing
-                                else{
-                                    Integer otherBuilderHeight =  board.fullMap[position.x+i][position.y+j].getLevel();
-                                    Square otherBuilderPosition = board.fullMap[position.x+i][position.y+j];
-                                    if(board.fullMap[otherBuilderPosition.x+i][otherBuilderPosition.y+j].getValue()==0){
-                                        if (board.fullMap[otherBuilderPosition.x+i][otherBuilderPosition.y+j].getLevel()-otherBuilderHeight<=1){
-                                            Square square = board.fullMap[position.x + i][position.y + j];
+
+
+        if(card == null)    // l'ho messo solo per testare, poi dovremo cancellarlo
+            return null;
+
+        switch (card.effects.movement) {
+            case "swap": {
+                Square position = builder.getPosition();
+                int i, j;
+                for (i = -1; i <= 1; i++) {
+                    for (j = -1; j <= 1; j++) {
+
+                        if (i != 0 || j != 0) {
+
+                            int a = position.x + i;
+                            int b = position.y + j;
+
+                            if (a >= 0 && a <= 5 && b >= 0 && b <= 5) {
+
+                                int playerHeight = position.getLevel();
+                                int otherHeight = board.fullMap[a][b].getLevel();
+
+                                if (playerHeight - otherHeight <= maxHeight) {
+                                    int newSquareValue = board.fullMap[a][b].getValue();
+                                    if (newSquareValue == 1) {
+                                        if (!(board.fullMap[a][b].getBuilder().getColour().equals(builder.getColour()))) { // scriviamola meglio va'
+                                            Square square = board.fullMap[a][b];
                                             specialMoves.add(square);
                                         }
                                     }
@@ -189,14 +187,76 @@ public class BasicRules {
                         }
                     }
                 }
+
+                if (specialMoves.isEmpty())
+                    specialMoves = null;
+
+                return specialMoves;
             }
-            if(specialMoves.isEmpty()){
-                specialMoves=null;
+
+            case "1":
+         /*
+            for (Square square: firstMove) {
+                Builder shiftedBuilder=builder;
+                shiftedBuilder.setPosition(square);
+                getPossibleMoves(shiftedBuilder)
+            */
+                break;
+            case "push": {
+                Square position = builder.getPosition();
+                int i, j;
+                for (i = -1; i <= 1; i++) {
+
+                    for (j = -1; j <= 1; j++) {
+
+                        if (i != 0 || j != 0) {
+
+                            int a = position.x + i;
+                            int b = position.y + j;
+
+                            if (a >= 0 && a <= 5 && b >= 0 && b <= 5) {
+
+                                int playerHeight = position.getLevel();
+                                int otherHeight = board.fullMap[a][b].getLevel();
+
+                                if (playerHeight - otherHeight <= maxHeight) {
+
+                                    int newSquareValue = board.fullMap[a][b].getValue();
+
+                                    if (newSquareValue == 1) {
+
+                                        if (!(board.fullMap[a][b].getBuilder().getColour().equals(builder.getColour()))) {
+
+                                            int otherBuilderHeight = board.fullMap[a][b].getLevel();
+                                            Square otherBuilderPosition = board.fullMap[a][b];
+
+                                            int c = otherBuilderPosition.x + i;
+                                            int d = otherBuilderPosition.y + j;
+
+                                            if (c >= 0 && c <= 5 && d >= 0 && d <= 5) {
+
+                                                if (board.fullMap[c][d].getValue() == 0) {
+                                                    if (board.fullMap[c][d].getLevel() - otherBuilderHeight <= 1) {
+                                                        Square square = board.fullMap[a][b];
+                                                        specialMoves.add(square);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (specialMoves.isEmpty()) {
+                    specialMoves = null;
+                }
+                return specialMoves;
             }
-            return specialMoves;
         }
 
-        if(specialMoves.isEmpty()){
+        if(specialMoves.isEmpty()){    // finora ritornano tutti nei loro rispettivi if_statements
             specialMoves = null;
         }
         return specialMoves;
@@ -222,9 +282,9 @@ public class BasicRules {
                     int a = position.x + i;
                     int b = position.x + j;
                     if (a >= 0 && a <= 5 && b >= 0 && b <= 5) {
-                        int newSquareValue = board.fullMap[position.x + i][position.y + j].getValue();
+                        int newSquareValue = board.fullMap[a][b].getValue();
                         if (newSquareValue == 0) {
-                            Square square = board.fullMap[position.x + i][position.y + j];
+                            Square square = board.fullMap[a][b];
                             possibleBuilds.add(square);
                         }
                     }
@@ -241,7 +301,7 @@ public class BasicRules {
 
 
 
-///
+
 
 
 

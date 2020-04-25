@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class CardPower implements Rules {
     protected Rules rules;
 
-    @Override
+ /*   @Override
     public abstract ArrayList<Square> getNext(Builder builder, Player player);
-
+  */
 }

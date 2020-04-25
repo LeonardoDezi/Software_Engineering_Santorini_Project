@@ -5,15 +5,17 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+// da testare: costruttore, chooseCard, removeBuilders
 public class PlayerTest {
     Player player1;
     Player player2;
+    Game game = new Game();
 
     // il costruttore?   test su remove builder?
     @Before
     public void createPlayers(){
-        player1 = new Player("Marco", "Red");
-        player2 = new Player("Leonardo", "Green");
+        player1 = new Player("Marco", "Red", game);
+        player2 = new Player("Leonardo", "Green", game);
     }
 
 

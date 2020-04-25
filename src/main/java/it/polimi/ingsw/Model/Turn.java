@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 public class Turn {
     private Player player;
-    public Context context;
+  //  public Context context;
     private Game game;
 
     public Turn(Player player, Game game) {

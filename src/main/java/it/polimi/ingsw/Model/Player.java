@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 
-
+//decidere cosa fare per removeBuilder
 /**
  * represents a player.
  * @version 1.5
@@ -10,11 +10,11 @@ import java.util.ArrayList;
  */
 public class Player {
     private boolean isPlayerTurn;
-    protected Card card;
-    private String playerID;
-    protected ArrayList<Builder> builders;
-    public final String colour;
-    protected Game game;
+    protected Card card;  //perchè protected?
+    public final String playerID;   // secondo me possiamo metterlo public e cancellare getPlayerID
+    protected ArrayList<Builder> builders;   // perchè  protected?
+    public final String colour;     // secondo me possiamo metterlo public e cancellare getColour
+    protected Game game;   // perchè protected?
 
     /**
      * creates a new player and the array list that is used to save the players builders.
@@ -39,10 +39,12 @@ public class Player {
         this.isPlayerTurn = isPlayerTurn;
     }  // aggiungere il parametro nell'UML
 
-
+    /**
+     * assigns the God card chosen by the player to the player class.
+     */
     public void chooseCard(int cardNumber){
-        this.card = game.getChoosenCard(cardNumber);
-    }
+        this.card = game.getChosenCard(cardNumber);
+    }   // non lo so come soluzione non mi convince completamente
 
     public Card getCard(){
         return this.card;
@@ -83,10 +85,6 @@ public class Player {
     //il controller potrà accedere a size()?
     //come facciamo con il builderid?
 
-    /**
-     * assignes the God card choosen by the player to the player class.
-     */
-    public void takeCard(){/* TBD*/}
 
     /**
      * adds the new builder to builderList
@@ -97,25 +95,33 @@ public class Player {
         //return builders.size() - 1;  // se magari vogliamo comunicare il numero della pedina che abbiamo appena messo
     }
 
-    public void removeBuilders(){
+
+
+
+  /*  public void removeBuilders(){
 
         Square position1 = builders.get(0).getPosition();
-        Square position2 = builders.get(1).getPosition();
+        try{
+            Square position2 = builders.get(1).getPosition();
+            position2.resetSquare();
+        }catch()
+
 
         position1.resetSquare();
-        position2.resetSquare();
+
 
         builders = null;   //dovrebbe eliminarsi ogni riferimento ai builders in questo modo
 
-    }
-  /*  public void removeBuilder(int builderId){
+    } */
+    public void removeBuilder(int builderId){
         try {
+            Square position = builders.get(builderId).getPosition();
+            position.resetSquare();
             builders.remove(builderId);
-            //Sì ma dobbiamo anche modificare i value e level dello square di appartenenza ecc....
         }catch(IndexOutOfBoundsException e) {
-            System.out.println("The builder " + builderId + " has already been removed");
+            System.out.println("The builder " + builderId + "doesn't exist");
         }
-    } mi sa che non serve   */
+    }
 
     public String getColour(){
         return this.colour;

@@ -16,7 +16,7 @@ import org.junit.Test;
   I position dei builders vengano aggiornati ( sia in caso di swap che tradizionale)
  */
 
-//il costruttore?
+//Da testare/ ritestare: costruttore, build(cupole)
 
 public class BoardTest {
     Board board;
