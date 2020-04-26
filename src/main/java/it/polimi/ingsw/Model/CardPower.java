@@ -6,6 +6,33 @@ public abstract class CardPower implements Rules {
     protected Rules rules;
 
     @Override
-    public abstract ArrayList<Square> getNext(Builder builder, Player player);
+    public ArrayList<Square> getPossibleMoves(Builder builder) {
+        return rules.getPossibleMoves(builder);
+    }
 
+    @Override
+    public ArrayList<Square> getBuildingRange(Builder builder) {
+        return null;
+    }
+
+
+    @Override
+    public void movement(Builder builder, int x, int y) {
+
+    }
+
+    @Override
+    public void building(int x, int y) {
+
+    }
+
+    @Override
+    public void winCondition(Builder builder, int x, int y) {
+
+    }
+
+    @Override
+    public void loseCondition() {
+
+    }
 }

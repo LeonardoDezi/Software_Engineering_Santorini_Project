@@ -9,4 +9,8 @@ public class Card {
     protected CardEffects effects;
 
 
+    metodo(){
+        if(effects = "swap")
+            payer.rules = new OccupiedSquare();
+    }
 }

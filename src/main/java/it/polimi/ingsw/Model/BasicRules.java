@@ -1,8 +1,10 @@
 package it.polimi.ingsw.Model;
 
+
+
 import java.util.ArrayList;
 
-public class BasicRules {
+public class BasicRules implements Rules {
     private Card card;
     private int maxBuild=1;
     private int numMoves=1;
@@ -30,6 +32,7 @@ public class BasicRules {
      * @param x is the x coordinate where the builder wants to move.
      * @param y is the y coordinate where the builder wants to move.
      */
+    @Override,
     public void movement(Builder builder, int x, int y){
         winCondition(builder, x, y);
         board.move(builder, x, y);
@@ -40,10 +43,12 @@ public class BasicRules {
      * @param x is the x coordinate where the player wants to build
      * @param y is the y coordinate where the player wants to build
      */
+    @Override
     public void building(int x, int y){
         board.build(x, y, false);
     }
 
+   @Override
     public void winCondition(Builder builder, int x, int y){
         Square actualPosition = builder.getPosition();
         if (actualPosition.getLevel() == 2) {
@@ -86,6 +91,7 @@ public class BasicRules {
         return firstPossibleMoves; //ritornare tutti e 4 gli array
     }
 
+    @Override
     public ArrayList<Square> getPossibleMoves(Builder builder) {
 
         ArrayList<Square> possibleMoves = new ArrayList<>();
@@ -208,6 +214,8 @@ public class BasicRules {
      * @param builder is the builder thant can build.
      * @return an arrayList with all the possible places to build.
      */
+
+    @Override
     public ArrayList<Square> getBuildingRange(Builder builder){
 
         ArrayList<Square> possibleBuilds = new ArrayList<>();
@@ -237,14 +245,3 @@ public class BasicRules {
     }
 
 }
-
-
-
-
-///
-
-
-
-
-
-
