@@ -3,6 +3,7 @@ package it.polimi.ingsw.Model;
 import java.util.ArrayList;
 
 //decidere cosa fare per removeBuilder
+//QUIII
 /**
  * represents a player.
  * @version 1.5
@@ -15,6 +16,8 @@ public class Player {
     protected ArrayList<Builder> builders;   // perchè  protected?
     public final String colour;     // secondo me possiamo metterlo public e cancellare getColour
     protected Game game;   // perchè protected?
+    protected Rules rules; //QUIII
+
 
     /**
      * creates a new player and the array list that is used to save the players builders.
@@ -125,5 +128,22 @@ public class Player {
 
     public String getColour(){
         return this.colour;
+    }
+
+
+    public void createRules(){
+
+        switch(card.power){
+
+            case "swap":
+                rules = new OccupiedSquare(game, card);
+            break;
+
+            case "win":
+                rules = new WinMoveDown(game, card);
+
+        }
+
+
     }
 }

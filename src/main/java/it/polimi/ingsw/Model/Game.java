@@ -13,13 +13,13 @@ import java.util.NoSuchElementException;
  * @since 1.5
  */
 public class Game {
-    private Board gameBoard;  //lo lasciamo private?
+    protected Board gameBoard;  //lo lasciamo private?
     protected ArrayList<Player> playerList;
     private ArrayList<Card> chosenCards;
     private Deck deck;     //lo lasciamo?
     private Dealer dealer;
     // identificatore numerico per differenziare le partite?
-    private BasicRules rules;
+    protected Rules basic;
 
     /**
      * creates a new game.
@@ -28,7 +28,7 @@ public class Game {
         gameBoard = new Board();
         playerList = new ArrayList<>();
         chosenCards = new ArrayList<>();
-        rules = new BasicRules(gameBoard, this);
+        basic = new BasicRules(gameBoard, this);
         //dobbiamo decidere se togliere o meno deck. Se lo lasciamo lo dobbiamo implementare
     }
 

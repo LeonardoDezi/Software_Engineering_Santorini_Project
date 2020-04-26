@@ -3,11 +3,20 @@ package it.polimi.ingsw.Model;
 import java.util.ArrayList;
 
 public abstract class CardPower implements Rules {
-    protected Rules rules;
+    protected Rules basic;    //al momento sto mettendo gli attributi private e protected a cazzo
+    protected Card card;
+    protected Game game;     // al momento li sto mettendo a cazzo
 
+    public CardPower(Game game, Card card) {
+        this.basic = game.basic;
+    }
+
+
+
+    //e sti metodi BOOOOOH
     @Override
     public ArrayList<Square> getPossibleMoves(Builder builder) {
-        return rules.getPossibleMoves(builder);
+        return basic.getPossibleMoves(builder);
     }
 
     @Override

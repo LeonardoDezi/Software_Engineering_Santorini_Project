@@ -32,7 +32,7 @@ public class BasicRules implements Rules {
      * @param x is the x coordinate where the builder wants to move.
      * @param y is the y coordinate where the builder wants to move.
      */
-    @Override,
+    @Override
     public void movement(Builder builder, int x, int y){
         winCondition(builder, x, y);
         board.move(builder, x, y);
@@ -73,18 +73,16 @@ public class BasicRules implements Rules {
     public ArrayList<Square> getMovementRange(Player player){
         ArrayList<Square> firstPossibleMoves;
         ArrayList<Square> secondPossibleMoves;
-        ArrayList<Square> firstSpecialMoves;
-        ArrayList<Square> secondSpecialMoves;
+
         firstPossibleMoves = getPossibleMoves(player.builders.get(0));
         try {
             secondPossibleMoves = getPossibleMoves(player.builders.get(1));
         }catch(NullPointerException e) {
             secondPossibleMoves = null;
         }
-        firstSpecialMoves=getSpecialMoves(player.builders.get(0), player);
-        secondSpecialMoves=getSpecialMoves(player.builders.get(1), player);
 
-        if(firstPossibleMoves.isEmpty() && secondPossibleMoves.isEmpty() && firstSpecialMoves.isEmpty() && secondSpecialMoves.isEmpty()){
+
+        if(firstPossibleMoves.isEmpty() && secondPossibleMoves.isEmpty()){
            // losecondition();  // ci mettiamo un exception da propagare al chiamante SOLO PER TESTARE
         }
 
@@ -128,85 +126,6 @@ public class BasicRules implements Rules {
         return possibleMoves;
     }
 
-    public ArrayList<Square> getSpecialMoves(Builder builder, Player player){
-        this.card=player.getCard();
-        ArrayList<Square> specialMoves = new ArrayList<>();
-        if(card.effects.movement.equals("swap")){
-            Square position = builder.getPosition();
-            int i, j;
-            for (i = -1; i <= 1; i++) {
-                for (j = -1; j <= 1; j++) {
-                    if (i == 0 && j == 0) {
-                    }
-                    else {
-                        int playerHeight = position.getLevel();
-                        int otherHeight = board.fullMap[position.x + i][position.y + j].getLevel();
-                        if (playerHeight - otherHeight <= maxHeight) {
-                            int newSquareValue = board.fullMap[position.x + i][position.y + j].getValue();
-                            if (newSquareValue == 1) {
-                                if(board.fullMap[position.x+i][position.y+j].getBuilder().getColour()==builder.getColour()){} //do nothing
-                                else{
-                                    Square square = board.fullMap[position.x + i][position.y + j];
-                                    specialMoves.add(square);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if(specialMoves.isEmpty()){
-                specialMoves=null;
-            }
-            return specialMoves;
-        }
-        else if(card.effects.movement.equals("1")){
-         /*
-            for (Square square: firstMove) {
-                Builder shiftedBuilder=builder;
-                shiftedBuilder.setPosition(square);
-                getPossibleMoves(shiftedBuilder)
-*/
-        }
-        else if(card.effects.movement.equals("push")){
-            Square position = builder.getPosition();
-            int i, j;
-            for (i = -1; i <= 1; i++) {
-                for (j = -1; j <= 1; j++) {
-                    if (i == 0 && j == 0) {
-                    }
-                    else {
-                        int playerHeight = position.getLevel();
-                        int otherHeight = board.fullMap[position.x + i][position.y + j].getLevel();
-                        if (playerHeight - otherHeight <= maxHeight) {
-                            int newSquareValue = board.fullMap[position.x + i][position.y + j].getValue();
-                            if (newSquareValue == 1) {
-                                if(board.fullMap[position.x+i][position.y+j].getBuilder().getColour()==builder.getColour()){} //do nothing
-                                else{
-                                    Integer otherBuilderHeight =  board.fullMap[position.x+i][position.y+j].getLevel();
-                                    Square otherBuilderPosition = board.fullMap[position.x+i][position.y+j];
-                                    if(board.fullMap[otherBuilderPosition.x+i][otherBuilderPosition.y+j].getValue()==0){
-                                        if (board.fullMap[otherBuilderPosition.x+i][otherBuilderPosition.y+j].getLevel()-otherBuilderHeight<=1){
-                                            Square square = board.fullMap[position.x + i][position.y + j];
-                                            specialMoves.add(square);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if(specialMoves.isEmpty()){
-                specialMoves=null;
-            }
-            return specialMoves;
-        }
-
-        if(specialMoves.isEmpty()){
-            specialMoves = null;
-        }
-        return specialMoves;
-    }
 
 
     /**
