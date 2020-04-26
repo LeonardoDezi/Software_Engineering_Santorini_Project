@@ -86,12 +86,15 @@ public class Board {
 
         pointB = fullMap[x][y];
 
-        if(isDome == true)   //necessario per via di Atlante
+        if(pointB.getLevel() == 3)    // non c'è bisogno di verificare il value. se c'è una pedina non arriverà a questo punto
+            isDome = true;
+
+        if(isDome)   //necessario per via di Atlante
             pointB.setValue(2);   // 2 = cupola
         else
             pointB.setLevel(pointB.getLevel() + 1);
 
-        return;
+        // qua penso di metterci un contatore di torri complete per Crono
 
     }
 

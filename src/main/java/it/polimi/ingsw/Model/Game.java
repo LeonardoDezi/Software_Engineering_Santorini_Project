@@ -1,12 +1,5 @@
 package it.polimi.ingsw.Model;
-/*17/04/2020
-Ho modificato addPlayer in modo che venissero assegnati direttamente i colori ai vari giocatori. in questo modo non correremo il rischio che due giocatori
-abbiano lo stesso colore assegnato.
-Red = Giocatore 1
-Green = Giocatore 2
-Blue = Giocatore 3
- */
-
+//penso che dovremmo mettere un falg che comunichi quando una partita è stata vinta
 
 //ci manca la rimozione delle pedine
 
@@ -20,13 +13,12 @@ import java.util.NoSuchElementException;
  * @since 1.5
  */
 public class Game {
-    private Board gameBoard;
+    private Board gameBoard;  //lo lasciamo private?
     protected ArrayList<Player> playerList;
     private ArrayList<Card> chosenCards;
     private Deck deck;     //lo lasciamo?
     private Dealer dealer;
     // identificatore numerico per differenziare le partite?
-    private Square position;
     private BasicRules rules;
 
     /**
@@ -72,15 +64,14 @@ public class Game {
     public void removePlayer(Player player){
 
    //     try {
-            player.removeBuilders();
+            player.removeBuilder(0);
+            player.removeBuilder(1);
             playerList.remove(player);
 
             //player = null; necessario?
 /*        }catch(NoSuchElementException e){
             System.out.println("There's no player registered with the name " + player.getPlayerID());
         }   mi sa che non servirà*/
-
-        return;
 
     }
 
@@ -134,10 +125,10 @@ public class Game {
      */
     public void deployBuilder(Player player, int x, int y){
 
-
+        Square position;
         //if(isPlayerTurn == true) {   serve?
 
-        if(player.getBuilderSize() == 2){   //ATTENZIONE: DOBBIAMO ACCERTARCI CHE size() sarà sempre o 0 o 2 in qualche modo
+        if(player.getBuilderSize() == 2){   //ATTENZIONE: DOBBIAMO ACCERTARCI CHE size() sarà sempre o 0 o 1 o 2 in qualche modo
             System.out.println("Error:" + player.getPlayerID() + "has already deployed all the builders");   //non possiamo lasciare questo
             //    isPlayerTurn = false;   Serve? compito del controller magari?
         } else {
@@ -150,8 +141,11 @@ public class Game {
         }
 
     }
-    public Card getChoosenCard(int cardNumber){
+
+    public Card getChosenCard(int cardNumber){
         return chosenCards.get(cardNumber);
     }
+
+    public Board getBoard(){ return this.gameBoard;}   // immagino serva anche questo
 
 }

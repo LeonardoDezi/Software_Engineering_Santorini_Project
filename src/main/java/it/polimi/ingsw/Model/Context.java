@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Model;
 
 
-public class Context {
+/*public class Context {
     private State state;
 
     public Context(){
@@ -15,4 +15,4 @@ public class Context {
     public State getState(){
         return state;
     }
-}
+}  */
