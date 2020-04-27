@@ -2,11 +2,7 @@ package it.polimi.ingsw.Model;
 
 public class Dealer extends Player {
 
-    private Player dealer;  // serve?
     private Deck deck;
-    private String colour;  // serve?
-    private Game game;
-
 
     public Dealer(String name, String colour, Game game) {
         super(name, colour, game);

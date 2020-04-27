@@ -14,6 +14,6 @@ public class Card {
 
     metodo(){
         if(effects = "swap")
-            payer.rules = new OccupiedSquare();
+            player.rules = new OccupiedSquare();
     }
 }

@@ -133,9 +133,9 @@ public class Player {
 
     public void createRules(){
 
-        switch(card.power){
+        switch(card.effects.movement){
 
-            case "swap":
+            case "occupiedSquare":
                 rules = new OccupiedSquare(game, card);
             break;
 

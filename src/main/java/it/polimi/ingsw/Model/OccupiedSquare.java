@@ -15,9 +15,9 @@ public class OccupiedSquare extends CardPower {
         Square position;
         int i, j;
 
-        switch (card.name) {
+        switch (card.effects.moveOpponent) {
 
-            case "Apollo":
+            case "swap":
                 position = builder.getPosition();
 
 
@@ -50,7 +50,7 @@ public class OccupiedSquare extends CardPower {
 
                 break;
 
-            case "Minotaur":
+            case "push":
                 position = builder.getPosition();
 
                 for (i = -1; i <= 1; i++) {

@@ -13,9 +13,9 @@ public class WinMoveDown extends CardPower {
         Square position = builder.getPosition();
         if (position.getLevel() - game.gameBoard.fullMap[x][y].getLevel() >= 2) {
 
-            switch(card.power){
+            switch(card.conditions.jump_down){
 
-                case "Pan":
+                case 2:
                     //vinci();
                     game.gameBoard.move(builder, x, y);
                 break;
