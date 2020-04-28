@@ -147,7 +147,7 @@ public class BasicRules implements Rules {
 
                 if(i!=0 || j!=0) {
                     int a = position.x + i;
-                    int b = position.x + j;
+                    int b = position.y + j;
                     if (a >= 0 && a <= 5 && b >= 0 && b <= 5) {
                         int newSquareValue = board.fullMap[position.x + i][position.y + j].getValue();
                         if (newSquareValue == 0) {
@@ -163,4 +163,7 @@ public class BasicRules implements Rules {
 
     }
 
+    @Override
+    public void loseCondition() {
+    }
 }

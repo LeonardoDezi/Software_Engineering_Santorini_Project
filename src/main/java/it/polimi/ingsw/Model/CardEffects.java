@@ -8,6 +8,6 @@ public class CardEffects {
     protected String beforeMovement;
     protected boolean win;
     protected boolean dome;
-    private boolean perimetersquare;
+    protected boolean perimetersquare;
 
 }
