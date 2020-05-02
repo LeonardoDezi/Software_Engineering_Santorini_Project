@@ -1,19 +1,11 @@
 package it.polimi.ingsw.Model;
 
 
-//QUIII
 public class Card {
     private Integer number;
-    public String name;   //QUIII
+    public String name;
     protected CardConditions conditions;
     protected CardEffects effects;
-    public String power;   // rivedere tutti  i private /public
+    public String power;
 
-    if(effects == "swap")
-        player.rules = new OccupiedSquare(board, game, card);
-
-    metodo(){
-        if(effects = "swap")
-            player.rules = new OccupiedSquare();
-    }
 }

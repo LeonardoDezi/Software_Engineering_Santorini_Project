@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 
 public class Board {
+    private int completedTowers;
 
     public Square[][] fullMap;   // per ora lo faccio public, ma forse bisogna metterlo square. in quel caso, modificare deploybuilder
     /** represents the board, fullmap is an array of sqares that rapresents the cells where the builders can move or build.
@@ -37,41 +38,34 @@ public class Board {
         }
     }
 
+
     //mossa verificata
     /**
-     * moves a builder from a square to another.
-     * @param builder is the builder that is moving.
-     * @param x is the x coordinate of the future builders cell.
-     * @param y is the y coordinat of the future builders cell.
+     * swaps the content of two squares
+     * @param pointA is the first square.
+     * @param pointB is the second square.
       */
 
+    public void move(Square pointA, Square pointB){
 
+        Builder tmp1;
+        Builder tmp2;
+            tmp1 = pointA.getBuilder();
+            tmp2 = pointB.getBuilder();
+            pointB.setBuilder(tmp1);
+            pointA.setBuilder(tmp2);
 
-    public void move(Builder builder, int x, int y){
-
-        pointA = builder.getPosition();    //builder's initial position
-        pointB = fullMap[x][y];            //builder's arriving point
+        if(tmp2 != null)
+            tmp2.setPosition(pointA); // in case of swap
+        if (tmp1 != null)
+            tmp1.setPosition(pointB);
 
         int valueA = pointA.getValue();
         int valueB = pointB.getValue();
-
-
         pointB.setValue(valueA);              // value exchange
         pointA.setValue(valueB);
 
 
-        Builder tmp = pointB.getBuilder();
-
-        pointA.setBuilder(tmp);     // builder exchange. tmp will be null if the cell had been free
-        pointB.setBuilder(builder);
-
-
-        if(tmp!= null)
-            tmp.setPosition(pointA); // in case of swap
-
-        builder.setPosition(pointB);
-
- 
         return;
 
     }
@@ -85,20 +79,24 @@ public class Board {
     public void build(int x, int y, boolean isDome){   // mi sa che ci serve un parametro isDome qua
 
         pointB = fullMap[x][y];
-
-        if(pointB.getLevel() == 3)    // non c'è bisogno di verificare il value. se c'è una pedina non arriverà a questo punto
+        if(pointB.getLevel()==3){
             isDome = true;
+            completedTowers ++;
+        }
 
         if(isDome)   //necessario per via di Atlante
             pointB.setValue(2);   // 2 = cupola
-        else
-            pointB.setLevel(pointB.getLevel() + 1);
 
-        // qua penso di metterci un contatore di torri complete per Crono
+
+        pointB.setLevel(pointB.getLevel() + 1);
 
     }
 
 }
+
+
+
+
 
 
 

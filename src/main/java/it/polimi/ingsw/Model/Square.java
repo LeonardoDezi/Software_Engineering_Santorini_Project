@@ -71,6 +71,7 @@ public class Square {
      * @param builder is the id of the builder that has been put on the square
      */
     public void setBuilder(Builder builder){
+
         this.builder = builder;
     }
 

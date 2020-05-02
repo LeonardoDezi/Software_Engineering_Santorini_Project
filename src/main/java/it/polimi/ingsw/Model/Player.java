@@ -101,21 +101,6 @@ public class Player {
 
 
 
-  /*  public void removeBuilders(){
-
-        Square position1 = builders.get(0).getPosition();
-        try{
-            Square position2 = builders.get(1).getPosition();
-            position2.resetSquare();
-        }catch()
-
-
-        position1.resetSquare();
-
-
-        builders = null;   //dovrebbe eliminarsi ogni riferimento ai builders in questo modo
-
-    } */
     public void removeBuilder(int builderId){
         try {
             Square position = builders.get(builderId).getPosition();
@@ -130,20 +115,4 @@ public class Player {
         return this.colour;
     }
 
-
-    public void createRules(){
-
-        switch(card.effects.movement){
-
-            case "occupiedSquare":
-                rules = new OccupiedSquare(game, card);
-            break;
-
-            case "win":
-                rules = new WinMoveDown(game, card);
-
-        }
-
-
-    }
 }

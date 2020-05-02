@@ -26,17 +26,10 @@ public class BasicRules implements Rules {
         return maxHeight;
     }
 
-    /**
-     * is used to finalize a move.
-     *
-     * @param builder is the selected builder that is moving.
-     * @param x       is the x coordinate where the builder wants to move.
-     * @param y       is the y coordinate where the builder wants to move.
-     */
+
     @Override
-    public void movement(Builder builder, int x, int y) {
-        winCondition(builder, x, y);
-        board.move(builder, x, y);
+    public void movement(Square square1, Square square2) {
+        board.move(square1, square2);
     }
 
     /**
@@ -66,32 +59,6 @@ public class BasicRules implements Rules {
             }
         }
     }
-
-    /**
-     * is used to give the player all the available moves.
-     *
-     * @param player is the player that can move.
-     * @return an ArrayList of all the possible moves of all the the builder of a player.
-     */
-    public ArrayList<Square> getMovementRange(Player player) {
-        ArrayList<Square> firstPossibleMoves;
-        ArrayList<Square> secondPossibleMoves;
-
-        firstPossibleMoves = getPossibleMoves(player.builders.get(0));
-        try {
-            secondPossibleMoves = getPossibleMoves(player.builders.get(1));
-        } catch (NullPointerException e) {
-            secondPossibleMoves = null;
-        }
-
-
-        if (firstPossibleMoves.isEmpty() && secondPossibleMoves.isEmpty()) {
-            // losecondition();  // ci mettiamo un exception da propagare al chiamante SOLO PER TESTARE
-        }
-
-        return firstPossibleMoves; //ritornare tutti e 4 gli array
-    }
-
 
     @Override
     public ArrayList<Square> getPossibleMoves(Builder builder) {
