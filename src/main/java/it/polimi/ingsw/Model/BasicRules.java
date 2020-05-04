@@ -68,7 +68,6 @@ public class BasicRules implements Rules {
         possibleMoves = removeDomeSquare(possibleMoves);
         possibleMoves = removeTooHighPlaces(possibleMoves, builder);
 
-
         return possibleMoves;
     }
 
