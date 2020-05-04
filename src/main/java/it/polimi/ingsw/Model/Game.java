@@ -5,7 +5,6 @@ package it.polimi.ingsw.Model;
 
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 /**
  * represents the game. this class is used as root of the model to connect every entity inside of it.
@@ -30,6 +29,10 @@ public class Game {
         chosenCards = new ArrayList<>();
         basic = new BasicRules(gameBoard, this);
         //dobbiamo decidere se togliere o meno deck. Se lo lasciamo lo dobbiamo implementare
+    }
+
+    public ArrayList<Player> getPlayerList() {
+       return this.playerList;
     }
 
     /**
@@ -148,4 +151,7 @@ public class Game {
 
     public Board getBoard(){ return this.gameBoard;}   // immagino serva anche questo
 
+    public Rules getRules(){
+        return this.basic;
+    }
 }
