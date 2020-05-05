@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 
-public class MovementPhase implements Phase {
+public class MovementPhase extends Phase {
     private Rules rules;
     private Board board;
 

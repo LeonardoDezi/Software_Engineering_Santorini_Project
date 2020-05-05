@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 import java.util.HashMap;
 
-public class BuildPhase {
+public class BuildPhase extends Phase {
 
     private Rules basicRules;
     protected HashMap<String, Runnable> commands;

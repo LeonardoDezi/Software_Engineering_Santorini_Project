@@ -16,7 +16,7 @@ public class GameInitializer implements Runnable{
 
         Game game = new Game();
         game.addPlayer(player1);
-        TurnManager myGameManager = new TurnManager();
+        TurnManager myGameManager = new TurnManager(game);
 
         //wait for other players
 

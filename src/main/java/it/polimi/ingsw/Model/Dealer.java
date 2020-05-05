@@ -1,8 +1,10 @@
 package it.polimi.ingsw.Model;
 
+import java.util.ArrayList;
+
 public class Dealer extends Player {
 
-    private Deck deck;
+    private ArrayList<Card> deck;
 
     public Dealer(String name, String colour, Game game) {
         super(name, colour, game);

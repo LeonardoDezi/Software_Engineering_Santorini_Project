@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SpecialPhase1 {
+public class SpecialPhase1 extends Phase {
 
     private Board board;
     private Card card;

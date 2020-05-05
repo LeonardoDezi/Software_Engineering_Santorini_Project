@@ -17,7 +17,7 @@ public class Game {
     private ArrayList<Card> chosenCards;
     private ArrayList<Card> deck;     //lo lasciamo?
     private Dealer dealer;
-    // identificatore numerico per differenziare le partite?
+                           // identificatore numerico per differenziare le partite?
     protected Rules basic;
 
     /**
@@ -28,7 +28,7 @@ public class Game {
         playerList = new ArrayList<>();
         chosenCards = new ArrayList<>();
         basic = new BasicRules(gameBoard, this);
-        //dobbiamo decidere se togliere o meno deck. Se lo lasciamo lo dobbiamo implementare
+         //dobbiamo decidere se togliere o meno deck. Se lo lasciamo lo dobbiamo implementare
     }
 
     public ArrayList<Player> getPlayerList() {
@@ -89,13 +89,12 @@ public class Game {
     /**
      * calls the move metod of the board to move a builder.
      * @param playerIndex is the player id of that builder.
-     * @param builderId is the id of the builder that is moving.
-     * @param x is the x coordinate where the builder is going to move.
-     * @param y is the y coordinate where the builder is going to move.
+     * @param square1 is the first square that is going to be changed.
+     * @param square2 is the second square that is going to be changed.
      */
-    public void move(int playerIndex, int builderId, int x, int y){
+    public void move(int playerIndex, Square square1, Square square2){
         Player player = playerList.get(playerIndex);   // recupera giocatore: è garantito che playerIndex sia un indice valido
-        gameBoard.move(player.getBuilder(builderId), x, y); // stessa cosa qui
+        gameBoard.move(square1, square2); // stessa cosa qui
     }
 
     /**
