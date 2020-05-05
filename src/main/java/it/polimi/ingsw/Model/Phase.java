@@ -1,7 +1,20 @@
 package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
+import java.util.Map;
 
-public interface Phase {
-    public ArrayList<Square> getMoves(Builder builder);
+public abstract class Phase {
+
+    private Rules basicRules;
+    protected Map<String, Runnable> commands;
+    private Card card;
+    ArrayList<Square> possibleMoves;
+
+    public Phase (Card card, Rules rules){
+        basicRules = rules;
+        this.card = card;
+        map();
+    }
+
+    public void map(){}
 }

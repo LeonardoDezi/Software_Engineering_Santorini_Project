@@ -30,15 +30,34 @@ public class TurnManager {
         Builder builder2;
         while(!gameEnded){
             for (int i=0; i < playerList.size(); i++) {
+
                 currentPlayer=playerList.get(i);
+                Card currentCard = currentPlayer.getCard();
                 builder1=currentPlayer.getBuilder(0);
                 builder2=currentPlayer.getBuilder(1);
                 //special phase 1
-                ArrayList<Square> moves1 = specialPhase1.getMoves(builder1);
-                ArrayList<Square> moves2 = specialPhase1.getMoves(builder2);
-                if( moves1 != null || moves2 != null){
+                ArrayList<Square> moves1 = specialPhase1.genericMethod(builder1, currentCard);
+                ArrayList<Square> moves2 = specialPhase1.genericMethod(builder2, currentCard);
 
-                    //chiedere al player se vuole fare mossa speciale
+                if( moves1 != null || moves2 != null){
+                    String message;
+                    if(currentPlayer.getCard().name.equals("Prometeo")){
+                        message = "Vuoi costruire prima del movimento? Se lo fai non potrai salire di livello.";
+                        //inviare mosse
+                        //aspetto risposta
+                        if(answer!=null){
+                            //esegui mossa speciale
+                            Rules rules = game.getRules();
+                            rules.setMaxHeight(0);
+                        }
+                    }
+                    else{
+                        //Caronte:
+                        // message = vuoi cambiare la posizione dell'avversario?
+                        board.move(square1, square2);
+                    }
+                        //
+
 
                 }
 //movement phase
@@ -49,8 +68,6 @@ public class TurnManager {
 
                     //lost
                 }
-
-
 
 
 

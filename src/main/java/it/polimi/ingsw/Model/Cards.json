@@ -2,13 +2,17 @@
   {
     "number": 1,
     "name": "Apollo",
+    "phase1": "swap",
+    "movePhase": "basic",
+    "phase2": "basic",
+    "buildPhase"
     "conditions":[
       {
         "jump_up"  : null,
         "freespace": null,
         "jump_down": null,
         "tower_number": null,
-        "buildergender": null
+        "buildergender": null,
       }
     ],
     "effects" :[
