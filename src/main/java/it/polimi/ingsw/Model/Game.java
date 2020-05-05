@@ -15,7 +15,7 @@ public class Game {
     protected Board gameBoard;  //lo lasciamo private?
     protected ArrayList<Player> playerList;
     private ArrayList<Card> chosenCards;
-    private Deck deck;     //lo lasciamo?
+    private ArrayList<Card> deck;     //lo lasciamo?
     private Dealer dealer;
     // identificatore numerico per differenziare le partite?
     protected Rules basic;
@@ -82,7 +82,7 @@ public class Game {
      * is used to get the deck of all the god cards.
      * @return the deck of cards.
      */
-    public Deck getDeck() {      // da aggiungere  nell'UML se vogliamo mettere la variabile private
+    public ArrayList<Card> getDeck() {      // da aggiungere  nell'UML se vogliamo mettere la variabile private
         return deck;
     }
 
