@@ -27,41 +27,49 @@ public class TurnManager {
     }
 
     public void letsPlay(){
+
         Builder builder1;
         Builder builder2;
         ArrayList<Square> moves1;
         ArrayList<Square> moves2;
         ArrayList<Square> specialMoves;
         Square lastPosition;
-        while(!gameEnded){
-            for (int i=0; i < playerList.size(); i++) {
 
-                currentPlayer=playerList.get(i);
+        while(!gameEnded){
+
+            for (Player player : playerList) {
+
+                currentPlayer = player;
                 Card currentCard = currentPlayer.getCard();
-                builder1=currentPlayer.getBuilder(0);
-                builder2=currentPlayer.getBuilder(1);
+                builder1 = currentPlayer.getBuilder(0);
+
+                try {
+                    builder2 = currentPlayer.getBuilder(1);
+                }catch(ArrayIndexOutOfBoundsException e){
+                    builder2 = null;
+                }
+
                 //special phase 1
                 moves1 = specialPhase1.genericMethod(builder1, currentCard);
                 moves2 = specialPhase1.genericMethod(builder2, currentCard);
 
-                if( moves1 != null || moves2 != null){
+                if (moves1 != null || moves2 != null) {
                     String message;
-                    if(currentPlayer.getCard().name.equals("Prometeo")){
+                    if (currentPlayer.getCard().name.equals("Prometeo")) {
                         message = "Vuoi costruire prima del movimento? Se lo fai non potrai salire di livello.";
                         //inviare mosse
                         //aspetto risposta
-                        if(answer!=null){
+                        if (answer != null) {
                             //esegui mossa speciale
                             Rules rules = game.getRules();
-                            rules.setMaxHeight(0);
+                            rules.setMaxHeight(0);  //come facciamo poi a rimetterla uguale a 1?
                         }
-                    }
-                    else{
+                    } else {
                         //Caronte:
                         // message = vuoi cambiare la posizione dell'avversario?
                         board.move(square1, square2);
                     }
-                        //
+                    //
 
 
                 }
@@ -69,21 +77,32 @@ public class TurnManager {
                 moves1 = movementPhase.getMoves(builder1);
                 moves2 = movementPhase.getMoves(builder2);
 
-                if (moves1 == null && moves2 == null){
-
-                    //lost
+                if (moves1 == null && moves2 == null) {
+                    //loseCondition();
+                }else{
+                    //invio delle moves alla virual view
+                    //verrà restituita una mossa con il relativo builder
+                    // builder è il builder ottenuto con il return
+                    lastPosition = builder.getPosition();
+                    //magari lo racchiudiamo dentro un if così da risparmiarci questo passaggio per le carte che non hanno bisogno di movement
+                    movementPhase.movement(builder, position);   //li diamo in ingresso il builder e lo square di destinazione
+                    game.gameBoard.move(lastPosition, position);  //movimento effettivo
                 }
 
-                //invio delle moves alla virual view
-                //verrà restituita una mossa con il relativo builder
-                // builder è il builder ottenuto con il return
-                lastPosition = builder.getPosition();
+                //non sono sicuro che sia strettamente necessaria una specialPhase2 ma non ho ancora controllato bene
 
-                specialMoves = specialPhase2.getMoves(builder, lastPosition);
+                //specialMoves = specialPhase2.getMoves(builder, lastPosition);
+
+                //fase di building
+                game.gameBoard.build(builder, x, y);  //voglio modificare build per mettere square al posto di x e y
+
+                //specialPhase3
 
 
+                //winPhase  // qua si controllano i wincondition delle carte speciali
+                basicRules.winCondition(lastPosition, position);  // qua si controllano i wincondition generali, validi per tutte le carte
 
-                if(gameEnded){
+                if (gameEnded) {
                     break;
                 }
             }

@@ -9,7 +9,7 @@ package it.polimi.ingsw.Model;
 public class Builder {
     private Square position;
     private boolean blocked;
-    private final String colour;
+    private final String colour;   // perchè private se final?
     private int builderId;
     // forse bisogna indicare anche a quale player appartiene per la GUI
 

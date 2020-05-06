@@ -152,7 +152,7 @@ public class BasicRules implements Rules {
         for (int i = 0; i < proximity.size(); i++) {
 
             int otherHeight = proximity.get(i).getLevel();
-            if (otherHeight - playerHeight >= maxHeight) {
+            if (otherHeight - playerHeight > maxHeight) {     // testare
                 proximity.remove(i);
             }
         }
