@@ -13,7 +13,7 @@ public class SpecialPhase1 {
     private ArrayList<Square> possibleMoves;
 
     public SpecialPhase1(Card card, Rules rules, Board board){
-        basicRules = rules;
+        basicRules = rules;   // sistemare
         this.card = card;
         this.board = board;
         map();

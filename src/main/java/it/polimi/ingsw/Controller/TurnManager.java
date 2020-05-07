@@ -89,18 +89,29 @@ public class TurnManager {
                     game.gameBoard.move(lastPosition, position);  //movimento effettivo
                 }
 
-                //non sono sicuro che sia strettamente necessaria una specialPhase2 ma non ho ancora controllato bene
+                //la winCondition si mette qui
+                // è necessaria una specialphase2 per Selene? come comunicare di quale builder vogliamo il range e cosa fare se
+                // il female worker non può costruire?
 
                 //specialMoves = specialPhase2.getMoves(builder, lastPosition);
 
-                //fase di building
-                game.gameBoard.build(builder, x, y);  //voglio modificare build per mettere square al posto di x e y
+                //Zeus: se deve costruire su se stesso lo farà nella building Phase e metterà lo square di build a null: modificare build() perchè non faccia niente
+                //in questo caso
 
+                //dovremmo memorizzarci i livelli dello square di partenza e di arrivo prima di costruire?
+
+                moves1 = buildingPhase.getMoves(builder);
+                //invio delle mosse
+                //ricezione dello square
+                buildingPhase.building(position);
+                //
+               // game.gameBoard.build(builder, x, y);  //voglio modificare build per mettere square al posto di x e y
+               // l'ho messo in buildingPhase
                 //specialPhase3
 
 
                 //winPhase  // qua si controllano i wincondition delle carte speciali
-                basicRules.winCondition(lastPosition, position);  // qua si controllano i wincondition generali, validi per tutte le carte
+
 
                 if (gameEnded) {
                     break;
