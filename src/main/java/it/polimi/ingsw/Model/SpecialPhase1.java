@@ -13,7 +13,7 @@ public class SpecialPhase1 {
     private ArrayList<Square> possibleMoves;
 
     public SpecialPhase1(Card card, Rules rules, Board board){
-        basicRules = rules;   // sistemare
+        basicRules = rules;   // assicurarsi che siano sempre le stesse rules
         this.card = card;
         this.board = board;
         map();
@@ -21,9 +21,10 @@ public class SpecialPhase1 {
 
     public void map(){
         commands = new HashMap<>();
-        commands.put("Prometeo", () -> prometeo());
-        commands.put("Caronte", () -> caronte());
-        commands.put("Basic", () ->basic());
+        commands.put("Prometeo", this::prometeo);
+        commands.put("Caronte", this::caronte);
+        commands.put("Basic", () ->{});    //controllare maxHeight
+        commands.put("restore", this::restore);  //Athena
     }
 
 
@@ -49,26 +50,24 @@ public class SpecialPhase1 {
 
         possibleMoves = basicRules.proximity(builder);
 
+        for(int i =0; i < possibleMoves.size(); i++) {
 
-        for(int i =0; i < possibleMoves.size(); i++)
+            Square position = possibleMoves.get(i);   // cambiare il nome
+            Builder opponentBuilder = position.getBuilder();
 
-            if(possibleMoves.get(i).getValue() != 1)   // qualunque casella che non contenga una pedina
+            //al posto di getValue() controlliamo getBuilder() ma prima vorrei fare più test sugli square
+            if (position.getValue() != 1 || opponentBuilder.getColour().equals(builder.getColour()))   // qualunque casella che non contenga una pedina o una pedina appartenente allo stesso giocatore
                 possibleMoves.remove(i);
 
-            else{
-
-                Builder opponent = possibleMoves.get(i).getBuilder();
-                Square playerPosition =  builder.getPosition();
-                Square opponentPosition = opponent.getPosition();
-
+            else {
                 // non so come mettere gli square opposti
             }
-
+        }
 
     }
 
 
-    public void basic(){
+    public void restore(){   //se athena aveva modificato maxHeight questo lo ristabilirà
         basicRules.setMaxHeight(1);
         possibleMoves = null;
     }

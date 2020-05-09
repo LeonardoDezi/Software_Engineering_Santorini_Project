@@ -34,6 +34,8 @@ public class TurnManager {
         ArrayList<Square> moves2;
         ArrayList<Square> specialMoves;
         Square lastPosition;
+        int levelEnd;
+        int levelStart;
 
         while(!gameEnded){
 
@@ -55,14 +57,14 @@ public class TurnManager {
 
                 if (moves1 != null || moves2 != null) {
                     String message;
-                    if (currentPlayer.getCard().name.equals("Prometeo")) {
+                  /*  if (currentPlayer.getCard().name.equals("Prometeo")) {
                         message = "Vuoi costruire prima del movimento? Se lo fai non potrai salire di livello.";
                         //inviare mosse
                         //aspetto risposta
                         if (answer != null) {
                             //esegui mossa speciale
                             Rules rules = game.getRules();
-                            rules.setMaxHeight(0);  //come facciamo poi a rimetterla uguale a 1?
+                            rules.setMaxHeight(0);  //MOSSA IMPORTANTE
                         }
                     } else {
                         //Caronte:
@@ -70,7 +72,7 @@ public class TurnManager {
                         board.move(square1, square2);
                     }
                     //
-
+                    */   //gestione della specialPhase1
 
                 }
 //movement phase
@@ -86,10 +88,17 @@ public class TurnManager {
                     lastPosition = builder.getPosition();
                     //magari lo racchiudiamo dentro un if così da risparmiarci questo passaggio per le carte che non hanno bisogno di movement
                     movementPhase.movement(builder, position);   //li diamo in ingresso il builder e lo square di destinazione
+
+                    levelEnd = position.getLevel();
+                    levelStart =lastPosition.getLevel();
                     game.gameBoard.move(lastPosition, position);  //movimento effettivo
                 }
 
-                //la winCondition si mette qui
+
+                //la winCondition la metteremo alla fine per accorpare il tutto.
+                //Ci salveremo i valori dei livelli così che non vangano modificati
+
+
                 // è necessaria una specialphase2 per Selene? come comunicare di quale builder vogliamo il range e cosa fare se
                 // il female worker non può costruire?
 
