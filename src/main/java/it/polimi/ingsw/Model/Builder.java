@@ -11,6 +11,7 @@ public class Builder {
     private boolean blocked;
     private final String colour;   // perchè private se final?
     private int builderId;
+    //pensare al sesso del builder
     // forse bisogna indicare anche a quale player appartiene per la GUI
 
 

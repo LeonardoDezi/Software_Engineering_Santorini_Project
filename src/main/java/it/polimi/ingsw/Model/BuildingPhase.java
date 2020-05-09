@@ -22,26 +22,20 @@ public class BuildingPhase{
 
     public void map(){
         commands = new HashMap<>();
-        commands.put("basic", () -> return null);  //boh);
-        commands.put("Zeus", ()-> addBuilderPosition());
-        commands.put("Zeus2", () -> buildBelowYou());
+        commands.put("basic", () ->{});
+        commands.put("ZeusMove", this::addBuilderPosition);
+        commands.put("ZeusBuild", this::buildBelowYou);
+        commands.put("dome", this::askforDome);
+        commands.put("female", this::askforFemale);
 
     }
 
-    public void getMoves(Builder builder){
+    public ArrayList<Square> getMoves(Builder builder){
          this.builder = builder;
          possibleMoves = basicRules.getBuildingRange(builder);  //potrebbe darci problemi a lungo andare?
          commands.get(Card.BuildingPhase).run();
+         return possibleMoves;
     }
-
-
-    public void building(Square position){
-        if(position.equals(builder.getPosition()))   // questo if mi sembra legittimo dato che credo che l'unico modo
-           commands.get(Card.AltroParametroBuildingPhase).run(); // in cui possiamo infrangere le regole arrivati a questo punto è che i due square coincidano
-        else
-           board.build(/*ecc...*/);
-    }
-
 
     public void addBuilderPosition(){
         Square position = builder.getPosition();
@@ -49,8 +43,35 @@ public class BuildingPhase{
             possibleMoves.add(position);
     }
 
+    public void askforDome(){
+        //sendrequest  "vuoi costruire una cupola?" ancora non so come
+    }
+
+    public void askForFemale(){
+        //sendrequest "ti sto mandando anche il range del tuo worker femmina vuoi usare questo
+        //piuttosto che l'altro?"
+    }
+
+
+    public void building(Square position, boolean isDome){
+        if(position.equals(builder.getPosition()))   // questo if mi sembra legittimo dato che credo che l'unico modo
+           commands.get(Card.AltroParametroBuildingPhase).run(); // in cui possiamo infrangere le regole arrivati a questo punto è che i due square coincidano
+
+           board.build(position, isDome);
+    }
+
+    //Zeus: se deve costruire su se stesso lo farà nella building Phase e metterà lo square di build a null: modificare build() perchè non faccia niente
+    //in questo caso
+
+
     public void buildBelowYou(){
         Square position = builder.getPosition();
-        position.setLevel(position.getLevel() +1);
+        if(position.getLevel() < 3) {
+            position.setLevel(position.getLevel() + 1);
+            position = null;
+        }
     }
+
+
+
 }

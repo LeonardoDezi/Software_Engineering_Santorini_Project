@@ -39,7 +39,7 @@ public class TurnManager {
 
         while(!gameEnded){
 
-            for (Player player : playerList) {
+            for (Player player : playerList) {  //succederà qualcosa se nel mentre rimuoviamo un giocatore
 
                 currentPlayer = player;
                 Card currentCard = currentPlayer.getCard();
@@ -75,13 +75,14 @@ public class TurnManager {
                     */   //gestione della specialPhase1
 
                 }
-//movement phase
+
                 moves1 = movementPhase.getMoves(builder1);
                 moves2 = movementPhase.getMoves(builder2);
 
-                if (moves1 == null && moves2 == null) {
-                    //loseCondition();
-                }else{
+
+                if (moves1 != null || moves2 != null) {
+
+//movementPhase
                     //invio delle moves alla virual view
                     //verrà restituita una mossa con il relativo builder
                     // builder è il builder ottenuto con il return
@@ -91,40 +92,50 @@ public class TurnManager {
 
                     levelEnd = position.getLevel();
                     levelStart =lastPosition.getLevel();
+
+                    //la winCondition la metteremo alla fine per accorpare il tutto.
+                    //Ci salveremo i valori dei livelli così che non vangano modificati
+
                     game.gameBoard.move(lastPosition, position);  //movimento effettivo
+
+//specialPhase2
+                    moves1 = specialPhase2.getMoves(builder, lastPosition /*card*/);
+                    //if(moves1== null) oppure gli mandiamo null? Ricezione di cosa bisogna fare
+                    specialPhase2.genericMethod(builder, position);
+
+                    moves1 = buildingPhase.getMoves(builder);
+
+
+                    // è necessaria una specialphase2 per Selene? come comunicare di quale builder vogliamo il range e cosa fare se
+
+//buildingPhase
+
+                    moves1 = buildingPhase.getMoves(builder);
+                    //invio delle mosse
+                    //ricezione dello square e l'isDome
+                    buildingPhase.building(position, isDome);
+
+//specialPhase3
+                    moves1 = specialPhase3.getMoves(builder /*card*/, lastPosition);
+
+
+
+                    //winPhase  // qua si controllano i wincondition delle carte speciali
+
+
+                    if (gameEnded) {
+                        //finalMethod();
+                    }
+
+
+                }else{
+                    //loseCondition();
                 }
 
 
-                //la winCondition la metteremo alla fine per accorpare il tutto.
-                //Ci salveremo i valori dei livelli così che non vangano modificati
 
 
-                // è necessaria una specialphase2 per Selene? come comunicare di quale builder vogliamo il range e cosa fare se
-                // il female worker non può costruire?
 
-                //specialMoves = specialPhase2.getMoves(builder, lastPosition);
-
-                //Zeus: se deve costruire su se stesso lo farà nella building Phase e metterà lo square di build a null: modificare build() perchè non faccia niente
-                //in questo caso
-
-                //dovremmo memorizzarci i livelli dello square di partenza e di arrivo prima di costruire?
-
-                moves1 = buildingPhase.getMoves(builder);
-                //invio delle mosse
-                //ricezione dello square
-                buildingPhase.building(position);
-                //
-               // game.gameBoard.build(builder, x, y);  //voglio modificare build per mettere square al posto di x e y
-               // l'ho messo in buildingPhase
-                //specialPhase3
-
-
-                //winPhase  // qua si controllano i wincondition delle carte speciali
-
-
-                if (gameEnded) {
-                    break;
-                }
             }
         }
         /* while(!gameEnded)

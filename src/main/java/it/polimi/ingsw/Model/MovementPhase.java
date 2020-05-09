@@ -31,6 +31,7 @@ public class MovementPhase {
         commands.put("basic", this::basicMoves);  //qua non dovrebbe fare niente(?)   //BASIC = NULL
         commands.put("push", this::minotauro); //cambiare TUTTI i nomi
         commands.put("Zeus", this::zeus);
+        commands.put("restore", this::restore);  //da usare quando Prometeo termina il suo turno e non poteva salire
 
         //Movement
         commands.put("jumpUp", this::jumpUp);

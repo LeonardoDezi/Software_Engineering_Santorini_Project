@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SpecialPhase1 {
-
+    //mi sa che conviene passare il giocatore facciamo prima
     private Board board;
     private Card card;
     private HashMap<String, Runnable> commands;
