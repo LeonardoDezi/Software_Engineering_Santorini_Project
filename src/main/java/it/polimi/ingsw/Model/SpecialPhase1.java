@@ -32,7 +32,7 @@ public class SpecialPhase1 {
         commands = new HashMap<>();
         commands.put("Prometeo", this::prometeo);
         commands.put("Caronte", this::caronte);
-        commands.put("Basic", () ->{possibleMoves = new ArrayList<>();});    //controllare maxHeight
+        commands.put(null, () ->{possibleMoves = new ArrayList<>();});    //controllare maxHeight
         commands.put("restore", this::restore);  //Athena
     }
 

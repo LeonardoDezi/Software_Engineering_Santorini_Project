@@ -18,7 +18,7 @@ public class MovementPhase {
 
     //servono?
     private Square position;
-    private String playerColour;
+    private String playerColour; // al posto di player colour magari mettere per tutti un player?
 
 
 
@@ -36,48 +36,56 @@ public class MovementPhase {
 
         //getMoves
         commands.put("swap", this::swapMoves);
-        commands.put("basic", this::basicMoves);  //qua non dovrebbe fare niente(?)   //BASIC = NULL
-        commands.put("push", this::minotauro); //cambiare TUTTI i nomi
+        commands.put(null, () ->{possibleMoves = basicRules.removeBuilderSquare(possibleMoves);});  //qua non dovrebbe fare niente(?)
         commands.put("Zeus", this::zeus);
-        commands.put("restore", this::restore);  //da usare quando Prometeo termina il suo turno e non poteva salire
 
         //Movement
         commands.put("jumpUp", this::jumpUp);
+        commands.put("push", this::minotauro); //cambiare TUTTI i nomi
+        commands.put("restore", () -> {basicRules.setMaxHeight(1);});  //da usare quando Prometeo termina il suo turno e non poteva salire
+
 
     }
 
-
+//getMoves
     public ArrayList<Square> getMoves( Player player, Builder builder){
 
+        if(builder == null)   // nel caso di builder non esistente
+            return new ArrayList<>();     //ritorna lista vuota  (necessario mettere Square?)
+
+        //è necessaria?
         this.builder = builder;
+        this.card = player.getCard();
 
         possibleMoves = basicRules.proximity(builder); // mappa il circondario del builder
         possibleMoves = basicRules.removeDomeSquare(possibleMoves); // queste condizioni vengono rispettate da tutte le carte FORSE POSSIAMO SEMPLIFICARLA
         possibleMoves = basicRules.removeTooHighPlaces(possibleMoves, builder); // queste condizioni vengono rispettate da tutte le carte
+
         playerColour = builder.getColour();
-        commands.get(Card.MovementPhase).run();
+        commands.get(card.MovementPhase).run();
 
         return possibleMoves;
     }
 
     public void swapMoves() {
-        int i;
+
         HashMap<String, Runnable> cardMap = new HashMap<>();  // cambiare il nome
-        cardMap.put("basic",()->{});      //BASIC = NULL
+        cardMap.put(null,()->{});      //BASIC = NULL
         cardMap.put("push2", this::pushMoves);  //cambiare i nomi
-        for (i = 0; i < possibleMoves.size(); i++) {
+
+        for (int i = 0; i < possibleMoves.size(); i++) {
             if (possibleMoves.get(i).getValue() == 1) {
-                if (possibleMoves.get(i).getBuilder().getColour().equals(playerColour))   //pedine dello stesso giocatore
+                if (possibleMoves.get(i).getBuilder().getColour().equals(playerColour)) {   //pedine dello stesso giocatore
                     possibleMoves.remove(i);
+                    i--;
+                }
                 else
-                    cardMap.get(Card.altroAttributo).run();
+                    cardMap.get(card.altroAttributo).run();
             }
         }
     }
 
-    public void basicMoves(){
-        possibleMoves = basicRules.removeBuilderSquare(possibleMoves);
-    }
+
 
     public void pushMoves(){
         //non so come fare bene nè push del minotauro nè caronte. come fai a decidere i giusti square?
@@ -90,8 +98,7 @@ public class MovementPhase {
 
 
 
-
-
+//movement
     public void movement(Builder builder, Square arrival){
 
         this.builder = builder;

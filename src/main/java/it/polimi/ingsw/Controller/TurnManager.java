@@ -86,7 +86,7 @@ public class TurnManager {
                 moves2 = movementPhase.getMoves(player, builder2);
 
 
-                if (moves1 != null || moves2 != null) {
+                if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {
 
 //movementPhase
                     //invio delle moves alla virual view
