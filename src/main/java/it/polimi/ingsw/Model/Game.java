@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @since 1.5
  */
 public class Game {
+    //rivedere tutti i private, protected e public
     protected Board gameBoard;  //lo lasciamo private?
     protected ArrayList<Player> playerList;
     private ArrayList<Card> chosenCards;

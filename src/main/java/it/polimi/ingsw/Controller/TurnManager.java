@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class TurnManager {
     private Player currentPlayer;
     private Game game;
-    private ArrayList<Player> playerList;
+    private ArrayList<Player> playerList;   //check
     public boolean gameEnded = false;
     private SpecialPhase1 specialPhase1;
     private SpecialPhase2 specialPhase2;
@@ -16,6 +16,9 @@ public class TurnManager {
     private MovementPhase movementPhase;
     private BuildingPhase buildingPhase;
 
+
+    //dovremmo assicurarci che sia unico?
+    //immagino serviranno delle modifiche per il multipartita
     public TurnManager(Game game){
         this.game = game;
         this.playerList = game.getPlayerList();
@@ -32,6 +35,9 @@ public class TurnManager {
         Builder builder2;
         ArrayList<Square> moves1;
         ArrayList<Square> moves2;
+
+
+
         ArrayList<Square> specialMoves;
         Square lastPosition;
         int levelEnd;
@@ -41,21 +47,21 @@ public class TurnManager {
 
             for (Player player : playerList) {  //succederà qualcosa se nel mentre rimuoviamo un giocatore
 
-                currentPlayer = player;
-                Card currentCard = currentPlayer.getCard();
-                builder1 = currentPlayer.getBuilder(0);
+               // currentPlayer = player;  serve?
+                Card currentCard = player.getCard();
+                builder1 = player.getBuilder(0);
 
                 try {
-                    builder2 = currentPlayer.getBuilder(1);
+                    builder2 = player.getBuilder(1);
                 }catch(ArrayIndexOutOfBoundsException e){
                     builder2 = null;
                 }
 
                 //special phase 1
-                moves1 = specialPhase1.genericMethod(builder1, currentCard);
-                moves2 = specialPhase1.genericMethod(builder2, currentCard);
+                moves1 = specialPhase1.genericMethod(player, builder1);
+                moves2 = specialPhase1.genericMethod(player, builder2);
 
-                if (moves1 != null || moves2 != null) {
+                if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
                     String message;
                   /*  if (currentPlayer.getCard().name.equals("Prometeo")) {
                         message = "Vuoi costruire prima del movimento? Se lo fai non potrai salire di livello.";
@@ -76,8 +82,8 @@ public class TurnManager {
 
                 }
 
-                moves1 = movementPhase.getMoves(builder1);
-                moves2 = movementPhase.getMoves(builder2);
+                moves1 = movementPhase.getMoves(player, builder1);
+                moves2 = movementPhase.getMoves(player, builder2);
 
 
                 if (moves1 != null || moves2 != null) {

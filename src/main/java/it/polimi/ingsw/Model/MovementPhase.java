@@ -6,28 +6,36 @@ import java.util.HashMap;
 public class MovementPhase {
 
     //revisionare gli attributi
-    private Board board;
-    private Card card;
+    private final Game game;
+    private final Board board;
+    private final Rules basicRules;
     private HashMap<String, Runnable> commands;
-    private Rules basicRules;
+
+
+    private Card card;
     private Builder builder;
-    private Square position;
     private ArrayList<Square> possibleMoves;
+
+    //servono?
+    private Square position;
     private String playerColour;
 
 
-    public MovementPhase(Card card, Rules rules, Board board){
-        basicRules = rules;
-        this.card = card;
-        this.board = board;
+
+    public MovementPhase(Game game){
+        basicRules = game.getRules();   // assicurarsi che siano sempre le stesse rules
+        this.game = game;
+        this.board = game.getBoard();
         map();
     }
+
+
 
     public void map(){
         commands = new HashMap<>();
 
         //getMoves
-        commands.put("swap", this::swapMoves);   //rivedere lambda functions
+        commands.put("swap", this::swapMoves);
         commands.put("basic", this::basicMoves);  //qua non dovrebbe fare niente(?)   //BASIC = NULL
         commands.put("push", this::minotauro); //cambiare TUTTI i nomi
         commands.put("Zeus", this::zeus);
@@ -39,7 +47,10 @@ public class MovementPhase {
     }
 
 
-    public ArrayList<Square> getMoves( Builder builder){
+    public ArrayList<Square> getMoves( Player player, Builder builder){
+
+        this.builder = builder;
+
         possibleMoves = basicRules.proximity(builder); // mappa il circondario del builder
         possibleMoves = basicRules.removeDomeSquare(possibleMoves); // queste condizioni vengono rispettate da tutte le carte FORSE POSSIAMO SEMPLIFICARLA
         possibleMoves = basicRules.removeTooHighPlaces(possibleMoves, builder); // queste condizioni vengono rispettate da tutte le carte

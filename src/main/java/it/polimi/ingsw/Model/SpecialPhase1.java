@@ -5,36 +5,45 @@ import java.util.HashMap;
 
 public class SpecialPhase1 {
     //mi sa che conviene passare il giocatore facciamo prima
-    private Board board;
-    private Card card;
+
+    private final Game game;
+    private final Board board;
+    private final Rules basicRules;
     private HashMap<String, Runnable> commands;
-    private Rules basicRules;
+
+    private Card card;
     private Builder builder;
     private ArrayList<Square> possibleMoves;
 
-    public SpecialPhase1(Card card, Rules rules, Board board){
-        basicRules = rules;   // assicurarsi che siano sempre le stesse rules
-        this.card = card;
-        this.board = board;
+    //terminare la seconda parte di specialPhase1
+
+    public SpecialPhase1(Game game){
+        basicRules = game.getRules();   // assicurarsi che siano sempre le stesse rules
+        this.game = game;
+        this.board = game.getBoard();
         map();
     }
+
+    /*public SpecialPhase1(){
+        map();
+    }*/     //altra possibilità: passare il player contenente il game. in questo modo potremmo fare il multi partita?
 
     public void map(){
         commands = new HashMap<>();
         commands.put("Prometeo", this::prometeo);
         commands.put("Caronte", this::caronte);
-        commands.put("Basic", () ->{});    //controllare maxHeight
+        commands.put("Basic", () ->{possibleMoves = new ArrayList<>();});    //controllare maxHeight
         commands.put("restore", this::restore);  //Athena
     }
 
 
-    public ArrayList<Square> genericMethod (Builder builder, Card card){
+    public ArrayList<Square> genericMethod (Player player, Builder builder){
 
         if(builder == null)   // nel caso di builder non esistente
-            return null;
+            return new ArrayList<>();     //ritorna lista vuota  (necessario mettere Square?)
 
         this.builder = builder;
-        this.card = card;
+        this.card = player.getCard();
         commands.get(card.specialPhase1).run();
         return possibleMoves;
     }
@@ -42,7 +51,6 @@ public class SpecialPhase1 {
     public void prometeo(){
 
         possibleMoves = basicRules.getBuildingRange(builder);
-        return;
 
     }
 
@@ -56,10 +64,10 @@ public class SpecialPhase1 {
             Builder opponentBuilder = position.getBuilder();
 
             //al posto di getValue() controlliamo getBuilder() ma prima vorrei fare più test sugli square
-            if (position.getValue() != 1 || opponentBuilder.getColour().equals(builder.getColour()))   // qualunque casella che non contenga una pedina o una pedina appartenente allo stesso giocatore
+            if (position.getValue() != 1 || opponentBuilder.getColour().equals(builder.getColour())) {   // qualunque casella che non contenga una pedina o una pedina appartenente allo stesso giocatore
                 possibleMoves.remove(i);
-
-            else {
+                i--;
+            }else {
                 // non so come mettere gli square opposti
             }
         }
@@ -69,6 +77,6 @@ public class SpecialPhase1 {
 
     public void restore(){   //se athena aveva modificato maxHeight questo lo ristabilirà
         basicRules.setMaxHeight(1);
-        possibleMoves = null;
+        possibleMoves = new ArrayList<>();
     }
 }
