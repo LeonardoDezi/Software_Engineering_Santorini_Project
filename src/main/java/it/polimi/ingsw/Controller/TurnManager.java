@@ -117,11 +117,15 @@ public class TurnManager {
 
 //specialPhase3
                     moves1 = specialPhase3.getMoves(builder /*card*/, lastPosition);
+                    //invio delle mosse
+                    //ricezione dello square e l'isDome
+                    specialPhase3.genericMethod(builder, position);
+
+                    board.build(position, isDome);
 
 
-
-                    //winPhase  // qua si controllano i wincondition delle carte speciali
-
+//winPhase
+                    winPhase.wincondition();
 
                     if (gameEnded) {
                         //finalMethod();

@@ -37,6 +37,7 @@ public class SpecialPhase3 {
         return possibleMoves;
     }
 
+    //getMoves
     public void notSameSquare(){
         for(int i = 0; i < possibleMoves.size(); i++) {
             if (possibleMoves.get(i).equals(position))
@@ -46,9 +47,8 @@ public class SpecialPhase3 {
 
     public void sameSquare(){
         possibleMoves = new ArrayList<>();
-        possibleMoves.add(position);
-
-        //non si possono costruire cupole?
+        if(position.getLevel() < 3)   // per rispetto dell'atomicità dovremmo dividere questo metodo in due
+            possibleMoves.add(position);
     }
 
     public void notPerimeter(){
@@ -58,6 +58,7 @@ public class SpecialPhase3 {
                 possibleMoves.remove(i);
         }
     }
+
 
 
 }

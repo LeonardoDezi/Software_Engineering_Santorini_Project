@@ -1,11 +1,42 @@
 package it.polimi.ingsw.Model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class WinPhase {
 
-    // creazione di winphase
+    private Board board;
+    private Card card;
+    private HashMap<String, Runnable> commands;
+    private Rules basicRules;
+    private Builder builder;
+    private ArrayList<Square> possibleMoves;
 
-    // credo che dovremmo segnarci le coordinate di arrivo e quelle di destinazione per far funzionare winCondition
+    public WinPhase(Card card, Rules rules, Board board){
+        basicRules = rules;   // assicurarsi che siano sempre le stesse rules
+        this.card = card;
+        this.board = board;
+        map();
+    }
+
+    public void map(){
+        commands = new HashMap<>();
+        commands.put("jump-down", () -> pan());
+        commands.put("towerCount", () -> towerCount());
+    }
 
 
-    //stessa storia della hashmap con pan e crono ecc....
+    public void winCondition(){
+        commands.get(Card.winPhase).run();
+        basicRules.winCondition();
+
+    }
+
+    public void pan(){
+        // you also win if you Worker moves down two or more levels
+    }
+    public void towerCount(){
+
+    }
+    //come mettere gameEnded uguale a true?
 }
