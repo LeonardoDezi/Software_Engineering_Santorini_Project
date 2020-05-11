@@ -7,7 +7,7 @@ public class SpecialPhase2 {
 
     private final Game game;
     private final Board board;
-    private final Rules basicRules;
+    private final BasicRules basicRules;
     private HashMap<String, Runnable> commands;
 
 

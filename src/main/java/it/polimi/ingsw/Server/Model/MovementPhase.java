@@ -8,7 +8,7 @@ public class MovementPhase {
     //revisionare gli attributi
     private final Game game;
     private final Board board;
-    private final Rules basicRules;
+    private final BasicRules basicRules;
     private HashMap<String, Runnable> commands;
 
 
@@ -122,7 +122,7 @@ public class MovementPhase {
 
         if(position.getValue() == 1)
             //non so come trovare lo square di destinazione
-            board.move(position ,pointB); //questa funzione dovrà limitarsi a spostare la pedina avversaria
+            board.move(position ,point); //questa funzione dovrà limitarsi a spostare la pedina avversaria
     }
 
 

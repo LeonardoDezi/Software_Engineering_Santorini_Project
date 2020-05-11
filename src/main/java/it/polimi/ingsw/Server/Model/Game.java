@@ -20,7 +20,7 @@ public class Game {
     private ArrayList<Card> deck;     //lo lasciamo?
     private Dealer dealer;
                            // identificatore numerico per differenziare le partite?
-    protected Rules basic;
+    protected BasicRules basic;
 
     /**
      * creates a new game.
@@ -93,26 +93,7 @@ public class Game {
         return deck;
     }
 
-    /**
-     * calls the move metod of the board to move a builder.
-     * @param playerIndex is the player id of that builder.
-     * @param square1 is the first square that is going to be changed.
-     * @param square2 is the second square that is going to be changed.
-     */
-    public void move(int playerIndex, Square square1, Square square2){
-        Player player = playerList.get(playerIndex);   // recupera giocatore: è garantito che playerIndex sia un indice valido
-        gameBoard.move(square1, square2); // stessa cosa qui
-    }
 
-    /**
-     * calls the move method of the board to build something.
-     * @param x is the x coordinate of the square where the player wants to build.
-     * @param y is the y coordinate of the square where the player wants to build.
-     * @param isDome is set to 1 when the player builds a dome that is not on the 4th floor.
-     */
-    public void build ( int x, int y, boolean isDome){
-        gameBoard.build(x, y, isDome);
-    }
 
     /**
      * adds the card chosen by the dealer at the beginning of the game to the list of the available cards for the other players.
@@ -120,7 +101,6 @@ public class Game {
      */
     public void addChosenCard(Card card){    // da aggiungere all'UML
         chosenCards.add(card);
-        return;
     }
 
 
@@ -157,7 +137,7 @@ public class Game {
 
     public Board getBoard(){ return this.gameBoard;}   // immagino serva anche questo
 
-    public Rules getRules(){
+    public BasicRules getRules(){
         return this.basic;
     }
 }
