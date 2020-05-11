@@ -107,16 +107,23 @@ public class BoardTest {
 
     @Test
     public void createBuilding(){
-        board.build(0 ,0 , false);  // in quella casella era già presente un blocco
+        Square position = board.fullMap[0][0];
+        board.build( position, false);  // in quella casella era già presente un blocco
         assertEquals(2, board.fullMap[0][0].getLevel());
         assertEquals(0, board.fullMap[0][0].getValue());
     }
 
     @Test
     public void createDome(){
-        board.build(0, 1, true);
+        Square position = board.fullMap[0][1];
+        board.build(position, true);
         assertEquals(4, board.fullMap[0][1].getLevel());  // decidere quale implementazione usare 4 o 5?
         assertEquals(2, board.fullMap[0][1].getValue());
     }
 
+    @Test
+    public void checkNull(){
+        Square position = null;
+        //dovrebbe controllare che fullMap non venga modificata
+    }
 }

@@ -7,13 +7,14 @@ import java.util.ArrayList;
 public class TurnManager {
     private Player currentPlayer;
     private Game game;
-    private ArrayList<Player> playerList;   //check
-    public boolean gameEnded = false;
+    private ArrayList<Player> playerList;
+
     private SpecialPhase1 specialPhase1;
     private SpecialPhase2 specialPhase2;
     private SpecialPhase3 specialPhase3;
     private MovementPhase movementPhase;
     private BuildingPhase buildingPhase;
+    private WinPhase winPhase;
 
 
     //dovremmo assicurarci che sia unico?
@@ -21,11 +22,12 @@ public class TurnManager {
     public TurnManager(Game game){
         this.game = game;
         this.playerList = game.getPlayerList();
-        specialPhase1 = new SpecialPhase1();
-        specialPhase2 = new SpecialPhase2();
-        specialPhase3 = new SpecialPhase3();
-        buildingPhase = new BuildingPhase();
-        movementPhase = new MovementPhase(game.getRules(), game.getBoard());
+        specialPhase1 = new SpecialPhase1(game);
+        specialPhase2 = new SpecialPhase2(game);
+        specialPhase3 = new SpecialPhase3(game);
+        buildingPhase = new BuildingPhase(game);
+        movementPhase = new MovementPhase(game);
+        winPhase = new WinPhase(game);
     }
 
     public void letsPlay(){
@@ -37,17 +39,16 @@ public class TurnManager {
 
 
 
-        ArrayList<Square> specialMoves;
         Square lastPosition;
         int levelEnd;
         int levelStart;
 
-        while(!gameEnded){
+        //dobbiamo discutere della winPhase
 
-            for (Player player : playerList) {  //succederà qualcosa se nel mentre rimuoviamo un giocatore
+        while(!(game.getGameEnded())){
 
-               // currentPlayer = player;  serve?
-                Card currentCard = player.getCard();
+            for (Player player : playerList) {  //succederà qualcosa se nel mentre rimuoviamo un giocatore?
+
                 builder1 = player.getBuilder(0);
 
                 try {
@@ -61,23 +62,11 @@ public class TurnManager {
                 moves2 = specialPhase1.genericMethod(player, builder2);
 
                 if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
-                    String message;
-                  /*  if (currentPlayer.getCard().name.equals("Prometeo")) {
-                        message = "Vuoi costruire prima del movimento? Se lo fai non potrai salire di livello.";
-                        //inviare mosse
-                        //aspetto risposta
-                        if (answer != null) {
-                            //esegui mossa speciale
-                            Rules rules = game.getRules();
-                            rules.setMaxHeight(0);  //MOSSA IMPORTANTE
-                        }
-                    } else {
-                        //Caronte:
-                        // message = vuoi cambiare la posizione dell'avversario?
-                        board.move(square1, square2);
-                    }
-                    //
-                    */   //gestione della specialPhase1
+                    //ricezione mossa
+                    //specialPhase1.genericMethod();
+
+
+                    //DOBBIAMO ANCORA FARE SPECIALPHASE1 (parte2)
 
                 }
 
@@ -85,7 +74,7 @@ public class TurnManager {
                 moves2 = movementPhase.getMoves(player, builder2);
 
 
-                if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {
+                if ( !(moves1.isEmpty()) || !(moves2.isEmpty()) ) {
 
 //movementPhase
                     //invio delle moves alla virual view
@@ -95,44 +84,50 @@ public class TurnManager {
                     //magari lo racchiudiamo dentro un if così da risparmiarci questo passaggio per le carte che non hanno bisogno di movement
                     movementPhase.movement(builder, position);   //li diamo in ingresso il builder e lo square di destinazione
 
-                    levelEnd = position.getLevel();
+                    //salviamo i valori dei livelli in modo tale che non vengano successivamente modificati
+
+                    levelEnd = position.getLevel();   // forse basta dichiararle qui invece che su
                     levelStart =lastPosition.getLevel();
 
-                    //la winCondition la metteremo alla fine per accorpare il tutto.
-                    //Ci salveremo i valori dei livelli così che non vangano modificati
+                    game.getBoard().move(lastPosition, position);  //movimento effettivo
 
-                    game.gameBoard.move(lastPosition, position);  //movimento effettivo
+                    //DISCUTERE DI QUESTO PUNTO
+                    winPhase.movement(levelStart, levelEnd);
 
 //specialPhase2
-                    moves1 = specialPhase2.getMoves(builder, lastPosition /*card*/);
+                    moves1 = specialPhase2.getMoves(player, builder, lastPosition );
                     //if(moves1== null) oppure gli mandiamo null? Ricezione di cosa bisogna fare
                     specialPhase2.genericMethod(builder, position);
 
-                    moves1 = buildingPhase.getMoves(builder);
+                    //DISCUTERE DI QUESTO PUNTO
+                    winPhase.movement(levelStart,levelEnd);
 
 
-                    // è necessaria una specialphase2 per Selene? come comunicare di quale builder vogliamo il range e cosa fare se
 
 //buildingPhase
 
-                    moves1 = buildingPhase.getMoves(builder);
+                    moves1 = buildingPhase.getMoves(player, builder);
                     //invio delle mosse
                     //ricezione dello square e l'isDome
-                    buildingPhase.building(position, isDome);
+                    buildingPhase.building(builder, position, isDome);
+
+                    //DISCUTERE DI QUESTO PUNTO
+                    winPhase.building();
 
 //specialPhase3
-                    moves1 = specialPhase3.getMoves(builder /*card*/, lastPosition);
+                    lastPosition = position;
+                    moves1 = specialPhase3.getMoves(player, builder , lastPosition);
                     //invio delle mosse
                     //ricezione dello square e l'isDome
-                    specialPhase3.genericMethod(builder, position);
 
-                    board.build(position, isDome);
+                 //   specialPhase3.genericMethod(builder, position);  per ora questo metodo non serve non so se metterlo per future implementazioni
 
+                    game.getBoard().build(position, isDome);
 
-//winPhase
-                    winPhase.wincondition();
+                    //DISCUTERE DI QUESTO PUNTO
+                    winPhase.building();
 
-                    if (gameEnded) {
+                    if (game.getGameEnded()) {
                         //finalMethod();
                     }
 
@@ -143,13 +138,9 @@ public class TurnManager {
 
 
 
-
-
             }
         }
-        /* while(!gameEnded)
-    for(player in players)
-        doSomething(); */
+
     }
 
     public void addPlayers(Player player){

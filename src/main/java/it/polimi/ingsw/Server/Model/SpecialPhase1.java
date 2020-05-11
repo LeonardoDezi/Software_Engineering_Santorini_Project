@@ -30,7 +30,7 @@ public class SpecialPhase1 {
 
     public void map(){
         commands = new HashMap<>();
-        commands.put("Prometeo", this::prometeo);
+        commands.put("Prometeo", () -> {possibleMoves = basicRules.getBuildingRange(builder);});
         commands.put("Caronte", this::caronte);
         commands.put(null, () ->{possibleMoves = new ArrayList<>();});    //controllare maxHeight
         commands.put("restore", this::restore);  //Athena
@@ -48,11 +48,6 @@ public class SpecialPhase1 {
         return possibleMoves;
     }
 
-    public void prometeo(){
-
-        possibleMoves = basicRules.getBuildingRange(builder);
-
-    }
 
     public void caronte(){
 

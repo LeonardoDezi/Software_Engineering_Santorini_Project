@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public class Game {
     //rivedere tutti i private, protected e public
+    private boolean gameEnded;
     protected Board gameBoard;  //lo lasciamo private?
     protected ArrayList<Player> playerList;
     private ArrayList<Card> chosenCards;
@@ -26,6 +27,7 @@ public class Game {
      */
     public Game(){     //da mettere un identificativo partita?
         gameBoard = new Board();
+        gameEnded = false;
         playerList = new ArrayList<>();
         chosenCards = new ArrayList<>();
         basic = new BasicRules(gameBoard, this);
@@ -35,6 +37,10 @@ public class Game {
     public ArrayList<Player> getPlayerList() {
        return this.playerList;
     }
+
+    public boolean getGameEnded(){return this.gameEnded;}
+
+    public void setGameEnded(boolean value){this.gameEnded = value;}
 
     /**
      * adds a new player to the game.

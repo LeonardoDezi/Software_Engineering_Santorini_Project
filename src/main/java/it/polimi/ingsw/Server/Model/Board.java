@@ -12,12 +12,8 @@ public class Board {
     public Square[][] fullMap;   // per ora lo faccio public, ma forse bisogna metterlo square. in quel caso, modificare deploybuilder
     /** represents the board, fullmap is an array of sqares that rapresents the cells where the builders can move or build.
      */
-    private Square pointA;
-    /** is the point where the builder that moves is before moving.
-     */
-    private Square pointB;
-    /** is the point where the builder that moves is moving to.
-     */
+
+
    // private ArrayList<it.polimi.ingsw.Server.Model.Observer> observerList;  SOLO PER TESTARE
 
     /** is the list of the observers of the board.
@@ -29,6 +25,7 @@ public class Board {
     public Board() {
 
         fullMap = new Square[5][5];
+        completedTowers = 0;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 fullMap[i][j] = new Square(i, j);
@@ -46,12 +43,11 @@ public class Board {
 
     public void move(Square pointA, Square pointB){
 
-        Builder tmp1;
-        Builder tmp2;
-            tmp1 = pointA.getBuilder();
-            tmp2 = pointB.getBuilder();
-            pointB.setBuilder(tmp1);
-            pointA.setBuilder(tmp2);
+        Builder tmp1 = pointA.getBuilder();
+        Builder tmp2 = pointB.getBuilder();
+
+        pointB.setBuilder(tmp1);
+        pointA.setBuilder(tmp2);
 
         if(tmp2 != null)
             tmp2.setPosition(pointA); // in case of swap
@@ -64,29 +60,27 @@ public class Board {
         pointA.setValue(valueB);
 
 
-        return;
-
     }
 
     /**
      * adds the new building or the new level on an existing building on the board.
-     * @param x the x coordinate of the cell where the new building is going to be.
-     * @param y the y coordinate of the cell where the new building is going to be.
+     * @param point the coordinate of the cell where the new building is going to be.
      * @param isDome this boolean is used to signal if the new building is going to be a dome in a level different from the 4th.
      */
-    public void build(int x, int y, boolean isDome){   //va corretto il metodo
+    public void build(Square point, boolean isDome){   //va corretto il metodo
 
-        pointB = fullMap[x][y];
-        if(pointB.getLevel()==3){
-            isDome = true;
-            completedTowers ++;
+        if(point != null) {
+
+            if (point.getLevel() == 3) {
+                isDome = true;
+                completedTowers++;
+            }
+
+            if (isDome)   //necessario per via di Atlante
+                point.setValue(2);   // 2 = cupola
+
+            point.setLevel(point.getLevel() + 1);
         }
-
-        if(isDome)   //necessario per via di Atlante
-            pointB.setValue(2);   // 2 = cupola
-
-
-        pointB.setLevel(pointB.getLevel() + 1);
 
     }
 

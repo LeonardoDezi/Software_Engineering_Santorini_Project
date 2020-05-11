@@ -36,12 +36,13 @@ public class MovementPhase {
 
         //getMoves
         commands.put("swap", this::swapMoves);
+        commands.put("push", this::swapMoves);
         commands.put(null, () ->{possibleMoves = basicRules.removeBuilderSquare(possibleMoves);});  //qua non dovrebbe fare niente(?)
-        commands.put("Zeus", this::zeus);
+
 
         //Movement
         commands.put("jumpUp", this::jumpUp);
-        commands.put("push", this::minotauro); //cambiare TUTTI i nomi
+        commands.put("push2", this::minotauro); //cambiare TUTTI i nomi
         commands.put("restore", () -> {basicRules.setMaxHeight(1);});  //da usare quando Prometeo termina il suo turno e non poteva salire
 
 
@@ -70,8 +71,10 @@ public class MovementPhase {
     public void swapMoves() {
 
         HashMap<String, Runnable> cardMap = new HashMap<>();  // cambiare il nome
-        cardMap.put(null,()->{});      //BASIC = NULL
-        cardMap.put("push2", this::pushMoves);  //cambiare i nomi
+        cardMap.put("swap",()->{});
+        cardMap.put("push", this::pushMoves);  //cambiare i nomi
+        cardMap.put(null, ()->{}); //non necessaria la metto per eventuali casi futuri
+
 
         for (int i = 0; i < possibleMoves.size(); i++) {
             if (possibleMoves.get(i).getValue() == 1) {
@@ -80,7 +83,7 @@ public class MovementPhase {
                     i--;
                 }
                 else
-                    cardMap.get(card.altroAttributo).run();
+                    cardMap.get(card.MovementPhase).run();
             }
         }
     }
@@ -91,26 +94,26 @@ public class MovementPhase {
         //non so come fare bene nè push del minotauro nè caronte. come fai a decidere i giusti square?
     }
 
-    public void zeus(){
+    //cancellare
+   /* public void zeus(){
         possibleMoves = basicRules.removeBuilderSquare(possibleMoves);
         possibleMoves.add(builder.getPosition());
-    }
+    }*/
 
 
 
 //movement
     public void movement(Builder builder, Square arrival){
-
+        // qui player e card non vengono aggiornati. rimangono quelli impostati precedentemente
         this.builder = builder;
         this.position = arrival;
-        commands.get(Card.sottoAttributodadefinire).run();
+        commands.get(Card.MovementPhase(movement)).run();
     }
 
     public void jumpUp(){
         int level1 = builder.getPosition().getLevel();
-        int level2 = position.getLevel();    //verificare che position non dia misunderstandings
-
-        if(level2 - level1 != 0)  //controllare i valori negativi
+        int level2 = position.getLevel();
+        if(level2 - level1 > 0)
             basicRules.setMaxHeight(0);
     }
 
@@ -119,7 +122,7 @@ public class MovementPhase {
 
         if(position.getValue() == 1)
             //non so come trovare lo square di destinazione
-            board.move(arrival ,pointB); //questa funzione dovrà limitarsi a spostare la pedina avversaria
+            board.move(position ,pointB); //questa funzione dovrà limitarsi a spostare la pedina avversaria
     }
 
 

@@ -4,7 +4,7 @@ package it.polimi.ingsw.Server.Model;
 
 import java.util.ArrayList;
 
-public class BasicRules implements Rules {
+public class BasicRules{
     private Card card;
     private int maxBuild = 1;
     private int numMoves = 1;
@@ -27,23 +27,6 @@ public class BasicRules implements Rules {
     }
 
 
-    @Override
-    public void movement(Square square1, Square square2) {
-        board.move(square1, square2);
-    }
-
-    /**
-     * is used to finalize the building of a new level.
-     *
-     * @param x is the x coordinate where the player wants to build
-     * @param y is the y coordinate where the player wants to build
-     */
-    @Override
-    public void building(int x, int y) {
-        board.build(x, y, false);
-    }
-
-    @Override
     public void winCondition(Builder builder, int x, int y) {
         Square actualPosition = builder.getPosition();
         if (actualPosition.getLevel() == 2) {
@@ -60,7 +43,7 @@ public class BasicRules implements Rules {
         }
     }
 
-    @Override
+
     public ArrayList<Square> getPossibleMoves(Builder builder) {
 
         ArrayList<Square> possibleMoves = proximity(builder);
@@ -79,7 +62,7 @@ public class BasicRules implements Rules {
      * @return an arrayList with all the possible places to build.
      */
 
-    @Override
+
     public ArrayList<Square> getBuildingRange(Builder builder) {
 
         ArrayList<Square> possibleBuilds = proximity(builder);
@@ -90,7 +73,7 @@ public class BasicRules implements Rules {
 
     }
 
-    @Override
+
     public void loseCondition() {
     }
 

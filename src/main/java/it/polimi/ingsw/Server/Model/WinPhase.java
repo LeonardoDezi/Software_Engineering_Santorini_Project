@@ -5,29 +5,33 @@ import java.util.HashMap;
 
 public class WinPhase {
 
-    private Board board;
-    private Card card;
+    private final Game game;
+    private final Board board;
+    private final Rules basicRules;
     private HashMap<String, Runnable> commands;
-    private Rules basicRules;
-    private Builder builder;
-    private ArrayList<Square> possibleMoves;
 
-    public WinPhase(Card card, Rules rules, Board board){
-        basicRules = rules;   // assicurarsi che siano sempre le stesse rules
-        this.card = card;
-        this.board = board;
+
+    private Card card;
+    private Builder builder;
+
+    public WinPhase(Game game){
+        basicRules = game.getRules();   // assicurarsi che siano sempre le stesse rules
+        this.game = game;
+        this.board = game.getBoard();
         map();
     }
 
+
+
     public void map(){
         commands = new HashMap<>();
-        commands.put("jump-down", () -> pan());
-        commands.put("towerCount", () -> towerCount());
+        commands.put("jump-down", this::pan);
+        commands.put("towerCount", this::towerCount);
     }
 
 
     public void winCondition(){
-        commands.get(Card.winPhase).run();
+        commands.get(card.winPhase).run();
         basicRules.winCondition();
 
     }
