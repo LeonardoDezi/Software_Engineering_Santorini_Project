@@ -2,7 +2,7 @@ package it.polimi.ingsw.Parser;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.Model.Card;
+import it.polimi.ingsw.Server.Model.Card;
 
 import java.io.IOException;
 import java.io.Reader;
