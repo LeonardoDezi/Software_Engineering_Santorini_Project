@@ -62,6 +62,7 @@ public class TurnManager {
                 moves2 = specialPhase1.genericMethod(player, builder2);
 
                 if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
+
                     //ricezione mossa
                     //specialPhase1.genericMethod();
 
