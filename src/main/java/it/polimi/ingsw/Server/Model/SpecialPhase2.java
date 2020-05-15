@@ -43,7 +43,7 @@ public class SpecialPhase2 {
         this.card = player.getCard();
         this.position = position;
 
-        commands.get(Card.specialPhase2-getMoves).run();
+        commands.get(card.parameters.specialPhase1Moves).run();
         return possibleMoves;
     }
 
@@ -67,7 +67,7 @@ public class SpecialPhase2 {
         this.builder = builder;  //forse non serve?
         this.position = position;
 
-        commands.get(card.specialPhase2-generic).run();
+        commands.get(card.parameters.specialPhase2Action).run();
     }
 
 

@@ -9,7 +9,7 @@ package it.polimi.ingsw.Server.Model;
 public class Board {
     private int completedTowers;
 
-    public Square[][] fullMap;   // per ora lo faccio public, ma forse bisogna metterlo square. in quel caso, modificare deploybuilder
+    protected Square[][] fullMap;   // per ora lo faccio public, ma forse bisogna metterlo square. in quel caso, modificare deploybuilder
     /** represents the board, fullmap is an array of sqares that rapresents the cells where the builders can move or build.
      */
 
@@ -33,6 +33,10 @@ public class Board {
         }
     }
 
+    //forse non servirà più
+    public Square getSquare(int x , int y){
+        return fullMap[x][y];
+    }
 
     //mossa verificata
     /**

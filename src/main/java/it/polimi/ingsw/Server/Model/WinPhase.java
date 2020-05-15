@@ -31,7 +31,7 @@ public class WinPhase {
 
 
     public void winCondition(){
-        commands.get(card.winPhase).run();
+        commands.get(card.parameters.winPhase).run();
         basicRules.winCondition();
 
     }

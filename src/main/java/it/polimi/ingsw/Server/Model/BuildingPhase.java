@@ -47,7 +47,7 @@ public class BuildingPhase{
          this.builder = builder;
          this.card = player.getCard();
          possibleMoves = basicRules.getBuildingRange(builder);
-         commands.get(card.BuildingPhase).run();
+         commands.get(card.parameters.buildingPhaseMoves).run();
          return possibleMoves;
     }
 

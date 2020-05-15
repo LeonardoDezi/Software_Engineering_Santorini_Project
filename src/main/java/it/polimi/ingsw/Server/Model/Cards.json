@@ -2,29 +2,20 @@
   {
     "number": 1,
     "name": "Apollo",
-    "phase1": "swap",
-    "movePhase": "basic",
-    "phase2": "basic",
-    "buildPhase"
-    "conditions":[
+    "parameters": [
       {
-        "jump_up"  : null,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": null,
-      }
-    ],
-    "effects" :[
-      {
-        "movement": "occupiedSquare",
-        "samesquare": null,
-        "building": null,
-        "moveOpponent": "swap",
-        "beforemovement": null,
-        "win": null,
-        "dome": null,
-        "perimetersquare": null
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
+
       }
     ]
   },
@@ -32,25 +23,20 @@
   {
     "number": 2,
     "name": "Artemis",
-    "conditions":[
+    "parameters": [
       {
-        "jump_up": null,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement": "1",
-        "samequare": false,
-        "building": null,
-        "moveOpponent": null,
-        "beforeMovement": null,
-        "win": null,
-        "dome": null,
-        "perimetersquare": null
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
+
       }
     ]
   },
@@ -58,25 +44,20 @@
   {
     "number": 3,
     "name": "Athena",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": true,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement":null,
-        "samesquare": null,
-        "building": null,
-        "moveOpponent": "samelevel",
-        "beforeMovement": null,
-        "win": null,
-        "dome": null,
-        "perimetersquare": null
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
+
       }
     ]
   },
@@ -84,25 +65,20 @@
   {
     "number": 4,
     "name": "Atlas",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": null,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement": null,
-        "samesquare": null,
-        "building": 1,
-        "moveOpponent": null,
-        "beforeMovement": null,
-        "win": null,
-        "dome": true,
-        "perimetersquare": null
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
+
       }
     ]
   },
@@ -110,25 +86,20 @@
   {
     "number": 5,
     "name": "Demeter",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": null,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement": null,
-        "samesquare": false,
-        "building": 1,
-        "moveOpponent": null,
-        "beforeMovement": null,
-        "win": null,
-        "dome": true,
-        "perimetersquare": null
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
+
       }
     ]
   },
@@ -136,25 +107,20 @@
   {
     "number": 6,
     "name": "Hephaestus",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": null,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement": null,
-        "samesquare": true ,
-        "building": 1,
-        "moveOpponent": null,
-        "beforeMovement": null,
-        "win": null,
-        "dome": false,
-        "perimetersquare": null
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
+
       }
     ]
   },
@@ -162,25 +128,20 @@
   {
     "number": 7,
     "name": "Minotaur",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": null,
-        "freespace": true,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement": "push",
-        "samesquare": null,
-        "building": null,
-        "moveOpponent": "push",
-        "beforeMovement": null,
-        "win": null,
-        "dome": null,
-        "perimetersquare": null
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
+
       }
     ]
   },
@@ -188,25 +149,20 @@
   {
     "number": 8,
     "name": "Pan",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": null,
-        "freespace": null,
-        "jump_down": 2,
-        "tower_number": null,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement": null,
-        "samesquare": null,
-        "building": null,
-        "moveOpponent": null,
-        "beforeMovement": null,
-        "win": true,
-        "dome": null,
-        "perimetersquare": null
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
+
       }
     ]
   },
@@ -214,25 +170,20 @@
   {
     "number": 9,
     "name": "Prometheus",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": false,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement": null,
-        "samesquare": null,
-        "building": 1,
-        "moveOpponent": null,
-        "beforeMovement": "build",
-        "win": null,
-        "dome": null,
-        "perimetersquare": null
+        "specialPhase1Moves": "additionalBuild",
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
+
       }
     ]
   },
@@ -240,25 +191,20 @@
   {
     "number": 10,
     "name": "Charon",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": null,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement": null,
-        "samesquare": null,
-        "building": null,
-        "moveOpponent": "opposite",
-        "beforeMovement": true,
-        "win": null,
-        "dome": null,
-        "perimetersquare": null
+        "specialPhase1Moves": "oppositeSideMoves",
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
+
       }
     ]
   },
@@ -266,25 +212,20 @@
   {
     "number": 11,
     "name": "Chronus",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": null,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": 5,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement": null,
-        "samesquare": null,
-        "building": null,
-        "moveOpponent": null,
-        "beforeMovement": null,
-        "win": true,
-        "dome": null,
-        "perimetersquare": null
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
+
       }
     ]
   },

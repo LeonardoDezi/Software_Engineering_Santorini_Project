@@ -58,13 +58,15 @@ public class TurnManager {
                 }
 
                 //special phase 1
-                moves1 = specialPhase1.genericMethod(player, builder1);
-                moves2 = specialPhase1.genericMethod(player, builder2);
+                moves1 = specialPhase1.getMoves(player, builder1);
+                moves2 = specialPhase1.getMoves(player, builder2);
 
                 if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
 
                     //ricezione mossa
-                    //specialPhase1.genericMethod();
+                    specialPhase1.actionMethod();
+
+                    //ATTENZIONE ATHENA
 
 
                     //DOBBIAMO ANCORA FARE SPECIALPHASE1 (parte2)

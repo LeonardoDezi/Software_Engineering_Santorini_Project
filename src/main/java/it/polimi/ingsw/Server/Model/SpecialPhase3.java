@@ -45,7 +45,7 @@ public class SpecialPhase3 {
         this.position = lastPosition;
 
         possibleMoves= basicRules.getBuildingRange(builder);
-        commands.get(card.specialPhase3).run();
+        commands.get(card.parameters.specialPhase3Moves).run();
 
         return possibleMoves;
     }

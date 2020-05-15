@@ -9,7 +9,8 @@ public class SpecialPhase1 {
     private final Game game;
     private final Board board;
     private final BasicRules basicRules;
-    private HashMap<String, Runnable> commands;
+    private HashMap<String, Runnable> movesCommands;
+    private HashMap<String, Runnable> actionCommands;
 
     private Card card;
     private Builder builder;
@@ -29,41 +30,63 @@ public class SpecialPhase1 {
     }*/     //altra possibilità: passare il player contenente il game. in questo modo potremmo fare il multi partita?
 
     public void map(){
-        commands = new HashMap<>();
-        commands.put("Prometeo", () -> {possibleMoves = basicRules.getBuildingRange(builder);});
-        commands.put("Caronte", this::caronte);
-        commands.put(null, () ->{possibleMoves = new ArrayList<>();});    //controllare maxHeight
-        commands.put("restore", this::restore);  //Athena
+        movesCommands = new HashMap<>();
+        actionCommands = new HashMap<>();
+    //getMoves
+        movesCommands.put("additionalBuild", () -> {possibleMoves = basicRules.getBuildingRange(builder);});
+        movesCommands.put("oppositeSideMoves", this::oppositeSideMoves);  //caronte
+        movesCommands.put(null, () ->{possibleMoves = new ArrayList<>();});    //controllare maxHeight
+    //actionMethod
+        actionCommands.put("restore", this::restore);  //Athena
     }
 
 
-    public ArrayList<Square> genericMethod (Player player, Builder builder){
+    public ArrayList<Square> getMoves (Player player, Builder builder){
 
         if(builder == null)   // nel caso di builder non esistente
             return new ArrayList<>();     //ritorna lista vuota  (necessario mettere Square?)
 
         this.builder = builder;
         this.card = player.getCard();
-        commands.get(card.specialPhase1).run();
+        movesCommands.get(card.parameters.specialPhase1Action).run();
         return possibleMoves;
     }
 
 
-    public void caronte(){
+    public void oppositeSideMoves(){
 
         possibleMoves = basicRules.proximity(builder);
 
         for(int i =0; i < possibleMoves.size(); i++) {
 
-            Square position = possibleMoves.get(i);   // cambiare il nome
+            Square position = possibleMoves.get(i);
             Builder opponentBuilder = position.getBuilder();
 
             //al posto di getValue() controlliamo getBuilder() ma prima vorrei fare più test sugli square
-            if (position.getValue() != 1 || opponentBuilder.getColour().equals(builder.getColour())) {   // qualunque casella che non contenga una pedina o una pedina appartenente allo stesso giocatore
+            if(position.getValue() == 1 && !(opponentBuilder.getColour().equals(builder.getColour()))){
+
+                    int builderX = builder.getPosition().x;
+                    int builderY = builder.getPosition().y;
+
+                    int positionX = position.x;
+                    int positionY = position.y;
+
+                    int a = 2 * builderX - positionX;
+                    int b = 2 * builderY - positionY;
+
+                    try{
+                        if(board.fullMap[a][b].getValue() != 0) {
+                            possibleMoves.remove(i);
+                            i--;
+                        }
+                    }catch(ArrayIndexOutOfBoundsException e){   //controllare che sia l'exception giusto'
+                        possibleMoves.remove(i);
+                        i--;
+                    }
+
+            }else{
                 possibleMoves.remove(i);
                 i--;
-            }else {
-                // non so come mettere gli square opposti
             }
         }
 

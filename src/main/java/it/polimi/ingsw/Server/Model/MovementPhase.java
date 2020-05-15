@@ -9,7 +9,8 @@ public class MovementPhase {
     private final Game game;
     private final Board board;
     private final BasicRules basicRules;
-    private HashMap<String, Runnable> commands;
+    private HashMap<String, Runnable> movesCommands;
+    private HashMap<String, Runnable> actionCommands;
 
 
     private Card card;
@@ -19,6 +20,7 @@ public class MovementPhase {
     //servono?
     private Square position;
     private String playerColour; // al posto di player colour magari mettere per tutti un player?
+    private int i;
 
 
 
@@ -32,19 +34,20 @@ public class MovementPhase {
 
 
     public void map(){
-        commands = new HashMap<>();
+        movesCommands = new HashMap<>();
+        actionCommands = new HashMap<>();
 
         //getMoves
-        commands.put("swap", this::swapMoves);
-        commands.put("push", this::swapMoves);
-        commands.put(null, () ->{possibleMoves = basicRules.removeBuilderSquare(possibleMoves);});  //qua non dovrebbe fare niente(?)
+        movesCommands.put("swap", this::swapMoves);
+        movesCommands.put("push", this::swapMoves);
+        movesCommands.put(null, () ->{possibleMoves = basicRules.removeBuilderSquare(possibleMoves);});  //qua non dovrebbe fare niente(?)
 
 
         //Movement
-        commands.put("jumpUp", this::jumpUp);
-        commands.put("push2", this::minotauro); //cambiare TUTTI i nomi
-        commands.put("restore", () -> {basicRules.setMaxHeight(1);});  //da usare quando Prometeo termina il suo turno e non poteva salire
-
+        actionCommands.put("jumpUp", this::jumpUp);
+        actionCommands.put("push2", this::minotauro); //cambiare TUTTI i nomi
+        actionCommands.put("restore", () -> {basicRules.setMaxHeight(1);});  //da usare quando Prometeo termina il suo turno e non poteva salire
+        actionCommands.put(null, () -> {});
 
     }
 
@@ -63,7 +66,7 @@ public class MovementPhase {
         possibleMoves = basicRules.removeTooHighPlaces(possibleMoves, builder); // queste condizioni vengono rispettate da tutte le carte
 
         playerColour = builder.getColour();
-        commands.get(card.MovementPhase).run();
+        movesCommands.get(card.parameters.movementPhaseMoves).run();
 
         return possibleMoves;
     }
@@ -76,14 +79,16 @@ public class MovementPhase {
         cardMap.put(null, ()->{}); //non necessaria la metto per eventuali casi futuri
 
 
-        for (int i = 0; i < possibleMoves.size(); i++) {
+        for (i = 0; i < possibleMoves.size(); i++) {
             if (possibleMoves.get(i).getValue() == 1) {
                 if (possibleMoves.get(i).getBuilder().getColour().equals(playerColour)) {   //pedine dello stesso giocatore
                     possibleMoves.remove(i);
                     i--;
                 }
-                else
-                    cardMap.get(card.MovementPhase).run();
+                else {
+                    position = possibleMoves.get(i);
+                    cardMap.get(card.parameters.movementPhaseAction).run();
+                }
             }
         }
     }
@@ -91,7 +96,26 @@ public class MovementPhase {
 
 
     public void pushMoves(){
-        //non so come fare bene nè push del minotauro nè caronte. come fai a decidere i giusti square?
+        int builderX = builder.getPosition().x;
+        int builderY = builder.getPosition().y;
+
+        int positionX = position.x;
+        int positionY = position.y;
+
+        int a = 2 * positionX - builderX;
+        int b = 2 * positionY - builderY;
+
+        try{
+            if(board.fullMap[a][b].getValue() != 0) {
+                possibleMoves.remove(i);
+                i--;
+            }
+        }catch(ArrayIndexOutOfBoundsException e){
+            possibleMoves.remove(i);
+            i--;
+        }
+
+
     }
 
     //cancellare
@@ -107,7 +131,7 @@ public class MovementPhase {
         // qui player e card non vengono aggiornati. rimangono quelli impostati precedentemente
         this.builder = builder;
         this.position = arrival;
-        commands.get(Card.MovementPhase(movement)).run();
+        actionCommands.get(card.parameters.movementPhaseAction).run();
     }
 
     public void jumpUp(){
@@ -120,9 +144,21 @@ public class MovementPhase {
 
     public void minotauro(){
 
-        if(position.getValue() == 1)
-            //non so come trovare lo square di destinazione
-            board.move(position ,point); //questa funzione dovrà limitarsi a spostare la pedina avversaria
+        if(position.getValue() == 1){
+
+            int builderX = builder.getPosition().x;
+            int builderY = builder.getPosition().y;
+
+            int positionX = position.x;
+            int positionY = position.y;
+
+            int a = 2 * positionX - builderX;
+            int b = 2 * positionY - builderY;
+
+            board.move(position ,board.fullMap[a][b]);  //questa funzione dovrà limitarsi a spostare la pedina avversaria
+
+        }
+
     }
 
 
