@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.Client.Client;
+import it.polimi.ingsw.Observer.Observer;
 import it.polimi.ingsw.Server.Controller.GameInitializer;
 
 import java.util.List;
