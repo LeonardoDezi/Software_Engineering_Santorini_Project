@@ -5,7 +5,7 @@ import java.io.IOException;
 public class ServerApp {
     public static void main( String[] args )
     {
-        MultiEchoServer server = new MultiEchoServer(1337); //la porta va data con il parser
+        Server server = new Server(1337); //la porta va data con il parser
         try {
             server.startServer();
         } catch(IOException e) {
