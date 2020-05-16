@@ -90,16 +90,13 @@ public class TurnManager {
 
 
                     game.getBoard().move(lastPosition, position);  //movimento effettivo
-
-                    winPhase.winCheck(lastPosition, position);     //RIGUARDARE WINPHASE
+                    winPhase.winCheck(lastPosition, position);
 
 //specialPhase2
                     moves1 = specialPhase2.getMoves(player, builder, lastPosition );
                     //if(moves1== null) oppure gli mandiamo null? Ricezione di cosa bisogna fare
                     specialPhase2.actionMethod(builder, position);
-
-                    //DISCUTERE DI QUESTO PUNTO
-                    winPhase.movement(levelStart,levelEnd);   //RIGUARDARE WINPHASE
+                    winPhase.winCheck(lastPosition, position);
 
 
 
@@ -110,8 +107,6 @@ public class TurnManager {
                     //ricezione dello square e l'isDome
                     buildingPhase.actionMethod(builder, position, isDome);
 
-                    //DISCUTERE DI QUESTO PUNTO
-                    winPhase.building();    //RIGUARDARE WINPHASE
 
 //specialPhase3
                     lastPosition = position;
@@ -122,8 +117,7 @@ public class TurnManager {
                     specialPhase3.actionMethod(builder, position, isDome);
 
 
-                    //DISCUTERE DI QUESTO PUNTO
-                    winPhase.building();
+                    winPhase.winCheck(lastPosition, position);
 
                     if (game.getGameEnded()) {
                         //finalMethod();

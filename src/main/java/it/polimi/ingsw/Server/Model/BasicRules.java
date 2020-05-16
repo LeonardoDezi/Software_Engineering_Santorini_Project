@@ -27,19 +27,11 @@ public class BasicRules{
     }
 
 
-    //da riscrivere tutto
-    public void winCondition(Builder builder, int x, int y) {
-        Square actualPosition = builder.getPosition();
-        if (actualPosition.getLevel() == 2) {
-            if (board.fullMap[x][y].getLevel() == 3) {
-                String colour = builder.getColour();
-                int i = 0;
-                while (game.playerList.get(i) != null) {
-                    if (game.playerList.get(i).colour.equals(colour)) {
-                        //   endGame(game.playerList.get(i));   SOLO PER TESTARE
-                    }
-                    i++;
-                }
+    //problemi di controllo che non siano square qualunque?
+    public void winCondition(Square initialPosition, Square finalPosition) {
+        if (initialPosition.getLevel() == 2) {
+            if (finalPosition.getLevel() == 3) {
+                game.setGameEnded(true);
             }
         }
     }
