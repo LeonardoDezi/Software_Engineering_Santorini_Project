@@ -64,12 +64,11 @@ public class TurnManager {
                 if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
 
                     //ricezione mossa
-                    specialPhase1.actionMethod();
+                    if(/* mossa valida) */)
+                    specialPhase1.actionMethod(builder, position);
 
                     //ATTENZIONE ATHENA
 
-
-                    //DOBBIAMO ANCORA FARE SPECIALPHASE1 (parte2)
 
                 }
 
@@ -85,25 +84,22 @@ public class TurnManager {
                     // builder è il builder ottenuto con il return
                     lastPosition = builder.getPosition();
                     //magari lo racchiudiamo dentro un if così da risparmiarci questo passaggio per le carte che non hanno bisogno di movement
-                    movementPhase.movement(builder, position);   //li diamo in ingresso il builder e lo square di destinazione
+                    movementPhase.actionMethod(builder, position);   //li diamo in ingresso il builder e lo square di destinazione
 
                     //salviamo i valori dei livelli in modo tale che non vengano successivamente modificati
 
-                    levelEnd = position.getLevel();   // forse basta dichiararle qui invece che su
-                    levelStart =lastPosition.getLevel();
 
                     game.getBoard().move(lastPosition, position);  //movimento effettivo
 
-                    //DISCUTERE DI QUESTO PUNTO
-                    winPhase.movement(levelStart, levelEnd);
+                    winPhase.winCheck(lastPosition, position);     //RIGUARDARE WINPHASE
 
 //specialPhase2
                     moves1 = specialPhase2.getMoves(player, builder, lastPosition );
                     //if(moves1== null) oppure gli mandiamo null? Ricezione di cosa bisogna fare
-                    specialPhase2.genericMethod(builder, position);
+                    specialPhase2.actionMethod(builder, position);
 
                     //DISCUTERE DI QUESTO PUNTO
-                    winPhase.movement(levelStart,levelEnd);
+                    winPhase.movement(levelStart,levelEnd);   //RIGUARDARE WINPHASE
 
 
 
@@ -112,10 +108,10 @@ public class TurnManager {
                     moves1 = buildingPhase.getMoves(player, builder);
                     //invio delle mosse
                     //ricezione dello square e l'isDome
-                    buildingPhase.building(builder, position, isDome);
+                    buildingPhase.actionMethod(builder, position, isDome);
 
                     //DISCUTERE DI QUESTO PUNTO
-                    winPhase.building();
+                    winPhase.building();    //RIGUARDARE WINPHASE
 
 //specialPhase3
                     lastPosition = position;
@@ -123,9 +119,8 @@ public class TurnManager {
                     //invio delle mosse
                     //ricezione dello square e l'isDome
 
-                 //   specialPhase3.genericMethod(builder, position);  per ora questo metodo non serve non so se metterlo per future implementazioni
+                    specialPhase3.actionMethod(builder, position, isDome);
 
-                    game.getBoard().build(position, isDome);
 
                     //DISCUTERE DI QUESTO PUNTO
                     winPhase.building();
@@ -151,3 +146,4 @@ public class TurnManager {
     }
 
 }
+

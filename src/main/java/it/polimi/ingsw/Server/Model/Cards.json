@@ -6,7 +6,7 @@
       {
         "specialPhase1Moves": null,
         "specialPhase1Action": null,
-        "movementPhaseMoves": null,
+        "movementPhaseMoves": "swap",
         "movementPhaseAction": null,
         "specialPhase2Moves": null,
         "specialPhase2Action": null,
@@ -29,8 +29,8 @@
         "specialPhase1Action": null,
         "movementPhaseMoves": null,
         "movementPhaseAction": null,
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
+        "specialPhase2Moves": "doubleNotSameMove",
+        "specialPhase2Action": "doubleNotSame",
         "buildingPhaseMoves": null,
         "buildingPhaseAction": null,
         "specialPhase3Moves": null,
@@ -46,10 +46,10 @@
     "name": "Athena",
     "parameters": [
       {
-        "specialPhase1Moves": null,
+        "specialPhase1Moves": "restore",
         "specialPhase1Action": null,
         "movementPhaseMoves": null,
-        "movementPhaseAction": null,
+        "movementPhaseAction": "jumpUp",
         "specialPhase2Moves": null,
         "specialPhase2Action": null,
         "buildingPhaseMoves": null,
@@ -69,7 +69,7 @@
       {
         "specialPhase1Moves": null,
         "specialPhase1Action": null,
-        "movementPhaseMoves": null,
+        "movementPhaseMoves": "askForDome",
         "movementPhaseAction": null,
         "specialPhase2Moves": null,
         "specialPhase2Action": null,
@@ -96,7 +96,7 @@
         "specialPhase2Action": null,
         "buildingPhaseMoves": null,
         "buildingPhaseAction": null,
-        "specialPhase3Moves": null,
+        "specialPhase3Moves": "notSameSquare",
         "specialPhase3Action": null,
         "winPhase": null
 
@@ -115,7 +115,7 @@
         "movementPhaseAction": null,
         "specialPhase2Moves": null,
         "specialPhase2Action": null,
-        "buildingPhaseMoves": null,
+        "buildingPhaseMoves": "sameSquareNotDome",
         "buildingPhaseAction": null,
         "specialPhase3Moves": null,
         "specialPhase3Action": null,
@@ -132,8 +132,8 @@
       {
         "specialPhase1Moves": null,
         "specialPhase1Action": null,
-        "movementPhaseMoves": null,
-        "movementPhaseAction": null,
+        "movementPhaseMoves": "push",
+        "movementPhaseAction": "pushAction",
         "specialPhase2Moves": null,
         "specialPhase2Action": null,
         "buildingPhaseMoves": null,
@@ -161,7 +161,7 @@
         "buildingPhaseAction": null,
         "specialPhase3Moves": null,
         "specialPhase3Action": null,
-        "winPhase": null
+        "winPhase": "jumpDown"
 
       }
     ]
@@ -173,9 +173,9 @@
     "parameters": [
       {
         "specialPhase1Moves": "additionalBuild",
-        "specialPhase1Action": null,
+        "specialPhase1Action":"specialBuild",
         "movementPhaseMoves": null,
-        "movementPhaseAction": null,
+        "movementPhaseAction": "restore",
         "specialPhase2Moves": null,
         "specialPhase2Action": null,
         "buildingPhaseMoves": null,
@@ -194,7 +194,7 @@
     "parameters": [
       {
         "specialPhase1Moves": "oppositeSideMoves",
-        "specialPhase1Action": null,
+        "specialPhase1Action": "moveOpposite",
         "movementPhaseMoves": null,
         "movementPhaseAction": null,
         "specialPhase2Moves": null,
@@ -224,7 +224,7 @@
         "buildingPhaseAction": null,
         "specialPhase3Moves": null,
         "specialPhase3Action": null,
-        "winPhase": null
+        "winPhase": "atLeastFiveTowers"
 
       }
     ]
@@ -233,25 +233,19 @@
   {
     "number": 12,
     "name": "Hestia",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": null,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement": null,
-        "samesquare": null,
-        "building": 1,
-        "moveOpponent": null,
-        "beforeMovement": null,
-        "win": null,
-        "dome": null,
-        "perimetersquare": false
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": null,
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": "notPerimeter",
+        "specialPhase3Action": null,
+        "winPhase": null
       }
     ]
   },
@@ -259,25 +253,19 @@
   {
     "number": 13,
     "name": "Selene",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": null,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": "female"
-      }
-    ],
-    "effects": [
-      {
-        "movement": null,
-        "samesquare": null,
-        "building": 1,
-        "moveOpponent": null,
-        "beforeMovement": null,
-        "win": null,
-        "dome": true,
-        "perimetersquare": null
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": "askForFemale",
+        "buildingPhaseAction": null,
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
       }
     ]
   },
@@ -285,25 +273,19 @@
   {
     "number": 14,
     "name": "Zeus",
-    "conditions": [
+    "parameters": [
       {
-        "jump_up": null,
-        "freespace": null,
-        "jump_down": null,
-        "tower_number": null,
-        "buildergender": null
-      }
-    ],
-    "effects": [
-      {
-        "movement": null,
-        "samesquare": true,
-        "building": null,
-        "moveOpponent": null,
-        "beforeMovement": null,
-        "win": null,
-        "dome": null,
-        "perimetersquare": null
+        "specialPhase1Moves": null,
+        "specialPhase1Action": null,
+        "movementPhaseMoves": null,
+        "movementPhaseAction": null,
+        "specialPhase2Moves": null,
+        "specialPhase2Action": null,
+        "buildingPhaseMoves": "addBuilderPosition",
+        "buildingPhaseAction": "buildBelowYou",
+        "specialPhase3Moves": null,
+        "specialPhase3Action": null,
+        "winPhase": null
       }
     ]
   }

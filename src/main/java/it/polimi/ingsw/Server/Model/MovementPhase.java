@@ -45,8 +45,8 @@ public class MovementPhase {
 
         //Movement
         actionCommands.put("jumpUp", this::jumpUp);
-        actionCommands.put("push2", this::minotauro); //cambiare TUTTI i nomi
-        actionCommands.put("restore", () -> {basicRules.setMaxHeight(1);});  //da usare quando Prometeo termina il suo turno e non poteva salire
+        actionCommands.put("pushAction", this::pushAction); //Minotauro
+        actionCommands.put("restore", () -> {basicRules.setMaxHeight(1);});  //Prometeo
         actionCommands.put(null, () -> {});
 
     }
@@ -73,9 +73,9 @@ public class MovementPhase {
 
     public void swapMoves() {
 
-        HashMap<String, Runnable> cardMap = new HashMap<>();  // cambiare il nome
+        HashMap<String, Runnable> cardMap = new HashMap<>();
         cardMap.put("swap",()->{});
-        cardMap.put("push", this::pushMoves);  //cambiare i nomi
+        cardMap.put("push", this::pushMoves);
         cardMap.put(null, ()->{}); //non necessaria la metto per eventuali casi futuri
 
 
@@ -118,16 +118,10 @@ public class MovementPhase {
 
     }
 
-    //cancellare
-   /* public void zeus(){
-        possibleMoves = basicRules.removeBuilderSquare(possibleMoves);
-        possibleMoves.add(builder.getPosition());
-    }*/
-
 
 
 //movement
-    public void movement(Builder builder, Square arrival){
+    public void actionMethod(Builder builder, Square arrival){
         // qui player e card non vengono aggiornati. rimangono quelli impostati precedentemente
         this.builder = builder;
         this.position = arrival;
@@ -142,7 +136,7 @@ public class MovementPhase {
     }
 
 
-    public void minotauro(){
+    public void pushAction(){
 
         if(position.getValue() == 1){
 

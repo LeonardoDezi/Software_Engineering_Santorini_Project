@@ -13,6 +13,7 @@ public class WinPhase {
 
     private Card card;
     private Builder builder;
+    int levelStart, levelEnd;
 
     public WinPhase(Game game){
         basicRules = game.getRules();   // assicurarsi che siano sempre le stesse rules
@@ -25,22 +26,29 @@ public class WinPhase {
 
     public void map(){
         commands = new HashMap<>();
-        commands.put("jump-down", this::pan);
-        commands.put("towerCount", this::towerCount);
+        commands.put("jumpDown", this::jumpDownCondition);
+        commands.put("atLeastFiveTowers", this::atLeastFiveTowers);
     }
 
 
-    public void winCondition(){
-        commands.get(card.parameters.winPhase).run();
-        basicRules.winCondition();
+    public void winCheck(int levelStart, int levelEnd){
+        if(levelStart != -1 && levelEnd != -1) {    //magari poi questa la cambio
+            this.levelStart = levelStart;
+            this.levelEnd = levelEnd;
+            commands.get(card.parameters.winPhase).run();
+            basicRules.winCondition(levelStart, levelEnd);
+        }
 
     }
 
-    public void pan(){
-        // you also win if you Worker moves down two or more levels
+    public void jumpDownCondition(){   //Pan
+        if(levelStart - levelEnd >= 2)
+            game.setGameEnded(true);
     }
-    public void towerCount(){
 
+    public void atLeastFiveTowers(){    //Crono
+        if(board.completedTowers >= 5)
+            game.setGameEnded(true);
     }
-    //come mettere gameEnded uguale a true?
+
 }

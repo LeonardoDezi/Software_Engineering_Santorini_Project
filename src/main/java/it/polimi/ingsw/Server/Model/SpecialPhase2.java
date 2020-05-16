@@ -8,10 +8,11 @@ public class SpecialPhase2 {
     private final Game game;
     private final Board board;
     private final BasicRules basicRules;
-    private HashMap<String, Runnable> commands;
+    private HashMap<String, Runnable> movesCommands;
+    private HashMap<String, Runnable> actionCommands;
 
 
-    private Card card;   //le carte devono essere sempre aggiornateeee
+    private Card card;
     private Builder builder;
     private ArrayList<Square> possibleMoves;
 
@@ -27,14 +28,16 @@ public class SpecialPhase2 {
 
 
     public void map(){
-        commands = new HashMap<>();
+        movesCommands = new HashMap<>();
+        actionCommands = new HashMap<>();
 
         //getMoves
-        commands.put("doubleNotSameMove", this::artemis);  //cambiare i nomi
-        commands.put(null, ()->{possibleMoves = new ArrayList<>();});
+        movesCommands.put("doubleNotSameMove", this::doubleNotSameMove);  //Artemide
+        movesCommands.put(null, ()->{possibleMoves = new ArrayList<>();});
 
-        //generic
-        commands.put("doubleNotSame", ()->{board.move(builder.getPosition(), position);});
+        //actionMethod
+        actionCommands.put("doubleNotSame", ()->{board.move(builder.getPosition(), position);});
+        actionCommands.put(null, ()->{});
     }
 
     public ArrayList<Square> getMoves(Player player, Builder builder, Square position){
@@ -43,11 +46,11 @@ public class SpecialPhase2 {
         this.card = player.getCard();
         this.position = position;
 
-        commands.get(card.parameters.specialPhase1Moves).run();
+        movesCommands.get(card.parameters.specialPhase1Moves).run();
         return possibleMoves;
     }
 
-    public void artemis(){
+    public void doubleNotSameMove(){
 
         possibleMoves = basicRules.proximity(builder);
         possibleMoves = basicRules.removeBuilderSquare(possibleMoves);
@@ -62,18 +65,14 @@ public class SpecialPhase2 {
         }
     }
 
-    public void genericMethod(Builder builder, Square position){
+    public void actionMethod(Builder builder, Square position){
 
         this.builder = builder;  //forse non serve?
         this.position = position;
 
-        commands.get(card.parameters.specialPhase2Action).run();
+        actionCommands.get(card.parameters.specialPhase2Action).run();
     }
 
 
-    /*artemide
-    public void doubleNotSame(){
-
-    }*/
 
 }

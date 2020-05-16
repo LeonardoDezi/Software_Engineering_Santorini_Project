@@ -8,8 +8,8 @@ public class SpecialPhase3 {
     private final Game game;
     private final Board board;
     private final BasicRules basicRules;
-    private HashMap<String, Runnable> commands;
-
+    private HashMap<String, Runnable> movesCommands;
+    private HashMap<String, Runnable> actionCommands;
 
     private Card card;
     private Builder builder;
@@ -30,13 +30,17 @@ public class SpecialPhase3 {
 
 
     public void map(){
-        commands = new HashMap<>();
+        movesCommands = new HashMap<>();
+        actionCommands = new HashMap<>();
 //getMoves
-        commands.put(null, ()->{possibleMoves = new ArrayList<>();});
-        commands.put("notSameSquare", this::notSameSquare);
-        commands.put("sameSquareNotDome", this::sameSquareNotDome);
-        commands.put("notPerimeter", this::notPerimeter);
+        movesCommands.put(null, ()->{possibleMoves = new ArrayList<>();});
+        movesCommands.put("notSameSquare", this::notSameSquare); //Demeter
+        movesCommands.put("sameSquareNotDome", this::sameSquareNotDome); //hephaestus
+        movesCommands.put("notPerimeter", this::notPerimeter);
+//actionMethod
+        actionCommands.put(null, ()->{});
     }
+
 
     public ArrayList<Square> getMoves(Player player, Builder builder, Square lastPosition){
 
@@ -45,7 +49,7 @@ public class SpecialPhase3 {
         this.position = lastPosition;
 
         possibleMoves= basicRules.getBuildingRange(builder);
-        commands.get(card.parameters.specialPhase3Moves).run();
+        movesCommands.get(card.parameters.specialPhase3Moves).run();
 
         return possibleMoves;
     }
@@ -74,6 +78,14 @@ public class SpecialPhase3 {
                 i--;
             }
         }
+    }
+
+    public void actionMethod(Builder builder, Square position, boolean isDome){
+        this.builder = builder;
+        this.position = position;
+
+        actionCommands.get(card.parameters.specialPhase3Action).run();
+        board.build(position, isDome);
     }
 
 

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-public class BasicRulesTest {
+/*public class BasicRulesTest {
 
     private Game game;
     private Board board;
@@ -118,3 +118,5 @@ public class BasicRulesTest {
 
     }
 }
+
+*/

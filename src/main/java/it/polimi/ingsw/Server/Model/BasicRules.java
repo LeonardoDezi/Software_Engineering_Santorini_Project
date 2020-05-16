@@ -27,6 +27,7 @@ public class BasicRules{
     }
 
 
+    //da riscrivere tutto
     public void winCondition(Builder builder, int x, int y) {
         Square actualPosition = builder.getPosition();
         if (actualPosition.getLevel() == 2) {

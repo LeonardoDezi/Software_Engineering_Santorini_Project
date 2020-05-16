@@ -16,7 +16,7 @@ public class Player {
     protected ArrayList<Builder> builders;   // perchè  protected?
     public final String colour;     // secondo me possiamo metterlo public e cancellare getColour
     protected Game game;   // perchè protected?
-    protected Rules rules; //QUIII
+    protected BasicRules rules; //QUIII
 
 
     /**

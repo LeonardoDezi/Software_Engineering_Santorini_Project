@@ -8,7 +8,8 @@ public class BuildingPhase{
     private final Game game;
     private final Board board;
     private final BasicRules basicRules;
-    private HashMap<String, Runnable> commands;
+    private HashMap<String, Runnable> movesCommands;
+    private HashMap<String, Runnable> actionCommands;
 
 
     private Card card;
@@ -28,15 +29,17 @@ public class BuildingPhase{
 
 
     public void map(){
-        commands = new HashMap<>();
+        movesCommands = new HashMap<>();
+        actionCommands = new HashMap<>();
 
-        commands.put(null, () ->{});
 //getMoves
-        commands.put("ZeusMove", this::addBuilderPosition);
-        commands.put("dome", this::askForDome);
-        commands.put("female", this::askForFemale);
+        movesCommands.put(null, () ->{});
+        movesCommands.put("addBuilderPosition", this::addBuilderPosition);  //zeus
+        movesCommands.put("askForDome", this::askForDome);
+        movesCommands.put("askForFemale", this::askForFemale);
 //building
-        commands.put("ZeusBuild", this::buildBelowYou);
+        actionCommands.put("buildBelowYou", this::buildBelowYou);
+        actionCommands.put(null, () ->{});
 
 
 
@@ -47,7 +50,7 @@ public class BuildingPhase{
          this.builder = builder;
          this.card = player.getCard();
          possibleMoves = basicRules.getBuildingRange(builder);
-         commands.get(card.parameters.buildingPhaseMoves).run();
+         movesCommands.get(card.parameters.buildingPhaseMoves).run();
          return possibleMoves;
     }
 
@@ -67,11 +70,11 @@ public class BuildingPhase{
     }
 
 
-    public void building(Builder builder, Square position, boolean isDome){
+    public void actionMethod(Builder builder, Square position, boolean isDome){
         this.builder = builder;
         this.position = position;
         if(position.equals(builder.getPosition()))   // questo if mi sembra legittimo dato che credo che l'unico modo
-           commands.get(Card.AltroParametroBuildingPhase).run(); // in cui possiamo infrangere le regole arrivati a questo punto è che i due square coincidano
+           actionCommands.get(card.parameters.buildingPhaseAction).run(); // in cui possiamo infrangere le regole arrivati a questo punto è che i due square coincidano
 
            board.build(position, isDome);
     }

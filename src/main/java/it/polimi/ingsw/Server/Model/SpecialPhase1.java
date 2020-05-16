@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SpecialPhase1 {
-    //mi sa che conviene passare il giocatore facciamo prima
+
 
     private final Game game;
     private final Board board;
@@ -14,9 +14,10 @@ public class SpecialPhase1 {
 
     private Card card;
     private Builder builder;
+    private Square position;
     private ArrayList<Square> possibleMoves;
 
-    //terminare la seconda parte di specialPhase1
+
 
     public SpecialPhase1(Game game){
         basicRules = game.getRules();   // assicurarsi che siano sempre le stesse rules
@@ -33,11 +34,15 @@ public class SpecialPhase1 {
         movesCommands = new HashMap<>();
         actionCommands = new HashMap<>();
     //getMoves
-        movesCommands.put("additionalBuild", () -> {possibleMoves = basicRules.getBuildingRange(builder);});
+        movesCommands.put("additionalBuild", () -> {possibleMoves = basicRules.getBuildingRange(builder);}); //Prometeo
         movesCommands.put("oppositeSideMoves", this::oppositeSideMoves);  //caronte
         movesCommands.put(null, () ->{possibleMoves = new ArrayList<>();});    //controllare maxHeight
-    //actionMethod
-        actionCommands.put("restore", this::restore);  //Athena
+        movesCommands.put("restore", this::restore);  //Athena
+        //actionMethod
+
+        actionCommands.put(null, ()->{});  //forse non serve
+        actionCommands.put("specialBuild", this::specialBuild);  //Prometeo
+        actionCommands.put("moveOpposite", this::moveOpposite);  //Caronte
     }
 
 
@@ -48,7 +53,7 @@ public class SpecialPhase1 {
 
         this.builder = builder;
         this.card = player.getCard();
-        movesCommands.get(card.parameters.specialPhase1Action).run();
+        movesCommands.get(card.parameters.specialPhase1Moves).run();
         return possibleMoves;
     }
 
@@ -92,9 +97,44 @@ public class SpecialPhase1 {
 
     }
 
-
     public void restore(){   //se athena aveva modificato maxHeight questo lo ristabilirà
         basicRules.setMaxHeight(1);
         possibleMoves = new ArrayList<>();
     }
+
+
+
+
+    public void actionMethod(Builder builder, Square position){
+        this.builder = builder;
+        this.position = position;
+        actionCommands.get(card.parameters.specialPhase1Action).run();
+    }
+
+    public void specialBuild(){
+        board.build(position, false);
+        basicRules.setMaxHeight(0);
+    }
+
+    public void moveOpposite(){
+
+        int builderX = builder.getPosition().x;
+        int builderY = builder.getPosition().y;
+
+        int positionX = position.x;
+        int positionY = position.y;
+
+        int a = 2 * builderX - positionX;
+        int b = 2 * builderY - positionY;
+
+        Square destination = board.fullMap[a][b];
+        board.move(position, destination);
+
+    }
+
+
+
+
+
+
 }
