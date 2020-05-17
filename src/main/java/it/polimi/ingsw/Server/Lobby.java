@@ -1,12 +1,12 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Observer.Observable;
 import it.polimi.ingsw.Observer.Observer;
 
 import java.util.LinkedList;
+import java.util.List;
 
-public class Lobby implements Observable {
+public class Lobby extends Observable {
     private static LinkedList<Client> clients;
     private LinkedList<Observer> observers;
 
@@ -41,22 +41,21 @@ public class Lobby implements Observable {
 
     public Client getFirstClient(){
         Client firstClient = clients.get(0);
-        clients.removeFirst();
+        this.removeClient(clients.get(0));
         return firstClient;
     }
 
     @Override
-    public void add(Observer observer) {
+    public void addObserver(Observer observer) {
 
         this.observers.add(observer);
 
     }
 
     @Override
-    public void remove(Observer observer) {
+    public void removeObserver(Observer observer) {
 
         this.observers.remove(observer);
 
     }
-
 }
