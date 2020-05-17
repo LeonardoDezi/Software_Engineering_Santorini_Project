@@ -37,11 +37,8 @@ public class TurnManager {
         ArrayList<Square> moves1;
         ArrayList<Square> moves2;
 
-
-
         Square lastPosition;
-        int levelEnd;
-        int levelStart;
+
 
         //dobbiamo discutere della winPhase
 
@@ -64,10 +61,12 @@ public class TurnManager {
                 if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
 
                     //ricezione mossa
-                    if(/* mossa valida) */)
+                    if(/* mossa valida) */ )
                     specialPhase1.actionMethod(builder, position);
 
-                    //ATTENZIONE ATHENA
+                    if(game.getGameEnded())
+                        break;
+
 
 
                 }
@@ -86,11 +85,7 @@ public class TurnManager {
                     //magari lo racchiudiamo dentro un if così da risparmiarci questo passaggio per le carte che non hanno bisogno di movement
                     movementPhase.actionMethod(builder, position);   //li diamo in ingresso il builder e lo square di destinazione
 
-                    //salviamo i valori dei livelli in modo tale che non vengano successivamente modificati
 
-
-                    game.getBoard().move(lastPosition, position);  //movimento effettivo
-                    winPhase.winCheck(lastPosition, position);
 
 //specialPhase2
                     moves1 = specialPhase2.getMoves(player, builder, lastPosition );

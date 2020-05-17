@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SpecialPhase1 {
-
+//controllare move e build
+    //vedere se accorpare winCondition
+    //aggiungere gli if in turnManager
 
     private final Game game;
     private final Board board;
@@ -16,6 +18,7 @@ public class SpecialPhase1 {
     private Builder builder;
     private Square position;
     private ArrayList<Square> possibleMoves;
+    private Player player;
 
 
 
@@ -50,7 +53,7 @@ public class SpecialPhase1 {
 
         if(builder == null)   // nel caso di builder non esistente
             return new ArrayList<>();     //ritorna lista vuota  (necessario mettere Square?)
-
+        this.player = player;   //rivedere
         this.builder = builder;
         this.card = player.getCard();
         movesCommands.get(card.parameters.specialPhase1Moves).run();
@@ -112,7 +115,7 @@ public class SpecialPhase1 {
     }
 
     public void specialBuild(){
-        board.build(position, false);
+        basicRules.build(player, position, false);
         basicRules.setMaxHeight(0);
     }
 

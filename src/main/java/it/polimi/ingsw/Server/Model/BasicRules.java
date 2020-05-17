@@ -36,7 +36,7 @@ public class BasicRules{
         }
     }
 
-
+    //forse non serve
     public ArrayList<Square> getPossibleMoves(Builder builder) {
 
         ArrayList<Square> possibleMoves = proximity(builder);
@@ -136,5 +136,20 @@ public class BasicRules{
             }
         }
         return proximity;
+    }
+
+    public void build(Player player, Square position, boolean isDome){
+        board.build(position, isDome);
+        WinPhase winPhase= new WinPhase(game);
+        winPhase.checkBuild(player);
+    }
+
+    public void move(Player player, Square initialPosition, Square position){
+        board.move(initialPosition, position);
+        WinPhase winPhase = new WinPhase(game);
+        winPhase.checkMovement(player, initialPosition, position);
+        winCondition(initialPosition, position);
+        if(game.getGameEnded())
+            game.setWinningPlayer(player);
     }
 }

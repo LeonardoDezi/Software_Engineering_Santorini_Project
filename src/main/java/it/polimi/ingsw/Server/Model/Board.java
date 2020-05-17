@@ -7,6 +7,7 @@ package it.polimi.ingsw.Server.Model;
 
 
 public class Board {
+
     protected int completedTowers;
 
     protected Square[][] fullMap;   // per ora lo faccio public, ma forse bisogna metterlo square. in quel caso, modificare deploybuilder

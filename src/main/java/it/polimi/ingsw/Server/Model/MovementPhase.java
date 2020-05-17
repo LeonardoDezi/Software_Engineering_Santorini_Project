@@ -17,6 +17,8 @@ public class MovementPhase {
     private Builder builder;
     private ArrayList<Square> possibleMoves;
 
+    private Player player;
+
     //servono?
     private Square position;
     private String playerColour; // al posto di player colour magari mettere per tutti un player?
@@ -58,6 +60,7 @@ public class MovementPhase {
             return new ArrayList<>();     //ritorna lista vuota  (necessario mettere Square?)
 
         //è necessaria?
+        this.player = player;   //quii
         this.builder = builder;
         this.card = player.getCard();
 
@@ -126,6 +129,8 @@ public class MovementPhase {
         this.builder = builder;
         this.position = arrival;
         actionCommands.get(card.parameters.movementPhaseAction).run();
+        Square lastPosition = builder.getPosition();
+        basicRules.move(player, lastPosition, position);  //movimento effettivo
     }
 
     public void jumpUp(){
