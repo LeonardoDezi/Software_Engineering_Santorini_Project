@@ -11,9 +11,5 @@ public class ServerApp {
         } catch(IOException e) {
             System.err.println(e.getMessage());
         }
-
     }
-
-
-
 }

@@ -1,9 +1,11 @@
 package it.polimi.ingsw.Parser;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.Server.Model.Card;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -15,18 +17,25 @@ public class ParserManager {
 
     private ArrayList<Card> cards;
 
-    public Card getCard(int num){
+    public Card getCard(int num) {
         return cards.get(num);
     }
 
-    public void upload() throws IOException {
+    public void update() {
 
-        Gson gson = new Gson();
-        Reader reader = Files.newBufferedReader(Paths.get("Cards.json"));
-        ArrayList<Card> cards = new Gson().fromJson(reader, new TypeToken<List<Card>>() {}.getType());
-        cards.forEach(System.out::println);
-        reader.close();
+        Gson gson = new GsonBuilder().serializeNulls().create();
+
+        try (Reader reader = new FileReader("Cards.json")) {
+
+            // Convert JSON File to Java Object
+            Card card = gson.fromJson(reader, Card.class);
+
+            // print staff
+            System.out.println(card);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
-
 }

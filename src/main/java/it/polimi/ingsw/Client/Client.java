@@ -11,10 +11,11 @@ import java.util.Scanner;
 
 public class Client {
 
+    private int clientID;
     private String ip;
     private int port;
 
-    public Client(String ip, int port){
+    public Client(int clientID, String ip, int port){
         this.ip = ip;
         this.port = port;
     }
