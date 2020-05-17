@@ -14,19 +14,21 @@ public class Player {
     protected Card card;  //perchè protected?
     public final String playerID;   // secondo me possiamo metterlo public e cancellare getPlayerID
     protected ArrayList<Builder> builders;   // perchè  protected?
-    public final String colour;     // secondo me possiamo metterlo public e cancellare getColour
+    public final String colour;
     protected Game game;   // perchè protected?
     protected BasicRules rules; //QUIII
+    public final int clientID;
 
 
     /**
      * creates a new player and the array list that is used to save the players builders.
      * @param playerID is the id that identifies the player.
      */
-    public Player(String playerID, String colour, Game game) {
+    public Player(String playerID, String colour, Game game,int clientID) {
 
         this.playerID = playerID;
         this.colour = colour;
+        this.clientID = clientID;
         builders = new ArrayList<>();
         isPlayerTurn = false;    // servirà mai?
         this.game=game;
@@ -109,10 +111,6 @@ public class Player {
         }catch(IndexOutOfBoundsException e) {
             System.out.println("The builder " + builderId + "doesn't exist");
         }
-    }
-
-    public String getColour(){
-        return this.colour;
     }
 
 }

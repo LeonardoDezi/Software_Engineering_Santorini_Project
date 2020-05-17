@@ -1,8 +1,7 @@
 package it.polimi.ingsw.Observer;
 
-public interface Observer<T> {
+public interface Observer {
 
-        void update(T message);
-
+        void update();
 }
 

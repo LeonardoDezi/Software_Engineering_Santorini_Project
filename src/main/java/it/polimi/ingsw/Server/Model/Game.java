@@ -19,20 +19,22 @@ public class Game {
     private ArrayList<Card> chosenCards;
     private ArrayList<Card> deck;     //lo lasciamo?
     private Dealer dealer;
-                           // identificatore numerico per differenziare le partite?
+    public final Integer numberOfPlayers;
     protected BasicRules basic;
 
     /**
      * creates a new game.
      */
-    public Game(){     //da mettere un identificativo partita?
+    public Game(Integer numberOfPlayers){     //da mettere un identificativo partita?
         gameBoard = new Board();
         gameEnded = false;
         playerList = new ArrayList<>();
         chosenCards = new ArrayList<>();
         basic = new BasicRules(gameBoard, this);
-         //dobbiamo decidere se togliere o meno deck. Se lo lasciamo lo dobbiamo implementare
+        this.numberOfPlayers=numberOfPlayers;
+
     }
+
 
     public ArrayList<Player> getPlayerList() {
        return this.playerList;
@@ -44,27 +46,17 @@ public class Game {
 
     /**
      * adds a new player to the game.
-     * @param name is the id of the player.
+     * @param player is the player object.
      */
-    public void addPlayer(String name){
-        // E se mettessimo enumerazioni?
-        switch(playerList.size()){
-            case 0:   //ancora nessun giocatore presente
-                playerList.add(new Dealer(name, "Red", this)); //il primo giocatore sarà sempre il dealer
-                // dealer = (Dealer) playerList.get(0);  nel caso fosse comodo tenerlo da parte: probabilmente dovremo aggiungere un altro test nel caso
-                break;
-            case 1:
-                playerList.add(new Player(name, "Green", this));
-                break;
-            case 2:
-                playerList.add(new Player(name, "Blue", this));
-                break;
-            default:
-                //se playerList.size() >= 3 non fa niente forse dovremmo mettere qualcosa;
+    public Integer addPlayer(Player player){
+
+        if(this.playerList.size()<numberOfPlayers){
+            this.playerList.add(player);
+            return 1;
         }
-
-        //Il controller dovrà avere un contatore che tenga conto di quanti giocatori sono presenti nella partita/lobby
-
+        else {
+            return 0;
+        }
     }
 
     /**
@@ -89,17 +81,22 @@ public class Game {
      * is used to get the deck of all the god cards.
      * @return the deck of cards.
      */
-    public ArrayList<Card> getDeck() {      // da aggiungere  nell'UML se vogliamo mettere la variabile private
+    public ArrayList<Card> getDeck() {
         return deck;
+    }
+
+    public BasicRules getBasic(){
+        return basic;
     }
 
 
 
     /**
      * adds the card chosen by the dealer at the beginning of the game to the list of the available cards for the other players.
-     * @param card is the card choosen by the dealer.
+     * @param cardNumber is the number that identifies the card choosen by the dealer.
      */
-    public void addChosenCard(Card card){    // da aggiungere all'UML
+    public void addChosenCard(Integer cardNumber){    // da aggiungere all'UML
+        Card card = deck.get(cardNumber);
         chosenCards.add(card);
     }
 
@@ -109,23 +106,18 @@ public class Game {
     /**
      * puts a new builder on the board.
      * @param player is the player that is deploying the builder.
-     * @param x is the x coordinate of the square where the player wants to put the builder
-     * @param y is the y coordinate of the square where the player wants to put the builder
+     * @param placement is the square where the player wants to put the builder
      */
-    public void deployBuilder(Player player, int x, int y){
-
-        Square position;
-        //if(isPlayerTurn == true) {   serve?
-
-        if(player.getBuilderSize() == 2){   //ATTENZIONE: DOBBIAMO ACCERTARCI CHE size() sarà sempre o 0 o 1 o 2 in qualche modo
-            System.out.println("Error:" + player.getPlayerID() + "has already deployed all the builders");   //non possiamo lasciare questo
-            //    isPlayerTurn = false;   Serve? compito del controller magari?
+    public void deployBuilder(Player player, Square placement){
+        Integer x = placement.x;
+        Integer y = placement.y;
+        if(player.getBuilderSize() == 2){
+            System.out.println("Error:" + player.getPlayerID() + "has already deployed all the builders");
         } else {
-            position = gameBoard.fullMap[x][y];  //mettere fullMap public o private?
-            if(position.getValue() == 1)
+            if(gameBoard.fullMap[x][y].getValue() == 1)
                 System.out.println("Error: Square already occupied by another player");
             else
-                player.addBuilder(position);   //aggiungi alla lista dei builder del giocatore
+                player.addBuilder(placement);   //aggiungi alla lista dei builder del giocatore
             System.out.println("Builder deployed");  //non possiamo lasciare questo
         }
 

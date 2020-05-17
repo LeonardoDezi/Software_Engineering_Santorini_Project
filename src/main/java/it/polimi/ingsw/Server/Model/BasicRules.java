@@ -66,7 +66,7 @@ public class BasicRules{
 
     }
 
-
+    //TODO implement loseCondition
     public void loseCondition() {
     }
 
@@ -137,4 +137,18 @@ public class BasicRules{
         }
         return proximity;
     }
+
+    public ArrayList<Square> getFreeSquares(){
+        ArrayList<Square> freeSquares = null;
+        for(int i=0; i<5; i++){
+            for(int j=0; j<5; j++){
+                if(game.gameBoard.fullMap[i][j].getValue()==0){
+                    Square square = game.gameBoard.fullMap[i][j];
+                    freeSquares.add(square);
+                }
+            }
+        }
+    return freeSquares;
+    }
+
 }
