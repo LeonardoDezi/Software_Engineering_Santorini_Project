@@ -61,9 +61,10 @@ public class TurnManager {
                 moves2 = specialPhase1.getMoves(player, builder2);
 
                 if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
-
+                    //netInterface.sendMessage()
+                    //move=netInterface.getMove(moves1, builder1, moves2, builder2, player) @ensures mossa valida
                     //ricezione mossa
-                    if(/* mossa valida) */)
+                    if(/* move!=null */)
                     specialPhase1.actionMethod(builder, position);
 
                     //ATTENZIONE ATHENA

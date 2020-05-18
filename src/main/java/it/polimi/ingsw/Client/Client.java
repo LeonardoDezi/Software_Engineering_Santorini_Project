@@ -2,6 +2,8 @@ package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Server.Model.Board;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -15,7 +17,7 @@ public class Client {
     private String ip;
     private int port;
 
-    public Client(int clientID, String ip, int port){
+    public Client(String ip, int port){
         this.ip = ip;
         this.port = port;
     }
@@ -73,7 +75,7 @@ public class Client {
         return t;
     }
 
-    public void startClient() throws IOException {
+    public void startConnection() throws IOException {
 
         Socket socket = new Socket(ip, port);
         System.out.println("Connection established");
@@ -94,6 +96,22 @@ public class Client {
             socketOut.close();
             socket.close();
         }
+    }
+
+    public void startClient(){
+        //TODO aggiungi runnable
+        SwingUtilities.
+        JFrame frame = new JFrame("Santorini");
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Integer screenHeight = screenSize.height;
+        Integer screenWidth = screenSize.width;
+        frame.setSize(screenWidth, screenHeight);
+
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
+
     }
 
 }
