@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SpecialPhase1 {
-//controllare move e build
-    //vedere se accorpare winCondition
+
     //aggiungere gli if in turnManager
 
     private final Game game;
@@ -14,7 +13,6 @@ public class SpecialPhase1 {
     private HashMap<String, Runnable> movesCommands;
     private HashMap<String, Runnable> actionCommands;
 
-    private Card card;
     private Builder builder;
     private Square position;
     private ArrayList<Square> possibleMoves;
@@ -23,26 +21,23 @@ public class SpecialPhase1 {
 
 
     public SpecialPhase1(Game game){
-        basicRules = game.getRules();   // assicurarsi che siano sempre le stesse rules
+        basicRules = game.getRules();
         this.game = game;
         this.board = game.getBoard();
         map();
     }
 
-    /*public SpecialPhase1(){
-        map();
-    }*/     //altra possibilità: passare il player contenente il game. in questo modo potremmo fare il multi partita?
 
     public void map(){
         movesCommands = new HashMap<>();
         actionCommands = new HashMap<>();
     //getMoves
         movesCommands.put("additionalBuild", () -> {possibleMoves = basicRules.getBuildingRange(builder);}); //Prometeo
-        movesCommands.put("oppositeSideMoves", this::oppositeSideMoves);  //caronte
+        movesCommands.put("oppositeSideMoves", this::oppositeSideMoves);  //Caronte
         movesCommands.put(null, () ->{possibleMoves = new ArrayList<>();});    //controllare maxHeight
         movesCommands.put("restore", this::restore);  //Athena
-        //actionMethod
 
+    //actionMethod
         actionCommands.put(null, ()->{});  //forse non serve
         actionCommands.put("specialBuild", this::specialBuild);  //Prometeo
         actionCommands.put("moveOpposite", this::moveOpposite);  //Caronte
@@ -55,8 +50,7 @@ public class SpecialPhase1 {
             return new ArrayList<>();     //ritorna lista vuota  (necessario mettere Square?)
         this.player = player;   //rivedere
         this.builder = builder;
-        this.card = player.getCard();
-        movesCommands.get(card.parameters.specialPhase1Moves).run();
+        movesCommands.get(player.getCard().parameters.specialPhase1Moves).run();   //player.getCard() e cancelliamo card?
         return possibleMoves;
     }
 
@@ -111,7 +105,7 @@ public class SpecialPhase1 {
     public void actionMethod(Builder builder, Square position){
         this.builder = builder;
         this.position = position;
-        actionCommands.get(card.parameters.specialPhase1Action).run();
+        actionCommands.get(player.getCard().parameters.specialPhase1Action).run();
     }
 
     public void specialBuild(){

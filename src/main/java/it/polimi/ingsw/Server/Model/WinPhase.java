@@ -14,7 +14,9 @@ public class WinPhase {
     private Card card;
     private Builder builder;
     private Square initialPosition, position;
+
     private Player player;
+    private Player participant;
 
     public WinPhase(Game game){
         basicRules = game.getRules();   // assicurarsi che siano sempre le stesse rules
@@ -32,8 +34,9 @@ public class WinPhase {
     }
 
     public void checkBuild(Player player){
+        this.player = player;
         for(Player participant : game.playerList){
-            this.player = player;
+            this.participant = participant;
             commands.get(participant.card.parameters.winBuilding).run();
             if(game.getGameEnded())
                 game.setWinningPlayer(participant);
@@ -44,14 +47,21 @@ public class WinPhase {
             this.player = player;
             this.initialPosition = initialPosition;
             this.position = position;
-            commands.get(card.parameters.winMovement).run();
+        for(Player participant : game.playerList){
+            this.participant = participant;
+            commands.get(participant.card.parameters.winBuilding).run();
+            if(game.getGameEnded())
+                game.setWinningPlayer(participant);
+        }
     }
 
     public void jumpDownCondition(){   //Pan
-        int levelStart = initialPosition.getLevel();
-        int levelEnd = position.getLevel();
-        if(levelStart - levelEnd >= 2)
-            game.setGameEnded(true);
+        if(player.equals(participant)) {
+            int levelStart = initialPosition.getLevel();
+            int levelEnd = position.getLevel();
+            if (levelStart - levelEnd >= 2)
+                game.setGameEnded(true);
+        }
     }
 
     public void atLeastFiveTowers(){    //Crono

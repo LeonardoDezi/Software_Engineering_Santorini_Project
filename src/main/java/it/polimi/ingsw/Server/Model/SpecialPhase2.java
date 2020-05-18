@@ -11,12 +11,11 @@ public class SpecialPhase2 {
     private HashMap<String, Runnable> movesCommands;
     private HashMap<String, Runnable> actionCommands;
 
-
-    private Card card;
     private Builder builder;
-    private ArrayList<Square> possibleMoves;
-
     private Square position;
+    private ArrayList<Square> possibleMoves;
+    private Player player;
+
 
 
     public SpecialPhase2(Game game){
@@ -36,17 +35,17 @@ public class SpecialPhase2 {
         movesCommands.put(null, ()->{possibleMoves = new ArrayList<>();});
 
         //actionMethod
-        actionCommands.put("doubleNotSame", ()->{board.move(builder.getPosition(), position);});
+        actionCommands.put("doubleNotSame", ()->{basicRules.move(player, builder.getPosition(), position);});
         actionCommands.put(null, ()->{});
     }
 
     public ArrayList<Square> getMoves(Player player, Builder builder, Square position){
 
+        this.player = player;
         this.builder = builder;
-        this.card = player.getCard();
         this.position = position;
 
-        movesCommands.get(card.parameters.specialPhase2Moves).run();
+        movesCommands.get(player.getCard().parameters.specialPhase2Moves).run();
         return possibleMoves;
     }
 
@@ -67,10 +66,10 @@ public class SpecialPhase2 {
 
     public void actionMethod(Builder builder, Square position){
 
-        this.builder = builder;  //forse non serve?
+        this.builder = builder;
         this.position = position;
 
-        actionCommands.get(card.parameters.specialPhase2Action).run();
+        actionCommands.get(player.getCard().parameters.specialPhase2Action).run();
     }
 
 

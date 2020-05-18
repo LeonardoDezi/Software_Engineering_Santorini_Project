@@ -5,29 +5,24 @@ import java.util.HashMap;
 
 public class MovementPhase {
 
-    //revisionare gli attributi
+
     private final Game game;
     private final Board board;
     private final BasicRules basicRules;
     private HashMap<String, Runnable> movesCommands;
     private HashMap<String, Runnable> actionCommands;
 
-
-    private Card card;
     private Builder builder;
+    private Square position;
     private ArrayList<Square> possibleMoves;
-
     private Player player;
 
-    //servono?
-    private Square position;
-    private String playerColour; // al posto di player colour magari mettere per tutti un player?
     private int i;
 
 
 
     public MovementPhase(Game game){
-        basicRules = game.getRules();   // assicurarsi che siano sempre le stesse rules
+        basicRules = game.getRules();
         this.game = game;
         this.board = game.getBoard();
         map();
@@ -59,17 +54,14 @@ public class MovementPhase {
         if(builder == null)   // nel caso di builder non esistente
             return new ArrayList<>();     //ritorna lista vuota  (necessario mettere Square?)
 
-        //è necessaria?
-        this.player = player;   //quii
+        this.player = player;
         this.builder = builder;
-        this.card = player.getCard();
 
-        possibleMoves = basicRules.proximity(builder); // mappa il circondario del builder
-        possibleMoves = basicRules.removeDomeSquare(possibleMoves); // queste condizioni vengono rispettate da tutte le carte FORSE POSSIAMO SEMPLIFICARLA
-        possibleMoves = basicRules.removeTooHighPlaces(possibleMoves, builder); // queste condizioni vengono rispettate da tutte le carte
+        possibleMoves = basicRules.proximity(builder);
+        possibleMoves = basicRules.removeDomeSquare(possibleMoves);
+        possibleMoves = basicRules.removeTooHighPlaces(possibleMoves, builder);
 
-        playerColour = builder.getColour();
-        movesCommands.get(card.parameters.movementPhaseMoves).run();
+        movesCommands.get(player.getCard().parameters.movementPhaseMoves).run();
 
         return possibleMoves;
     }
@@ -84,13 +76,13 @@ public class MovementPhase {
 
         for (i = 0; i < possibleMoves.size(); i++) {
             if (possibleMoves.get(i).getValue() == 1) {
-                if (possibleMoves.get(i).getBuilder().getColour().equals(playerColour)) {   //pedine dello stesso giocatore
+                if (possibleMoves.get(i).getBuilder().getColour().equals(player.getColour())) {   //pedine dello stesso giocatore
                     possibleMoves.remove(i);
                     i--;
                 }
                 else {
                     position = possibleMoves.get(i);
-                    cardMap.get(card.parameters.movementPhaseAction).run();
+                    cardMap.get(player.getCard().parameters.movementPhaseAction).run();
                 }
             }
         }
@@ -125,10 +117,9 @@ public class MovementPhase {
 
 //movement
     public void actionMethod(Builder builder, Square arrival){
-        // qui player e card non vengono aggiornati. rimangono quelli impostati precedentemente
         this.builder = builder;
         this.position = arrival;
-        actionCommands.get(card.parameters.movementPhaseAction).run();
+        actionCommands.get(player.getCard().parameters.movementPhaseAction).run();
         Square lastPosition = builder.getPosition();
         basicRules.move(player, lastPosition, position);  //movimento effettivo
     }

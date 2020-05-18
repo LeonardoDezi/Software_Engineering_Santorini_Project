@@ -5,6 +5,8 @@ package it.polimi.ingsw.Server.Model;
 import java.util.ArrayList;
 
 public class BasicRules{
+    private static final int INITIALLEVEL = 2;
+    private static final int FINALLEVEL = 3;
     private Card card;
     private int maxBuild = 1;
     private int numMoves = 1;
@@ -27,11 +29,12 @@ public class BasicRules{
     }
 
 
-    //problemi di controllo che non siano square qualunque?
-    public void winCondition(Square initialPosition, Square finalPosition) {
-        if (initialPosition.getLevel() == 2) {
-            if (finalPosition.getLevel() == 3) {
+
+    public void winCondition(Player player, Square initialPosition, Square finalPosition) {
+        if (initialPosition.getLevel() == INITIALLEVEL && initialPosition.getValue() == 0) {
+            if (finalPosition.getLevel() == FINALLEVEL && finalPosition.getValue() == 1) {
                 game.setGameEnded(true);
+                game.setWinningPlayer(player);
             }
         }
     }
@@ -148,9 +151,9 @@ public class BasicRules{
         board.move(initialPosition, position);
         WinPhase winPhase = new WinPhase(game);
         winPhase.checkMovement(player, initialPosition, position);
-        winCondition(initialPosition, position);
-        if(game.getGameEnded())
-            game.setWinningPlayer(player);
+        if(!(game.getGameEnded()))
+            winCondition(player, initialPosition, position);
+            
     }
 
     public ArrayList<Square> getFreeSquares(){

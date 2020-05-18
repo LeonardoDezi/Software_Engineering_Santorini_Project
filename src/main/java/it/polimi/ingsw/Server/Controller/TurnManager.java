@@ -5,7 +5,7 @@ import it.polimi.ingsw.Server.Model.*;
 import java.util.ArrayList;
 
 public class TurnManager {
-    private Player currentPlayer;
+
     private Game game;
     private ArrayList<Player> playerList;
 
@@ -43,8 +43,6 @@ public class TurnManager {
         int levelEnd;
         int levelStart;
 
-        //dobbiamo discutere della winPhase
-
         while(!(game.getGameEnded())){
 
             for (Player player : playerList) {  //succederà qualcosa se nel mentre rimuoviamo un giocatore?
@@ -57,7 +55,8 @@ public class TurnManager {
                     builder2 = null;
                 }
 
-                //special phase 1
+//specialPhase1
+
                 moves1 = specialPhase1.getMoves(player, builder1);
                 moves2 = specialPhase1.getMoves(player, builder2);
 
@@ -98,6 +97,8 @@ public class TurnManager {
                     specialPhase2.actionMethod(builder, position);
                     winPhase.winCheck(lastPosition, position);
 
+                    if(game.getGameEnded())
+                        break;
 
 
 //buildingPhase
