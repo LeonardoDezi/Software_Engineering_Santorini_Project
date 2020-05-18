@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class TurnManager {
 
+    //mi devo salvere il valore della netInterface per usarlo in MovementPhase
+
     private Game game;
     private ArrayList<Player> playerList;
 
@@ -37,11 +39,13 @@ public class TurnManager {
         ArrayList<Square> moves1;
         ArrayList<Square> moves2;
 
+        Envelope envelope1;
+        Envelope envelope2;
+        Envelope received;
 
 
         Square lastPosition;
-        int levelEnd;
-        int levelStart;
+
 
         while(!(game.getGameEnded())){
 
@@ -62,13 +66,15 @@ public class TurnManager {
 
                 if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
                     //netInterface.sendMessage()
-                    //move=netInterface.getMove(moves1, builder1, moves2, builder2, player) @ensures mossa valida
-                    //ricezione mossa
-                    if(/* move!=null */)
-                    specialPhase1.actionMethod(builder, position);
+                    envelope1 = new Envelope(moves1, builder1);
+                    envelope2 = new Envelope(moves2, builder2);
+                    //Envelope received =netInterface.getMove(envelope1, envelope2, player) @ensures mossa valida
 
-                    //ATTENZIONE ATHENA
+                    if(/* received.getMove()!=null */)
+                        specialPhase1.actionMethod(received.getBuilder(), received.getMove());
 
+                    if(game.getGameEnded())
+                        break;
 
                 }
 
@@ -79,51 +85,56 @@ public class TurnManager {
                 if ( !(moves1.isEmpty()) || !(moves2.isEmpty()) ) {
 
 //movementPhase
-                    //invio delle moves alla virual view
-                    //verrà restituita una mossa con il relativo builder
-                    // builder è il builder ottenuto con il return
-                    lastPosition = builder.getPosition();
-                    //magari lo racchiudiamo dentro un if così da risparmiarci questo passaggio per le carte che non hanno bisogno di movement
-                    movementPhase.actionMethod(builder, position);   //li diamo in ingresso il builder e lo square di destinazione
+                    envelope1 = new Envelope(moves1, builder1);
+                    envelope2 = new Envelope(moves2, builder2);
+                    // received =netInterface.getMove(envelope1, envelope2, player) @ensures mossa valida
 
-                    //salviamo i valori dei livelli in modo tale che non vengano successivamente modificati
-
-
-                    game.getBoard().move(lastPosition, position);  //movimento effettivo
-                    winPhase.winCheck(lastPosition, position);
-
-//specialPhase2
-                    moves1 = specialPhase2.getMoves(player, builder, lastPosition );
-                    //if(moves1== null) oppure gli mandiamo null? Ricezione di cosa bisogna fare
-                    specialPhase2.actionMethod(builder, position);
-                    winPhase.winCheck(lastPosition, position);
+                    lastPosition = received.getBuilder().getPosition();
+                    movementPhase.actionMethod(received.getBuilder(), received.getMove());
 
                     if(game.getGameEnded())
                         break;
 
 
+
+
+
+//specialPhase2
+                    moves1 = specialPhase2.getMoves(player, received.getBuilder(), lastPosition );
+
+                    if(moves1 != null) {
+                        envelope1 = new Envelope(moves1, received.getBuilder());
+                        //received = netInterface.getMove(envelope1, null, player);
+
+                        //gestire il caso in cui non restituisca mosse
+                        specialPhase2.actionMethod(received.getBuilder(), received.getMove());
+
+                        if (game.getGameEnded())
+                            break;
+                    }
+
 //buildingPhase
 
-                    moves1 = buildingPhase.getMoves(player, builder);
-                    //invio delle mosse
-                    //ricezione dello square e l'isDome
-                    buildingPhase.actionMethod(builder, position, isDome);
+                    moves1 = buildingPhase.getMoves(player, received.getBuilder());
+                    envelope1 = new Envelope(moves1, received.getBuilder());
+                    //received = netInterface.getMove(envelope1, null, player);
+
+                    buildingPhase.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
+                    if (game.getGameEnded())
+                        break;
 
 
 //specialPhase3
-                    lastPosition = position;
-                    moves1 = specialPhase3.getMoves(player, builder , lastPosition);
-                    //invio delle mosse
-                    //ricezione dello square e l'isDome
+                    lastPosition = received.getMove();
+                    moves1 = specialPhase3.getMoves(player, received.getBuilder() , lastPosition);
+                    envelope1 = new Envelope(moves1, received.getBuilder());
+                    //received = netInterface.getMove(envelope1, null, player);
 
-                    specialPhase3.actionMethod(builder, position, isDome);
+                    //gestire il caso in cui non restituisca mosse
+                    specialPhase3.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
 
-
-                    winPhase.winCheck(lastPosition, position);
-
-                    if (game.getGameEnded()) {
-                        //finalMethod();
-                    }
+                    if (game.getGameEnded())
+                        break;
 
 
                 }else{
