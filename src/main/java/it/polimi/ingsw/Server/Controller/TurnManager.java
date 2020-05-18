@@ -64,7 +64,7 @@ public class TurnManager {
                 if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
 
                     //ricezione mossa
-                    if(/* mossa valida) */)
+                   if(/* mossa valida) */)
                     specialPhase1.actionMethod(builder, position);
 
                     //ATTENZIONE ATHENA
