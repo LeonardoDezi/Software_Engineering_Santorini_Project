@@ -3,17 +3,16 @@ package it.polimi.ingsw.Server.Model;
 import java.util.ArrayList;
 
 public class Envelope {
-    private ArrayList<Square> movesList;
     private Builder builder;
     private Square move = null;
     private boolean isDome = false;
 
-    public Envelope(ArrayList<Square> moves, Builder builder){
-        this.movesList = moves;
+    public Envelope(Builder builder, Square move){
         this.builder = builder;
+        this.move = move;
     }
 
-    public ArrayList<Square> getMovesList(){return movesList;}
+
 
     public Builder getBuilder(){return builder;}
 

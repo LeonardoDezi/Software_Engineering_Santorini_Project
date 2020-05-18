@@ -7,11 +7,13 @@ public class CardParameters {
     protected String movementPhaseAction;
     protected String specialPhase2Moves;
     protected String specialPhase2Action;
-    protected String buildingPhaseMoves;
+    public String buildingPhaseMoves;
     protected String buildingPhaseAction;
+    public boolean buildDome;
     protected String specialPhase3Moves;
     protected String specialPhase3Action;
     protected String winMovement;
     protected String winBuilding;
+
 
 }

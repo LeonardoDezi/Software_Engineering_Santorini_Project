@@ -2,6 +2,7 @@ package it.polimi.ingsw.Server.Controller;
 
 import it.polimi.ingsw.Server.Model.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class TurnManager {
@@ -39,8 +40,7 @@ public class TurnManager {
         ArrayList<Square> moves1;
         ArrayList<Square> moves2;
 
-        Envelope envelope1;
-        Envelope envelope2;
+
         Envelope received;
 
 
@@ -66,9 +66,8 @@ public class TurnManager {
 
                 if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
                     //netInterface.sendMessage()
-                    envelope1 = new Envelope(moves1, builder1);
-                    envelope2 = new Envelope(moves2, builder2);
-                    //Envelope received =netInterface.getMove(envelope1, envelope2, player) @ensures mossa valida
+
+                    //Envelope received =netInterface.getMove(moves1, builder1, moves2, builder2, player) //player non mi è così necessario
 
                     if(/* received.getMove()!=null */)
                         specialPhase1.actionMethod(received.getBuilder(), received.getMove());
@@ -85,9 +84,7 @@ public class TurnManager {
                 if ( !(moves1.isEmpty()) || !(moves2.isEmpty()) ) {
 
 //movementPhase
-                    envelope1 = new Envelope(moves1, builder1);
-                    envelope2 = new Envelope(moves2, builder2);
-                    // received =netInterface.getMove(envelope1, envelope2, player) @ensures mossa valida
+                    // received =netInterface.getMove(moves1, builder1, moves2, builder2, player) @ensures mossa valida
 
                     lastPosition = received.getBuilder().getPosition();
                     movementPhase.actionMethod(received.getBuilder(), received.getMove());
@@ -103,8 +100,8 @@ public class TurnManager {
                     moves1 = specialPhase2.getMoves(player, received.getBuilder(), lastPosition );
 
                     if(moves1 != null) {
-                        envelope1 = new Envelope(moves1, received.getBuilder());
-                        //received = netInterface.getMove(envelope1, null, player);
+
+                        //received = netInterface.getMove(moves1, builder1, player);
 
                         //gestire il caso in cui non restituisca mosse
                         specialPhase2.actionMethod(received.getBuilder(), received.getMove());
@@ -116,8 +113,17 @@ public class TurnManager {
 //buildingPhase
 
                     moves1 = buildingPhase.getMoves(player, received.getBuilder());
-                    envelope1 = new Envelope(moves1, received.getBuilder());
-                    //received = netInterface.getMove(envelope1, null, player);
+                    Boolean buildDome = player.getCard().parameters.buildDome;
+
+                    /* da completare Selene
+                    if(player.getCard().parameters.buildingPhaseMoves == "askForFemale"){
+                        if(received.getBuilder().sex == "male" && player.getBuilderSize() == 2){
+
+                            game.getRules().getBuildingRange()
+                        }
+                    } */
+
+                    //received = netInterface.getMove(moves1, builder1, buildDome, player);   //il flag buildDome indica se il giocatore può scegliere di costruire
 
                     buildingPhase.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
                     if (game.getGameEnded())
@@ -127,8 +133,7 @@ public class TurnManager {
 //specialPhase3
                     lastPosition = received.getMove();
                     moves1 = specialPhase3.getMoves(player, received.getBuilder() , lastPosition);
-                    envelope1 = new Envelope(moves1, received.getBuilder());
-                    //received = netInterface.getMove(envelope1, null, player);
+                    //received = netInterface.getMove(moves1, builder1, player);
 
                     //gestire il caso in cui non restituisca mosse
                     specialPhase3.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());

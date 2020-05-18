@@ -49,7 +49,7 @@ public class WinPhase {
             this.position = position;
         for(Player participant : game.playerList){
             this.participant = participant;
-            commands.get(participant.card.parameters.winBuilding).run();
+            commands.get(participant.card.parameters.winMovement).run();
             if(game.getGameEnded())
                 game.setWinningPlayer(participant);
         }

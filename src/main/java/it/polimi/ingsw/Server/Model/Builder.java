@@ -10,7 +10,7 @@ public class Builder {
     private Square position;
     private boolean blocked;
     private final String colour;   // perchè private se final?
-    protected final String sex;
+    public final String sex;
     private int builderId;
     //pensare al sesso del builder
     // forse bisogna indicare anche a quale player appartiene per la GUI

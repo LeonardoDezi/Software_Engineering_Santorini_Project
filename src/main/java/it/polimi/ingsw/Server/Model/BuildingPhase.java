@@ -65,19 +65,16 @@ public class BuildingPhase{
             possibleMoves.add(position);
     }
 
-    public void askForDome(){
-        //sendrequest  "vuoi costruire una cupola?" ancora non so come
-    }
 
-    public void askForFemale(){
+  /*  public void askForFemale(){
         if(builder.sex == "male" && player.builders.size() == 2){
             ArrayList<Square> tmp = basicRules.getBuildingRange(player.getFemale());
             //sendBuildingPhase(femaleBuilder, tmp);
         }else
-            System.out.println("ciao0"); //solo per i test
+            System.out.println; //solo per i test
             //askForDome
 
-    }
+    }   */
 
 
     public void actionMethod(Builder builder, Square position, boolean isDome){
