@@ -10,6 +10,7 @@ public class Builder {
     private Square position;
     private boolean blocked;
     private final String colour;   // perchè private se final?
+    protected final String sex;
     private int builderId;
     //pensare al sesso del builder
     // forse bisogna indicare anche a quale player appartiene per la GUI
@@ -19,9 +20,10 @@ public class Builder {
      * creates the builder and puts it on the board at a given position.
      * @param position is used to store the builder position also inside the builder class.
      */
-    public Builder(Square position, String colour){
+    public Builder(Square position, String colour, String sex){
         blocked = false;
         this.colour = colour;
+        this.sex = sex;
         // builderId serve?
         this.position = position;
         position.setValue(1);   //occupa la casella con la pedina

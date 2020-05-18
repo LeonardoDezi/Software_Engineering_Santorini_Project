@@ -19,6 +19,8 @@ public class Game {
     private ArrayList<Card> chosenCards;
     private ArrayList<Card> deck;     //lo lasciamo?
     private Dealer dealer;
+    private Player winningPlayer;
+                           // identificatore numerico per differenziare le partite?
     public final Integer numberOfPlayers;
     protected BasicRules basic;
 
@@ -31,6 +33,8 @@ public class Game {
         playerList = new ArrayList<>();
         chosenCards = new ArrayList<>();
         basic = new BasicRules(gameBoard, this);
+        winningPlayer = null;
+         //dobbiamo decidere se togliere o meno deck. Se lo lasciamo lo dobbiamo implementare
         this.numberOfPlayers=numberOfPlayers;
 
     }
@@ -132,4 +136,8 @@ public class Game {
     public BasicRules getRules(){
         return this.basic;
     }
+
+    public Player getWinningPlayer(){return winningPlayer;}
+
+    public void setWinningPlayer(Player player){ this.winningPlayer = player;}
 }

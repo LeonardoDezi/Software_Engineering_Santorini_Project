@@ -17,6 +17,8 @@ public class SpecialPhase3 {
 
     private Square position;
 
+    private Player player;
+
 
 
     public SpecialPhase3(Game game){
@@ -44,6 +46,7 @@ public class SpecialPhase3 {
 
     public ArrayList<Square> getMoves(Player player, Builder builder, Square lastPosition){
 
+        this.player = player;
         this.builder = builder;
         this.card = player.getCard();
         this.position = lastPosition;
@@ -85,7 +88,7 @@ public class SpecialPhase3 {
         this.position = position;
 
         actionCommands.get(card.parameters.specialPhase3Action).run();
-        board.build(position, isDome);
+        basicRules.build(player, position, isDome);
     }
 
 

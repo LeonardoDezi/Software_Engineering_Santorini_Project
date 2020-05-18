@@ -138,6 +138,21 @@ public class BasicRules{
         return proximity;
     }
 
+    public void build(Player player, Square position, boolean isDome){
+        board.build(position, isDome);
+        WinPhase winPhase= new WinPhase(game);
+        winPhase.checkBuild(player);
+    }
+
+    public void move(Player player, Square initialPosition, Square position){
+        board.move(initialPosition, position);
+        WinPhase winPhase = new WinPhase(game);
+        winPhase.checkMovement(player, initialPosition, position);
+        winCondition(initialPosition, position);
+        if(game.getGameEnded())
+            game.setWinningPlayer(player);
+    }
+
     public ArrayList<Square> getFreeSquares(){
         ArrayList<Square> freeSquares = null;
         for(int i=0; i<5; i++){

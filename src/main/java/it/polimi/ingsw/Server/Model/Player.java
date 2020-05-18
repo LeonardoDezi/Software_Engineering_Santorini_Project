@@ -96,7 +96,14 @@ public class Player {
      * @param position are the coordinates of the square where the new builder is.
      */
     public void addBuilder(Square position){
-        builders.add(new Builder(position, colour));
+        String sex;
+
+        if(builders.isEmpty())
+            sex = "male";
+        else
+            sex = "female";
+
+        builders.add(new Builder(position, colour, sex));
         //return builders.size() - 1;  // se magari vogliamo comunicare il numero della pedina che abbiamo appena messo
     }
 
@@ -111,6 +118,20 @@ public class Player {
         }catch(IndexOutOfBoundsException e) {
             System.out.println("The builder " + builderId + "doesn't exist");
         }
+    }
+
+    public String getColour(){
+        return this.colour;
+    }
+
+
+
+    public Builder getFemale(){
+        Builder builder = null;
+        for(int i = 0; i < builders.size(); i++)
+            if(builders.get(i).sex == "female")
+                builder = builders.get(i);
+        return builder;
     }
 
 }

@@ -46,7 +46,7 @@ public class SpecialPhase2 {
         this.card = player.getCard();
         this.position = position;
 
-        movesCommands.get(card.parameters.specialPhase1Moves).run();
+        movesCommands.get(card.parameters.specialPhase2Moves).run();
         return possibleMoves;
     }
 

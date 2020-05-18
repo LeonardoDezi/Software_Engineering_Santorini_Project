@@ -11,6 +11,7 @@ public class CardParameters {
     protected String buildingPhaseAction;
     protected String specialPhase3Moves;
     protected String specialPhase3Action;
-    protected String winPhase;
+    protected String winMovement;
+    protected String winBuilding;
 
 }

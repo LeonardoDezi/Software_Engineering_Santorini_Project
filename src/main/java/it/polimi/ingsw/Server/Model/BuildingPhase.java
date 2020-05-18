@@ -18,6 +18,9 @@ public class BuildingPhase{
 
     private Square position;
 
+    private Player player;
+    private Builder actionBuilder;
+    private boolean isDome;
 
     public BuildingPhase(Game game){
         basicRules = game.getRules();   // assicurarsi che siano sempre le stesse rules
@@ -39,6 +42,7 @@ public class BuildingPhase{
         movesCommands.put("askForFemale", this::askForFemale);
 //building
         actionCommands.put("buildBelowYou", this::buildBelowYou);
+        actionCommands.put("maleOrFemale", this::maleOrFemale);
         actionCommands.put(null, () ->{});
 
 
@@ -48,6 +52,7 @@ public class BuildingPhase{
     public ArrayList<Square> getMoves(Player player, Builder builder){
 
          this.builder = builder;
+         this.player = player;
          this.card = player.getCard();
          possibleMoves = basicRules.getBuildingRange(builder);
          movesCommands.get(card.parameters.buildingPhaseMoves).run();
@@ -65,29 +70,39 @@ public class BuildingPhase{
     }
 
     public void askForFemale(){
-        //sendrequest "ti sto mandando anche il range del tuo worker femmina vuoi usare questo
-        //piuttosto che l'altro?"
+        if(builder.sex == "male" && player.builders.size() == 2){
+            ArrayList<Square> tmp = basicRules.getBuildingRange(player.getFemale());
+            //sendBuildingPhase(femaleBuilder, tmp);
+        }else
+            System.out.println("ciao0"); //solo per i test
+            //askForDome
+
     }
 
 
     public void actionMethod(Builder builder, Square position, boolean isDome){
-        this.builder = builder;
+        this.actionBuilder = builder;
         this.position = position;
-        if(position.equals(builder.getPosition()))   // questo if mi sembra legittimo dato che credo che l'unico modo
-           actionCommands.get(card.parameters.buildingPhaseAction).run(); // in cui possiamo infrangere le regole arrivati a questo punto è che i due square coincidano
+        this.isDome = isDome;
 
-           board.build(position, isDome);
+        actionCommands.get(card.parameters.buildingPhaseAction).run();
+        basicRules.build(player, position, isDome);
     }
 
-    //Zeus: se deve costruire su se stesso lo farà nella building Phase e metterà lo square di build a null: modificare build() perchè non faccia niente
-    //in questo caso
 
 
     public void buildBelowYou(){
-        if(position.getLevel() < 3) {
-            position.setLevel(position.getLevel() + 1);
-            position = null;
+        if(position.equals(actionBuilder.getPosition())) {
+            if (position.getLevel() < 3) {
+                position.setLevel(position.getLevel() + 1);
+                position = null;
+            }
         }
+    }
+
+    public void maleOrFemale(){
+        if(!(actionBuilder.equals(builder)))
+            isDome = true;
     }
 
 
