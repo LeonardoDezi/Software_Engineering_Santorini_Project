@@ -1,9 +1,4 @@
 package it.polimi.ingsw.Server.Model;
-//penso che dovremmo mettere un falg che comunichi quando una partita è stata vinta
-
-//ci manca la rimozione delle pedine
-
-
 import java.util.ArrayList;
 
 /**
@@ -14,7 +9,7 @@ import java.util.ArrayList;
 public class Game {
     //rivedere tutti i private, protected e public
     private boolean gameEnded;
-    protected Board gameBoard;  //lo lasciamo private?
+    protected Board gameBoard;
     protected ArrayList<Player> playerList;
     private ArrayList<Card> chosenCards;
     private ArrayList<Card> deck;     //lo lasciamo?
@@ -67,19 +62,16 @@ public class Game {
      * removes a player from the game.
      * @param player is the player id.
      */
-    public void removePlayer(Player player){
-
-   //     try {
-            player.removeBuilder(0);
-            player.removeBuilder(1);
-            playerList.remove(player);
-
-            //player = null; necessario?
-/*        }catch(NoSuchElementException e){
-            System.out.println("There's no player registered with the name " + player.getPlayerID());
-        }   mi sa che non servirà*/
-
+    //da testare
+    public void removePlayer(Player player) {
+        for (int i = 0; i < player.getBuilderSize(); i++) {
+            player.removeBuilder(i);
+            i--;
+        }
     }
+
+
+
 
     /**
      * is used to get the deck of all the god cards.
