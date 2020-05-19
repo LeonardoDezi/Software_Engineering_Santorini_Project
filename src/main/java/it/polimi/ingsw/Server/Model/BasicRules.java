@@ -7,12 +7,9 @@ import java.util.ArrayList;
 public class BasicRules{
     private static final int INITIALLEVEL = 2;
     private static final int FINALLEVEL = 3;
-    private Card card;
-    private int maxBuild = 1;
-    private int numMoves = 1;
     private int maxHeight;
-    private Board board;
-    private Game game;
+    private final Board board;
+    private final Game game;
 
     public BasicRules(Board board, Game game) {
         this.board = board;
@@ -40,16 +37,6 @@ public class BasicRules{
     }
 
 
-    public ArrayList<Square> getPossibleMoves(Builder builder) {
-
-        ArrayList<Square> possibleMoves = proximity(builder);
-        possibleMoves = removeBuilderSquare(possibleMoves);
-        possibleMoves = removeDomeSquare(possibleMoves);
-        possibleMoves = removeTooHighPlaces(possibleMoves, builder);
-
-        return possibleMoves;
-    }
-
 
     /**
      * is used to give the player all the available places to build.
@@ -69,9 +56,6 @@ public class BasicRules{
 
     }
 
-    //TODO implement loseCondition
-    public void loseCondition() {
-    }
 
     public ArrayList<Square> proximity(Builder builder) {
 
@@ -88,7 +72,7 @@ public class BasicRules{
                     int a = position.x + i;
                     int b = position.y + j;
                     
-                    if (a >= 0 && a <= 5 && b >= 0 && b <= 5) {
+                    if (a >= 0 && a < Board.BOARDSIZEX && b >= 0 && b < Board.BOARDSIZEY) {
 
                         Square square = board.fullMap[a][b];
                         proximity.add(square);
@@ -112,7 +96,7 @@ public class BasicRules{
             }
         }
 
-            return proximity;
+        return proximity;
     }
 
     public ArrayList<Square> removeDomeSquare(ArrayList<Square> proximity) {
@@ -158,15 +142,15 @@ public class BasicRules{
 
     public ArrayList<Square> getFreeSquares(){
         ArrayList<Square> freeSquares = null;
-        for(int i=0; i<5; i++){
-            for(int j=0; j<5; j++){
+        for(int i = 0; i< Board.BOARDSIZEX; i++){
+            for(int j = 0; j< Board.BOARDSIZEY; j++){
                 if(game.gameBoard.fullMap[i][j].getValue()==0){
                     Square square = game.gameBoard.fullMap[i][j];
                     freeSquares.add(square);
                 }
             }
         }
-    return freeSquares;
+        return freeSquares;
     }
 
 }
