@@ -5,9 +5,21 @@ import it.polimi.ingsw.Server.Model.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
+// received != null: quando il giocatore non fa alcuna mossa getMove mi deve restituire received= null
+
+
+
+//Envelope received =netInterface.getBothMovementMove(ArrayList<Square> moves1, Builder builder1, ArrayList<Square> moves2, builder2, player)
+//received = netInterface.getMovementMove(ArrayList<Square> moves, Builder builder, player); P.S. potremmo accorparlo a
+//                                                                          getBothMovementMove e mettere
+//                                                                             moves2 e builder 2 a null
+////received=netInterface.getBuildMove(moves1, builder1, boolean buildDome, player);
+//// received = netInterface.getBothBuildMove(moves1, Builder, boolean buildDome1, moves2, Builder, boolean buildDome2);
+
+
+
 public class TurnManager {
 
-    //mi devo salvere il valore della netInterface per usarlo in MovementPhase
 
     private Game game;
     private ArrayList<Player> playerList;
@@ -65,11 +77,11 @@ public class TurnManager {
                 moves2 = specialPhase1.getMoves(player, builder2);
 
                 if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
+
                     //netInterface.sendMessage()
+                    //Envelope received =netInterface.getBothMovementMove(moves1, builder1, moves2, builder2, player) //player non mi è così necessario
 
-                    //Envelope received =netInterface.getMove(moves1, builder1, moves2, builder2, player) //player non mi è così necessario
-
-                    if(/* received != null /*PER FRA: quando il giocatore non fa alcuna mossa getMove mi deve restituire received= null*/)
+                    if(/* received != null */)
                         specialPhase1.actionMethod(received.getBuilder(), received.getMove());
 
                     if(game.getGameEnded())
@@ -84,7 +96,7 @@ public class TurnManager {
                 if ( !(moves1.isEmpty()) || !(moves2.isEmpty()) ) {
 
 //movementPhase
-                    // received =netInterface.getMove(moves1, builder1, moves2, builder2, player) @ensures mossa valida
+                    // received =netInterface.getBothMovementMove(moves1, builder1, moves2, builder2, player) @ensures mossa valida
 
                     lastPosition = received.getBuilder().getPosition();
                     movementPhase.actionMethod(received.getBuilder(), received.getMove());
@@ -101,10 +113,10 @@ public class TurnManager {
 
                     if(moves1 != null) {
 
-                        //received = netInterface.getMove(moves1, builder1, player);
+                        //received = netInterface.getMovementMove(moves1, received.getBuilder(), player);
 
-                        //gestire il caso in cui non restituisca mosse
-                        specialPhase2.actionMethod(received.getBuilder(), received.getMove());
+                        if(received != null)
+                            specialPhase2.actionMethod(received.getBuilder(), received.getMove());
 
                         if (game.getGameEnded())
                             break;
@@ -118,15 +130,15 @@ public class TurnManager {
 
                     if(player.getCard().parameters.buildingPhaseMoves.equals("askForFemale")){
                         if (received.getBuilder().sex.equals("female")) {
-                            //received=netInterface.getMove(moves1, builder1, true, player);
+                            //received=netInterface.getBuildMove(moves1, builder1, true, player);
                         }else if(player.getBuilderSize() ==2){
                                 Builder female = player.getFemale();
                                 moves2 = game.getRules().getBuildingRange(female);
-                                // received = netInterface.getBothBuildersMove(moves1, received.getBuilder(), false, moves2, female, false);
+                                // received = netInterface.getBothBuildMove(moves1, received.getBuilder(), false, moves2, female, false);
                         }else
-                            //received =netInterface.getMove(moves1, received.getBuilder(), false, player);
+                            //received =netInterface.getBuildMove(moves1, received.getBuilder(), false, player);
                     }else {
-                        //received = netInterface.getMove(moves1, builder1, buildDome, player);   //il flag buildDome indica se il giocatore può scegliere di costruire
+                        //received = netInterface.getBuildMove(moves1, builder1, buildDome, player);   //il flag buildDome indica se il giocatore può scegliere di costruire
                     }
 
 
@@ -138,7 +150,7 @@ public class TurnManager {
 //specialPhase3
                     lastPosition = received.getMove();
                     moves1 = specialPhase3.getMoves(player, received.getBuilder() , lastPosition);
-                    //received = netInterface.getMove(moves1, builder1, player);
+                    //received = netInterface.getBuildMove(moves1, builder1, buildDome,player);
 
                     //gestire il caso in cui non restituisca mosse
                     specialPhase3.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
