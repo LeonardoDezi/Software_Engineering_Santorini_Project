@@ -155,6 +155,7 @@
       {
         "buildingPhaseAction": "maleOrFemale",
         "buildDome": "false"
+      }
     ]
   },
 
@@ -165,7 +166,7 @@
       {
         "buildingPhaseMoves": "addBuilderPosition",
         "buildingPhaseAction": "buildBelowYou",
-        "buildDome": "false",
+        "buildDome": "false"
 
       }
     ]
