@@ -47,9 +47,12 @@ public class Game {
      * adds a new player to the game.
      * @param player is the player object.
      */
+
+
+    //dealer?
     public Integer addPlayer(Player player){
 
-        if(this.playerList.size()<numberOfPlayers){
+        if(this.playerList.size() < numberOfPlayers){
             this.playerList.add(player);
             return 1;
         }
@@ -91,7 +94,7 @@ public class Game {
      * adds the card chosen by the dealer at the beginning of the game to the list of the available cards for the other players.
      * @param cardNumber is the number that identifies the card choosen by the dealer.
      */
-    public void addChosenCard(Integer cardNumber){    // da aggiungere all'UML
+    public void addChosenCard(Integer cardNumber){
         Card card = deck.get(cardNumber);
         chosenCards.add(card);
     }
@@ -105,10 +108,10 @@ public class Game {
      * @param placement is the square where the player wants to put the builder
      */
     public void deployBuilder(Player player, Square placement){
-        Integer x = placement.x;
-        Integer y = placement.y;
+        int x = placement.x;
+        int y = placement.y;
         if(player.getBuilderSize() == 2){
-            System.out.println("Error:" + player.getPlayerID() + "has already deployed all the builders");
+            System.out.println("Error:" + player.playerID + "has already deployed all the builders");
         } else {
             if(gameBoard.fullMap[x][y].getValue() == 1)
                 System.out.println("Error: Square already occupied by another player");
