@@ -61,8 +61,8 @@ public class TurnManager {
 
         while(!(game.getGameEnded())){
 
-            for (Player player : playerList) {  //succederà qualcosa se nel mentre rimuoviamo un giocatore?
-
+            for (int i=0; i < playerList.size(); i++) {  //succederà qualcosa se nel mentre rimuoviamo un giocatore?
+                Player player = playerList.get(i);
                 builder1 = player.getBuilder(0);
 
                 try {
@@ -159,20 +159,32 @@ public class TurnManager {
                         break;
 
 
+//loseCondition
                 }else{
-                    //loseCondition();
+
+                    playerList.remove(i);
+                    i--;
+                    game.removePlayer(player);
+                    if(playerList.size() == 1){
+                        game.setWinningPlayer(playerList.get(0));
+                        game.setGameEnded(true);
+                        break;
+                    }
                 }
-
-
-
             }
         }
-
+        endGame();
     }
 
-    public void addPlayers(Player player){
 
+    public void endGame(){
+        //broadcast("La partita è finita. Ha vinto game.currentPlayer!!!);
     }
+
+
+   /* public void addPlayers(Player player){
+
+    } */
 
 }
 

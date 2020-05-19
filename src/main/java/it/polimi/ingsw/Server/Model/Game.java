@@ -67,19 +67,19 @@ public class Game {
      * removes a player from the game.
      * @param player is the player id.
      */
-    public void removePlayer(Player player){
+    //da testare
+    public void removePlayer(Player player) {
+        for (int i = 0; i < player.getBuilderSize(); i++) {
+            player.removeBuilder(i);
+            i--;
+        }
+    }
 
-   //     try {
-            player.removeBuilder(0);
-            player.removeBuilder(1);
-            playerList.remove(player);
+
 
             //player = null; necessario?
-/*        }catch(NoSuchElementException e){
-            System.out.println("There's no player registered with the name " + player.getPlayerID());
-        }   mi sa che non servirà*/
 
-    }
+
 
     /**
      * is used to get the deck of all the god cards.

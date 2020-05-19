@@ -10,7 +10,6 @@ import java.util.ArrayList;
  * @since 1.0
  */
 public class Player {
-    private boolean isPlayerTurn;
     protected Card card;  //perchè protected?
     public final String playerID;   // secondo me possiamo metterlo public e cancellare getPlayerID
     protected ArrayList<Builder> builders;   // perchè  protected?
@@ -30,19 +29,12 @@ public class Player {
         this.colour = colour;
         this.clientID = clientID;
         builders = new ArrayList<>();
-        isPlayerTurn = false;    // servirà mai?
         this.game=game;
 
     }
 
     //serve ancora? si deve vedere come si implementerà Turn
     /**
-     * is used to keep track if is the player's turn or not.
-     * @param isPlayerTurn is set to 1 if is the player's turn, to 0 if it isn't.
-     */
-    public void setIsTurn(boolean isPlayerTurn) {
-        this.isPlayerTurn = isPlayerTurn;
-    }  // aggiungere il parametro nell'UML
 
     /**
      * assigns the God card chosen by the player to the player class.
@@ -109,15 +101,13 @@ public class Player {
 
 
 
-
+    //accertarci che il builder esista sempre
     public void removeBuilder(int builderId){
-        try {
-            Square position = builders.get(builderId).getPosition();
-            position.resetSquare();
-            builders.remove(builderId);
-        }catch(IndexOutOfBoundsException e) {
-            System.out.println("The builder " + builderId + "doesn't exist");
-        }
+
+        Square position = builders.get(builderId).getPosition();
+        position.resetSquare();
+        builders.remove(builderId);
+
     }
 
     public String getColour(){
