@@ -4,19 +4,8 @@
     "name": "Apollo",
     "parameters": [
       {
-        "specialPhase1Moves": null,
-        "specialPhase1Action": null,
         "movementPhaseMoves": "swap",
-        "movementPhaseAction": null,
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
-        "buildingPhaseMoves": null,
-        "buildingPhaseAction": null,
-        "buildDome": "false",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
+        "buildDome": "false"
 
       }
     ]
@@ -27,19 +16,9 @@
     "name": "Artemis",
     "parameters": [
       {
-        "specialPhase1Moves": null,
-        "specialPhase1Action": null,
-        "movementPhaseMoves": null,
-        "movementPhaseAction": null,
         "specialPhase2Moves": "doubleNotSameMove",
         "specialPhase2Action": "doubleNotSame",
-        "buildingPhaseMoves": null,
-        "buildingPhaseAction": null,
-        "buildDome": "false",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
+        "buildDome": "false"
 
       }
     ]
@@ -51,18 +30,8 @@
     "parameters": [
       {
         "specialPhase1Moves": "restore",
-        "specialPhase1Action": null,
-        "movementPhaseMoves": null,
         "movementPhaseAction": "jumpUp",
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
-        "buildingPhaseMoves": null,
-        "buildingPhaseAction": null,
-        "buildDome": "false",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
+        "buildDome": "false"
 
       }
     ]
@@ -73,19 +42,7 @@
     "name": "Atlas",
     "parameters": [
       {
-        "specialPhase1Moves": null,
-        "specialPhase1Action": null,
-        "movementPhaseMoves": null,
-        "movementPhaseAction": null,
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
-        "buildingPhaseMoves": null,
-        "buildingPhaseAction": null,
-        "buildDome": "true",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
+        "buildDome": "true"
 
       }
     ]
@@ -96,20 +53,9 @@
     "name": "Demeter",
     "parameters": [
       {
-        "specialPhase1Moves": null,
-        "specialPhase1Action": null,
-        "movementPhaseMoves": null,
-        "movementPhaseAction": null,
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
-        "buildingPhaseMoves": null,
-        "buildingPhaseAction": null,
-        "buildDome": "false",
-        "specialPhase3Moves": "notSameSquare",
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
 
+        "buildDome": "false",
+        "specialPhase3Moves": "notSameSquare"
       }
     ]
   },
@@ -119,19 +65,8 @@
     "name": "Hephaestus",
     "parameters": [
       {
-        "specialPhase1Moves": null,
-        "specialPhase1Action": null,
-        "movementPhaseMoves": null,
-        "movementPhaseAction": null,
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
         "buildingPhaseMoves": "sameSquareNotDome",
-        "buildingPhaseAction": null,
-        "buildDome": "false",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
+        "buildDome": "false"
 
       }
     ]
@@ -142,19 +77,9 @@
     "name": "Minotaur",
     "parameters": [
       {
-        "specialPhase1Moves": null,
-        "specialPhase1Action": null,
         "movementPhaseMoves": "push",
         "movementPhaseAction": "pushAction",
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
-        "buildingPhaseMoves": null,
-        "buildingPhaseAction": null,
-        "buildDome": "false",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
+        "buildDome": "false"
 
       }
     ]
@@ -165,19 +90,8 @@
     "name": "Pan",
     "parameters": [
       {
-        "specialPhase1Moves": null,
-        "specialPhase1Action": null,
-        "movementPhaseMoves": null,
-        "movementPhaseAction": null,
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
-        "buildingPhaseMoves": null,
-        "buildingPhaseAction": null,
         "buildDome": "false",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": "jumpDown",
-        "winBuilding": null,
+        "winMovement": "jumpDown"
 
 
       }
@@ -191,17 +105,8 @@
       {
         "specialPhase1Moves": "additionalBuild",
         "specialPhase1Action":"specialBuild",
-        "movementPhaseMoves": null,
         "movementPhaseAction": "restore",
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
-        "buildingPhaseMoves": null,
-        "buildingPhaseAction": null,
-        "buildDome": "false",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
+        "buildDome": "false"
 
       }
     ]
@@ -214,17 +119,7 @@
       {
         "specialPhase1Moves": "oppositeSideMoves",
         "specialPhase1Action": "moveOpposite",
-        "movementPhaseMoves": null,
-        "movementPhaseAction": null,
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
-        "buildingPhaseMoves": null,
-        "buildingPhaseAction": null,
-        "buildDome": "false",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
+        "buildDome": "false"
 
       }
     ]
@@ -235,18 +130,7 @@
     "name": "Chronus",
     "parameters": [
       {
-        "specialPhase1Moves": null,
-        "specialPhase1Action": null,
-        "movementPhaseMoves": null,
-        "movementPhaseAction": null,
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
-        "buildingPhaseMoves": null,
-        "buildingPhaseAction": null,
         "buildDome": "false",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": null,
         "winBuilding": "atLeastFiveTowers"
 
       }
@@ -258,19 +142,8 @@
     "name": "Hestia",
     "parameters": [
       {
-        "specialPhase1Moves": null,
-        "specialPhase1Action": null,
-        "movementPhaseMoves": null,
-        "movementPhaseAction": null,
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
-        "buildingPhaseMoves": null,
-        "buildingPhaseAction": null,
         "buildDome": "false",
-        "specialPhase3Moves": "notPerimeter",
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
+        "specialPhase3Moves": "notPerimeter"
       }
     ]
   },
@@ -280,20 +153,8 @@
     "name": "Selene",
     "parameters": [
       {
-        "specialPhase1Moves": null,
-        "specialPhase1Action": null,
-        "movementPhaseMoves": null,
-        "movementPhaseAction": null,
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
-        "buildingPhaseMoves": "askForFemale",
         "buildingPhaseAction": "maleOrFemale",
-        "buildDome": "false",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
-      }
+        "buildDome": "false"
     ]
   },
 
@@ -302,19 +163,10 @@
     "name": "Zeus",
     "parameters": [
       {
-        "specialPhase1Moves": null,
-        "specialPhase1Action": null,
-        "movementPhaseMoves": null,
-        "movementPhaseAction": null,
-        "specialPhase2Moves": null,
-        "specialPhase2Action": null,
         "buildingPhaseMoves": "addBuilderPosition",
         "buildingPhaseAction": "buildBelowYou",
         "buildDome": "false",
-        "specialPhase3Moves": null,
-        "specialPhase3Action": null,
-        "winMovement": null,
-        "winBuilding": null
+
       }
     ]
   }

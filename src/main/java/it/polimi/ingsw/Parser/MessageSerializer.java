@@ -1,16 +1,37 @@
 package it.polimi.ingsw.Parser;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import it.polimi.ingsw.Server.Model.Square;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-public class MessageSerializer implements JsonSerializer <Square> {
+public class MessageSerializer {
+    public void clientServerMessage() {
 
-    public JsonElement serialize(Square square, Type type,JsonSerializationContext context){
-       return new JsonPrimitive(square.toString());
+        Gson gson = new GsonBuilder().create();
+
+        Box<Message> type = new Box<>();
+        Message message = new Message();
+        message.setId();
+        message.setMoves();
+        message.setBuilder();
+
+        Type fooType = new TypeToken<Box<Message>>() {}.getType();
+        String userJson = gson.toJson(type, fooType);
+
+        Box <Message> box = gson.fromJson(userJson, fooType);
+
+    }
+}
+
+class Box <T> {
+    private T t;
+
+    public void set(T t) {
+        this.t = t;
+    }
+
+    public T get(){
+        return t;
     }
 }
