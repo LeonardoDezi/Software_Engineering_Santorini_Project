@@ -17,6 +17,11 @@ import java.util.ArrayList;
 //public Envelope getBothBuildMove(ArrayList<Square> moves1, Builder builder1, boolean buildDome1, ArrayList<Square> moves2, Builder builder2, boolean buildDome2);
 
 
+//loseMethod(): questo metodo dovrebbe inviare un messaggio al giocatore che ha perso comunicandogli la sconfitta,
+//per poi chiudere la connessione. Non so come chiudere la connessione quindi non so specificare il prototipo
+
+//broadcastMessage(String message): manda in broadcast il messaggio contenuto in message
+//updateBoard(Board board): aggiorna in broadcast tutte le board dei giocatori
 
 public class TurnManager {
 
@@ -81,9 +86,10 @@ public class TurnManager {
                     //netInterface.sendMessage()
                     //Envelope received =netInterface.getBothMovementMove(moves1, builder1, moves2, builder2, player) //player non mi è così necessario
 
-                    if(/* received != null */)
+                    if(/* received != null */) {
                         specialPhase1.actionMethod(received.getBuilder(), received.getMove());
-
+                        //updateBoard(game.getBoard);
+                    }
                     if(game.getGameEnded())
                         break;
 
@@ -100,6 +106,7 @@ public class TurnManager {
 
                     lastPosition = received.getBuilder().getPosition();
                     movementPhase.actionMethod(received.getBuilder(), received.getMove());
+                    //updateBoard(game.getBoard);
 
                     if(game.getGameEnded())
                         break;
@@ -117,6 +124,7 @@ public class TurnManager {
 
                         if(received != null)
                             specialPhase2.actionMethod(received.getBuilder(), received.getMove());
+                            //updateBoard(game.getBoard);
 
                         if (game.getGameEnded())
                             break;
@@ -143,6 +151,7 @@ public class TurnManager {
 
 
                     buildingPhase.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
+                    //updateBoard(game.getBoard);
                     if (game.getGameEnded())
                         break;
 
@@ -154,6 +163,7 @@ public class TurnManager {
 
                     //gestire il caso in cui non restituisca mosse
                     specialPhase3.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
+                    //updateBoard(game.getBoard);
 
                     if (game.getGameEnded())
                         break;
@@ -165,6 +175,8 @@ public class TurnManager {
                     playerList.remove(i);
                     i--;
                     game.removePlayer(player);
+                    //loseMethod();
+                    //broadcastMessage("Il giocatore" + player + "ha perso");
                     if(playerList.size() == 1){
                         game.setWinningPlayer(playerList.get(0));
                         game.setGameEnded(true);
@@ -178,7 +190,7 @@ public class TurnManager {
 
 
     public void endGame(){
-        //broadcast("La partita è finita. Ha vinto game.currentPlayer!!!);
+        //broadcastMessage("La partita è finita. Ha vinto game.currentPlayer!!!);
     }
 
 

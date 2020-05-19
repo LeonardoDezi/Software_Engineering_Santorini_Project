@@ -108,7 +108,7 @@ public class Player {
     public Builder getFemale(){
         Builder builder = null;
         for (Builder value : builders)
-            if (value.sex == SEX2)
+            if (value.sex.equals(SEX2))
                 builder = value;
         return builder;
     }
