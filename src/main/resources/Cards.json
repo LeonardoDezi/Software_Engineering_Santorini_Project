@@ -153,6 +153,7 @@
     "name": "Selene",
     "parameters": [
       {
+        "buildingPhaseMoves": "askForFemale",
         "buildingPhaseAction": "maleOrFemale",
         "buildDome": "false"
       }
