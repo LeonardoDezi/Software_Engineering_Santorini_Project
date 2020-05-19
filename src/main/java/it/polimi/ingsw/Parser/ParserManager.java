@@ -2,6 +2,7 @@ package it.polimi.ingsw.Parser;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.Server.Model.Card;
 
@@ -30,4 +31,5 @@ public class ParserManager {
         }
 
     }
+
 }
