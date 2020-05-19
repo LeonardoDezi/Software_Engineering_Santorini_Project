@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 
 
-//Envelope received =netInterface.getBothMovementMove(ArrayList<Square> moves1, Builder builder1, ArrayList<Square> moves2, builder2, player)
-//received = netInterface.getMovementMove(ArrayList<Square> moves, Builder builder, player); P.S. potremmo accorparlo a
+//public Envelope getBothMovementMove(ArrayList<Square> moves1, Builder builder1, ArrayList<Square> moves2, Builder builder2, Player player)
+//public Envelope getMovementMove(ArrayList<Square> moves, Builder builder, Player player); P.S. potremmo accorparlo a
 //                                                                          getBothMovementMove e mettere
 //                                                                             moves2 e builder 2 a null
-////received=netInterface.getBuildMove(moves1, builder1, boolean buildDome, player);
-//// received = netInterface.getBothBuildMove(moves1, Builder, boolean buildDome1, moves2, Builder, boolean buildDome2);
+//public Envelope getBuildMove(ArrayList<Square> moves1, Builder builder, boolean buildDome, Player player);
+//public Envelope getBothBuildMove(ArrayList<Square> moves1, Builder builder1, boolean buildDome1, ArrayList<Square> moves2, Builder builder2, boolean buildDome2);
 
 
 
