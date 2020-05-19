@@ -17,7 +17,9 @@ public class TurnManager {
     private SpecialPhase3 specialPhase3;
     private MovementPhase movementPhase;
     private BuildingPhase buildingPhase;
-    private WinPhase winPhase;
+
+    //private NetList netList??
+
 
 
     //dovremmo assicurarci che sia unico?
@@ -30,7 +32,7 @@ public class TurnManager {
         specialPhase3 = new SpecialPhase3(game);
         buildingPhase = new BuildingPhase(game);
         movementPhase = new MovementPhase(game);
-        winPhase = new WinPhase(game);
+        //netList = new NetList(); ??
     }
 
     public void letsPlay(){
@@ -40,9 +42,7 @@ public class TurnManager {
         ArrayList<Square> moves1;
         ArrayList<Square> moves2;
 
-
         Envelope received;
-
 
         Square lastPosition;
 
@@ -69,7 +69,7 @@ public class TurnManager {
 
                     //Envelope received =netInterface.getMove(moves1, builder1, moves2, builder2, player) //player non mi è così necessario
 
-                    if(/* received.getMove()!=null */)
+                    if(/* received != null /*PER FRA: quando il giocatore non fa alcuna mossa getMove mi deve restituire received= null*/)
                         specialPhase1.actionMethod(received.getBuilder(), received.getMove());
 
                     if(game.getGameEnded())
@@ -115,15 +115,20 @@ public class TurnManager {
                     moves1 = buildingPhase.getMoves(player, received.getBuilder());
                     Boolean buildDome = player.getCard().parameters.buildDome;
 
-                    /* da completare Selene
-                    if(player.getCard().parameters.buildingPhaseMoves == "askForFemale"){
-                        if(received.getBuilder().sex == "male" && player.getBuilderSize() == 2){
 
-                            game.getRules().getBuildingRange()
-                        }
-                    } */
+                    if(player.getCard().parameters.buildingPhaseMoves.equals("askForFemale")){
+                        if (received.getBuilder().sex.equals("female")) {
+                            //received=netInterface.getMove(moves1, builder1, true, player);
+                        }else if(player.getBuilderSize() ==2){
+                                Builder female = player.getFemale();
+                                moves2 = game.getRules().getBuildingRange(female);
+                                // received = netInterface.getBothBuildersMove(moves1, received.getBuilder(), false, moves2, female, false);
+                        }else
+                            //received =netInterface.getMove(moves1, received.getBuilder(), false, player);
+                    }else {
+                        //received = netInterface.getMove(moves1, builder1, buildDome, player);   //il flag buildDome indica se il giocatore può scegliere di costruire
+                    }
 
-                    //received = netInterface.getMove(moves1, builder1, buildDome, player);   //il flag buildDome indica se il giocatore può scegliere di costruire
 
                     buildingPhase.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
                     if (game.getGameEnded())

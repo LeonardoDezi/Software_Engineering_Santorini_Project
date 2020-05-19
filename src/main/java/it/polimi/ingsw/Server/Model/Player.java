@@ -128,9 +128,9 @@ public class Player {
 
     public Builder getFemale(){
         Builder builder = null;
-        for(int i = 0; i < builders.size(); i++)
-            if(builders.get(i).sex == "female")
-                builder = builders.get(i);
+        for (Builder value : builders)
+            if (value.sex == "female")
+                builder = value;
         return builder;
     }
 

@@ -38,8 +38,6 @@ public class BuildingPhase{
 //getMoves
         movesCommands.put(null, () ->{});
         movesCommands.put("addBuilderPosition", this::addBuilderPosition);  //zeus
-        movesCommands.put("askForDome", this::askForDome);
-        movesCommands.put("askForFemale", this::askForFemale);
 //building
         actionCommands.put("buildBelowYou", this::buildBelowYou);
         actionCommands.put("maleOrFemale", this::maleOrFemale);
@@ -66,15 +64,6 @@ public class BuildingPhase{
     }
 
 
-  /*  public void askForFemale(){
-        if(builder.sex == "male" && player.builders.size() == 2){
-            ArrayList<Square> tmp = basicRules.getBuildingRange(player.getFemale());
-            //sendBuildingPhase(femaleBuilder, tmp);
-        }else
-            System.out.println; //solo per i test
-            //askForDome
-
-    }   */
 
 
     public void actionMethod(Builder builder, Square position, boolean isDome){
@@ -98,7 +87,7 @@ public class BuildingPhase{
     }
 
     public void maleOrFemale(){
-        if(!(actionBuilder.equals(builder)))
+        if(!(actionBuilder.equals(builder)))  //se non corrispondono allora sarà il builder donna che potrà solo costruire cupole a questo punto
             isDome = true;
     }
 
