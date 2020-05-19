@@ -21,8 +21,8 @@ import java.util.ArrayList;
 public class TurnManager {
 
 
-    private Game game;
-    private ArrayList<Player> playerList;
+    private final Game game;
+    private final ArrayList<Player> playerList;
 
     private SpecialPhase1 specialPhase1;
     private SpecialPhase2 specialPhase2;

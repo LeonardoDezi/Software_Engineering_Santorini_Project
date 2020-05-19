@@ -1,9 +1,4 @@
 package it.polimi.ingsw.Server.Model;
-//penso che dovremmo mettere un falg che comunichi quando una partita è stata vinta
-
-//ci manca la rimozione delle pedine
-
-
 import java.util.ArrayList;
 
 /**
@@ -14,7 +9,7 @@ import java.util.ArrayList;
 public class Game {
     //rivedere tutti i private, protected e public
     private boolean gameEnded;
-    protected Board gameBoard;  //lo lasciamo private?
+    protected Board gameBoard;
     protected ArrayList<Player> playerList;
     private ArrayList<Card> chosenCards;
     private ArrayList<Card> deck;     //lo lasciamo?
@@ -75,9 +70,6 @@ public class Game {
         }
     }
 
-
-
-            //player = null; necessario?
 
 
 

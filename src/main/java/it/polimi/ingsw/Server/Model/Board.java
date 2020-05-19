@@ -7,15 +7,17 @@ package it.polimi.ingsw.Server.Model;
 
 
 public class Board {
+    public static final int BOARDSIZEX = 5;
+    public static final int BOARDSIZEY = 5;
 
     protected int completedTowers;
 
-    protected Square[][] fullMap;   // per ora lo faccio public, ma forse bisogna metterlo square. in quel caso, modificare deploybuilder
+    protected Square[][] fullMap;
     /** represents the board, fullmap is an array of sqares that rapresents the cells where the builders can move or build.
      */
 
 
-   // private ArrayList<it.polimi.ingsw.Server.Model.Observer> observerList;  SOLO PER TESTARE
+   // private ArrayList<it.polimi.ingsw.Server.Model.Observer> observerList;
 
     /** is the list of the observers of the board.
      */
@@ -25,21 +27,17 @@ public class Board {
      */
     public Board() {
 
-        fullMap = new Square[5][5];
+        fullMap = new Square[BOARDSIZEX][BOARDSIZEY];
         completedTowers = 0;
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < BOARDSIZEX; i++) {
+            for (int j = 0; j < BOARDSIZEY; j++) {
                 fullMap[i][j] = new Square(i, j);
             }
         }
     }
 
-    //forse non servirà più
-    public Square getSquare(int x , int y){
-        return fullMap[x][y];
-    }
 
-    //mossa verificata
+
     /**
      * swaps the content of two squares
      * @param pointA is the first square.
@@ -73,7 +71,7 @@ public class Board {
      * @param point the coordinate of the cell where the new building is going to be.
      * @param isDome this boolean is used to signal if the new building is going to be a dome in a level different from the 4th.
      */
-    public void build(Square point, boolean isDome){   //va corretto il metodo
+    public void build(Square point, boolean isDome){
 
         if(point != null) {
 
@@ -82,7 +80,7 @@ public class Board {
                 completedTowers++;
             }
 
-            if (isDome)   //necessario per via di Atlante
+            if (isDome)
                 point.setValue(2);   // 2 = cupola
 
             point.setLevel(point.getLevel() + 1);

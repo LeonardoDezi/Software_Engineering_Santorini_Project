@@ -6,10 +6,6 @@ package it.polimi.ingsw.Server.Model;
  * @since 1.0
  */
 
-
-//Penso che Square non abbia bisogno di Test dato che i suoi metodi sono tutti dei getter e dei setter
-//al massimo il costruttore
-
 public class Square {
 
     private int value;
@@ -70,10 +66,7 @@ public class Square {
      * puts a builder on the square.
      * @param builder is the id of the builder that has been put on the square
      */
-    public void setBuilder(Builder builder){
-
-        this.builder = builder;
-    }
+    public void setBuilder(Builder builder){ this.builder = builder; }
 
     /**
      * is used to know the id of the builder on the square.
