@@ -38,9 +38,11 @@ public class Player {
     /**
      * assigns the God card chosen by the player to the player class.
      */
-    public void chooseCard(int cardNumber){
-        this.card = game.getChosenCard(cardNumber);
-    }   // non lo so come soluzione non mi convince completamente
+    public ArrayList<Card> chooseCard(ArrayList<Card> possibleCards, int cardNumber){   //cardNumber è la posizione della carta nell'array
+        this.card = possibleCards.get(cardNumber);
+        possibleCards.remove(cardNumber);
+        return possibleCards;
+    }
 
     public Card getCard(){
         return this.card;

@@ -1,10 +1,7 @@
 package it.polimi.ingsw.Server.Controller;
 
 import it.polimi.ingsw.Server.Client;
-import it.polimi.ingsw.Server.Model.Dealer;
-import it.polimi.ingsw.Server.Model.Game;
-import it.polimi.ingsw.Server.Model.Player;
-import it.polimi.ingsw.Server.Model.Square;
+import it.polimi.ingsw.Server.Model.*;
 
 import java.util.ArrayList;
 
@@ -15,6 +12,7 @@ import static it.polimi.ingsw.Server.ServerApp.*;
 //sendMessage("Sei il dealer. scegli tre carte) ???
 //ArrayList<Integer> cards = netInterface.getCards(player?);
 //int chosenCard = netInterface.getChosenCard(possibleCard, player);
+//messaggio per confermare che la carta è stata scelta?
 
 public class GameInitializer implements Runnable{
 
@@ -46,7 +44,7 @@ public class GameInitializer implements Runnable{
             return;
         }
         //TODO ask the first player which cards he wants to choose
-        TurnManager myGameManager = new TurnManager(game);
+        TurnManager myGameManager = new TurnManager(game);   //possiamo spostarlo? se no in questo punto è inutile
     }
 
     public int addPlayer(Client client){
@@ -75,14 +73,20 @@ public class GameInitializer implements Runnable{
         //Il client avrà già il mazzo di carte?
         //sendMessage("Sei il dealer. scegli tre carte) ???
         //ArrayList<Integer> cards = netInterface.getCards(player?);
-        Dealer dealer = (Dealer)game.getPlayerList().get(0);
+        Dealer dealer = (Dealer)game.getPlayerList().get(0);  //funzionerà?
+        //non abbiamo fatto il caso in cui ci sono solo due giocatori
         dealer.chooseCards(cards.get(0), cards.get(1), cards.get(2));
-        //possibleCards = copy of game.chosenCards;
+
+        ArrayList<Card> possibleCards = new ArrayList<>();
+        for(int i=0; i < game.getChosenCardsSize(); i++) {
+            possibleCards.add(game.getChosenCard(i));
+        }
+
 
         for(Player player: game.getPlayerList()){
             //int chosenCard = netInterface.getChosenCard(possibleCards, player);
-
-
+            possibleCards = player.chooseCard(possibleMoves, chosenCard);
+            //messaggio per confermare che la carta è stata scelta?
         }
 
 
@@ -100,6 +104,8 @@ public class GameInitializer implements Runnable{
             game.deployBuilder(player, square1);
             game.deployBuilder(player, square2);
         }
+
+        myGameManager.letsPlay();    //lo mettiamo qui?
     }
 
 

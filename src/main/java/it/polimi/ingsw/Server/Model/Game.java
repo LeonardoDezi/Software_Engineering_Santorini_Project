@@ -126,6 +126,8 @@ public class Game {
         return chosenCards.get(cardNumber);
     }
 
+    public int getChosenCardsSize(){return chosenCards.size();}
+
     public Board getBoard(){ return this.gameBoard;}   // immagino serva anche questo
 
     public BasicRules getRules(){

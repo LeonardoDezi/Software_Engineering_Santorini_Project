@@ -193,15 +193,7 @@ public class TurnManager {
         //broadcastMessage("La partita è finita. Ha vinto game.currentPlayer!!!);
     }
 
-    public void CardSelection(){
-        for(Player player : playerList){
 
-        }
-    }
-
-   /* public void addPlayers(Player player){
-
-    } */
 
 }
 
