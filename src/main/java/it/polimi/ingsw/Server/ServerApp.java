@@ -7,9 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerApp {
-    public static String RED = "red";
-    public static String BLUE = "blue";
-    public static String WHITE = "white";
+    public static String COLOUR1 = "red";
+    public static String COLOUR2 = "blue";
+    public static String COLOUR3 = "white";
     public static void main( String[] args ) throws IOException{
 
         int portNumber = Integer.parseInt(args[1]);

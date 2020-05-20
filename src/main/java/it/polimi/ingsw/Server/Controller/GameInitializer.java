@@ -10,6 +10,12 @@ import java.util.ArrayList;
 
 import static it.polimi.ingsw.Server.ServerApp.*;
 
+
+
+//sendMessage("Sei il dealer. scegli tre carte) ???
+//ArrayList<Integer> cards = netInterface.getCards(player?);
+//int chosenCard = netInterface.getChosenCard(possibleCard, player);
+
 public class GameInitializer implements Runnable{
 
     private Client firstPlayer;
@@ -30,11 +36,11 @@ public class GameInitializer implements Runnable{
         //TODO ask the player the number of players
         // virtualView. sendmessage("Please insert the number of player")
         // wait for virtualView
-        Integer numberOfPlayers;
+        int numberOfPlayers;
         Game game = new Game(numberOfPlayers);
         this.game = game;
-        Dealer player1 = new Dealer(firstPlayerName, RED, game, clientID);
-        Integer outcome = game.addPlayer(player1);
+        Dealer player1 = new Dealer(firstPlayerName, COLOUR1, game, clientID);
+        int outcome = game.addPlayer(player1);  //testare che non ci dia problemi quando facciamo addPlayer
         if(outcome == 0){
             //TODO send to the client "error in match creation, please retry"
             return;
@@ -43,15 +49,15 @@ public class GameInitializer implements Runnable{
         TurnManager myGameManager = new TurnManager(game);
     }
 
-    public Integer addPlayer(Client client){
-        Integer outcome;
-        Integer playersInGame = game.getPlayerList().size();
+    public int addPlayer(Client client){
+        int outcome;
+        int playersInGame = game.getPlayerList().size();
         if(playersInGame==1){
-            Player player = new Player(client.getUsername(), BLUE, game, client.clientID);
+            Player player = new Player(client.getUsername(), COLOUR2, game, client.clientID);
             outcome = game.addPlayer(player);
         }
         else{
-            Player player = new Player(client.getUsername(), WHITE, game, client.clientID);
+            Player player = new Player(client.getUsername(), COLOUR3, game, client.clientID);
             outcome = game.addPlayer(player);
         }
         if(outcome == 0){
@@ -61,16 +67,23 @@ public class GameInitializer implements Runnable{
     }
 
     public boolean checkStatus(){
-        if(game.getPlayerList().size()==game.numberOfPlayers){
-            return true;
-        }
-        return false;
+        return game.getPlayerList().size() == game.numberOfPlayers;
     }
 
     public void dealCards(){
 
-    //TODO implement the method to choose and deal the cards
+        //Il client avrà già il mazzo di carte?
+        //sendMessage("Sei il dealer. scegli tre carte) ???
+        //ArrayList<Integer> cards = netInterface.getCards(player?);
+        Dealer dealer = (Dealer)game.getPlayerList().get(0);
+        dealer.chooseCards(cards.get(0), cards.get(1), cards.get(2));
+        //possibleCards = copy of game.chosenCards;
 
+        for(Player player: game.getPlayerList()){
+            //int chosenCard = netInterface.getChosenCard(possibleCards, player);
+
+
+        }
 
 
         this.setBuilders();

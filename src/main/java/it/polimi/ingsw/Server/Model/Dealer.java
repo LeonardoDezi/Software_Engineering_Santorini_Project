@@ -4,11 +4,9 @@ import java.util.ArrayList;
 
 public class Dealer extends Player {
 
-    private ArrayList<Card> deck;
 
     public Dealer(String name, String colour, Game game, Integer clientID) {
         super(name, colour, game, clientID);
-        this.deck = game.getDeck();
     }
 
     // bisogna ancora fare test per chooseCards
@@ -17,8 +15,6 @@ public class Dealer extends Player {
         game.addChosenCard(card1);
         game.addChosenCard(card2);
         game.addChosenCard(card3);
-
-        return;
 
     }
 }

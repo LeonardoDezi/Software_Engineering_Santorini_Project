@@ -34,7 +34,7 @@ public class SpecialPhase1 {
     //getMoves
         movesCommands.put("additionalBuild", () -> {possibleMoves = basicRules.getBuildingRange(builder);}); //Prometeo
         movesCommands.put("oppositeSideMoves", this::oppositeSideMoves);  //Caronte
-        movesCommands.put(null, () ->{possibleMoves = new ArrayList<>();});    //controllare maxHeight
+        movesCommands.put(null, () ->{possibleMoves = new ArrayList<>();});
         movesCommands.put("restore", this::restore);  //Athena
 
     //actionMethod
@@ -50,7 +50,7 @@ public class SpecialPhase1 {
             return new ArrayList<>();     //ritorna lista vuota  (necessario mettere Square?)
         this.player = player;   //rivedere
         this.builder = builder;
-        movesCommands.get(player.getCard().parameters.specialPhase1Moves).run();   //player.getCard() e cancelliamo card?
+        movesCommands.get(player.getCard().parameters.specialPhase1Moves).run();
         return possibleMoves;
     }
 
