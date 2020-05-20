@@ -2,6 +2,7 @@ package it.polimi.ingsw.Server.Controller;
 
 import it.polimi.ingsw.Server.Client;
 import it.polimi.ingsw.Server.Model.*;
+import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class GameInitializer implements Runnable{
     private Client firstPlayer;
     private String firstPlayerName;
     private Integer clientID;
+    private NetInterface netInterface;
     private Game game;
 
     public GameInitializer(Client client){
@@ -31,6 +33,8 @@ public class GameInitializer implements Runnable{
 
     @Override
     public void run() {
+        this.netInterface = new NetInterface(game);
+        netInterface.addClient(firstPlayer);
         //TODO ask the player the number of players
         // virtualView. sendmessage("Please insert the number of player")
         // wait for virtualView
@@ -44,7 +48,7 @@ public class GameInitializer implements Runnable{
             return;
         }
         //TODO ask the first player which cards he wants to choose
-        TurnManager myGameManager = new TurnManager(game);   //possiamo spostarlo? se no in questo punto è inutile
+        TurnManager myGameManager = new TurnManager(game, netInterface);   //possiamo spostarlo? se no in questo punto è inutile
     }
 
     public int addPlayer(Client client){
@@ -53,10 +57,16 @@ public class GameInitializer implements Runnable{
         if(playersInGame==1){
             Player player = new Player(client.getUsername(), COLOUR2, game, client.clientID);
             outcome = game.addPlayer(player);
+            if(outcome==1){
+                netInterface.addClient(client);
+            }
         }
         else{
             Player player = new Player(client.getUsername(), COLOUR3, game, client.clientID);
             outcome = game.addPlayer(player);
+            if(outcome==1){
+                netInterface.addClient(client);
+            }
         }
         if(outcome == 0){
             return 0;
@@ -71,8 +81,8 @@ public class GameInitializer implements Runnable{
     public void dealCards(){
 
         //Il client avrà già il mazzo di carte?
-        //sendMessage("Sei il dealer. scegli tre carte) ???
-        //ArrayList<Integer> cards = netInterface.getCards(player?);
+        //sendMessage("Sei stato scelto dagli Dei per decidere chi parteciperà al gioco. scegli " + game.numberOfPlayers + " carte", firstPlayer)
+        //ArrayList<Integer> cards = netInterface.getCards(player);
         Dealer dealer = (Dealer)game.getPlayerList().get(0);  //funzionerà?
         //non abbiamo fatto il caso in cui ci sono solo due giocatori
         dealer.chooseCards(cards.get(0), cards.get(1), cards.get(2));
@@ -99,9 +109,10 @@ public class GameInitializer implements Runnable{
             Player player = game.getPlayerList().get(game.numberOfPlayers-i);
             possibleSquares=game.getBasic().getFreeSquares();
             //TODO ask the player where he wants to place the builders
-            //Square square1 = netinteface.getBuilderplacement
-            //Square square2 = netinteface.getBuilderplacement
+            //Square square1 = netinteface.getBuilderplacement(possibleSquares)
             game.deployBuilder(player, square1);
+            possibleSquares=game.getBasic().getFreeSquares();
+            //Square square2 = netinteface.getBuilderplacement
             game.deployBuilder(player, square2);
         }
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Server.Controller;
 
 import it.polimi.ingsw.Server.Model.*;
+import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class TurnManager {
 
     private final Game game;
     private final ArrayList<Player> playerList;
+    private NetInterface netInterface;
 
     private SpecialPhase1 specialPhase1;
     private SpecialPhase2 specialPhase2;
@@ -41,8 +43,9 @@ public class TurnManager {
 
     //dovremmo assicurarci che sia unico?
     //immagino serviranno delle modifiche per il multipartita
-    public TurnManager(Game game){
+    public TurnManager(Game game, NetInterface netInterface){
         this.game = game;
+        this.netInterface = netInterface;
         this.playerList = game.getPlayerList();
         specialPhase1 = new SpecialPhase1(game);
         specialPhase2 = new SpecialPhase2(game);

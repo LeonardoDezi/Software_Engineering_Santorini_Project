@@ -2,15 +2,18 @@ package it.polimi.ingsw.Server.VirtualView;
 
 import com.sun.tools.doclint.Env;
 import it.polimi.ingsw.Server.Client;
-import it.polimi.ingsw.Server.Model.Builder;
-import it.polimi.ingsw.Server.Model.Envelope;
-import it.polimi.ingsw.Server.Model.Player;
-import it.polimi.ingsw.Server.Model.Square;
+import it.polimi.ingsw.Server.Model.*;
+import sun.nio.ch.Net;
 
 import java.util.ArrayList;
 
 public class NetInterface {
     private ArrayList<Client> clients;
+    private Game game;
+
+    public NetInterface(Game game){
+        this.game = game;
+    }
 
 
 public Envelope getBothMovementMove(ArrayList<Square> moves1, Builder builder1,ArrayList<Square> moves2, Builder builder2, Player player){
@@ -27,7 +30,19 @@ public Envelope getBothBuildingMove(){
 
 }
 
-public Ennvelope
+public Envelope getBuildingMove(){
+
+}
+
+public void sendMessage(String message, Client client){
+    if(client == null){
+        for(int i=0; i<)
+    }
+}
+
+public void addClient(Client client){
+        this.clients.add(client);
+}
 
 
 
