@@ -6,13 +6,12 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 public class MessageSerializer {
-    public void clientServerMessage() {
+    public String clientServerMessage() {
 
         Gson gson = new GsonBuilder().create();
 
         Box<Message> type = new Box<>();
         Message message = new Message();
-        message.setId();
         message.setMoves();
         message.setBuilder();
 
@@ -20,7 +19,7 @@ public class MessageSerializer {
         String userJson = gson.toJson(type, fooType);
 
         Box <Message> box = gson.fromJson(userJson, fooType);
-
+        return userJson;
     }
 }
 

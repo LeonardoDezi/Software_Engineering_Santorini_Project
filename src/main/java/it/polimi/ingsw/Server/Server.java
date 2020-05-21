@@ -16,49 +16,28 @@ public class Server {
         this.port = port;
     }
 
-    private ServerSocket serverSocket;
-    private ExecutorService executor = Executors.newCachedThreadPool();
-    private Map<String, ClientConnection> waitingConnection = new HashMap<>();
-    private Map<ClientConnection, ClientConnection> playingConnection = new HashMap<>();
-
-    //Deregister connection
-    public synchronized void deregisterConnection(ClientConnection c) {
-        ClientConnection opponent = playingConnection.get(c);
-        if (opponent != null) {
-            opponent.closeConnection();
-        }
-        playingConnection.remove(c);
-        playingConnection.remove(opponent);
-        Iterator<String> iterator = waitingConnection.keySet().iterator();
-        while (iterator.hasNext()) {
-            if (waitingConnection.get(iterator.next()) == c) {
-                iterator.remove();
-            }
-        }
-    }
-
     public void startServer() throws IOException {
 
-        ServerSocket serverSocket;
-        try {
-            serverSocket = new ServerSocket(port);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            return;
-        }
-        Lobby lobby = new Lobby();
-        System.out.println("Server ready");
-        while (true) {
-            try {
-                Socket socket = serverSocket.accept();
-                executor.submit(new SocketClientConnection(socket));
-                Client client = new Client(socket);
-                lobby.addClient(client);
-            } catch (IOException e) {
-                break;
+            //It creates threads when necessary, otherwise it re-uses existing one when possible
+            ExecutorService executor = Executors.newCachedThreadPool();
+            ServerSocket serverSocket;
+            try{
+                serverSocket = new ServerSocket(port);
+            }catch (IOException e){
+                System.err.println(e.getMessage()); //port not available
+                return;
             }
+            System.out.println("Server ready");
+            while (true){
+                try{
+                    Socket socket = serverSocket.accept();
+                    executor.submit( new ServerClientHandler(socket));
+                }catch(IOException e){
+                    break; //In case the serverSocket gets closed
+                }
+            }
+            executor.shutdown();
+            serverSocket.close();
         }
-        executor.shutdown();
-        serverSocket.close();
+
     }
-}

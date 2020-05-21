@@ -8,24 +8,22 @@ import java.util.ArrayList;
 
 public class Message {
 
-    private int id;
-    private ArrayList<Square> moves;
-    private Builder builder;
+    private ArrayList<Square> moves1;
+    private ArrayList<Square> moves2;
+    private Builder builder1;
+    private Builder builder2;
+    private boolean isDome;
 
-    public int getId(){
-        return id;
-    }
 
-    public void setId(){
-        this.id = id;
-    }
 
     public void setMoves(){
-        this.moves = moves;
+        this.moves1 = moves1;
+        this.moves2 = moves2;
     }
 
     public void setBuilder(){
-        this.builder = builder;
+        this.builder1 = builder1;
+        this.builder2 = builder2;
     }
 
 }
