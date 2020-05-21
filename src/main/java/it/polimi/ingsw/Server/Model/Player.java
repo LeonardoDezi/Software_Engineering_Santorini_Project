@@ -57,7 +57,7 @@ public class Player {
      */
 
 
-    //DA TESTARE
+    //magari modificarlo per IndexOutOfBounds e non ARRAYIndexOuTOfBounds
     public Builder getBuilder(int BuilderId) throws ArrayIndexOutOfBoundsException{
 
         if(BuilderId >= builders.size())
@@ -79,8 +79,8 @@ public class Player {
      * adds the new builder to builderList
      * @param position are the coordinates of the square where the new builder is.
      */
-    public void addBuilder(Square position){
-        String sex;
+    public void addBuilder(Square position){    //la posizione deve essere legittima!!
+        String sex;                             //la dimensione dell'array deve essere controllata più in alto
 
         if(builders.isEmpty())
             sex = SEX1;
@@ -91,8 +91,8 @@ public class Player {
         //return builders.size() - 1;  // se magari vogliamo comunicare il numero della pedina che abbiamo appena messo
     }
 
-//
 
+    //al momento removeBuilder non implica la possibilità che builderId sia errato
     public void removeBuilder(int builderId){
 
         Square position = builders.get(builderId).getPosition();

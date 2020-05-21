@@ -18,7 +18,7 @@ public class Builder {
      * creates the builder and puts it on the board at a given position.
      * @param position is used to store the builder position also inside the builder class.
      */
-    public Builder(Square position, String colour, String sex){
+    public Builder(Square position, String colour, String sex){  //position deve essere legittima a questo punto
         this.colour = colour;
         this.sex = sex;
         this.position = position;

@@ -8,6 +8,7 @@ import java.util.ArrayList;
  */
 public class Game {
     //rivedere tutti i private, protected e public
+    private static final int MAXNUMBUILDERS = 2;
     private boolean gameEnded;
     protected Board gameBoard;
     protected ArrayList<Player> playerList;
@@ -22,7 +23,7 @@ public class Game {
     /**
      * creates a new game.
      */
-    public Game(Integer numberOfPlayers){     //da mettere un identificativo partita?
+    public Game(int numberOfPlayers){     //da mettere un identificativo partita?
         gameBoard = new Board();
         gameEnded = false;
         playerList = new ArrayList<>();
@@ -65,12 +66,12 @@ public class Game {
      * removes a player from the game.
      * @param player is the player id.
      */
-    //da testare
-    public void removePlayer(Player player) {
+    public void removePlayer(Player player) {     //non consideriamo il caso in cui il giocatore non sia presente nella lista
         for (int i = 0; i < player.getBuilderSize(); i++) {
             player.removeBuilder(i);
             i--;
         }
+        playerList.remove(player);
     }
 
 
@@ -100,39 +101,37 @@ public class Game {
     }
 
 
-    // arrivati a questo punto siamo certi che la posizione data è possibile?
 
     /**
      * puts a new builder on the board.
      * @param player is the player that is deploying the builder.
      * @param placement is the square where the player wants to put the builder
      */
-    public void deployBuilder(Player player, Square placement){
+    public String deployBuilder(Player player, Square placement){
         int x = placement.x;
         int y = placement.y;
-        if(player.getBuilderSize() == 2){
-            System.out.println("Error:" + player.playerID + "has already deployed all the builders");
+        String message;
+        if(player.getBuilderSize() == MAXNUMBUILDERS){
+            message = "Error:" + player.playerID + "has already deployed all the builders";
         } else {
-            if(gameBoard.fullMap[x][y].getValue() == 1)
-                System.out.println("Error: Square already occupied by another player");
-            else
+            if(gameBoard.fullMap[x][y].getValue() != 0)
+                message = "Error: Square already occupied by another player";
+            else {
                 player.addBuilder(placement);   //aggiungi alla lista dei builder del giocatore
-            System.out.println("Builder deployed");  //non possiamo lasciare questo
+                message = "Builder deployed";  //non possiamo lasciare questo
+            }
         }
 
+        return message;
     }
 
-    public Card getChosenCard(int cardNumber){
-        return chosenCards.get(cardNumber);
-    }
+    public Card getChosenCard(int cardNumber){ return chosenCards.get(cardNumber); }
 
     public int getChosenCardsSize(){return chosenCards.size();}
 
-    public Board getBoard(){ return this.gameBoard;}   // immagino serva anche questo
+    public Board getBoard(){ return this.gameBoard;}   // serve ancora?
 
-    public BasicRules getRules(){
-        return this.basic;
-    }
+    public BasicRules getRules(){ return this.basic; }
 
     public Player getWinningPlayer(){return winningPlayer;}
 

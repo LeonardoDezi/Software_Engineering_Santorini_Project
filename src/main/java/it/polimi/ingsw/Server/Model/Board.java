@@ -80,13 +80,14 @@ public class Board {
                 completedTowers++;
             }
 
-            if (isDome)
+            if (isDome) {
                 point.setValue(2);   // 2 = cupola
+            }
 
             point.setLevel(point.getLevel() + 1);
         }
 
-    }
+    }   //la mossa deve essere legittima. non controlla se cìè già un builder o se è troppo in alto
 
 }
 
