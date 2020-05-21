@@ -52,7 +52,6 @@ public class TurnManager {
         specialPhase3 = new SpecialPhase3(game);
         buildingPhase = new BuildingPhase(game);
         movementPhase = new MovementPhase(game);
-        //netList = new NetList(); ??
     }
 
     public void letsPlay(){
@@ -87,9 +86,9 @@ public class TurnManager {
                 if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
 
                     //netInterface.sendMessage()
-                    //Envelope received =netInterface.getBothMovementMove(moves1, builder1, moves2, builder2, player) //player non mi è così necessario
+                    received =netInterface.getBothMovementMove(moves1, builder1, moves2, builder2, player);
 
-                    if(/* received != null */) {
+                    if(received != null ) {
                         specialPhase1.actionMethod(received.getBuilder(), received.getMove());
                         //updateBoard(game.getBoard);
                     }
@@ -105,7 +104,7 @@ public class TurnManager {
                 if ( !(moves1.isEmpty()) || !(moves2.isEmpty()) ) {
 
 //movementPhase
-                    // received =netInterface.getBothMovementMove(moves1, builder1, moves2, builder2, player) @ensures mossa valida
+                    received =netInterface.getBothMovementMove(moves1, builder1, moves2, builder2, player);
 
                     lastPosition = received.getBuilder().getPosition();
                     movementPhase.actionMethod(received.getBuilder(), received.getMove());
@@ -123,7 +122,7 @@ public class TurnManager {
 
                     if(moves1 != null) {
 
-                        //received = netInterface.getMovementMove(moves1, received.getBuilder(), player);
+                        received = netInterface.getMovementMove(moves1, received.getBuilder(), player);
 
                         if(received != null)
                             specialPhase2.actionMethod(received.getBuilder(), received.getMove());
@@ -141,15 +140,15 @@ public class TurnManager {
 
                     if(player.getCard().parameters.buildingPhaseMoves.equals("askForFemale")){
                         if (received.getBuilder().sex.equals("female")) {
-                            //received=netInterface.getBuildMove(moves1, builder1, true, player);
+                            received=netInterface.getBuildMove(moves1, builder1, true, player);
                         }else if(player.getBuilderSize() ==2){
                                 Builder female = player.getFemale();
                                 moves2 = game.getRules().getBuildingRange(female);
                                 // received = netInterface.getBothBuildMove(moves1, received.getBuilder(), false, moves2, female, false);
                         }else
-                            //received =netInterface.getBuildMove(moves1, received.getBuilder(), false, player);
+                            received =netInterface.getBuildMove(moves1, received.getBuilder(), false, player);
                     }else {
-                        //received = netInterface.getBuildMove(moves1, builder1, buildDome, player);   //il flag buildDome indica se il giocatore può scegliere di costruire
+                        received = netInterface.getBuildMove(moves1, builder1, buildDome, player);
                     }
 
 
@@ -162,7 +161,7 @@ public class TurnManager {
 //specialPhase3
                     lastPosition = received.getMove();
                     moves1 = specialPhase3.getMoves(player, received.getBuilder() , lastPosition);
-                    //received = netInterface.getBuildMove(moves1, builder1, buildDome,player);
+                    received = netInterface.getBuildMove(moves1, builder1, buildDome,player);
 
                     //gestire il caso in cui non restituisca mosse
                     specialPhase3.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
@@ -179,7 +178,7 @@ public class TurnManager {
                     i--;
                     game.removePlayer(player);
                     //loseMethod();
-                    //broadcastMessage("Il giocatore" + player + "ha perso");
+                    //sendMessage("Il giocatore" + player + "ha perso", null); //per mandare in broadcast il campo player è null
                     if(playerList.size() == 1){
                         game.setWinningPlayer(playerList.get(0));
                         game.setGameEnded(true);
@@ -193,7 +192,7 @@ public class TurnManager {
 
 
     public void endGame(){
-        //broadcastMessage("La partita è finita. Ha vinto game.currentPlayer!!!);
+        //sendMessage("La partita è finita. Ha vinto game.currentPlayer!!!, null);
     }
 
 
