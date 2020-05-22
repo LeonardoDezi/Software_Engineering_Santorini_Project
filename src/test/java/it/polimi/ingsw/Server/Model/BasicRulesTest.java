@@ -1,13 +1,15 @@
 package it.polimi.ingsw.Server.Model;
 
+import static java.lang.Math.abs;
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-/*public class BasicRulesTest {
+public class BasicRulesTest {
 
     private Game game;
     private Board board;
@@ -17,43 +19,50 @@ import java.util.ArrayList;
     @Before
     public void createGameAndRules(){
 
-        game = new Game();
+        game = new Game(3);
         board = game.getBoard();
-        game.addPlayer("Marco");
-        game.addPlayer("leonardo");
-        game.addPlayer("Fra");
+        int num1 =game.addPlayer(new Player("Marco", "Red", game, 0));
+        int num2 =game.addPlayer(new Player("Luca", "Blue", game, 1));
+        int num3 =game.addPlayer(new Player("Fra", "Green", game, 2));
+        rules = new BasicRules(board, game);
+
+    }
+
+
+    @After
+    public void clearAndRecreate(){
+
+        game = new Game(3);
+        board = game.getBoard();
+        int num1 =game.addPlayer(new Player("Marco", "Red", game, 0));
+        int num2 =game.addPlayer(new Player("Luca", "Blue", game, 1));
+        int num3 =game.addPlayer(new Player("Fra", "Green", game, 2));
         rules = new BasicRules(board, game);
 
     }
 
     @Test
     public void testWinCondition(){
-        board.build(1, 2, false);
-        board.build(1,2, false);  //costruiamo un edificio di due piani
+        board.build(board.fullMap[1][2], false);
+        board.build(board.fullMap[1][2], false);  //costruiamo un edificio di due piani
         assertEquals(0, board.fullMap[1][2].getValue());
         assertEquals(2, board.fullMap[1][2].getLevel());  // verifichiamo che l'edificio sia costruito correttamente
 
-        board.build(2,2, false);
-        board.build(2,2, false);
-        board.build(2,2, false);  // costruiamo un edifico di tre piani
+        board.build(board.fullMap[2][2], false);
+        board.build(board.fullMap[2][2], false);
+        board.build(board.fullMap[2][2], false);  // costruiamo un edifico di tre piani
         assertEquals(0, board.fullMap[2][2].getValue());
         assertEquals(3, board.fullMap[2][2].getLevel());  // verifichiamo che l'edificio sia costruito correttamente
 
 
         player1 = game.playerList.get(2);
-        game.deployBuilder(player1, 1, 2);  // poniamo una pedina su la torre di due piani
-        assertEquals(1, board.fullMap[1][2].getValue());  // verifichiamo che sia stata posta
-        assertFalse(rules.testFlag);  // ci accertiamo che testFlag sia false
-        rules.winCondition(player1.builders.get(0), 2, 2);
-        assertTrue(rules.testFlag);  // ci accertiamo che testFlag sia true
-
-
-        game = new Game();
-        board = game.getBoard();
-        game.addPlayer("Marco");
-        game.addPlayer("leonardo");
-        game.addPlayer("Fra");
-        rules = new BasicRules(board, game);   // reinizializza per il prossimo metodo di test
+        game.deployBuilder(player1, board.fullMap[2][2]);  // poniamo una pedina sulla torre di tre piani
+        assertEquals(1, board.fullMap[2][2].getValue());  // verifichiamo che sia stata posta
+        assertFalse(game.getGameEnded());
+        assertNull(game.getWinningPlayer());
+        rules.winCondition(player1, board.fullMap[1][2], board.fullMap[2][2]);
+        assertTrue(game.getGameEnded());
+        assertEquals(player1, game.getWinningPlayer());
 
 
     }
@@ -62,61 +71,265 @@ import java.util.ArrayList;
     @Test
     public void testLosingConditions(){
 
-        //primo caso: il giocatore non si trovo su un edificio di due piani
-        game.deployBuilder(game.playerList.get(0), 0,1);
-        board.build(1,1, false);
 
-        assertFalse(rules.testFlag); // accertiamoci che testFlag sia falso all'inizio
-        rules.winCondition(game.playerList.get(0).builders.get(0), 1 ,1);
-        assertFalse(rules.testFlag); //accertiamoci che testFlag sia ancora falso in quanto non è una winCondition
+        //1) il giocatore si trova ancora sulla posizione iniziale
+        player1 = game.playerList.get(0);
+        board.build(board.fullMap[0][1], false);   //torre di due piani
+        board.build(board.fullMap[0][1], false);
+        game.deployBuilder(player1, board.fullMap[0][1]);
+
+        board.build(board.fullMap[1][1], false);
+        board.build(board.fullMap[1][1], false);
+        board.build(board.fullMap[1][1], false);   // torre di tre piani
+
+        assertEquals(2, board.fullMap[0][1].getLevel());  //accertarsi che la pedina si trova sulla torre di due piani
+        assertEquals(1, board.fullMap[0][1].getValue());
+
+        assertEquals(3, board.fullMap[1][1].getLevel());   //accertarsi che la torre sia di tre piani è libera
+        assertEquals(0, board.fullMap[1][1].getValue());
+
+        assertFalse(game.getGameEnded());                         // accertarsi che nessuno abbia ancora vinto
+        assertNull(game.getWinningPlayer());
+
+        rules.winCondition(player1, board.fullMap[0][1], board.fullMap[1][1]);
+
+        assertFalse(game.getGameEnded());                         // accertarsi che non sia cambiato niente
+        assertNull(game.getWinningPlayer());
 
 
-        //secondo caso: il giocatore si trova su un edificio di due piani ma la sua destinazione non è un edificio di 3
-        board.build(4,4, false);
-        board.build(4,4, false);
-        game.deployBuilder(game.playerList.get(1),4,4);
-        board.build(3,1, false);
-        assertFalse(rules.testFlag);
-        rules.winCondition(game.playerList.get(1).builders.get(0), 3 ,1);
-        assertFalse(rules.testFlag);
+        //2) c'è una pedina in finalPosition ma il giocatore è ancora nella posizione iniziale
+        game.deployBuilder(player1, board.fullMap[1][1]);   //posizionare una pedina su finalPosition
+        assertEquals(3, board.fullMap[1][1].getLevel());
+        assertEquals(1, board.fullMap[1][1].getValue());    //accertarsi che la torre sia occupata
+
+        assertEquals(2, board.fullMap[0][1].getLevel());  //accertarsi che la pedina si trova sulla torre di due piani
+        assertEquals(1, board.fullMap[0][1].getValue());
+
+        assertFalse(game.getGameEnded());                         // accertarsi che nessuno abbia ancora vinto
+        assertNull(game.getWinningPlayer());
+
+        rules.winCondition(player1, board.fullMap[0][1], board.fullMap[1][1]);
+
+        assertFalse(game.getGameEnded());                         // accertarsi che non sia cambiato niente
+        assertNull(game.getWinningPlayer());
 
 
-        game = new Game();
-        board = game.getBoard();
-        game.addPlayer("Marco");
-        game.addPlayer("Leonardo");
-        game.addPlayer("Fra");
-        rules = new BasicRules(board, game);   // reinizializza per il prossimo metodo di test
+
+        //3) finalPosition non è del livello corretto
+        board.build(board.fullMap[0][2], false);    // torre di due piani
+        board.build(board.fullMap[0][2], false);
+        board.move(board.fullMap[0][1], board.fullMap[0][2]);   // spostamento del builder da una torre di due piani a un' altra di due piani
+
+        assertEquals(2, board.fullMap[0][1].getLevel());  //accertarsi che la posizione ora è libera
+        assertEquals(0, board.fullMap[0][1].getValue());
+
+        assertEquals(2, board.fullMap[0][2].getLevel());   //accertarsi che la posizione è occupata
+        assertEquals(1, board.fullMap[0][2].getValue());
+
+        assertFalse(game.getGameEnded());                         // accertarsi che nessuno abbia ancora vinto
+        assertNull(game.getWinningPlayer());
+
+        rules.winCondition(player1, board.fullMap[0][1], board.fullMap[0][2]);
+
+        assertFalse(game.getGameEnded());                         // accertarsi che non sia cambiato niente
+        assertNull(game.getWinningPlayer());
+
+
+        //4) initialPosition non è del livello corretto
+        board.build(board.fullMap[2][3], false);
+        board.build(board.fullMap[2][3], false);
+        board.build(board.fullMap[2][3], false);    // torre di tre piani
+
+        Player player3 = game.playerList.get(2);
+        game.deployBuilder(player3, board.fullMap[2][2]);
+        board.move(board.fullMap[2][2], board.fullMap[2][3]);   // spostamento del builder da terra a una torre di tre piani
+
+        assertEquals(0, board.fullMap[2][2].getLevel());  //accertarsi che la posizione ora è libera
+        assertEquals(0, board.fullMap[2][2].getValue());
+
+        assertEquals(3, board.fullMap[2][3].getLevel());   //accertarsi che la posizione è occupata
+        assertEquals(1, board.fullMap[2][3].getValue());
+
+        assertFalse(game.getGameEnded());                         // accertarsi che nessuno abbia ancora vinto
+        assertNull(game.getWinningPlayer());
+
+        rules.winCondition(player3, board.fullMap[2][2], board.fullMap[2][3]);
+
+        assertFalse(game.getGameEnded());                         // accertarsi che non sia cambiato niente
+        assertNull(game.getWinningPlayer());
+
+
+        //5) il builder in finalPosition non è del player giocante
+        Player player2 = game.playerList.get(1);
+
+        board.build(board.fullMap[0][4], false);
+        board.build(board.fullMap[0][4], false);   //torre di due piani
+
+        board.build(board.fullMap[1][4], false);
+        board.build(board.fullMap[1][4], false);   //torre di tre piani
+        board.build(board.fullMap[1][4], false);
+
+        game.deployBuilder(player2, board.fullMap[1][4]);   //mettere la pedina sulla torre di tre piani
+
+        assertEquals(2, board.fullMap[0][4].getLevel());  //accertarsi che la posizione ora è libera
+        assertEquals(0, board.fullMap[0][4].getValue());
+
+        assertEquals(3, board.fullMap[1][4].getLevel());   //accertarsi che la posizione è occupata
+        assertEquals(1, board.fullMap[1][4].getValue());
+
+        assertFalse(game.getGameEnded());                         // accertarsi che nessuno abbia ancora vinto
+        assertNull(game.getWinningPlayer());
+
+        rules.winCondition(player1, board.fullMap[0][4], board.fullMap[1][4]);
+
+        assertFalse(game.getGameEnded());                         // accertarsi che non sia cambiato niente
+        assertNull(game.getWinningPlayer());
+
+    }
+
+
+    @Test
+    public void checkProximity() {
+
+        //1) Plancia vuota
+        player1 = game.playerList.get(0);
+        game.deployBuilder(player1, board.fullMap[2][2]);
+        Builder builder = player1.getBuilder(0);
+        ArrayList<Square> possibleMoves = rules.proximity(builder);
+        assertEquals(8, possibleMoves.size()); // controlla che ci siano tutte le caselle
+
+        for (Square possibleMove : possibleMoves) {
+            assertNotEquals(player1.getBuilder(0).getPosition(), possibleMove);  // controlla che la posizione del giocatore non sia presente
+            assertEquals(0, possibleMove.getValue());  //controlla che siano tutti square liberi
+            assertTrue(abs(builder.getPosition().x - possibleMove.x) <= 1);  //controlla che siano tutte caselle adiacenti al builder
+            assertTrue(abs(builder.getPosition().y - possibleMove.y) <= 1);
+        }
+
+        //2) Aggiunta di un edificio di tre piani in (1,3) una cupola in (3,1) una pedina in (2,3)
+        board.build(board.fullMap[1][3], false);
+        board.build(board.fullMap[1][3], false);
+        board.build(board.fullMap[1][3], false);   // torre di tre piani
+
+        board.build(board.fullMap[3][1], true);   //cupola
+
+        game.deployBuilder(game.playerList.get(1), board.fullMap[2][3]);    // pedina in (2,3)
+
+        possibleMoves = rules.proximity(builder);
+        assertEquals(8, possibleMoves.size()); // controlla che ci siano tutte le caselle
+
+        boolean flag1 = false;
+        boolean flag2 = false;
+        boolean flag3 = false;
+        for (Square possibleMove : possibleMoves) {
+            if (possibleMove.getLevel() == 3 && possibleMove.equals(board.fullMap[1][3]))
+                flag1 = true;
+            if (possibleMove.getValue() == 2 && possibleMove.equals(board.fullMap[3][1]))
+                flag2 = true;
+            if (possibleMove.getValue() == 1 && possibleMove.equals(board.fullMap[2][3]))
+                flag3 = true;
+        }
+        assertTrue(flag1);
+        assertTrue(flag2);
+        assertTrue(flag3);
+
+
+        //3)proximity di un builder in un angolo
+        game.deployBuilder(game.playerList.get(0), board.fullMap[0][4]);
+        builder = game.playerList.get(0).getBuilder(1);
+        possibleMoves = rules.proximity(builder);
+        assertEquals(3, possibleMoves.size());  // si accerta che la dimensione sia tre
+
+        //4)proximity di un builder in un lato
+        game.deployBuilder(game.playerList.get(2), board.fullMap[4][2]);
+        builder = game.playerList.get(2).getBuilder(0);
+        possibleMoves = rules.proximity(builder);
+        assertEquals(5, possibleMoves.size());
 
     }
 
     @Test
-    public void testPossibleMoves(){
-        game.deployBuilder(game.playerList.get(0), 2,2);
-        //testiamo getPossibleMoves nel caso di una pedina circondata da caselle vuote
-        rules.getMovementRange(game.playerList.get(0));
-        ArrayList<Square> moves = rules.getFirstPossibleMoves();
-        assertEquals(8, moves.size()); // verifichiamo che ci siano 8 mosse disponibili
+    public void checkRemoveBuilderSquare(){
 
-        for(int i = 0; i < 8; i++) {
-            assertNotSame(moves.get(i), board.fullMap[2][2]);  // verifichiamo che nessuna delle caselle sia quella in cui la pedina è contenuta
-            assertTrue(Math.abs(moves.get(i).x - 2) <= 1);  // verifichiamo che le mosse contenute nell'array siano solo di caselle adiacenti
-            assertTrue(Math.abs(moves.get(i).y - 2) <= 1);
-        }
-        
-        assertSame(moves.get(0), board.fullMap[1][1]);    //non so se può essere considerato un buon caso di test
-        assertSame(moves.get(1), board.fullMap[1][2]);
-        assertSame(moves.get(2), board.fullMap[1][3]);
-        assertSame(moves.get(3), board.fullMap[2][1]);
-        assertSame(moves.get(4), board.fullMap[2][3]);
-        assertSame(moves.get(5), board.fullMap[3][1]);
-        assertSame(moves.get(6), board.fullMap[3][2]);
-        assertSame(moves.get(7), board.fullMap[3][3]);
+        player1 = game.playerList.get(0);
+        game.deployBuilder(player1, board.fullMap[2][2]);
+        Builder builder = player1.getBuilder(0);   //soggetto
 
+        game.deployBuilder(player1, board.fullMap[2][3]);   //aggiunta di due pedine
+        game.deployBuilder(game.playerList.get(1), board.fullMap[3][2]);
 
+        board.build(board.fullMap[1][3], false);
+        board.build(board.fullMap[1][3], false);
+        board.build(board.fullMap[1][3], false);   // torre di tre piani
+
+        board.build(board.fullMap[3][1], true);   //cupola
+
+        ArrayList<Square> posssibleMoves = rules.proximity(builder);
+        posssibleMoves = rules.removeBuilderSquare(posssibleMoves);
+        assertEquals(6, posssibleMoves.size());
 
 
     }
+
+    @Test
+    public void checkRemoveDomeSquare(){
+
+        player1 = game.playerList.get(0);
+        game.deployBuilder(player1, board.fullMap[2][2]);
+        Builder builder = player1.getBuilder(0);   //soggetto
+
+        game.deployBuilder(player1, board.fullMap[2][3]);   //aggiunta di due pedine
+        game.deployBuilder(game.playerList.get(1), board.fullMap[3][2]);
+
+        board.build(board.fullMap[1][3], false);
+        board.build(board.fullMap[1][3], false);
+        board.build(board.fullMap[1][3], false);   // torre di tre piani con cupola
+        board.build(board.fullMap[1][3], false);
+
+        board.build(board.fullMap[3][1], true);   //cupola
+
+        board.build(board.fullMap[1][1], false);
+        board.build(board.fullMap[1][1], false);
+        board.build(board.fullMap[1][1], false);   // torre di tre piani
+
+        ArrayList<Square> posssibleMoves = rules.proximity(builder);
+        posssibleMoves = rules.removeDomeSquare(posssibleMoves);
+        assertEquals(6, posssibleMoves.size());
+    }
+
+    @Test
+    public void checkGetFreeSquares(){
+        player1 = game.playerList.get(0);
+        game.deployBuilder(player1, board.fullMap[2][2]);
+        Builder builder = player1.getBuilder(0);   //soggetto
+
+        game.deployBuilder(player1, board.fullMap[2][3]);   //aggiunta di due pedine
+        game.deployBuilder(game.playerList.get(1), board.fullMap[3][2]);
+
+        board.build(board.fullMap[1][3], false);
+        board.build(board.fullMap[1][3], false);
+        board.build(board.fullMap[1][3], false);   // torre di tre piani con cupola
+        board.build(board.fullMap[1][3], false);
+
+        board.build(board.fullMap[3][1], true);   //cupola
+
+        board.build(board.fullMap[1][1], false);
+        board.build(board.fullMap[1][1], false);
+        board.build(board.fullMap[1][1], false);   // torre di tre piani
+
+        board.build(board.fullMap[0][0], false);
+        board.build(board.fullMap[4][4], false);
+        board.build(board.fullMap[0][4], false);
+        board.build(board.fullMap[4][0], false);
+        board.build(board.fullMap[4][4], false);
+
+        ArrayList <Square> possibleMoves = rules.getFreeSquares();
+        assertEquals(20, possibleMoves.size()); // tre pedine, un edificio con cupola e una cupola
+
+        for(Square possibleMove: possibleMoves)
+            assertEquals(0, possibleMove.getValue());
+
+    }
+
 }
 
-*/
+

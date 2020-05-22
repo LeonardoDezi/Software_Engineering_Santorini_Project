@@ -50,7 +50,7 @@ public class Game {
      */
 
 
-    //dealer?
+    //dealer?    // non controlla se due player abbiano clientID uguali
     public Integer addPlayer(Player player){
 
         if(this.playerList.size() < numberOfPlayers){

@@ -122,7 +122,7 @@ public class BoardTest {
         int num = board.completedTowers;
         assertEquals(3, board.fullMap[0][1].getLevel());
         assertEquals(0, board.fullMap[0][1].getValue());
-        board.build(position, true);
+        board.build(position, false);
         assertEquals(4, board.fullMap[0][1].getLevel());   //controlla che il livello sia aumentato
         assertEquals(2, board.fullMap[0][1].getValue());   //controlla che il value sia posto a 2
         assertEquals(num + 1, board.completedTowers);   //controlla che completedTowers sia stato aggiornato

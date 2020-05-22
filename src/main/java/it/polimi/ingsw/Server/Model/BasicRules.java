@@ -26,10 +26,10 @@ public class BasicRules{
     }
 
 
-
+    //non controlla che siano square adiacenti
     public void winCondition(Player player, Square initialPosition, Square finalPosition) {
         if (initialPosition.getLevel() == INITIALLEVEL && initialPosition.getValue() == 0) {
-            if (finalPosition.getLevel() == FINALLEVEL && finalPosition.getValue() == 1) {
+            if (finalPosition.getLevel() == FINALLEVEL && finalPosition.getValue() == 1 && finalPosition.getBuilder().getColour().equals(player.getColour())) {
                 game.setGameEnded(true);
                 game.setWinningPlayer(player);
             }
@@ -46,6 +46,7 @@ public class BasicRules{
      */
 
 
+    //da testare
     public ArrayList<Square> getBuildingRange(Builder builder) {
 
         ArrayList<Square> possibleBuilds = proximity(builder);
@@ -110,6 +111,7 @@ public class BasicRules{
         return proximity;
     }
 
+    //da testare
     public ArrayList<Square> removeTooHighPlaces(ArrayList<Square> proximity, Builder builder) {
         Square position = builder.getPosition();
         int playerHeight = position.getLevel();
@@ -125,12 +127,14 @@ public class BasicRules{
         return proximity;
     }
 
+    //da testare
     public void build(Player player, Square position, boolean isDome){
         board.build(position, isDome);
         WinPhase winPhase= new WinPhase(game);
         winPhase.checkBuild(player);
     }
 
+    //da testare
     public void move(Player player, Square initialPosition, Square position){
         board.move(initialPosition, position);
         WinPhase winPhase = new WinPhase(game);
@@ -141,7 +145,7 @@ public class BasicRules{
     }
 
     public ArrayList<Square> getFreeSquares(){
-        ArrayList<Square> freeSquares = null;
+        ArrayList<Square> freeSquares = new ArrayList<>();
         for(int i = 0; i< Board.BOARDSIZEX; i++){
             for(int j = 0; j< Board.BOARDSIZEY; j++){
                 if(game.gameBoard.fullMap[i][j].getValue()==0){
