@@ -330,6 +330,98 @@ public class BasicRulesTest {
 
     }
 
+    @Test
+    public void checkGetBuilding(){
+        player1 = game.playerList.get(0);
+        game.deployBuilder(player1, board.fullMap[2][2]);
+        Builder builder = player1.getBuilder(0);   //soggetto
+
+        game.deployBuilder(player1, board.fullMap[2][3]);   //aggiunta di due pedine
+        game.deployBuilder(game.playerList.get(1), board.fullMap[3][2]);
+
+        board.build(board.fullMap[1][3], false);
+        board.build(board.fullMap[1][3], false);
+        board.build(board.fullMap[1][3], false);   // torre di tre piani con cupola
+        board.build(board.fullMap[1][3], false);
+
+        board.build(board.fullMap[3][1], true);   //cupola
+
+        board.build(board.fullMap[1][1], false);
+        board.build(board.fullMap[1][1], false);
+        board.build(board.fullMap[1][1], false);   // torre di tre piani
+
+        ArrayList<Square> possibleMoves = rules.getBuildingRange(builder);
+        assertEquals(4, possibleMoves.size());
+
+        for(Square possibleMove: possibleMoves)
+            assertEquals(0, possibleMove.getValue());
+
+    }
+
+    @Test
+    public void checkRemoveTooHighPlaces(){
+
+        //1) poniamo il builder sulla torre da un piano
+        board.build(board.fullMap[2][2], false);
+        player1 = game.playerList.get(0);
+        game.deployBuilder(player1, board.fullMap[2][2]);   // la pedina si trova sulla torre di un piano
+        Builder builder = player1.getBuilder(0);
+
+        board.build(board.fullMap[3][3], false);   //torre di tre piani
+        board.build(board.fullMap[3][3], false);
+        board.build(board.fullMap[3][3], false);
+
+        board.build(board.fullMap[1][3], false);   //torre di due piani
+        board.build(board.fullMap[1][3], false);
+
+        ArrayList<Square> possibleMoves = rules.proximity(builder);
+        possibleMoves = rules.removeTooHighPlaces(possibleMoves,builder);
+
+        assertEquals(7, possibleMoves.size());
+        for(Square possibleMove : possibleMoves)
+            assertNotEquals(possibleMove, board.fullMap[3][3]);
+
+
+        //2)poniamo il builder a terra
+        player1 = game.playerList.get(1);
+        game.deployBuilder(player1, board.fullMap[0][4]); // la pedina si trova sulla torre di un piano
+        builder = player1.getBuilder(0);
+
+        board.build(board.fullMap[0][3], false); //torre di tre piani
+        board.build(board.fullMap[0][3], false);
+        board.build(board.fullMap[0][3], false);
+
+        board.build(board.fullMap[1][4], false);  //torre di due piani
+        board.build(board.fullMap[1][4], false);
+
+        possibleMoves = rules.proximity(builder);
+        possibleMoves = rules.removeTooHighPlaces(possibleMoves, builder);
+        assertTrue(possibleMoves.isEmpty());
+
+
+
+        //3) poniamo il builder su una torre di tre piani     (1,1):torre di tre piani     (0,1):torre di un piano    (1,0):terra
+        board.build(board.fullMap[0][0], false); //torre di tre piani
+        board.build(board.fullMap[0][0], false);
+        board.build(board.fullMap[0][0], false);
+
+        board.build(board.fullMap[1][1], false); //torre di tre piani
+        board.build(board.fullMap[1][1], false);
+        board.build(board.fullMap[1][1], false);
+
+        board.build(board.fullMap[0][1], false);  //torre di un piano
+
+        player1 = game.playerList.get(2);
+        game.deployBuilder(player1, board.fullMap[0][0]); // la pedina si trova sulla torre di un piano
+        builder = player1.getBuilder(0);
+
+        possibleMoves = rules.proximity(builder);
+        possibleMoves = rules.removeTooHighPlaces(possibleMoves, builder);
+
+        assertEquals(3, possibleMoves.size());
+
+
+    }
 }
 
 

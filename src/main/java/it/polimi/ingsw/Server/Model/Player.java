@@ -20,6 +20,12 @@ public class Player {
     public final int clientID;
 
 
+    //da cancellare
+    private String tmp;
+    public String getTmp(){return this.tmp;}
+    public void setTmp(String tmp){this.tmp = tmp;}
+
+
     /**
      * creates a new player and the array list that is used to save the players builders.
      * @param playerID is the id that identifies the player.
