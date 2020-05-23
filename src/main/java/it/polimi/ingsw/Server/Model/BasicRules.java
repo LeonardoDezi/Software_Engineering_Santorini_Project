@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Server.Model;
 
-
-
 import java.util.ArrayList;
 
 public class BasicRules{
@@ -46,7 +44,7 @@ public class BasicRules{
      */
 
 
-    //da testare
+
     public ArrayList<Square> getBuildingRange(Builder builder) {
 
         ArrayList<Square> possibleBuilds = proximity(builder);
@@ -100,6 +98,7 @@ public class BasicRules{
         return proximity;
     }
 
+
     public ArrayList<Square> removeDomeSquare(ArrayList<Square> proximity) {
 
         for (int i = 0; i < proximity.size(); i++) {
@@ -111,7 +110,8 @@ public class BasicRules{
         return proximity;
     }
 
-    //da testare
+
+    //proximity non toglie le caselle con cupole o pedine
     public ArrayList<Square> removeTooHighPlaces(ArrayList<Square> proximity, Builder builder) {
         Square position = builder.getPosition();
         int playerHeight = position.getLevel();
@@ -119,7 +119,7 @@ public class BasicRules{
         for (int i = 0; i < proximity.size(); i++) {
 
             int otherHeight = proximity.get(i).getLevel();
-            if (otherHeight - playerHeight > maxHeight) {     // testare
+            if (otherHeight - playerHeight > maxHeight) {
                 proximity.remove(i);
                 i--;
             }

@@ -7,9 +7,7 @@ public class WinPhase {
 
     private final Game game;
     private final Board board;
-    private final BasicRules basicRules;
     private HashMap<String, Runnable> commands;
-
 
     private Card card;
     private Builder builder;
@@ -19,7 +17,6 @@ public class WinPhase {
     private Player participant;
 
     public WinPhase(Game game){
-        basicRules = game.getRules();   // assicurarsi che siano sempre le stesse rules
         this.game = game;
         this.board = game.getBoard();
         map();
@@ -29,6 +26,7 @@ public class WinPhase {
 
     public void map(){
         commands = new HashMap<>();
+        commands.put(null, ()->{});
         commands.put("jumpDown", this::jumpDownCondition);
         commands.put("atLeastFiveTowers", this::atLeastFiveTowers);
     }
@@ -37,21 +35,28 @@ public class WinPhase {
         this.player = player;
         for(Player participant : game.playerList){
             this.participant = participant;
-            commands.get(participant.card.parameters.winBuilding).run();
-            if(game.getGameEnded())
+            commands.get(participant.getTmp()).run();  //da cancellare
+            //commands.get(participant.card.parameters.winBuilding).run();
+            if(game.getGameEnded()) {
                 game.setWinningPlayer(participant);
+                break;
+            }
         }
     }
 
+    //non controlla che ci siano pedine o cupole negli Square, nè se ci sia la pedina giocante coinvolta
     public void checkMovement(Player player, Square initialPosition, Square position){
             this.player = player;
             this.initialPosition = initialPosition;
             this.position = position;
         for(Player participant : game.playerList){
             this.participant = participant;
-            commands.get(participant.card.parameters.winMovement).run();
-            if(game.getGameEnded())
+            commands.get(participant.getTmp()).run();  // da cancellare
+            //commands.get(participant.card.parameters.winMovement).run();
+            if(game.getGameEnded()) {
                 game.setWinningPlayer(participant);
+                break;
+            }
         }
     }
 
