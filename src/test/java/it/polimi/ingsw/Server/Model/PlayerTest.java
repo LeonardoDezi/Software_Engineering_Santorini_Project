@@ -7,6 +7,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.util.ArrayList;
+
 // da testare: costruttore, chooseCard, removeBuilders
 public class PlayerTest {
     Player player1;
@@ -86,5 +88,24 @@ public class PlayerTest {
         player1.removeBuilder(0);
     }
 
+
+    @Test
+    public void checkChooseCard(){
+
+        game.addChosenCard(3);
+        game.addChosenCard(8);
+        game.addChosenCard(14);
+        ArrayList<Card> possibleCards = game.getChosenCards();
+        assertEquals(3, possibleCards.size());
+        possibleCards = player1.chooseCard(possibleCards, 1);
+        assertEquals(2, possibleCards.size());
+        assertEquals(8, player1.card.getNumber());
+        assertEquals("Pan", player1.card.getName());
+
+        for(Card card: possibleCards){
+            assertNotEquals(player1.card, card);
+        }
+
+    }
 
 }

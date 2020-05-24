@@ -127,14 +127,14 @@ public class BasicRules{
         return proximity;
     }
 
-    //da testare
+    //potrebbe dare problemi quando il metodo viene eseguito e un giocatore ha già vinto
     public void build(Player player, Square position, boolean isDome){
         board.build(position, isDome);
         WinPhase winPhase= new WinPhase(game);
         winPhase.checkBuild(player);
     }
 
-    //da testare
+    //potrebbe dare problemi quando il metodo viene eseguito e un giocatore ha già vinto
     public void move(Player player, Square initialPosition, Square position){
         board.move(initialPosition, position);
         WinPhase winPhase = new WinPhase(game);

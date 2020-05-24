@@ -1,23 +1,22 @@
 package it.polimi.ingsw.Parser;
 
-import com.google.gson.JsonElement;
+import static org.junit.Assert.*;
+import it.polimi.ingsw.Server.Model.Card;
 import org.junit.Test;
-import com.google.gson.JsonParser;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.util.ArrayList;
 
 
 public class ParserManagerTest {
 
     @Test
-    public void carduploader(){
+    public void checkCardUpLoad(){
+        ParserManager parserManager = new ParserManager();
 
-        JsonParser parser = new JsonParser();
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Cards.jsons");
-        Reader reader = new InputStreamReader(inputStream);
-        JsonElement rootelement = parser.parse(reader);
+        parserManager.uploadCards();
+        ArrayList<Card> deck = parserManager.getDeck();
+        assertEquals(14, deck.size());
+
+
     }
 
 }

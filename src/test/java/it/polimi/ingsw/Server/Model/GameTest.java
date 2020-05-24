@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public class GameTest {
 
 
     @Before          //pensare anche alle partite a due giocatori
-    public void createGame(){
+    public void createGame() {
         game1 = new Game(3);
         game2 = new Game(2);
     }
@@ -159,6 +160,14 @@ public class GameTest {
 
     }
 
+
+    @Test
+    public void checkAddChosenCard(){
+        assertEquals(0, game1.getChosenCardsSize());
+        game1.addChosenCard(5);
+        Card card = game1.getChosenCard(0);
+        assertEquals("Demeter", card.name);
+    }
 }
 
 

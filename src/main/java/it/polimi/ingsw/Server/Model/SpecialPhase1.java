@@ -38,7 +38,7 @@ public class SpecialPhase1 {
         movesCommands.put("restore", this::restore);  //Athena
 
     //actionMethod
-        actionCommands.put(null, ()->{});  //forse non serve
+        actionCommands.put(null, ()->{});
         actionCommands.put("specialBuild", this::specialBuild);  //Prometeo
         actionCommands.put("moveOpposite", this::moveOpposite);  //Caronte
     }
@@ -64,7 +64,7 @@ public class SpecialPhase1 {
             Square position = possibleMoves.get(i);
             Builder opponentBuilder = position.getBuilder();
 
-            //al posto di getValue() controlliamo getBuilder() ma prima vorrei fare più test sugli square
+
             if(position.getValue() == 1 && !(opponentBuilder.getColour().equals(builder.getColour()))){
 
                     int builderX = builder.getPosition().x;
@@ -108,11 +108,15 @@ public class SpecialPhase1 {
         actionCommands.get(player.getCard().parameters.specialPhase1Action).run();
     }
 
-    public void specialBuild(){
-        basicRules.build(player, position, false);
-        basicRules.setMaxHeight(0);
+    //position deve essere legittima
+    public void specialBuild() {
+        if (position != null){
+            basicRules.build(player, position, false);
+            basicRules.setMaxHeight(0);
+        }
     }
 
+    //position deve essere legittima
     public void moveOpposite(){
 
         int builderX = builder.getPosition().x;

@@ -1,4 +1,7 @@
 package it.polimi.ingsw.Server.Model;
+import it.polimi.ingsw.Parser.ParserManager;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +16,7 @@ public class Game {
     protected Board gameBoard;
     protected ArrayList<Player> playerList;
     private ArrayList<Card> chosenCards;
-    private ArrayList<Card> deck;     //lo lasciamo?
+    private final ArrayList<Card> deck;
     private Dealer dealer;
     private Player winningPlayer;
                            // identificatore numerico per differenziare le partite?
@@ -23,15 +26,18 @@ public class Game {
     /**
      * creates a new game.
      */
-    public Game(int numberOfPlayers){     //da mettere un identificativo partita?
+    public Game(int numberOfPlayers) {     //da mettere un identificativo partita?
         gameBoard = new Board();
         gameEnded = false;
         playerList = new ArrayList<>();
         chosenCards = new ArrayList<>();
         basic = new BasicRules(gameBoard, this);
         winningPlayer = null;
-         //dobbiamo decidere se togliere o meno deck. Se lo lasciamo lo dobbiamo implementare
         this.numberOfPlayers=numberOfPlayers;
+
+        ParserManager parserManager = new ParserManager();
+        parserManager.uploadCards();
+        deck = parserManager.getDeck();
 
     }
 
@@ -39,6 +45,8 @@ public class Game {
     public ArrayList<Player> getPlayerList() {
        return this.playerList;
     }
+
+    public ArrayList<Card> getChosenCards(){return this.chosenCards;}
 
     public boolean getGameEnded(){return this.gameEnded;}
 
@@ -85,6 +93,8 @@ public class Game {
         return deck;
     }
 
+    public Card getDeckCard(int cardNumber){return deck.get(cardNumber -1);}
+
     public BasicRules getBasic(){
         return basic;
     }
@@ -93,10 +103,11 @@ public class Game {
 
     /**
      * adds the card chosen by the dealer at the beginning of the game to the list of the available cards for the other players.
-     * @param cardNumber is the number that identifies the card choosen by the dealer.
+     * @param cardNumber is the number that identifies the card chosen by the dealer.
      */
-    public void addChosenCard(Integer cardNumber){
-        Card card = deck.get(cardNumber);
+    //i numeri devono essere legittimi
+    public void addChosenCard(int cardNumber){
+        Card card = deck.get(cardNumber - 1);
         chosenCards.add(card);
     }
 
@@ -125,7 +136,7 @@ public class Game {
         return message;
     }
 
-    public Card getChosenCard(int cardNumber){ return chosenCards.get(cardNumber); }
+    public Card getChosenCard(int cardPosition){ return chosenCards.get(cardPosition); }
 
     public int getChosenCardsSize(){return chosenCards.size();}
 

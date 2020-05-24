@@ -35,13 +35,13 @@ public class MovementPhase {
         actionCommands = new HashMap<>();
 
         //getMoves
-        movesCommands.put("swap", this::swapMoves);
-        movesCommands.put("push", this::swapMoves);
+        movesCommands.put("swap", this::swapMoves);   //Apollo
+        movesCommands.put("push", this::swapMoves);   //Minotauro
         movesCommands.put(null, () ->{possibleMoves = basicRules.removeBuilderSquare(possibleMoves);});  //qua non dovrebbe fare niente(?)
 
 
         //Movement
-        actionCommands.put("jumpUp", this::jumpUp);
+        actionCommands.put("jumpUp", this::jumpUp);    //Athena
         actionCommands.put("pushAction", this::pushAction); //Minotauro
         actionCommands.put("restore", () -> {basicRules.setMaxHeight(1);});  //Prometeo
         actionCommands.put(null, () -> {});
@@ -71,7 +71,7 @@ public class MovementPhase {
         HashMap<String, Runnable> cardMap = new HashMap<>();
         cardMap.put("swap",()->{});
         cardMap.put("push", this::pushMoves);
-        cardMap.put(null, ()->{}); //non necessaria la metto per eventuali casi futuri
+        cardMap.put(null, ()->{});
 
 
         for (i = 0; i < possibleMoves.size(); i++) {
@@ -82,7 +82,7 @@ public class MovementPhase {
                 }
                 else {
                     position = possibleMoves.get(i);
-                    cardMap.get(player.getCard().parameters.movementPhaseAction).run();
+                    cardMap.get(player.getCard().parameters.movementPhaseMoves).run();
                 }
             }
         }

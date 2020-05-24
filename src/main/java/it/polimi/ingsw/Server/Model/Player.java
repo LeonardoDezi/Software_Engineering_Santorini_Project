@@ -2,8 +2,8 @@ package it.polimi.ingsw.Server.Model;
 
 import java.util.ArrayList;
 
-//decidere cosa fare per removeBuilder
-//QUIII
+//TODO decidere cosa fare per removeBuilder
+
 /**
  * represents a player.
  * @version 1.5
@@ -12,17 +12,17 @@ import java.util.ArrayList;
 public class Player {
     public static final String SEX1 = "Male";
     public static final String SEX2 = "Female";
-    protected Card card;  //perchè protected?
+    protected Card card = null;
     public final String playerID;
     protected ArrayList<Builder> builders;
     public final String colour;
-    protected final Game game;   // perchè protected?
+    protected final Game game;
     public final int clientID;
 
 
-    //da cancellare
+
     private String tmp;
-    public String getTmp(){return this.tmp;}
+    public String getTmp(){return this.tmp;}   // variabile usata solo nei test
     public void setTmp(String tmp){this.tmp = tmp;}
 
 
@@ -44,15 +44,22 @@ public class Player {
     /**
      * assigns the God card chosen by the player to the player class.
      */
-    public ArrayList<Card> chooseCard(ArrayList<Card> possibleCards, int cardNumber){   //cardNumber è la posizione della carta nell'array
-        this.card = possibleCards.get(cardNumber);
-        possibleCards.remove(cardNumber);
+
+    //TODO per ora va per posizione. Possiamo sempre modificarla per farla andare per nome
+    public ArrayList<Card> chooseCard(ArrayList<Card> possibleCards, int cardPosition){   //cardPosition è la posizione della carta nell'array
+        if(card == null) {
+            this.card = possibleCards.get(cardPosition);
+            possibleCards.remove(cardPosition);
+        }
+
         return possibleCards;
     }
 
     public Card getCard(){
         return this.card;
     }
+
+    public Card setCard(Card card){return this.card = card;}
 
 
     /**

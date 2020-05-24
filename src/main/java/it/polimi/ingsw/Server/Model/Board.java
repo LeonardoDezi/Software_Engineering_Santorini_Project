@@ -44,7 +44,7 @@ public class Board {
      * @param pointB is the second square.
       */
 
-    //che succede se gli diamo lo stesso square due volte?
+    //che succede se pointA = pointB?
     public void move(Square pointA, Square pointB){
 
         Builder tmp1 = pointA.getBuilder();

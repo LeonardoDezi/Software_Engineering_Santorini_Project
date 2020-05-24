@@ -9,12 +9,18 @@ public class Dealer extends Player {
         super(name, colour, game, clientID);
     }
 
-    // bisogna ancora fare test per chooseCards
-    public void chooseCards (int card1, int card2, int card3){
+
+    public void drawCards (int card1, int card2, int card3){
 
         game.addChosenCard(card1);
         game.addChosenCard(card2);
         game.addChosenCard(card3);
 
+    }
+
+    //i numeri devono essere legittimi
+    public void drawCards(int card1, int card2){
+        game.addChosenCard(card1);
+        game.addChosenCard(card2);
     }
 }

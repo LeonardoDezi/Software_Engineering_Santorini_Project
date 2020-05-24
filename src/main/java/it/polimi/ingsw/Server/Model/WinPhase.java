@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Server.Model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class WinPhase {
@@ -10,7 +9,6 @@ public class WinPhase {
     private HashMap<String, Runnable> commands;
 
     private Card card;
-    private Builder builder;
     private Square initialPosition, position;
 
     private Player player;
@@ -35,8 +33,8 @@ public class WinPhase {
         this.player = player;
         for(Player participant : game.playerList){
             this.participant = participant;
-            commands.get(participant.getTmp()).run();  //da cancellare
-            //commands.get(participant.card.parameters.winBuilding).run();
+            //commands.get(participant.getTmp()).run();  //TODO da cancellare
+            commands.get(participant.card.parameters.winBuilding).run();
             if(game.getGameEnded()) {
                 game.setWinningPlayer(participant);
                 break;
@@ -51,8 +49,8 @@ public class WinPhase {
             this.position = position;
         for(Player participant : game.playerList){
             this.participant = participant;
-            commands.get(participant.getTmp()).run();  // da cancellare
-            //commands.get(participant.card.parameters.winMovement).run();
+            //commands.get(participant.getTmp()).run();  // TODO da cancellare
+            commands.get(participant.card.parameters.winMovement).run();
             if(game.getGameEnded()) {
                 game.setWinningPlayer(participant);
                 break;

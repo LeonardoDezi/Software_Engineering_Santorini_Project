@@ -20,18 +20,22 @@ public class ParserManager {
         return cards.get(num);
     }
 
-    public void uploadCards() throws IOException {
+    public ArrayList<Card> getDeck(){ return cards;}
+
+    public void uploadCards() {
 
         Gson gson = new GsonBuilder().serializeNulls().create();
 
         Type founderlistType = new TypeToken<ArrayList<Card>>() {}.getType();
 
-        try (Reader reader = new FileReader("C:\\Users\\leona\\untiitled1\\src\\main\\resources\\Cards.json")) {
+        try (Reader reader = new FileReader("C:\\Users\\Marco\\Documents\\GitHub\\ing-sw-2020-Dezi-Dami-Bruni\\src\\main\\resources\\Cards.json")) {
 
-            List<Card> deck = gson.fromJson(reader, founderlistType);
+            cards = gson.fromJson(reader, founderlistType);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
+
+
