@@ -4,7 +4,7 @@ package it.polimi.ingsw.Server.Model;
 public class Card {
     private Integer number;
     public String name;
-    public CardParameters[] parameters;
+    public CardParameters parameters;
 
     public int getNumber(){
         return number;
@@ -22,11 +22,11 @@ public class Card {
         this.name = name;
     }
 
-    public CardParameters[] getParameters(){
+    public CardParameters getParameters(){
         return parameters;
     }
 
-    public void setParameters(CardParameters[] parameters){
+    public void setParameters(CardParameters parameters){
         this.parameters = parameters;
     }
 
