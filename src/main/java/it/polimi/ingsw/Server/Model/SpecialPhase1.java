@@ -20,6 +20,7 @@ public class SpecialPhase1 {
 
 
 
+
     public SpecialPhase1(Game game){
         basicRules = game.getRules();
         this.game = game;
@@ -95,7 +96,7 @@ public class SpecialPhase1 {
     }
 
     public void restore(){   //se athena aveva modificato maxHeight questo lo ristabilirà
-        basicRules.setMaxHeight(1);
+        basicRules.setMaxHeight(BasicRules.BASICMAXHEIGHT);
         possibleMoves = new ArrayList<>();
     }
 
@@ -112,6 +113,7 @@ public class SpecialPhase1 {
     public void specialBuild() {
         if (position != null){
             basicRules.build(player, position, false);
+            basicRules.setPreviousMaxHeight( basicRules.getMaxHeight());   //necessario in quanto maxHeight potrebbe essere != 1
             basicRules.setMaxHeight(0);
         }
     }

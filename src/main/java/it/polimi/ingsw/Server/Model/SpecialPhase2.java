@@ -50,11 +50,11 @@ public class SpecialPhase2 {
     }
 
     public void doubleNotSameMove(){
-
+        //position è l'ultima posizione in cui si trovava la pedina
         possibleMoves = basicRules.proximity(builder);
         possibleMoves = basicRules.removeBuilderSquare(possibleMoves);
         possibleMoves = basicRules.removeTooHighPlaces(possibleMoves, builder);
-        possibleMoves = basicRules.removeDomeSquare(possibleMoves);    //considerare se sia il caso di accorpare queste due
+        possibleMoves = basicRules.removeDomeSquare(possibleMoves);
 
         for(int i =0; i<possibleMoves.size(); i++) {
             if (possibleMoves.get(i).equals(position)) {

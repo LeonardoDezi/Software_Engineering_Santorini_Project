@@ -37,7 +37,7 @@ public class SpecialPhase3 {
 //getMoves
         movesCommands.put(null, ()->{possibleMoves = new ArrayList<>();});
         movesCommands.put("notSameSquare", this::notSameSquare); //Demeter
-        movesCommands.put("sameSquareNotDome", this::sameSquareNotDome); //hephaestus
+        movesCommands.put("sameSquareNotDome", this::sameSquareNotDome); //Hephaestus
         movesCommands.put("notPerimeter", this::notPerimeter);
 //actionMethod
         actionCommands.put(null, ()->{});

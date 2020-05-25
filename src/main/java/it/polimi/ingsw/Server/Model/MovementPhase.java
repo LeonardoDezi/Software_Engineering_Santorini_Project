@@ -19,7 +19,7 @@ public class MovementPhase {
 
     private int i;
 
-
+    public BasicRules getBasicRules(){return this.basicRules;}
 
     public MovementPhase(Game game){
         basicRules = game.getRules();
@@ -43,7 +43,7 @@ public class MovementPhase {
         //Movement
         actionCommands.put("jumpUp", this::jumpUp);    //Athena
         actionCommands.put("pushAction", this::pushAction); //Minotauro
-        actionCommands.put("restore", () -> {basicRules.setMaxHeight(1);});  //Prometeo
+        actionCommands.put("restore", this :: restore);  //Prometeo
         actionCommands.put(null, () -> {});
 
     }
@@ -149,6 +149,11 @@ public class MovementPhase {
 
         }
 
+    }
+
+    public void restore(){
+        basicRules.setMaxHeight(basicRules.getPreviousMaxHeight());
+        basicRules.setPreviousMaxHeight(BasicRules.BASICMAXHEIGHT);
     }
 
 

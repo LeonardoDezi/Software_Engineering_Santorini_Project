@@ -144,7 +144,7 @@ public class TurnManager {
                         }else if(player.getBuilderSize() ==2){
                                 Builder female = player.getFemale();
                                 moves2 = game.getRules().getBuildingRange(female);
-                                received = netInterface.getBothBuildMove(moves1, received.getBuilder(), moves2, female, true, player);
+                                // received = netInterface.getBothBuildMove(moves1, received.getBuilder(), false, moves2, female, false);
                         }else
                             received =netInterface.getBuildMove(moves1, received.getBuilder(), false, player);
                     }else {
@@ -161,13 +161,11 @@ public class TurnManager {
 //specialPhase3
                     lastPosition = received.getMove();
                     moves1 = specialPhase3.getMoves(player, received.getBuilder() , lastPosition);
-                    //TODO send text messages
                     received = netInterface.getBuildMove(moves1, builder1, buildDome,player);
 
-                    if(received!= null){
-                        specialPhase3.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
-                        //updateBoard(game.getBoard);
-                    }
+                    //gestire il caso in cui non restituisca mosse
+                    specialPhase3.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
+                    //updateBoard(game.getBoard);
 
                     if (game.getGameEnded())
                         break;

@@ -3,17 +3,24 @@ package it.polimi.ingsw.Server.Model;
 import java.util.ArrayList;
 
 public class BasicRules{
-    private static final int INITIALLEVEL = 2;
-    private static final int FINALLEVEL = 3;
+    public static final int INITIALLEVEL = 2;
+    public static final int FINALLEVEL = 3;
+    public static final int BASICMAXHEIGHT = 1;
+
     private int maxHeight;
     private final Board board;
     private final Game game;
+    private int previousMaxHeight = BASICMAXHEIGHT;
 
     public BasicRules(Board board, Game game) {
         this.board = board;
         this.game = game;
-        this.maxHeight = 1;
+        this.maxHeight = BASICMAXHEIGHT;
     }
+
+    public int getPreviousMaxHeight() { return previousMaxHeight; }
+
+    public void setPreviousMaxHeight(int num){this.previousMaxHeight = num;}
 
     public void setMaxHeight(int maxHeight) {
         this.maxHeight = maxHeight;
@@ -156,5 +163,6 @@ public class BasicRules{
         }
         return freeSquares;
     }
+
 
 }
