@@ -28,7 +28,9 @@ public class ParserManager {
 
         Type founderlistType = new TypeToken<ArrayList<Card>>() {}.getType();
 
-        try (Reader reader = new FileReader("C:\\Users\\Marco\\Documents\\GitHub\\ing-sw-2020-Dezi-Dami-Bruni\\src\\main\\resources\\Cards.json")) {
+        String fileName = "src/main/resources/Cards.json";
+
+        try (Reader reader = new FileReader(fileName)) {
 
             cards = gson.fromJson(reader, founderlistType);
 
