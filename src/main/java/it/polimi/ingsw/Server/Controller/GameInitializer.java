@@ -95,7 +95,7 @@ public class GameInitializer implements Runnable{
 
         for(Player player: game.getPlayerList()){
             //int chosenCard = netInterface.getChosenCard(possibleCards, player);
-            possibleCards = player.chooseCard(possibleMoves, chosenCard);
+            possibleCards = player.chooseCard(possibleCards, chosenCard);
             //messaggio per confermare che la carta è stata scelta?
         }
 

@@ -1,0 +1,9 @@
+[
+  {
+    "type" : "stringa",
+    "caratteristiche" : {
+      "numero" : 1,
+      "text" : "stringa"
+    }
+  }
+]
