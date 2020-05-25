@@ -7,6 +7,7 @@ import it.polimi.ingsw.Server.Model.*;
 
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.function.BinaryOperator;
 
 import static java.lang.Integer.parseInt;
 
@@ -17,7 +18,6 @@ public class NetInterface {
     private ArrayList<Square> moves2;
     private Builder builder1;
     private Builder builder2;
-    private boolean isDome;
     private ClientController clientController;
 
     public NetInterface(ClientController clientController) {
@@ -46,7 +46,7 @@ public class NetInterface {
         if(values[0].equals("3")){
             moves1 = stringToArrayListSquare(values[1]);
             builder2 = stringToBuilder(values[2]);
-            isDome = stringToBool(values[3]);
+            boolean isDome = stringToBool(values[3]);
             moves = new Moves(builder1, moves1, null, null, isDome, false);
         }
         if(values[0].equals("4")){
@@ -67,8 +67,16 @@ public class NetInterface {
         return moves;
     }
 
-    public void sendMoves(Envelope envelope){ //TODO implement
-
+    public void sendMoves(Envelope envelope){
+        if(envelope == null){
+            //TODO send 0
+        }
+        Square square = envelope.getMove();
+        Builder builder = envelope.getBuilder();
+        Boolean dome = envelope.getIsDome();
+        String coordinates = squareToString(square) + builderToString(builder) + booleanToString(dome);
+        //TODO send to the server
+        return;
     }
 
     /**
@@ -138,6 +146,18 @@ public class NetInterface {
             possiblemoves.add(square);
         }
         return possiblemoves;
+    }
+
+    /**
+     * is used to set the message to signal that the player can also build a dome.
+     * @param isDome if is true the player has the possibility to build a dome.
+     * @return String:"1" if isDome is tru, String:"0" if the boolean is false.
+     */
+    public String booleanToString(Boolean isDome){
+        if(isDome){
+            return "1";
+        }
+        return "0";
     }
 
 }
