@@ -1,9 +1,64 @@
 [
   {
-    "type" : "stringa",
-    "caratteristiche" : {
+    "type" : "initialization",
+    "message" : {
       "numero" : 1,
-      "text" : "stringa"
+      "text" : "What's your name?"
+    },
+    "type" : "initialization",
+    "message" : {
+      "numero" : 2,
+      "text" : "Connection to the server..."
+    },
+    "type" : "initialization",
+    "message" : {
+      "numero" : 3,
+      "text" : "Connected!"
+    },
+    "type" : "initialization",
+    "message" : {
+      "numero" : 4,
+      "text" : "Choose the Gods that will compete today"
+    },
+    "type" : "initialization",
+    "message" : {
+      "numero" : 5,
+      "text" : "Choose your God"
+    },
+    "type" : "initialization",
+    "message" : {
+      "numero" : 6,
+      "text" : "let's begin!"
+    },
+    "type" : "game",
+    "message" :{
+      "numero" : 1,
+      "text" : "It's your turn"
+    },
+    "type" : "game",
+    "message" :{
+      "numero" : 2,
+      "text" : "Choose your movement"
+    },
+    "type" : "game",
+    "message" :{
+      "numero" : 3,
+      "text" : "Where do you want to build?"
+    },
+    "type" : "game",
+    "message" :{
+      "numero" : 4,
+      "text" : "That move is forbidden by the Gods"
+    },
+    "type" : "final",
+    "message" :{
+      "numero" : 1,
+      "text" : "You lost"
+    },
+    "type" : "final",
+    "message" :{
+      "numero" : 2,
+      "text" : "You won!"
     }
   }
 ]

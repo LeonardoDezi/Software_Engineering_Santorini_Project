@@ -10,9 +10,10 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Client {
+public class Client implements Runnable {
 
     private int clientID;
+    private String username;
     private String ip;
     private int port;
 
@@ -97,28 +98,71 @@ public class Client {
         }
     }*/
 
-    public void startClient() throws IOException {
 
-        Socket socket = new Socket(ip, port);
+    public void startClient() throws IOException {
+        run();
+    }
+
+    @Override
+    public void run() {
+        Socket socket = null;
+        try {
+            socket = new Socket(ip, port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //TODO ask the player for the username
+        this.username = "username";
         System.out.println("Connection established");
-        OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+        ClientController clientController = new ClientController();
+        clientController.matchSetup(socket); //TODO here starts the client for the game
+        clientController.play(socket);
+
+        OutputStreamWriter writer = null;
+        try {
+            writer = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("prova", "dai dai dai");
 
-        writer.write(jsonObject.toString() + "\n");
-        writer.flush();
+        try {
+            writer.write(jsonObject.toString() + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        String line = reader.readLine();
+        String line = null;
+        try {
+            line = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         jsonObject = new JSONObject(line);
 
         System.out.println("Received from Server:\n " + jsonObject.toString(2));
 
         System.out.println("Connection closed");
 
-        socket.close();
-
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

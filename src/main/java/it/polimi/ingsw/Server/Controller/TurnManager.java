@@ -83,8 +83,6 @@ public class TurnManager {
                 moves1 = specialPhase1.getMoves(player, builder1);
                 moves2 = specialPhase1.getMoves(player, builder2);
 
-                if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // se almeno uno dei due array non è vuoto
-
                     //netInterface.sendMessage()
                     received =netInterface.getBothMovementMove(moves1, builder1, moves2, builder2, player);
 
@@ -95,7 +93,6 @@ public class TurnManager {
                     if(game.getGameEnded())
                         break;
 
-                }
 
                 moves1 = movementPhase.getMoves(player, builder1);
                 moves2 = movementPhase.getMoves(player, builder2);
@@ -120,17 +117,15 @@ public class TurnManager {
 //specialPhase2
                     moves1 = specialPhase2.getMoves(player, received.getBuilder(), lastPosition );
 
-                    if(moves1 != null) {
 
-                        received = netInterface.getMovementMove(moves1, received.getBuilder(), player);
+                    received = netInterface.getMovementMove(moves1, received.getBuilder(), player);
 
-                        if(received != null)
-                            specialPhase2.actionMethod(received.getBuilder(), received.getMove());
-                            //updateBoard(game.getBoard);
+                    if(received != null)
+                        specialPhase2.actionMethod(received.getBuilder(), received.getMove());
+                    //updateBoard(game.getBoard);
 
-                        if (game.getGameEnded())
+                    if (game.getGameEnded())
                             break;
-                    }
 
 //buildingPhase
 

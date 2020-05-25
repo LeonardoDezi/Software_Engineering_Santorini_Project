@@ -14,8 +14,10 @@ import static java.lang.Integer.parseInt;
 
 public class NetInterface {
     private ArrayList<Client> clients;
-    private Game game;
+    private final Game game;
     private Player currentPlayer;
+    private final Sender sender = new Sender();
+    private final Reciever reciever = new Reciever();
 
     public NetInterface(Game game){
         this.game = game;
@@ -35,15 +37,13 @@ public class NetInterface {
         this.currentPlayer=player;
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(builder2);
-        //TODO send to the player
-        // wait for response
-        //message = ;//ricevuto
+        String message = "1@ " + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(builder2);
+        sender.send(message, socket);
+        message=reciever.recieve(socket);
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
-        Envelope envelope = new Envelope(chosenBuilder, chosenSquare);
-        return envelope;
+        return new Envelope(chosenBuilder, chosenSquare);
     }
 
     /**
@@ -57,23 +57,46 @@ public class NetInterface {
     public Envelope getMovementMove(ArrayList<Square> moves, Builder builder, Player player){
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = arrayListSquareToString(moves) + builderToString(builder);
+        String message = "2@ " + arrayListSquareToString(moves) + builderToString(builder);
         //TODO send to the player
-        // wait for response
-        //message = ;//ricevuto
+        sender.send(message, socket);
+        message=reciever.recieve(socket);
         if(message==null){
             return null;
         }
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
+        return new Envelope(chosenBuilder, chosenSquare);
+    }
+
+    /**
+     * method used to ask the player with whitch builder he wants to build if it is allowed by the card of the player.
+     * @param moves1 the places where the first builder can build.
+     * @param builder1 the first builder.
+     * @param moves2 the places where the second builder can build.
+     * @param female the second builder.
+     * @param canBuildADome true if the second builder can build a dome.
+     * @param player the player that has to choose where to build.
+     * @return an Envelope Object with the choice of the player.
+     */
+    public Envelope getBothBuildMove(ArrayList<Square> moves1, Builder builder1, ArrayList<Square> moves2, Builder female, Boolean canBuildADome, Player player){
+        Client client = getClient(player);
+        Socket socket=client.getSocket();
+        String message ="4@ " + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(female) + wantsToBuildADome(canBuildADome);
+        //TODO send to the player
+        sender.send(message, socket);
+        message=reciever.recieve(socket);
+        String[] choosenmove = message.split("@");
+        Square chosenSquare = stringToSquare(choosenmove[0]);
+        Builder chosenBuilder = stringToBuilder(choosenmove[1]);
+        Boolean femaleDome = stringToBool(choosenmove[2]);
         Envelope envelope = new Envelope(chosenBuilder, chosenSquare);
+        envelope.setIsDome(femaleDome);
         return envelope;
-    }
 
-    public Envelope getBothBuildingMove(){
-
-    }
+    } //TODO remember that the second builder is the female so ask the player if he wants to build a dome
+      // is possible ONLY for the female one
 
 
     /**
@@ -88,13 +111,12 @@ public class NetInterface {
     public Envelope getBuildMove(ArrayList<Square>moves, Builder builder, Boolean isDome, Player player){
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = arrayListSquareToString(moves) + builderToString(builder) + wantsToBuildADome(isDome);
+        String message = "3@ " + arrayListSquareToString(moves) + builderToString(builder) + wantsToBuildADome(isDome);
         if(isDome){
-            sendMessage("vuoi costruire la cupola?", client);
+            //sendMessage("vuoi costruire la cupola?", client);
         }
-        //TODO send to the player
-        // wait for response
-        // message= response;
+        sender.send(message, socket);
+        message=reciever.recieve(socket);
         if(message==null){
             return null;
         }
@@ -107,7 +129,7 @@ public class NetInterface {
         return envelope;
     }
 
-    public void sendMessage(String message, Client client){
+    public void sendMessage(int x, String phase, Client client){ //TODO implement the method with the message hashmap
         Socket socket;
         if(client == null){
             for(int i=0; i<game.numberOfPlayers;i++){
@@ -120,6 +142,10 @@ public class NetInterface {
         }
     }
 
+    /**
+     * adds a new client to the client list
+     * @param client the client to add to the list
+     */
     public void addClient(Client client){
         this.clients.add(client);
     }
@@ -145,14 +171,14 @@ public class NetInterface {
         if(moves.isEmpty()){
             return null;
         }
-        String stringMoves=null;
+        StringBuilder stringMoves= null;
         String partial;
-        for(int i=0; i<moves.size();i++){
-            partial=squareToString(moves.get(i));
-            stringMoves = stringMoves + " : " + partial;
+        for (Square move : moves) {
+            partial = squareToString(move);
+            stringMoves.append(" : ").append(partial);
         }
-        stringMoves=stringMoves + "@ ";
-        return stringMoves;
+        stringMoves.append("@ ");
+        return stringMoves.toString();
     }
 
     /**
@@ -162,8 +188,7 @@ public class NetInterface {
      */
     public String builderToString(Builder builder){
         Square position = builder.getPosition();
-        String builderString = squareToString(position) + "@ ";
-        return builderString;
+        return squareToString(position) + "@ ";
     }
 
     /**
@@ -173,11 +198,9 @@ public class NetInterface {
      */
     public String wantsToBuildADome(Boolean isDome){
         if(isDome){
-            String string = "1";
-            return string;
+            return "1";
         }
-        String string = "0";
-        return string;
+        return "0";
     }
 
     /**
@@ -187,12 +210,11 @@ public class NetInterface {
      */
     public Square stringToSquare(String string){
         String[] coordinates = string.split(",");
-        Integer x;
-        Integer y;
+        int x;
+        int y;
         x = parseInt(coordinates[0]);
         y = parseInt(coordinates[1]);
-        Square square = new Square(x, y);
-        return square;
+        return new Square(x, y);
     }
 
     /**
@@ -202,23 +224,29 @@ public class NetInterface {
      */
     public Builder stringToBuilder(String string){
         Square square = stringToSquare(string);
-        Builder builder = new Builder(square, currentPlayer.playerID, null);
-        return builder;
+        return new Builder(square, currentPlayer.colour, null);
     }
 
+    /**
+     * reads an integer from a string a converts it to a boolean. '0' is false '1' is true.
+     * @param string is the string from where to read
+     * @return true if the number in the string is '1', false if it is '0'.
+     */
     public Boolean stringToBool(String string){
-        Integer x;
+        int x;
         x=parseInt(string);
-        if(x==1){
-            return true;
-        }
-        return false;
+        return x == 1;
     }
 
+    /**
+     * is used to get the client Object of a specific player
+     * @param player the player.
+     * @return the client object relative to the player.
+     */
     public Client getClient(Player player){
-        for(int i=0; i<clients.size(); i++){
-            if(player.clientID==clients.get(i).clientID){
-                return clients.get(i);
+        for (Client client : clients) {
+            if (player.clientID == client.clientID) {
+                return client;
             }
         }
         return null;
