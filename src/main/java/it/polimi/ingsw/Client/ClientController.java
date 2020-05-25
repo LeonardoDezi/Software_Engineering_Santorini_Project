@@ -34,6 +34,11 @@ public class ClientController {
         //close the connection and ask for rematch.
     }
 
+    /**
+     * Shows on the screen all the possible moves that the player can do and waits for the choice.
+     * @param moves all the moves that the player can do.
+     * @return the single move chosen by the player with the builder that is going to do that move.
+     */
     public Envelope chooseMove(Moves moves){
         //TODO moves contains all the moves that the player can do, return an envelope to send back to the server
     }
