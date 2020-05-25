@@ -14,8 +14,10 @@ import static java.lang.Integer.parseInt;
 
 public class NetInterface {
     private ArrayList<Client> clients;
-    private Game game;
+    private final Game game;
     private Player currentPlayer;
+    private final Sender sender = new Sender();
+    private final Reciever reciever = new Reciever();
 
     public NetInterface(Game game){
         this.game = game;
@@ -35,12 +37,9 @@ public class NetInterface {
         this.currentPlayer=player;
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(builder2);
-        //TODO send to the player
-        //sender.send(string, socket)
-        //message=reciever.answer()
-        // wait for response
-        //message = ;//ricevuto
+        String message = "1@ " + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(builder2);
+        sender.send(message, socket);
+        message=reciever.recieve(socket);
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
@@ -58,18 +57,17 @@ public class NetInterface {
     public Envelope getMovementMove(ArrayList<Square> moves, Builder builder, Player player){
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = arrayListSquareToString(moves) + builderToString(builder);
+        String message = "2@ " + arrayListSquareToString(moves) + builderToString(builder);
         //TODO send to the player
-        // wait for response
-        //message = ;//ricevuto
+        sender.send(message, socket);
+        message=reciever.recieve(socket);
         if(message==null){
             return null;
         }
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
-        Envelope envelope = new Envelope(chosenBuilder, chosenSquare);
-        return envelope;
+        return new Envelope(chosenBuilder, chosenSquare);
     }
 
     /**
@@ -85,10 +83,10 @@ public class NetInterface {
     public Envelope getBothBuildMove(ArrayList<Square> moves1, Builder builder1, ArrayList<Square> moves2, Builder female, Boolean canBuildADome, Player player){
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(female) + wantsToBuildADome(canBuildADome);
+        String message ="4@ " + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(female) + wantsToBuildADome(canBuildADome);
         //TODO send to the player
-        // wait for response
-        //message = ;//ricevuto
+        sender.send(message, socket);
+        message=reciever.recieve(socket);
         String[] choosenmove = message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
@@ -113,13 +111,12 @@ public class NetInterface {
     public Envelope getBuildMove(ArrayList<Square>moves, Builder builder, Boolean isDome, Player player){
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = arrayListSquareToString(moves) + builderToString(builder) + wantsToBuildADome(isDome);
+        String message = "3@ " + arrayListSquareToString(moves) + builderToString(builder) + wantsToBuildADome(isDome);
         if(isDome){
             //sendMessage("vuoi costruire la cupola?", client);
         }
-        //TODO send to the player
-        // wait for response
-        // message= response;
+        sender.send(message, socket);
+        message=reciever.recieve(socket);
         if(message==null){
             return null;
         }
@@ -174,14 +171,14 @@ public class NetInterface {
         if(moves.isEmpty()){
             return null;
         }
-        String stringMoves=null;
+        StringBuilder stringMoves= null;
         String partial;
         for (Square move : moves) {
             partial = squareToString(move);
-            stringMoves = stringMoves + " : " + partial;
+            stringMoves.append(" : ").append(partial);
         }
-        stringMoves=stringMoves + "@ ";
-        return stringMoves;
+        stringMoves.append("@ ");
+        return stringMoves.toString();
     }
 
     /**
@@ -227,7 +224,7 @@ public class NetInterface {
      */
     public Builder stringToBuilder(String string){
         Square square = stringToSquare(string);
-        return new Builder(square, currentPlayer.playerID, null);
+        return new Builder(square, currentPlayer.colour, null);
     }
 
     /**
@@ -238,10 +235,7 @@ public class NetInterface {
     public Boolean stringToBool(String string){
         int x;
         x=parseInt(string);
-        if(x==1){
-            return true;
-        }
-        return false;
+        return x == 1;
     }
 
     /**

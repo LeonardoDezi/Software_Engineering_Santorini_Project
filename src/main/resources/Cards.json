@@ -5,10 +5,9 @@
     "parameters":
       {
         "movementPhaseMoves": "swap",
-        "buildDome": "false"
-
+        "buildDome": "false",
+        "description": "God of Music/n during your turn your worker may move into an opponent Worker's space (using normal movement rules) and force their Worker to the space yours just vacated (swapping their position)."
       }
-
   },
 
   {
@@ -18,7 +17,8 @@
       {
         "specialPhase2Moves": "doubleNotSameMove",
         "specialPhase2Action": "doubleNotSame",
-        "buildDome": "false"
+        "buildDome": "false",
+        "description" : "Goddess of the Hunt/n Your worker can move an additional time but not back to the space it started on."
 
       }
 
@@ -31,7 +31,8 @@
       {
         "specialPhase1Moves": "restore",
         "movementPhaseAction": "jumpUp",
-        "buildDome": "false"
+        "buildDome": "false",
+        "description" : "Goddess of Wisdom/n If one of your workers moved up during your last turn, opponent worker cannot move up this turn."
 
       }
 
@@ -42,8 +43,8 @@
     "name": "Atlas",
     "parameters":
       {
-        "buildDome": "true"
-
+        "buildDome": "true",
+        "description": "Titan Shouldering the Heavens/n Your worker may build a dome at any level including the ground."
       }
 
   },
@@ -55,7 +56,8 @@
       {
 
         "buildDome": "false",
-        "specialPhase3Moves": "notSameSquare"
+        "specialPhase3Moves": "notSameSquare",
+        "description" : "Goddess of the Harvest/n Your worker may build an additional time but not on the same space."
       }
 
   },
@@ -66,8 +68,8 @@
     "parameters":
       {
         "buildingPhaseMoves": "sameSquareNotDome",
-        "buildDome": "false"
-
+        "buildDome": "false",
+        "description" : "God of Blacksmiths/n Your worker may build an additional block on top of your first block."
       }
 
   },
@@ -79,8 +81,8 @@
       {
         "movementPhaseMoves": "push",
         "movementPhaseAction": "pushAction",
-        "buildDome": "false"
-
+        "buildDome": "false",
+        "description" : "Bull-Headed Monster/n Your Worker may move into an opponent Worker's space (using normal movement rules), if the next space in the same direction is unoccupied. Their Worker is forced into that space (regardless of it's level)."
       }
 
   },
@@ -91,9 +93,8 @@
     "parameters":
       {
         "buildDome": "false",
-        "winMovement": "jumpDown"
-
-
+        "winMovement": "jumpDown",
+        "description" : "God of the Wild/n You also win if your Worker moves down two or more levels."
       }
 
   },
@@ -106,8 +107,8 @@
         "specialPhase1Moves": "additionalBuild",
         "specialPhase1Action":"specialBuild",
         "movementPhaseAction": "restore",
-        "buildDome": "false"
-
+        "buildDome": "false",
+        "description" : "Titan Benefactor of Mankind/n If your worker does not move up it may build both before and after moving."
       }
 
   },
@@ -119,8 +120,8 @@
       {
         "specialPhase1Moves": "oppositeSideMoves",
         "specialPhase1Action": "moveOpposite",
-        "buildDome": "false"
-
+        "buildDome": "false",
+        "description" : "Ferryman to the Underworld/n Before your Worker moves, you may force a neighboring opponent Worker to the space directly on the other side of your Worker, if that space is unoccupied."
       }
 
   },
@@ -131,8 +132,8 @@
     "parameters":
       {
         "buildDome": "false",
-        "winBuilding": "atLeastFiveTowers"
-
+        "winBuilding": "atLeastFiveTowers",
+        "description": "God of Time/n You also win when there are at least five Complete Towers on the Board."
       }
 
   },
@@ -143,7 +144,8 @@
     "parameters":
       {
         "buildDome": "false",
-        "specialPhase3Moves": "notPerimeter"
+        "specialPhase3Moves": "notPerimeter",
+        "description" : "Goddess of Hearth and Home/n Your worker may build one additional time. The additional build cannot be on a perimeter space."
       }
 
   },
@@ -155,7 +157,8 @@
       {
         "buildingPhaseMoves": "askForFemale",
         "buildingPhaseAction": "maleOrFemale",
-        "buildDome": "false"
+        "buildDome": "false",
+        "description" : "Goddess of the Moon/n instead of your normal build, you may build a dome at any level with your female Worker (even if your male Worker moved)."
       }
 
   },
@@ -167,8 +170,8 @@
       {
         "buildingPhaseMoves": "addBuilderPosition",
         "buildingPhaseAction": "buildBelowYou",
-        "buildDome": "false"
-
+        "buildDome": "false",
+        "description" : "God of the Sky/n Your worker may build under itself in its current space, forcing it up one level. you do not win by forcing yourself up to the third level."
       }
 
   }
