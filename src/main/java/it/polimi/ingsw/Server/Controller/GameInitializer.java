@@ -85,7 +85,10 @@ public class GameInitializer implements Runnable{
         //ArrayList<Integer> cards = netInterface.getCards(player);
         Dealer dealer = (Dealer)game.getPlayerList().get(0);  //funzionerà?
         //non abbiamo fatto il caso in cui ci sono solo due giocatori
-        dealer.chooseCards(cards.get(0), cards.get(1), cards.get(2));
+        if(numberOfPlayers == 3)
+            dealer.drawCards(cards.get(0), cards.get(1), cards.get(2));
+        else
+            dealer.drawCards(cards.get(0), cards.get(1));
 
         ArrayList<Card> possibleCards = new ArrayList<>();
         for(int i=0; i < game.getChosenCardsSize(); i++) {
