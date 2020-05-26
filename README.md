@@ -1,6 +1,19 @@
+
 # ing-sw-2020-Dezi-Dami-Bruni
-32
-Margara
-Dezi-Leonardo-871412-10588151-leonardo.dezi@mail.polimi.it
-Dami-Francesco-888982-10574136-francesco.dami@mail.polimi.it
-Bruni-Marco-889087-10572664-marco1.bruni@mail.polimi.it
+## Gruppo AM32
+
+- ###   10588151    Leonardo Dezi ([@LeonardoDezi](https://github.com/LeonardoDezi))<br>leonardo.dezi@mail.polimi.it
+- ###   10574136    Francesco Dami ([@FrancescoDami](https://github.com/FrancescoDami))<br>francesco.dami@mail.polimi.it
+- ###   10572664    Marco Bruni ([@BrMarco99](https://github.com/BrMarco99))<br>marco1.bruni@mail.polimi.it
+
+| Functionality | State |
+|:-----------------------|:------------------------------------:|
+| Basic rules | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
+| Complete rules | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
+| Socket | [![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#) |
+| GUI | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
+| CLI | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
+| Multiple games | [![YELLOW](https://placehold.it/15/ffdd00/ffdd00)](#) |
+| Advanced Gods | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
+
+<!--
