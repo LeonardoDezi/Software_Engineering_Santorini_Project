@@ -1,14 +1,10 @@
 package it.polimi.ingsw.Client.NetworkHandler;
 
-import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Client.ClientController;
 import it.polimi.ingsw.Client.Moves;
 import it.polimi.ingsw.Server.Model.*;
-
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.function.BinaryOperator;
-
 import static java.lang.Integer.parseInt;
 
 public class NetInterface {

@@ -10,7 +10,6 @@ public class Card {
         return number;
     }
 
-
     public String getName(){
         return name;
     }
@@ -18,6 +17,5 @@ public class Card {
     public CardParameters getParameters(){
         return parameters;
     }
-
 
 }

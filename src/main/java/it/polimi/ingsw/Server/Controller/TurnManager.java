@@ -130,10 +130,10 @@ public class TurnManager {
 //buildingPhase
 
                     moves1 = buildingPhase.getMoves(player, received.getBuilder());
-                    Boolean buildDome = player.getCard().parameters.buildDome;
+                    Boolean buildDome = player.getCard().getParameters().buildDome;
 
 
-                    if(player.getCard().parameters.buildingPhaseMoves.equals("askForFemale")){
+                    if(player.getCard().getParameters().buildingPhaseMoves.equals("askForFemale")){
                         if (received.getBuilder().sex.equals("female")) {
                             received=netInterface.getBuildMove(moves1, builder1, true, player);
                         }else if(player.getBuilderSize() ==2){

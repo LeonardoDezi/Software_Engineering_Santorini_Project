@@ -17,7 +17,7 @@ public class CardParameters {
 
 
 
-    /*
+
     public String getSpecialPhase1Moves(){
         return specialPhase1Moves;
     }
@@ -120,5 +120,5 @@ public class CardParameters {
 
     public void setWinBuilding(String winBuilding){
         this.winBuilding = winBuilding;
-    }*/
+    }
 }
