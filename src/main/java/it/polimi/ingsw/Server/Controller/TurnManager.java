@@ -64,6 +64,7 @@ public class TurnManager {
         Envelope received;
 
         Square lastPosition;
+        netInterface.startGame();
 
 
         while(!(game.getGameEnded())){
@@ -139,7 +140,7 @@ public class TurnManager {
                         }else if(player.getBuilderSize() ==2){
                                 Builder female = player.getFemale();
                                 moves2 = game.getRules().getBuildingRange(female);
-                                // received = netInterface.getBothBuildMove(moves1, received.getBuilder(), false, moves2, female, false);
+                                received = netInterface.getBothBuildMove(moves1,received.getBuilder(), moves2, female, true, player);
                         }else
                             received =netInterface.getBuildMove(moves1, received.getBuilder(), false, player);
                     }else {
