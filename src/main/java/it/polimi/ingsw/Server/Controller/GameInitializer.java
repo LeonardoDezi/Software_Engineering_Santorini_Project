@@ -4,6 +4,7 @@ import it.polimi.ingsw.Server.Client;
 import it.polimi.ingsw.Server.Model.*;
 import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static it.polimi.ingsw.Server.ServerApp.*;
@@ -50,11 +51,23 @@ public class GameInitializer implements Runnable{
 
         // Wait until game.getPlayerList().size() == game.numberOfPlayers;
 
-        dealCards();
+        try {
+            dealCards();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         setPlayers();
-        setBuilders();
+        try {
+            setBuilders();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         TurnManager myGameManager = new TurnManager(game, netInterface);   //possiamo spostarlo? se no in questo punto è inutile
-        myGameManager.letsPlay();
+        try {
+            myGameManager.letsPlay();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public int addPlayer(Client client){
@@ -94,7 +107,7 @@ public class GameInitializer implements Runnable{
 
     }
 
-    public void dealCards(){
+    public void dealCards() throws IOException {
 
         // TODO sendMessage("Sei stato scelto dagli Dei per decidere chi parteciperà al gioco. scegli " + game.numberOfPlayers + " carte", firstPlayer)
         ArrayList<Integer> cards = netInterface.getCards(firstPlayer, game.getDeck());
@@ -123,7 +136,7 @@ public class GameInitializer implements Runnable{
 
     }
 
-    public void setBuilders(){
+    public void setBuilders() throws IOException {
         ArrayList<Square> possibleSquares;
         for(int i=0; i < game.numberOfPlayers; i++){
             Player player = game.getPlayerList().get(i);
