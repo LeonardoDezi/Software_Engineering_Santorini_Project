@@ -36,9 +36,9 @@ public class GameInitializer implements Runnable{
         this.netInterface = new NetInterface(game);
         netInterface.addClient(firstPlayer);
         //TODO ask the player the number of players
-        // virtualView. sendmessage("Please insert the number of player")
+        // virtualView.sendmessage("Please insert the number of player")
         // wait for virtualView
-        int numberOfPlayers;
+        int numberOfPlayers = 2; //get this from client
         Game game = new Game(numberOfPlayers);
         this.game = game;
         Dealer player1 = new Dealer(firstPlayerName, COLOUR1, game, clientID);
@@ -47,8 +47,13 @@ public class GameInitializer implements Runnable{
             //TODO send to the client "error in match creation, please retry"
             return;
         }
-        //TODO ask the first player which cards he wants to choose
+
+        // Wait until game.getPlayerList().size() == game.numberOfPlayers;
+
+        dealCards();
+        setBuilders();
         TurnManager myGameManager = new TurnManager(game, netInterface);   //possiamo spostarlo? se no in questo punto è inutile
+        myGameManager.letsPlay();
     }
 
     public int addPlayer(Client client){
@@ -80,12 +85,10 @@ public class GameInitializer implements Runnable{
 
     public void dealCards(){
 
-        //Il client avrà già il mazzo di carte?
         //sendMessage("Sei stato scelto dagli Dei per decidere chi parteciperà al gioco. scegli " + game.numberOfPlayers + " carte", firstPlayer)
-        //ArrayList<Integer> cards = netInterface.getCards(player);
-        Dealer dealer = (Dealer)game.getPlayerList().get(0);  //funzionerà?
-        //non abbiamo fatto il caso in cui ci sono solo due giocatori
-        if(numberOfPlayers == 3)
+        ArrayList<Integer> cards = netInterface.getCards(firstPlayer, game.getDeck());
+        Dealer dealer = (Dealer)game.getPlayerList().get(0);
+        if(game.numberOfPlayers == 3)
             dealer.drawCards(cards.get(0), cards.get(1), cards.get(2));
         else
             dealer.drawCards(cards.get(0), cards.get(1));
@@ -96,14 +99,12 @@ public class GameInitializer implements Runnable{
         }
 
 
-        for(Player player: game.getPlayerList()){
-            //int chosenCard = netInterface.getChosenCard(possibleCards, player);
-            possibleCards = player.chooseCard(possibleMoves, chosenCard);
+        for(int i=game.numberOfPlayers; i>0; i--){
+            int chosenCard = netInterface.getChosenCard(possibleCards, game.getPlayerList().get(i).clientID);
+            possibleCards = game.getPlayerList().get(i).chooseCard(possibleCards, chosenCard);
             //messaggio per confermare che la carta è stata scelta?
         }
 
-
-        this.setBuilders();
     }
 
     public void setBuilders(){
@@ -112,14 +113,17 @@ public class GameInitializer implements Runnable{
             Player player = game.getPlayerList().get(game.numberOfPlayers-i);
             possibleSquares=game.getBasic().getFreeSquares();
             //TODO ask the player where he wants to place the builders
-            //Square square1 = netinteface.getBuilderplacement(possibleSquares)
+            Square square1 = netInterface.getBuilderPlacement(possibleSquares, player.clientID, 1);
+            if(square1.x == -1){
+                System.out.print("There has been an error with the recognition of the client, the player has not set the builders");
+                return;
+            }
             game.deployBuilder(player, square1);
             possibleSquares=game.getBasic().getFreeSquares();
-            //Square square2 = netinteface.getBuilderplacement
+            Square square2 = netInterface.getBuilderPlacement(possibleSquares, player.clientID, 2);
             game.deployBuilder(player, square2);
         }
 
-        myGameManager.letsPlay();    //lo mettiamo qui?
     }
 
 

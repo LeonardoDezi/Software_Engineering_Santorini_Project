@@ -1,12 +1,14 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Server.Model.Board;
+import it.polimi.ingsw.Server.Model.Card;
 import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -16,6 +18,7 @@ public class Client implements Runnable {
     private String username;
     private String ip;
     private int port;
+    private Socket serverSocket;
 
     public Client(String ip, int port) {
         this.ip = ip;
@@ -81,21 +84,7 @@ public class Client implements Runnable {
         System.out.println("Connection established");
         ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
         PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
-        Scanner stdin = new Scanner(System.in);
 
-        try {
-            Thread t0 = asyncReadFromSocket(socketIn);
-            Thread t1 = asyncWriteToSocket(stdin, socketOut);
-            t0.join();
-            t1.join();
-        } catch (InterruptedException | NoSuchElementException e) {
-            System.out.println("Connection closed from the client side");
-        } finally {
-            stdin.close();
-            socketIn.close();
-            socketOut.close();
-            socket.close();
-        }
     }*/
 
 
@@ -105,28 +94,44 @@ public class Client implements Runnable {
 
     @Override
     public void run() {
-        Socket socket = null;
+        this.serverSocket = new Socket();
         try {
-            socket = new Socket(ip, port);
+            serverSocket = new Socket(ip, port);
         } catch (IOException e) {
             e.printStackTrace();
         }
         //TODO ask the player for the username
         this.username = "username";
         System.out.println("Connection established");
-        ClientController clientController = new ClientController();
-        clientController.matchSetup(socket); //TODO here starts the client for the game
-        clientController.play(socket);
+        ClientController clientController = new ClientController(this);
+        clientController.matchSetup(serverSocket); //TODO here starts the client for the game
+        clientController.play(serverSocket);
+
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //TODO ask for rematch, if yes newgame if no close app
+    }
+
+    public Socket getServerSocket(){
+        return this.serverSocket;
+    }
+}
+
+
+        /*
 
         OutputStreamWriter writer = null;
         try {
-            writer = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
+            writer = new OutputStreamWriter(serverSocket.getOutputStream(), "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(serverSocket.getInputStream(), "UTF-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -158,29 +163,6 @@ public class Client implements Runnable {
 
         System.out.println("Connection closed");
 
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-}
-
-/*        //TODO aggiungi runnable
-        SwingUtilities.
-        JFrame frame = new JFrame("Santorini");
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        Integer screenHeight = screenSize.height;
-        Integer screenWidth = screenSize.width;
-        frame.setSize(screenWidth, screenHeight);
 
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-
-
-    }
-
-}
-*/
+    } */

@@ -20,6 +20,11 @@ public class NetInterface {
         this.clientController = clientController;
     }
 
+    /**
+     * method used during the game to show the player what possibility has to choose and wait for the choice
+     * @param socket is the Server socket.
+     * @return the move chosen by the player depending on the phase of the game
+     */
     public Moves getMoves(Socket socket){
         String availableMoves = reciever.recieve(socket);
         Moves moves = null;
@@ -63,16 +68,72 @@ public class NetInterface {
         return moves;
     }
 
-    public void sendMoves(Envelope envelope){
+    /**
+     * method used to get the cards and the available squares to place the builders.
+     * @param socket is the serverSocket.
+     * @param controller is the controller of the player.
+     */
+    public void getMatchSetup(Socket socket, ClientController controller){
+        String availableMoves = reciever.recieve(socket);
+        String[] values = availableMoves.split("@");
+        if(values[0].equals("7")){//dealer has to choose all the cards
+            String[] cards = values[1].split(":");
+            Card card = new Card();
+            for(int i=0; i<cards.length; i++){
+                card = stringToCard(cards[i]);
+                controller.possibleCards.add(card);
+                controller.dealerChoice();
+            }
+        }
+        if(values[0].equals("8")){//player has to choose the card
+            String[] cards = values[1].split(":");
+            Card card = new Card();
+            for(int i=0; i<cards.length; i++){
+                card = stringToCard(cards[i]);
+                controller.possibleCards.add(card);
+                controller.playerChoiche();
+            }
+        }
+        if(values[0].equals("9")){//player has to choose where to place the builder
+
+        }
+        if(values[0].equals("10")){ //la partita comincia
+            controller.setup=false;
+        }
+
+    }
+
+    /**
+     * sends the three cards chosen by the Dealer to the server
+     * @param card1 is the first card.
+     * @param card2 is the second card.
+     * @param card3 is the third card.
+     * @param socket is the server socket.
+     */
+    public void sendCard(Integer card1, Integer card2, Integer card3, Socket socket){
+        String message = Integer.toString(card1) + ", " + Integer.toString(card2) + ", " + Integer.toString(card3);
+        sender.send(message,socket);
+    }
+
+    /**
+     * sends the card chosen by the player to the server.
+     * @param card1 is the choosen card.
+     * @param socket is the server socket.
+     */
+    public void sendCard(Integer card1, Socket socket){
+        String message = Integer.toString(card1);
+        sender.send(message, socket);
+    }
+
+    public void sendMoves(Envelope envelope, Socket socket){
         if(envelope == null){
-            //TODO send 0
+            sender.send("0", socket);
         }
         Square square = envelope.getMove();
         Builder builder = envelope.getBuilder();
         Boolean dome = envelope.getIsDome();
         String coordinates = squareToString(square) + builderToString(builder) + booleanToString(dome);
-        //TODO send to the server
-        return;
+        sender.send(coordinates, socket);
     }
 
     /**
@@ -154,6 +215,21 @@ public class NetInterface {
             return "1";
         }
         return "0";
+    }
+
+    /**
+     * converts a String containing the name and description of a card to a card object.
+     * @param string a string containing name and description of a card separated by "_".
+     * @return the card object with name and description set.
+     */
+    public Card stringToCard(String string){
+        String[] parts = string.split("_");
+        String name = parts[0];
+        String description = parts[1];
+        Card card = new Card();
+        card.name=name;
+        card.description=description;
+        return card;
     }
 
 }

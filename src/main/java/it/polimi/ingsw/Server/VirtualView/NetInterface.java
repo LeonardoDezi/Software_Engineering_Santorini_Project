@@ -124,6 +124,82 @@ public class NetInterface {
         return envelope;
     }
 
+    /**
+     * method use to make the Dealer choose whitch cards will partecipate to the game.
+     * @param dealer is the dealer player.
+     * @param deck is the Deck containing all the cards.
+     * @return an arrayList of integers containing the index number of the choosen cards.
+     */
+    public ArrayList<Integer> getCards(Client dealer, ArrayList<Card> deck){
+        Socket socket = dealer.getSocket();
+        StringBuilder message = new StringBuilder("7@ ");
+        String stringCard;
+        for (Card value : deck) {
+            stringCard = cardToString(value);
+            message.append(stringCard);
+        }
+        sender.send(message.toString(), socket);
+        message = new StringBuilder(reciever.recieve(socket));
+        String[] response = message.toString().split(",");
+        ArrayList<Integer> choosenCards = new ArrayList<>();
+        for (String s : response) {
+            int x = parseInt(s);
+            choosenCards.add(x);
+        }
+        return choosenCards;
+    }
+
+    /**
+     * method used to make a player whitch card he wants to use for the game
+     * @param possibleCards the available cards to choose
+     * @param clientID the ID of the client whitch has to choose the card
+     * @return the number of the card choosen by the player
+     */
+    public Integer getChosenCard(ArrayList<Card> possibleCards, Integer clientID){
+        Socket socket = new Socket();
+        for (Client client : clients) {
+            if (clientID == client.clientID) {
+                socket = client.getSocket();
+            }
+        }
+        if(socket==null){
+            System.out.print("Attention! Client not found!");
+            return 0;
+        }
+        StringBuilder partial = new StringBuilder("8@ ");
+        for(int i=0; i<possibleCards.size(); i++){
+            partial.append(String.valueOf(possibleCards.get(i).getNumber())).append(", ");
+        }
+        String message = partial.toString();
+        sender.send(message, socket);
+        message = reciever.recieve(socket);
+        return stringToInt(message);
+    }
+
+    /**
+     * method used to ask one player where he wants to place one of its builders at the beginning of the match.
+     * @param possibleSquares all the available squares to place the builder.
+     * @param clientID the ID of the client whitch has to place the builder.
+     * @param buildernumber a number used to distinct from first and second builder.
+     * @return the Square where the player wants to place the builder.
+     */
+    public Square getBuilderPlacement(ArrayList<Square> possibleSquares, int clientID, int buildernumber){
+        Socket socket = new Socket();
+        for (Client client : clients) {
+            if (clientID == client.clientID) {
+                socket = client.getSocket();
+            }
+        }
+        if(socket==null){
+            System.out.print("Attention! Client not found!");
+            return new Square(-1, -1);
+        }
+        String message = "@9 " + arrayListSquareToString(possibleSquares) + "@ " +buildernumber;
+        sender.send(message, socket);
+        message =reciever.recieve(socket);
+        return stringToSquare(message);
+    }
+
     public void sendMessage(int x, String phase, Client client){ //TODO implement the method with the message hashmap
         Socket socket;
         if(client == null){
@@ -166,7 +242,7 @@ public class NetInterface {
         if(moves.isEmpty()){
             return null;
         }
-        StringBuilder stringMoves= null;
+        StringBuilder stringMoves= new StringBuilder();
         String partial;
         for (Square move : moves) {
             partial = squareToString(move);
@@ -198,19 +274,7 @@ public class NetInterface {
         return "0";
     }
 
-    /**
-     * converts a string containing coordinates x and y separated by "," to a Square with x and y coordinates.
-     * @param string is the string that contains the coordinates
-     * @return a Square with x and y coordinates and all the other values set to 0.
-     */
-    public Square stringToSquare(String string){
-        String[] coordinates = string.split(",");
-        int x;
-        int y;
-        x = parseInt(coordinates[0]);
-        y = parseInt(coordinates[1]);
-        return new Square(x, y);
-    }
+
 
     /**
      * converts back a string with the coordinates of the position of a builder to a builder object usable by the controller.
@@ -245,6 +309,49 @@ public class NetInterface {
             }
         }
         return null;
+    }
+
+
+    /**
+     * converts a Card object to a string
+     * @param card is the card that needs to be serialized
+     * @return a string with the name of the card "," the description of the card and ": " as separators
+     */
+    public String cardToString(Card card){
+        String string = card.name + "_" + card.description + ": ";
+        return string;
+    }
+
+    public void startGame(){
+        String message = "10@ ";
+        for(int i=0; i < game.numberOfPlayers; i++){
+            sender.send(message, clients.get(i).getSocket());
+        }
+    }
+
+    /**
+     * converts a String containing a number to an integer.
+     * @param string is the string containing the number.
+     * @return the integer.
+     */
+    Integer stringToInt(String string){
+        int x;
+        x = parseInt(string);
+        return x;
+    }
+
+    /**
+     * converts a string containing coordinates x and y separated by "," to a Square with x and y coordinates.
+     * @param string is the string that contains the coordinates
+     * @return a Square with x and y coordinates and all the other values set to 0.
+     */
+    public Square stringToSquare(String string){
+        String[] coordinates = string.split(",");
+        int x;
+        int y;
+        x = parseInt(coordinates[0]);
+        y = parseInt(coordinates[1]);
+        return new Square(x, y);
     }
 
 
