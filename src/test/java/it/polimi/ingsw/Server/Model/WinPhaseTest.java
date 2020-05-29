@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+//TODO magari fare più test con carte speciali move e carte speciali build insieme
+
 public class WinPhaseTest {
     private WinPhase winPhase;
     private Game game;
@@ -47,9 +49,9 @@ public class WinPhaseTest {
         game.gameBoard.build(game.gameBoard.fullMap[0][3], false);
 
         //1) solo quattro torri
-        player1.setTmp(null);
-        player2.setTmp("atLeastFiveTowers");
-        player3.setTmp("jumpDown");  //in condizioni normali jumpDown non si troverà mai qui
+        player1.setCard(game.getDeckCard(7));     //Minotauro
+        player2.setCard(game.getDeckCard(11));    //Crono
+        player3.setCard(game.getDeckCard(8));     //Pan
 
         assertFalse(game.getGameEnded());
         assertNull(game.getWinningPlayer());   // si accerta che nessuno abbia ancora vinto
@@ -72,9 +74,9 @@ public class WinPhaseTest {
         game.setWinningPlayer(null);    //reinizializzazione
 
         //3) cinque torri e il giocatore passato in ingresso ha la carta speciale
-        player1.setTmp("atLeastFiveTowers");
-        player2.setTmp(null);
-        player3.setTmp("jumpDown");
+        player1.setCard(game.getDeckCard(11));    //Crono
+        player2.setCard(game.getDeckCard(13));     //Selene
+        player3.setCard(game.getDeckCard(8));     //Pan
 
         winPhase.checkBuild(player1);
         assertTrue(game.getGameEnded());
@@ -85,9 +87,9 @@ public class WinPhaseTest {
 
 
         //4) cinque torri e nessun giocatore ha la carta speciale
-        player1.setTmp(null);
-        player2.setTmp(null);
-        player3.setTmp("jumpDown");  //in condizioni normali jumpDown non si troverà mai qui
+        player1.setCard(game.getDeckCard(5));    //Demeter
+        player2.setCard(game.getDeckCard(1));    //Apollo
+        player3.setCard(game.getDeckCard(8));    //Pan
 
         winPhase.checkBuild(player1);
         assertFalse(game.getGameEnded());
@@ -107,9 +109,10 @@ public class WinPhaseTest {
         game.gameBoard.build(game.gameBoard.fullMap[1][3], false);
         game.gameBoard.build(game.gameBoard.fullMap[1][3], false);   //torre di due piani
 
-        player1.setTmp(null);
-        player2.setTmp(null);
-        player3.setTmp("jumpDown");
+
+        player1.setCard(game.getDeckCard(5));    //Demeter
+        player2.setCard(game.getDeckCard(1));    //Apollo
+        player3.setCard(game.getDeckCard(8));    //Pan
 
         assertFalse(game.getGameEnded());
         assertNull(game.getWinningPlayer());   // si accerta che nessuno abbia ancora vinto
@@ -146,7 +149,7 @@ public class WinPhaseTest {
 
 
         //5) caso vincente e nessuno ha la carta speciale
-        player3.setTmp(null);
+        player3.setCard(game.getDeckCard(4));    //Apollo
         assertFalse(game.getGameEnded());
         assertNull(game.getWinningPlayer());   // si accerta che nessuno abbia vinto
         winPhase.checkMovement(player2, game.gameBoard.fullMap[3][3],game.gameBoard.fullMap[4][4]);

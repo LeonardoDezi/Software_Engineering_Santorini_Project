@@ -136,6 +136,13 @@ public class Game {
         return message;
     }
 
+
+    //TODO verificare che non dia problemi
+    public void setDealer(Player player){ this.dealer = (Dealer) player; }
+
+    public Dealer getDealer(){return this.dealer;}
+
+
     public Card getChosenCard(int cardPosition){ return chosenCards.get(cardPosition); }
 
     public int getChosenCardsSize(){return chosenCards.size();}
