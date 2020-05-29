@@ -19,8 +19,11 @@ public class Card {
         return parameters;
     }
 
-    public String getDescription( ){
+    public String getDescription(){
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

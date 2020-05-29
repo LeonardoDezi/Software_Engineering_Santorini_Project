@@ -70,6 +70,7 @@ public class ClientController {
      */
     public Envelope chooseMove(Moves moves){
         //TODO moves contains all the moves that the player can do, return an envelope with the chosen move
+    return  null;
     }
 
     /**

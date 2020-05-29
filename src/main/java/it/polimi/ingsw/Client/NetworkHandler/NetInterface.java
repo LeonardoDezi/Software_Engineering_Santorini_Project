@@ -9,7 +9,7 @@ import static java.lang.Integer.parseInt;
 
 public class NetInterface {
     private Sender sender;
-    private Reciever reciever;
+    private Receiver receiver;
     private ArrayList<Square> moves1;
     private ArrayList<Square> moves2;
     private Builder builder1;
@@ -26,7 +26,7 @@ public class NetInterface {
      * @return the move chosen by the player depending on the phase of the game
      */
     public Moves getMoves(Socket socket){
-        String availableMoves = reciever.recieve(socket);
+        String availableMoves = receiver.receive(socket);
         Moves moves = null;
         String[] values = availableMoves.split("@");
         if(values[0].equals("-1")){
@@ -74,7 +74,7 @@ public class NetInterface {
      * @param controller is the controller of the player.
      */
     public void getMatchSetup(Socket socket, ClientController controller){
-        String availableMoves = reciever.recieve(socket);
+        String availableMoves = receiver.receive(socket);
         String[] values = availableMoves.split("@");
         if(values[0].equals("7")){//dealer has to choose all the cards
             String[] cards = values[1].split(":");
@@ -228,7 +228,7 @@ public class NetInterface {
         String description = parts[1];
         Card card = new Card();
         card.name=name;
-        card.description=description;
+        card.setDescription(description);
         return card;
     }
 

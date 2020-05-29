@@ -12,7 +12,7 @@ public class NetInterface {
     private final Game game;
     private Player currentPlayer;
     private final Sender sender = new Sender();
-    private final Reciever reciever = new Reciever();
+    private final Receiver receiver = new Receiver();
 
     public NetInterface(Game game){
         this.game = game;
@@ -34,7 +34,7 @@ public class NetInterface {
         Socket socket=client.getSocket();
         String message = "1@ " + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(builder2);
         sender.send(message, socket);
-        message=reciever.recieve(socket);
+        message= receiver.receive(socket);
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
@@ -55,7 +55,7 @@ public class NetInterface {
         String message = "2@ " + arrayListSquareToString(moves) + builderToString(builder);
         //TODO send to the player
         sender.send(message, socket);
-        message=reciever.recieve(socket);
+        message= receiver.receive(socket);
         if(message==null){
             return null;
         }
@@ -81,7 +81,7 @@ public class NetInterface {
         String message ="4@ " + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(female) + wantsToBuildADome(canBuildADome);
         //TODO send to the player
         sender.send(message, socket);
-        message=reciever.recieve(socket);
+        message= receiver.receive(socket);
         String[] choosenmove = message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
@@ -111,7 +111,7 @@ public class NetInterface {
             //sendMessage("vuoi costruire la cupola?", client);
         }
         sender.send(message, socket);
-        message=reciever.recieve(socket);
+        message= receiver.receive(socket);
         if(message==null){
             return null;
         }
@@ -139,7 +139,7 @@ public class NetInterface {
             message.append(stringCard);
         }
         sender.send(message.toString(), socket);
-        message = new StringBuilder(reciever.recieve(socket));
+        message = new StringBuilder(receiver.receive(socket));
         String[] response = message.toString().split(",");
         ArrayList<Integer> choosenCards = new ArrayList<>();
         for (String s : response) {
@@ -172,7 +172,7 @@ public class NetInterface {
         }
         String message = partial.toString();
         sender.send(message, socket);
-        message = reciever.recieve(socket);
+        message = receiver.receive(socket);
         return stringToInt(message);
     }
 
@@ -196,7 +196,7 @@ public class NetInterface {
         }
         String message = "@9 " + arrayListSquareToString(possibleSquares) + "@ " +buildernumber;
         sender.send(message, socket);
-        message =reciever.recieve(socket);
+        message =receiver.receive(socket);
         return stringToSquare(message);
     }
 
@@ -318,7 +318,7 @@ public class NetInterface {
      * @return a string with the name of the card "," the description of the card and ": " as separators
      */
     public String cardToString(Card card){
-        String string = card.name + "_" + card.description + ": ";
+        String string = card.name + "_" + card.getDescription() + ": ";
         return string;
     }
 

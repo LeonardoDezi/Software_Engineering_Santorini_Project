@@ -2,9 +2,10 @@ package it.polimi.ingsw.Client.NetworkHandler;
 
 import java.net.Socket;
 
-public class Reciever {
-    public String recieve(Socket socket){
+public class Receiver {
+    public String receive(Socket socket){
         //wait for the server answer on the socket
+        return null;
     }
 
    /* Scanner stdin = new Scanner(System.in);
