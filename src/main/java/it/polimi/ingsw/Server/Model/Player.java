@@ -10,20 +10,38 @@ import java.util.ArrayList;
  * @since 1.0
  */
 public class Player {
+    /** represents the first sex that a worker can have */
     public static final String SEX1 = "Male";
+
+    /** represents the second sex that a worker can have */
     public static final String SEX2 = "Female";
+
+    /** represents the card chosen by the player */
     protected Card card = null;
+
+    /** represents the name chosen by the user for playing */
     public final String playerID;
+
+    /** represents the list of workers associated to the player */
     protected ArrayList<Builder> builders;
+
+    /** represents the colour associated to the player */
     public final String colour;
+
+    /** represents the game that the player is playing */
     protected final Game game;
+
+    /** represents the id of the player, used to identify it in an absolute way, compared to the other players */
     public final int clientID;
 
 
 
     /**
-     * creates a new player and the array list that is used to save the players builders.
-     * @param playerID is the id that identifies the player.
+     * creates a new player and the array list that is used to save the player's workers.
+     * @param playerID is the name that identifies the player.
+     * @param colour is the colour that will be associated to the player
+     * @param game is the game that the player is playing
+     * @param clientID is the id that will be associated to the player
      */
     public Player(String playerID, String colour, Game game, int clientID) {
 
@@ -38,8 +56,10 @@ public class Player {
 
     /**
      * assigns the God card chosen by the player to the player class.
+     * @param possibleCards represents the list of cards from which the player can choose
+     * @param cardPosition represents the position of the card inside possibleCards
+     * @return the list of cards that can still be chosen by the other players
      */
-
     //TODO per ora va per posizione. Possiamo sempre modificarla per farla andare per nome
     public ArrayList<Card> chooseCard(ArrayList<Card> possibleCards, int cardPosition){   //cardPosition è la posizione della carta nell'array
         if(card == null) {
@@ -50,21 +70,25 @@ public class Player {
         return possibleCards;
     }
 
+    /** is used to get the card associated to the player
+     * @return is the card of the player
+     */
     public Card getCard(){
         return this.card;
     }
 
-    public Card setCard(Card card){return this.card = card;}
+    /** is used to set the card associated to the player
+     * @param card is the card that will be associated to the player
+     */
+    public void setCard(Card card){this.card = card;}
 
 
     /**
-     * is used to assign the builders to the player.
-     * @param BuilderId is the id of one of the two builders.
-     * @return the variable containing the id of the builder.
-     * @throws IndexOutOfBoundsException if the player hasn't placed its builders yet.
+     * is used to get a worker of the player.
+     * @param BuilderId is the position of the worker inside the ArrayList builders.
+     * @return the worker requested
+     * @throws IndexOutOfBoundsException if there is no worker saved in builders, at the index represented by builderId.
      */
-
-
     //magari modificarlo per IndexOutOfBounds e non ARRAYIndexOuTOfBounds
     public Builder getBuilder(int BuilderId) throws ArrayIndexOutOfBoundsException{
 
@@ -76,7 +100,9 @@ public class Player {
     }
 
 
-
+    /** is used to get the number of workers associated to the player.
+     * @return the dimension of the arraylist builders.
+     */
     public int getBuilderSize(){
         return builders.size();
     }
@@ -84,8 +110,9 @@ public class Player {
 
 
     /**
-     * adds the new builder to builderList
-     * @param position are the coordinates of the square where the new builder is.
+     * adds a new worker to the arraylist builders.
+     * If the new worker is the first one associated to the player, its sex will be SEX1, otherwise SEX2
+     * @param position is the square where the new border will be.
      */
     public void addBuilder(Square position){    //la posizione deve essere legittima!!
         String sex;                             //la dimensione dell'array deve essere controllata più in alto
@@ -99,7 +126,10 @@ public class Player {
         //return builders.size() - 1;  // se magari vogliamo comunicare il numero della pedina che abbiamo appena messo
     }
 
-
+    /**
+     * removes a worker from the list builders and from the square that contained it
+     * @param builderId is the index of the list builders where the worker is saved
+     */
     //al momento removeBuilder non implica la possibilità che builderId sia errato
     public void removeBuilder(int builderId){
 
@@ -109,11 +139,16 @@ public class Player {
 
     }
 
+    /** is used to get the colour associated to the player
+     * @return the colour of the player
+     */
     public String getColour(){
         return this.colour;
     }
 
-
+    /** is used to get the female worker associated to the player.
+      * @return the female worker. Returns null if there is no female worker.
+     */
 
     public Builder getFemale(){
         Builder builder = null;

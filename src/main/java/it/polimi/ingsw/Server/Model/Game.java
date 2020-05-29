@@ -11,20 +11,39 @@ import java.util.ArrayList;
  */
 public class Game {
     //rivedere tutti i private, protected e public
+    /** represents the maximum number of workers that a player can have */
     private static final int MAXNUMBUILDERS = 2;
+
+    /** this boolean indicates if the game has ended */
     private boolean gameEnded;
+
+    /** represents the board where the game is played */
     protected Board gameBoard;
+
+    /** represents the list of the players that play in the match */
     protected ArrayList<Player> playerList;
+
+    /** represents the list of the cards used in this match */
     private ArrayList<Card> chosenCards;
+
+    /** represents the deck of all the cards that can be used in a game */
     private final ArrayList<Card> deck;
+
+    /** represents the Challenger of the game's match */
     private Dealer dealer;
+
+    /** represents the player who wins the game */
     private Player winningPlayer;
                            // identificatore numerico per differenziare le partite?
-    public final Integer numberOfPlayers;
+    /** represents the number of players in the game */
+    public final int numberOfPlayers;
+
+    /** represents the rules followed by all the players, regardless of their cards */
     protected BasicRules basic;
 
     /**
      * creates a new game.
+     * @param numberOfPlayers is the number of players that will partecipate in this match.
      */
     public Game(int numberOfPlayers) {     //da mettere un identificativo partita?
         gameBoard = new Board();
@@ -41,25 +60,37 @@ public class Game {
 
     }
 
-
+    /** used to get the list of the players of the game
+     * @return is the list of the players playing
+     */
     public ArrayList<Player> getPlayerList() {
        return this.playerList;
     }
 
+    /** used to get the cards chosen by the Challenger
+     * @return is the list of the cards that will be used in this game
+     */
     public ArrayList<Card> getChosenCards(){return this.chosenCards;}
 
+    /** used to get gameEnded
+     * @return is the boolean that indicated if the game has ended
+     */
     public boolean getGameEnded(){return this.gameEnded;}
 
+    /**
+     * used to communicate if the game has ended, setting gameEnded
+     * @param value If True, indicates that the game has ended.
+     */
     public void setGameEnded(boolean value){this.gameEnded = value;}
+
 
     /**
      * adds a new player to the game.
      * @param player is the player object.
+     * @return 1, if the player has been successifully added, 0 otherwise
      */
-
-
     //dealer?    // non controlla se due player abbiano clientID uguali
-    public Integer addPlayer(Player player){
+    public int addPlayer(Player player){
 
         if(this.playerList.size() < numberOfPlayers){
             this.playerList.add(player);
@@ -72,7 +103,7 @@ public class Game {
 
     /**
      * removes a player from the game.
-     * @param player is the player id.
+     * @param player is the player object.
      */
     public void removePlayer(Player player) {     //non consideriamo il caso in cui il giocatore non sia presente nella lista
         for (int i = 0; i < player.getBuilderSize(); i++) {
@@ -93,8 +124,16 @@ public class Game {
         return deck;
     }
 
+    /**
+     * is used to get a card from the deck
+     * @param cardNumber is the number associated to the card
+     * @return the card associated to cardNumber
+     */
     public Card getDeckCard(int cardNumber){return deck.get(cardNumber -1);}
 
+    /** used to get the basic rules used in the game
+     * @return the basic rules of the game
+     */
     public BasicRules getBasic(){
         return basic;
     }
@@ -102,8 +141,8 @@ public class Game {
 
 
     /**
-     * adds the card chosen by the dealer at the beginning of the game to the list of the available cards for the other players.
-     * @param cardNumber is the number that identifies the card chosen by the dealer.
+     * adds the card chosen by the Challenger at the beginning of the game to the list of the available cards that can be chosen by a player.
+     * @param cardNumber is the number that identifies the card chosen by the Challenger.
      */
     //i numeri devono essere legittimi
     public void addChosenCard(int cardNumber){
@@ -114,9 +153,10 @@ public class Game {
 
 
     /**
-     * puts a new builder on the board.
-     * @param player is the player that is deploying the builder.
-     * @param placement is the square where the player wants to put the builder
+     * puts a new worker on the board.
+     * @param player is the player that is deploying the worker.
+     * @param placement is the square where the player wants to put the worker.
+     * @return the message regarding the outcome of the operation
      */
     public String deployBuilder(Player player, Square placement){
         int x = placement.x;
@@ -138,20 +178,50 @@ public class Game {
 
 
     //TODO verificare che non dia problemi
+
+    /**
+     * set the Challenger of the game
+     * @param player is the player that is going to be the challenger
+     */
     public void setDealer(Player player){ this.dealer = (Dealer) player; }
 
+    /**
+     * get the Challenger of the game
+     * @return the Challenger of the game
+     */
     public Dealer getDealer(){return this.dealer;}
 
-
+    /**
+     * get the card from the list of cards chosen by the Challenger
+     * @param cardPosition is the index of chosenCards where the card is saved
+     * @return the card saved at the index of chosenCards
+     */
     public Card getChosenCard(int cardPosition){ return chosenCards.get(cardPosition); }
 
+    /**
+     * get the dimension of the list of cards chosen by the Challenger
+     * @return the number of cards chosen by the challenger
+     */
     public int getChosenCardsSize(){return chosenCards.size();}
 
+    /**
+     * @return the board where the game is played
+     */
     public Board getBoard(){ return this.gameBoard;}   // serve ancora?
 
+    /**
+     * @return the basic rules of the game
+     */
     public BasicRules getRules(){ return this.basic; }
 
+    /**
+     * @return the player who won the game. it is null if nobody has not won yet.
+     */
     public Player getWinningPlayer(){return winningPlayer;}
 
+    /**
+     * set the winning player of the game
+     * @param player is the player to be set as winner
+     */
     public void setWinningPlayer(Player player){ this.winningPlayer = player;}
 }

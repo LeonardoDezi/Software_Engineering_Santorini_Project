@@ -7,14 +7,19 @@ package it.polimi.ingsw.Server.Model;
 
 
 public class Board {
+
+    /** represents the number of rows of the board */
     public static final int BOARDSIZEX = 5;
+
+    /** represents the number of columns of the board */
     public static final int BOARDSIZEY = 5;
 
+    /** represents the number of completed towers constructed during the game */
     protected int completedTowers;
 
+    /** represents the board, fullmap is an array of squares that represents the cells where the builders can move or build. */
     protected Square[][] fullMap;
-    /** represents the board, fullmap is an array of sqares that rapresents the cells where the builders can move or build.
-     */
+
 
 
 
@@ -63,10 +68,10 @@ public class Board {
     }
 
     /**
-     * adds the new building or the new level on an existing building on the board.
-     * @param point the coordinate of the cell where the new building is going to be.
-     * @param isDome this boolean is used to signal if the new building is going to be a dome in a level different from the 4th.
-     */
+     * adds a new construction on a cell of the board.
+     * @param point the coordinate of the cell where the new construction is going to be.
+     * @param isDome this boolean is used to signal if the new construction is going to be a dome or a simple block
+     * If the level of point is 3, the new construction will automatically be a dome, and completedTowers will be updated.*/
     public void build(Square point, boolean isDome){
 
         if(point != null) {

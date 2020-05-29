@@ -8,10 +8,21 @@ package it.polimi.ingsw.Server.Model;
 
 public class Square {
 
+    /** represents what is on the top of the square. Blank space = 0, Worker = 1, Dome = 2 */
     private int value;
+
+    /** represents the x coordinate of the square */
     public final int x;
+
+    /** represents the y coordinate of the square*/
     public final int y;
+
+    /**If the square is unoccupied, level will represent the highest free cell,
+     * otherwise it represents the level where the worker or the dome is placed
+     */
     private int level;
+
+    /** represents the worker placed in this square. If the square is unoccupied, builder is null */
     private Builder builder;
 
     /**
@@ -30,9 +41,9 @@ public class Square {
     /**
      * changes the type of object that is on the square.
      * 0 signifies that there is nothing on it.
-     * 1 signifies that there is a player on it.
+     * 1 signifies that there is a worker on it.
      * 2 signifies that there is a dome on it.
-     * @param value is the kind of object that is now on top af the square.
+     * @param value is the kind of object that is now on top of the square.
      */
     public void setValue(int value) {
         this.value = value;
@@ -48,8 +59,6 @@ public class Square {
      * is used to change the height of the square.
      * @param level is the new height of the square.
      */
-    /*If the last occupied cell contains a construction, level will represent the highest free cell
-      If the last occupied cell contains a builder, level will represent its position.*/
     public void setLevel(int level){
         this.level = level;
     }
@@ -63,22 +72,26 @@ public class Square {
     }
 
     /**
-     * puts a builder on the square.
-     * @param builder is the id of the builder that has been put on the square
+     * puts a worker on the square.
+     * @param builder is the worker that has been put on the square
      */
     public void setBuilder(Builder builder){ this.builder = builder; }
 
     /**
-     * is used to know the id of the builder on the square.
-     * @return the id of the builder on the square.
+     * is used to know the worker on the square.
+     * @return the object of the worker on the square.
      */
     public Builder getBuilder(){
         return this.builder;
     }
 
+
+    /**
+     * is used to remove a worker from the square, and to delete all the traces of its previous presence.
+     */
     public void resetSquare(){
-        this.value = 0 ;  //rimetti la casella come libera
-        this.builder = null;  // cancella il riferimento al builder
+        this.value = 0 ;
+        this.builder = null;
     }
 
 }
