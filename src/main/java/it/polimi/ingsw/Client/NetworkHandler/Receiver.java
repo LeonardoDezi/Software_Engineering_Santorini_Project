@@ -1,11 +1,33 @@
 package it.polimi.ingsw.Client.NetworkHandler;
 
+import com.google.gson.JsonObject;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class Receiver {
-    public String receive(Socket socket){
+    public static String receive(Socket socket){
         //wait for the server answer on the socket
-        return null;
+
+        BufferedReader bufferedReaderreader = null;
+        try {
+            bufferedReaderreader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String line = null;
+        try {
+            line = bufferedReaderreader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JSONObject jsonObject = new JSONObject(line);
+
+        return jsonObject.toString();
     }
 
    /* Scanner stdin = new Scanner(System.in);

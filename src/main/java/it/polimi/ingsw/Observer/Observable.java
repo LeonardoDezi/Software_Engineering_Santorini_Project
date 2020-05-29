@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Observer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Observable<T> {
         }
     }
 
-    public void updateAll(){
+    public void updateAll() throws IOException {
         synchronized (observers) {
             for(Observer observer : observers){
                 observer.update();

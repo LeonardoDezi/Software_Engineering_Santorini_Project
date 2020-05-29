@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.Server.VirtualView.Receiver;
+import it.polimi.ingsw.Server.VirtualView.Sender;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -19,14 +21,13 @@ public class ServerClientHandler implements Runnable{
     @Override
     public void run () {
         try {
-            OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 
-            String line = reader.readLine();
-            JSONObject jsonObject = new JSONObject(line);
+            JSONObject jsonObject = new JSONObject();
+            String message = jsonObject.toString();
+            Sender.send(message,socket);
+            Receiver.receive(socket);
 
-            writer.write(jsonObject.toString() + "\n");
-            writer.flush();
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

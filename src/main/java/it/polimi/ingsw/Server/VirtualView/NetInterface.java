@@ -2,6 +2,8 @@ package it.polimi.ingsw.Server.VirtualView;
 
 import it.polimi.ingsw.Server.Client;
 import it.polimi.ingsw.Server.Model.*;
+
+import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -28,13 +30,13 @@ public class NetInterface {
      * @param player the player that has to choose the move.
      * @return the move that the player has choosen.
      */
-    public Envelope getBothMovementMove(ArrayList<Square> moves1, Builder builder1,ArrayList<Square> moves2, Builder builder2, Player player){
+    public Envelope getBothMovementMove(ArrayList<Square> moves1, Builder builder1,ArrayList<Square> moves2, Builder builder2, Player player) throws IOException {
         this.currentPlayer=player;
         Client client = getClient(player);
         Socket socket=client.getSocket();
         String message = "1@ " + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(builder2);
-        sender.send(message, socket);
-        message= receiver.receive(socket);
+        Sender.send(message, socket);
+        message= Receiver.receive(socket);
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
@@ -49,13 +51,13 @@ public class NetInterface {
      * @param player is the player that has to choose.
      * @return the move chosen by the player or null if the player choses not to take a special action.
      */
-    public Envelope getMovementMove(ArrayList<Square> moves, Builder builder, Player player){
+    public Envelope getMovementMove(ArrayList<Square> moves, Builder builder, Player player) throws IOException {
         Client client = getClient(player);
         Socket socket=client.getSocket();
         String message = "2@ " + arrayListSquareToString(moves) + builderToString(builder);
         //TODO send to the player
-        sender.send(message, socket);
-        message= receiver.receive(socket);
+        Sender.send(message, socket);
+        message= Receiver.receive(socket);
         if(message==null){
             return null;
         }
@@ -75,13 +77,13 @@ public class NetInterface {
      * @param player the player that has to choose where to build.
      * @return an Envelope Object with the choice of the player.
      */
-    public Envelope getBothBuildMove(ArrayList<Square> moves1, Builder builder1, ArrayList<Square> moves2, Builder female, Boolean canBuildADome, Player player){
+    public Envelope getBothBuildMove(ArrayList<Square> moves1, Builder builder1, ArrayList<Square> moves2, Builder female, Boolean canBuildADome, Player player) throws IOException {
         Client client = getClient(player);
         Socket socket=client.getSocket();
         String message ="4@ " + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(female) + wantsToBuildADome(canBuildADome);
         //TODO send to the player
-        sender.send(message, socket);
-        message= receiver.receive(socket);
+        Sender.send(message, socket);
+        message= Receiver.receive(socket);
         String[] choosenmove = message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
@@ -103,15 +105,15 @@ public class NetInterface {
      * @return and Envelope Object containing where the player wants to build and if he wants to build a dome.
      * if the player has the opportunity to choose to build or not the method can return null if the choice is to not build anything.
      */
-    public Envelope getBuildMove(ArrayList<Square>moves, Builder builder, Boolean isDome, Player player){
+    public Envelope getBuildMove(ArrayList<Square>moves, Builder builder, Boolean isDome, Player player) throws IOException {
         Client client = getClient(player);
         Socket socket=client.getSocket();
         String message = "3@ " + arrayListSquareToString(moves) + builderToString(builder) + wantsToBuildADome(isDome);
         if(isDome){
             //sendMessage("vuoi costruire la cupola?", client);
         }
-        sender.send(message, socket);
-        message= receiver.receive(socket);
+        Sender.send(message, socket);
+        message= Receiver.receive(socket);
         if(message==null){
             return null;
         }
@@ -130,7 +132,7 @@ public class NetInterface {
      * @param deck is the Deck containing all the cards.
      * @return an arrayList of integers containing the index number of the choosen cards.
      */
-    public ArrayList<Integer> getCards(Client dealer, ArrayList<Card> deck){
+    public ArrayList<Integer> getCards(Client dealer, ArrayList<Card> deck) throws IOException {
         Socket socket = dealer.getSocket();
         StringBuilder message = new StringBuilder("7@ ");
         String stringCard;
@@ -138,8 +140,8 @@ public class NetInterface {
             stringCard = cardToString(value);
             message.append(stringCard);
         }
-        sender.send(message.toString(), socket);
-        message = new StringBuilder(receiver.receive(socket));
+        Sender.send(message.toString(), socket);
+        message = new StringBuilder(Receiver.receive(socket));
         String[] response = message.toString().split(",");
         ArrayList<Integer> choosenCards = new ArrayList<>();
         for (String s : response) {
@@ -155,7 +157,7 @@ public class NetInterface {
      * @param clientID the ID of the client whitch has to choose the card
      * @return the number of the card choosen by the player
      */
-    public Integer getChosenCard(ArrayList<Card> possibleCards, Integer clientID){
+    public Integer getChosenCard(ArrayList<Card> possibleCards, Integer clientID) throws IOException {
         Socket socket = new Socket();
         for (Client client : clients) {
             if (clientID == client.clientID) {
@@ -171,8 +173,8 @@ public class NetInterface {
             partial.append(String.valueOf(possibleCards.get(i).getNumber())).append(", ");
         }
         String message = partial.toString();
-        sender.send(message, socket);
-        message = receiver.receive(socket);
+        Sender.send(message, socket);
+        message = Receiver.receive(socket);
         return stringToInt(message);
     }
 
@@ -183,7 +185,7 @@ public class NetInterface {
      * @param buildernumber a number used to distinct from first and second builder.
      * @return the Square where the player wants to place the builder.
      */
-    public Square getBuilderPlacement(ArrayList<Square> possibleSquares, int clientID, int buildernumber){
+    public Square getBuilderPlacement(ArrayList<Square> possibleSquares, int clientID, int buildernumber) throws IOException {
         Socket socket = new Socket();
         for (Client client : clients) {
             if (clientID == client.clientID) {
@@ -195,8 +197,8 @@ public class NetInterface {
             return new Square(-1, -1);
         }
         String message = "@9 " + arrayListSquareToString(possibleSquares) + "@ " +buildernumber;
-        sender.send(message, socket);
-        message =receiver.receive(socket);
+        Sender.send(message, socket);
+        message = Receiver.receive(socket);
         return stringToSquare(message);
     }
 
@@ -322,10 +324,10 @@ public class NetInterface {
         return string;
     }
 
-    public void startGame(){
+    public void startGame() throws IOException {
         String message = "10@ ";
         for(int i=0; i < game.numberOfPlayers; i++){
-            sender.send(message, clients.get(i).getSocket());
+            Sender.send(message, clients.get(i).getSocket());
         }
     }
 

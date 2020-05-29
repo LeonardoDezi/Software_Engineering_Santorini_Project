@@ -4,6 +4,7 @@ import it.polimi.ingsw.Server.Model.*;
 import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 // received != null: quando il giocatore non fa alcuna mossa getMove mi deve restituire received= null
@@ -54,7 +55,7 @@ public class TurnManager {
         movementPhase = new MovementPhase(game);
     }
 
-    public void letsPlay(){
+    public void letsPlay() throws IOException {
 
         Builder builder1;
         Builder builder2;

@@ -3,6 +3,7 @@ package it.polimi.ingsw.Server;
 import it.polimi.ingsw.Observer.Observable;
 import it.polimi.ingsw.Observer.Observer;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class Lobby extends Observable {
 
     }
 
-    public void addClient(Client client){
+    public void addClient(Client client) throws IOException {
         if(client==null) {
             throw new IllegalArgumentException("'newClient' was null");
         }

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.Client.NetworkHandler.Receiver;
+import it.polimi.ingsw.Client.NetworkHandler.Sender;
 import it.polimi.ingsw.Server.Model.Board;
+import it.polimi.ingsw.Server.Model.Builder;
 import it.polimi.ingsw.Server.Model.Card;
 import org.json.JSONObject;
 
@@ -12,7 +15,7 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Client implements Runnable {
+public class Client {
 
     private int clientID;
     private String username;
@@ -89,11 +92,7 @@ public class Client implements Runnable {
 
 
     public void startClient() throws IOException {
-        run();
-    }
 
-    @Override
-    public void run() {
         this.serverSocket = new Socket();
         try {
             serverSocket = new Socket(ip, port);
@@ -119,50 +118,3 @@ public class Client implements Runnable {
         return this.serverSocket;
     }
 }
-
-
-        /*
-
-        OutputStreamWriter writer = null;
-        try {
-            writer = new OutputStreamWriter(serverSocket.getOutputStream(), "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(serverSocket.getInputStream(), "UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("prova", "dai dai dai");
-
-        try {
-            writer.write(jsonObject.toString() + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String line = null;
-        try {
-            line = reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        jsonObject = new JSONObject(line);
-
-        System.out.println("Received from Server:\n " + jsonObject.toString(2));
-
-        System.out.println("Connection closed");
-
-
-
-    } */

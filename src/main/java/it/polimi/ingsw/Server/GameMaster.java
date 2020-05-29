@@ -3,6 +3,7 @@ package it.polimi.ingsw.Server;
 import it.polimi.ingsw.Observer.Observer;
 import it.polimi.ingsw.Server.Controller.GameInitializer;
 
+import java.io.IOException;
 import java.util.List;
 
 public class GameMaster implements Observer {
@@ -11,7 +12,7 @@ private List<GameInitializer> gameInitializers;
 
 
     @Override
-    public void update() {
+    public void update() throws IOException {
 
         if (gameInitializers.isEmpty()){
             Client client = lobby.getFirstClient();
