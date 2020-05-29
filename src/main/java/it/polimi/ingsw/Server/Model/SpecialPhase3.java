@@ -22,7 +22,7 @@ public class SpecialPhase3 {
 
 
     public SpecialPhase3(Game game){
-        basicRules = game.getRules();   // assicurarsi che siano sempre le stesse rules
+        basicRules = game.getRules();
         this.game = game;
         this.board = game.getBoard();
         map();
@@ -69,7 +69,7 @@ public class SpecialPhase3 {
 
     public void sameSquareNotDome(){
         possibleMoves = new ArrayList<>();
-        if(position.getLevel() < 3)   // per rispetto dell'atomicità dovremmo dividere questo metodo in due dato che magari qualche carta potrebbe costruire la cupola
+        if(position.getLevel() < 3)
             possibleMoves.add(position);
     }
 

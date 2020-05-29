@@ -1,9 +1,12 @@
 package it.polimi.ingsw.Client.View.GUI;
 
+import it.polimi.ingsw.Client.ClientApp;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class StartDialog extends JDialog {
 
@@ -16,6 +19,7 @@ public class StartDialog extends JDialog {
     //private JComboBox<Choice> choices;
     private JButton confirmButton;
     private JFrame frame;
+    private String text;
 
 
 
@@ -25,6 +29,11 @@ public class StartDialog extends JDialog {
     private class ConfirmListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+            try {
+                ClientApp.main(text);
+            } catch (IOException ioException) {    //TODO risolvere questo problema
+                ioException.printStackTrace();
+            }
             StartDialog.this.dispose();
             new PlayerNumberDialog(frame);
         }
@@ -33,7 +42,7 @@ public class StartDialog extends JDialog {
     private class TextListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
-            String text = textField.getText();
+            text = textField.getText();
         }
     }
 

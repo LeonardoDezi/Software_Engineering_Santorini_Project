@@ -80,7 +80,7 @@ public class TurnManager {
                 }
 
 //specialPhase1
-
+                //IMPORTANTE : TUTTE LE CARTE DEVONO PASSARE PER OGNI GETMOVES
                 moves1 = specialPhase1.getMoves(player, builder1);
                 moves2 = specialPhase1.getMoves(player, builder2);
 

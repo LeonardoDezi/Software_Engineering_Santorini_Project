@@ -51,6 +51,7 @@ public class GameInitializer implements Runnable{
         // Wait until game.getPlayerList().size() == game.numberOfPlayers;
 
         dealCards();
+        setPlayers();
         setBuilders();
         TurnManager myGameManager = new TurnManager(game, netInterface);   //possiamo spostarlo? se no in questo punto è inutile
         myGameManager.letsPlay();
@@ -83,15 +84,29 @@ public class GameInitializer implements Runnable{
         return game.getPlayerList().size() == game.numberOfPlayers;
     }
 
+
+    public void setPlayers(){
+
+        //TODO invia al dealer la lista dei giocatori e fa che ritorni il primo giocatore come player
+        Player player = null;    //questo deve essere il giocatore ritornato lo inizializzo per compilare
+        game.getPlayerList().remove(player);  //rimuovi il giocatore da playerList. posso anche farlo se mi mandi solo il nome
+        game.getPlayerList().add(0, player); //inserisce il giocatore in testa a playerList
+
+    }
+
     public void dealCards(){
 
-        //sendMessage("Sei stato scelto dagli Dei per decidere chi parteciperà al gioco. scegli " + game.numberOfPlayers + " carte", firstPlayer)
+        // TODO sendMessage("Sei stato scelto dagli Dei per decidere chi parteciperà al gioco. scegli " + game.numberOfPlayers + " carte", firstPlayer)
         ArrayList<Integer> cards = netInterface.getCards(firstPlayer, game.getDeck());
-        Dealer dealer = (Dealer)game.getPlayerList().get(0);
+
+        game.setDealer(game.getPlayerList().get(0));
+
+        //Dealer dealer = (Dealer)game.getPlayerList().get(0);   //l'ho modificato
+
         if(game.numberOfPlayers == 3)
-            dealer.drawCards(cards.get(0), cards.get(1), cards.get(2));
+            game.getDealer().drawCards(cards.get(0), cards.get(1), cards.get(2));    //modificato
         else
-            dealer.drawCards(cards.get(0), cards.get(1));
+            game.getDealer().drawCards(cards.get(0), cards.get(1));   //modificato
 
         ArrayList<Card> possibleCards = new ArrayList<>();
         for(int i=0; i < game.getChosenCardsSize(); i++) {
@@ -99,7 +114,8 @@ public class GameInitializer implements Runnable{
         }
 
 
-        for(int i=game.numberOfPlayers; i>0; i--){
+        for(int i= game.numberOfPlayers -1 ; i >= 0; i--){
+            //TODO chosenCard al momento deve essere cardPosition non cardNumber in questo punto
             int chosenCard = netInterface.getChosenCard(possibleCards, game.getPlayerList().get(i).clientID);
             possibleCards = game.getPlayerList().get(i).chooseCard(possibleCards, chosenCard);
             //messaggio per confermare che la carta è stata scelta?
@@ -109,8 +125,8 @@ public class GameInitializer implements Runnable{
 
     public void setBuilders(){
         ArrayList<Square> possibleSquares;
-        for(int i=0; i<game.numberOfPlayers; i++){
-            Player player = game.getPlayerList().get(game.numberOfPlayers-i);
+        for(int i=0; i < game.numberOfPlayers; i++){
+            Player player = game.getPlayerList().get(i);
             possibleSquares=game.getBasic().getFreeSquares();
             //TODO ask the player where he wants to place the builders
             Square square1 = netInterface.getBuilderPlacement(possibleSquares, player.clientID, 1);

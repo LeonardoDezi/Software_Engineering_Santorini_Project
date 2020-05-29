@@ -1,5 +1,10 @@
 package it.polimi.ingsw.Client.View.GUI;
 import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 
 public class App {
 
@@ -24,6 +29,7 @@ public class App {
         mainFrame.add(mainPanel);
         mainFrame.pack();
         mainFrame.setVisible(true);
+        mainFrame.setLocationRelativeTo(null);
 
         new StartDialog(mainFrame);
 
@@ -32,3 +38,17 @@ public class App {
 
 
 }
+
+
+
+
+//TODO
+/*
+    button.setOnAction(new EventHandler<ActionEvent>(){
+        @Override
+        public void handle(){
+            System.out.println ("ciao");
+
+        });
+
+ */

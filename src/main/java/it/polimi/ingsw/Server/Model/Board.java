@@ -17,10 +17,6 @@ public class Board {
      */
 
 
-   // private ArrayList<it.polimi.ingsw.Server.Model.Observer> observerList;
-
-    /** is the list of the observers of the board.
-     */
 
     /**
      * creates and initializes the board.

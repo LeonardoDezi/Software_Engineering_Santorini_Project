@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.View.GUI;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +16,7 @@ public class PlayerNumberDialog extends JDialog {
     private final static String newline = "\n";
     //private JComboBox<Choice> choices;
     private JButton confirmButton;
+    private JFrame frame;
 
     JRadioButton twoPlayersButton = new JRadioButton("2");
     JRadioButton threePlayersButton = new JRadioButton("3");
@@ -26,6 +28,8 @@ public class PlayerNumberDialog extends JDialog {
         @Override
         public void actionPerformed(ActionEvent e) {
             PlayerNumberDialog.this.dispose();
+          /*  new WaitingDialog(frame);
+            new CardChoosingDialog(frame);   */
         }
     }
 

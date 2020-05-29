@@ -14,7 +14,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
-//2) test che controlla che non ci siano due giocatori con lo stesso builderId  ??
+
 
 
 public class GameTest {
