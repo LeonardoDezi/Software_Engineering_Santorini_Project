@@ -6,6 +6,7 @@ package it.polimi.ingsw.Server.Model;
  * @since 1.0
  */
 
+
 public class Square {
 
     /** represents what is on the top of the square. Blank space = 0, Worker = 1, Dome = 2 */
@@ -17,8 +18,10 @@ public class Square {
     /** represents the y coordinate of the square*/
     public final int y;
 
-    /**If the square is unoccupied, level will represent the highest free cell,
-     * otherwise it represents the level where the worker or the dome is placed
+    /**If the square does not contain a worker, level will represent the number of constructions placed in the square,
+     * otherwise it represents the level where the worker is placed.
+     * Ground Level = 0, First Level = 1, Second Level = 2, Third Level = 3
+     * We define construction as either a block or a dome
      */
     private int level;
 
@@ -39,7 +42,7 @@ public class Square {
     }
 
     /**
-     * changes the type of object that is on the square.
+     * changes the type of object that is on the top of the square.
      * 0 signifies that there is nothing on it.
      * 1 signifies that there is a worker on it.
      * 2 signifies that there is a dome on it.
@@ -73,7 +76,7 @@ public class Square {
 
     /**
      * puts a worker on the square.
-     * @param builder is the worker that has been put on the square
+     * @param builder is the worker to put on the square
      */
     public void setBuilder(Builder builder){ this.builder = builder; }
 
@@ -87,7 +90,7 @@ public class Square {
 
 
     /**
-     * is used to remove a worker from the square, and to delete all the traces of its previous presence.
+     * is used to remove a worker from the square, and to delete all the traces of its presence.
      */
     public void resetSquare(){
         this.value = 0 ;

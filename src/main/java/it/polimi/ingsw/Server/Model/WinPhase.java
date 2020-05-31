@@ -8,7 +8,6 @@ public class WinPhase {
     private final Board board;
     private HashMap<String, Runnable> commands;
 
-    private Card card;
     private Square initialPosition, position;
 
     private Player player;
@@ -35,7 +34,6 @@ public class WinPhase {
             this.participant = participant;
             commands.get(participant.card.parameters.winBuilding).run();
             if(game.getGameEnded()) {
-                game.setWinningPlayer(participant);
                 break;
             }
         }
@@ -66,8 +64,10 @@ public class WinPhase {
     }
 
     public void atLeastFiveTowers(){    //Crono
-        if(board.completedTowers >= 5)
+        if(board.completedTowers >= 5) {
             game.setGameEnded(true);
+            game.setWinningPlayer(participant);
+        }
     }
 
 }

@@ -1,35 +1,51 @@
 package it.polimi.ingsw.Server.Model;
 
+import it.polimi.ingsw.Server.Controller.Context;
+import it.polimi.ingsw.Server.Controller.Phase;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SpecialPhase3 {
+public class SpecialPhase3 extends Phase {
 
-    private final Game game;
-    private final Board board;
-    private final BasicRules basicRules;
+
     private HashMap<String, Runnable> movesCommands;
     private HashMap<String, Runnable> actionCommands;
 
-    private Card card;
-    private Builder builder;
+    private Builder playingBuilder;
     private ArrayList<Square> possibleMoves;
 
+    //può rappresentare sia l'ultima posizione in cui avevamo costruito sia il punto dove costruiremo
     private Square position;
 
-    private Player player;
+    private final Player player;
 
 
 
-    public SpecialPhase3(Game game){
-        basicRules = game.getRules();
-        this.game = game;
-        this.board = game.getBoard();
+    public SpecialPhase3(Game game, Context context, Player player, Builder builder, Square position){
+        super(game, context);
+        this.player = player;
+        this.playingBuilder = builder;
+        this.position = position;
         map();
     }
 
 
+    public void handle() throws IOException{
 
+        ArrayList<Square> moves1 = getMoves(playingBuilder , position);
+        boolean buildDome = player.getCard().getParameters().buildDome;
+        Envelope received = context.getNetInterface().getBuildMove(moves1, playingBuilder, buildDome ,player);
+
+        if(received.getMove() != null)  //TODO received != null ???
+            actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
+            //updateBoard(game.getBoard);
+
+        if(!(game.getGameEnded()))
+            context.setPhase(null);
+
+    }
 
     public void map(){
         movesCommands = new HashMap<>();
@@ -38,21 +54,19 @@ public class SpecialPhase3 {
         movesCommands.put(null, ()->{possibleMoves = new ArrayList<>();});
         movesCommands.put("notSameSquare", this::notSameSquare); //Demeter
         movesCommands.put("sameSquareNotDome", this::sameSquareNotDome); //Hephaestus
-        movesCommands.put("notPerimeter", this::notPerimeter);
+        movesCommands.put("notPerimeter", this::notPerimeter); //Hestia
 //actionMethod
         actionCommands.put(null, ()->{});
     }
 
 
-    public ArrayList<Square> getMoves(Player player, Builder builder, Square lastPosition){
+    public ArrayList<Square> getMoves(Builder builder, Square lastPosition){
 
-        this.player = player;
-        this.builder = builder;
-        this.card = player.getCard();
+        this.playingBuilder = builder;
         this.position = lastPosition;
 
         possibleMoves= basicRules.getBuildingRange(builder);
-        movesCommands.get(card.parameters.specialPhase3Moves).run();
+        movesCommands.get(player.getCard().parameters.specialPhase3Moves).run();
 
         return possibleMoves;
     }
@@ -76,7 +90,7 @@ public class SpecialPhase3 {
     public void notPerimeter(){
         for(int i =0; i < possibleMoves.size(); i++) {
             Square pos = possibleMoves.get(i);
-            if (pos.x == 0 || pos.y == 0 || pos.x == 5 || pos.y == 5) {
+            if (pos.x == 0 || pos.y == 0 || pos.x == Board.BOARDSIZEX - 1 || pos.y == Board.BOARDSIZEY -1 ) {   //casella perimetrale
                 possibleMoves.remove(i);
                 i--;
             }
@@ -84,10 +98,10 @@ public class SpecialPhase3 {
     }
 
     public void actionMethod(Builder builder, Square position, boolean isDome){
-        this.builder = builder;
+        this.playingBuilder = builder;
         this.position = position;
 
-        actionCommands.get(card.parameters.specialPhase3Action).run();
+        actionCommands.get(player.getCard().parameters.specialPhase3Action).run();
         basicRules.build(player, position, isDome);
     }
 

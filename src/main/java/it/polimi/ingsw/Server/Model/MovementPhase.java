@@ -1,31 +1,70 @@
 package it.polimi.ingsw.Server.Model;
 
+import it.polimi.ingsw.Server.Controller.Context;
+import it.polimi.ingsw.Server.Controller.Phase;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MovementPhase {
+public class MovementPhase extends Phase {
 
-
-    private final Game game;
-    private final Board board;
-    private final BasicRules basicRules;
     private HashMap<String, Runnable> movesCommands;
     private HashMap<String, Runnable> actionCommands;
 
-    private Builder builder;
+    private Builder builder1;
+    private Builder builder2;
+
+    private Builder playingBuilder;
+    //parametro generico usato sia da pushMoves che per segnarci lo square di destinazione
     private Square position;
     private ArrayList<Square> possibleMoves;
-    private Player player;
+    private final Player player;
 
     private int i;
 
+    public MovementPhase(Game game, Context context, Player player, Builder builder1, Builder builder2) {
+        super(game, context);
+        this.player = player;
+        this.builder1 = builder1;
+        this.builder2 = builder2;
+
+    }
+
     public BasicRules getBasicRules(){return this.basicRules;}
 
-    public MovementPhase(Game game){
-        basicRules = game.getRules();
-        this.game = game;
-        this.board = game.getBoard();
-        map();
+
+    public void handle() throws IOException {
+
+        ArrayList<Square> moves1 = getMoves(builder1);
+        ArrayList<Square> moves2 = getMoves(builder2);
+
+
+        if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {
+
+            Envelope received = context.getNetInterface().getBothMovementMove(moves1, builder1, moves2, builder2, player);
+
+            Square lastPosition = received.getBuilder().getPosition();
+            actionMethod(received.getBuilder(), received.getMove());
+            //updateBoard(game.getBoard);
+
+            if(!(game.getGameEnded()))
+                context.setPhase(new SpecialPhase2(game, context, player, playingBuilder, lastPosition));
+
+
+        }else{    //entrambi i worker sono incapaci di muoversi
+
+            game.removePlayer(player);
+            //loseMethod();
+            //sendMessage("Il giocatore" + player + "ha perso", null); //per mandare in broadcast il campo player è null
+
+            if(game.getPlayerList().size() == 1) {   //è rimasto solo un giocatore
+                game.setWinningPlayer(game.playerList.get(0));
+                game.setGameEnded(true);
+            }
+
+            context.setPhase(null);
+        }
     }
 
 
@@ -37,7 +76,7 @@ public class MovementPhase {
         //getMoves
         movesCommands.put("swap", this::swapMoves);   //Apollo
         movesCommands.put("push", this::swapMoves);   //Minotauro
-        movesCommands.put(null, () ->{possibleMoves = basicRules.removeBuilderSquare(possibleMoves);});  //qua non dovrebbe fare niente(?)
+        movesCommands.put(null, () -> possibleMoves = basicRules.removeBuilderSquare(possibleMoves));
 
 
         //Movement
@@ -49,13 +88,12 @@ public class MovementPhase {
     }
 
 //getMoves
-    public ArrayList<Square> getMoves( Player player, Builder builder){
+    public ArrayList<Square> getMoves(Builder builder){
 
         if(builder == null)   // nel caso di builder non esistente
             return new ArrayList<>();     //ritorna lista vuota  (necessario mettere Square?)
 
-        this.player = player;
-        this.builder = builder;
+        this.playingBuilder = builder;
 
         possibleMoves = basicRules.proximity(builder);
         possibleMoves = basicRules.removeDomeSquare(possibleMoves);
@@ -91,13 +129,13 @@ public class MovementPhase {
 
 
     public void pushMoves(){
-        int builderX = builder.getPosition().x;
-        int builderY = builder.getPosition().y;
+        int builderX = playingBuilder.getPosition().x;
+        int builderY = playingBuilder.getPosition().y;
 
         int positionX = position.x;
         int positionY = position.y;
 
-        int a = 2 * positionX - builderX;
+        int a = 2 * positionX - builderX;    //coordinate della casella retrostante il worker esaminato
         int b = 2 * positionY - builderY;
 
         try{
@@ -105,7 +143,7 @@ public class MovementPhase {
                 possibleMoves.remove(i);
                 i--;
             }
-        }catch(ArrayIndexOutOfBoundsException e){
+        }catch(ArrayIndexOutOfBoundsException e){  // nel caso in cui la casella sia inesistente
             possibleMoves.remove(i);
             i--;
         }
@@ -117,15 +155,15 @@ public class MovementPhase {
 
 //movement
     public void actionMethod(Builder builder, Square arrival){
-        this.builder = builder;
+        this.playingBuilder = builder;
         this.position = arrival;
         actionCommands.get(player.getCard().parameters.movementPhaseAction).run();
-        Square lastPosition = builder.getPosition();
+        Square lastPosition = playingBuilder.getPosition();
         basicRules.move(player, lastPosition, position);  //movimento effettivo
     }
 
     public void jumpUp(){
-        int level1 = builder.getPosition().getLevel();
+        int level1 = playingBuilder.getPosition().getLevel();
         int level2 = position.getLevel();
         if(level2 - level1 > 0)
             basicRules.setMaxHeight(0);
@@ -136,8 +174,8 @@ public class MovementPhase {
 
         if(position.getValue() == 1){
 
-            int builderX = builder.getPosition().x;
-            int builderY = builder.getPosition().y;
+            int builderX = playingBuilder.getPosition().x;
+            int builderY = playingBuilder.getPosition().y;
 
             int positionX = position.x;
             int positionY = position.y;
@@ -152,8 +190,8 @@ public class MovementPhase {
     }
 
     public void restore(){
-        basicRules.setMaxHeight(basicRules.getPreviousMaxHeight());
-        basicRules.setPreviousMaxHeight(BasicRules.BASICMAXHEIGHT);
+        basicRules.setMaxHeight(basicRules.getPreviousMaxHeight());  //ristabilisce maxHeight all'altezza precedente
+        basicRules.setPreviousMaxHeight(BasicRules.BASICMAXHEIGHT);  //pone previousMaxHeight all'altezza base
     }
 
 

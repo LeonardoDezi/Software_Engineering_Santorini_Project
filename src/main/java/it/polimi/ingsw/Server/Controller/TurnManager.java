@@ -1,9 +1,11 @@
 package it.polimi.ingsw.Server.Controller;
 
-import it.polimi.ingsw.Server.Model.*;
+import it.polimi.ingsw.Server.Model.Builder;
+import it.polimi.ingsw.Server.Model.Game;
+import it.polimi.ingsw.Server.Model.Player;
+import it.polimi.ingsw.Server.Model.SpecialPhase1;
 import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -27,163 +29,50 @@ import java.util.ArrayList;
 
 public class TurnManager {
 
-
     private final Game game;
     private final ArrayList<Player> playerList;
-    private NetInterface netInterface;
-
-    private SpecialPhase1 specialPhase1;
-    private SpecialPhase2 specialPhase2;
-    private SpecialPhase3 specialPhase3;
-    private MovementPhase movementPhase;
-    private BuildingPhase buildingPhase;
-
-    //private NetList netList??
+    private final NetInterface netInterface;
 
 
-
-    //dovremmo assicurarci che sia unico?
-    //immagino serviranno delle modifiche per il multipartita
     public TurnManager(Game game, NetInterface netInterface){
         this.game = game;
         this.netInterface = netInterface;
         this.playerList = game.getPlayerList();
-        specialPhase1 = new SpecialPhase1(game);
-        specialPhase2 = new SpecialPhase2(game);
-        specialPhase3 = new SpecialPhase3(game);
-        buildingPhase = new BuildingPhase(game);
-        movementPhase = new MovementPhase(game);
     }
 
     public void letsPlay() throws IOException {
 
         Builder builder1;
         Builder builder2;
-        ArrayList<Square> moves1;
-        ArrayList<Square> moves2;
 
-        Envelope received;
-
-        Square lastPosition;
         netInterface.startGame();
 
 
-        while(!(game.getGameEnded())){
+        while(!(game.getGameEnded())) {
 
-            for (int i=0; i < playerList.size(); i++) {  //succederà qualcosa se nel mentre rimuoviamo un giocatore?
-                Player player = playerList.get(i);
+            for (Player player : playerList) {  //succederà qualcosa se nel mentre rimuoviamo un giocatore?   cambierà la playerList di game?
+
                 builder1 = player.getBuilder(0);
 
                 try {
                     builder2 = player.getBuilder(1);
-                }catch(ArrayIndexOutOfBoundsException e){
+                } catch (ArrayIndexOutOfBoundsException e) {
                     builder2 = null;
                 }
 
-//specialPhase1
-                //IMPORTANTE : TUTTE LE CARTE DEVONO PASSARE PER OGNI GETMOVES
-                moves1 = specialPhase1.getMoves(player, builder1);
-                moves2 = specialPhase1.getMoves(player, builder2);
 
-                    //netInterface.sendMessage()
-                    received =netInterface.getBothMovementMove(moves1, builder1, moves2, builder2, player);
+                Context provaContext = new Context(netInterface);
+                provaContext.setPhase(new SpecialPhase1(game, provaContext, player, builder1, builder2));
 
-                    if(received != null ) {
-                        specialPhase1.actionMethod(received.getBuilder(), received.getMove());
-                        //updateBoard(game.getBoard);
-                    }
-                    if(game.getGameEnded())
-                        break;
+                while (!(game.getGameEnded()) && provaContext.getPhase() != null)
+                    provaContext.request();
 
+                if(game.getGameEnded())
+                    break;
 
-                moves1 = movementPhase.getMoves(player, builder1);
-                moves2 = movementPhase.getMoves(player, builder2);
-
-
-                if ( !(moves1.isEmpty()) || !(moves2.isEmpty()) ) {
-
-//movementPhase
-                    received =netInterface.getBothMovementMove(moves1, builder1, moves2, builder2, player);
-
-                    lastPosition = received.getBuilder().getPosition();
-                    movementPhase.actionMethod(received.getBuilder(), received.getMove());
-                    //updateBoard(game.getBoard);
-
-                    if(game.getGameEnded())
-                        break;
-
-
-
-
-
-//specialPhase2
-                    moves1 = specialPhase2.getMoves(player, received.getBuilder(), lastPosition );
-
-
-                    received = netInterface.getMovementMove(moves1, received.getBuilder(), player);
-
-                    if(received != null)
-                        specialPhase2.actionMethod(received.getBuilder(), received.getMove());
-                    //updateBoard(game.getBoard);
-
-                    if (game.getGameEnded())
-                            break;
-
-//buildingPhase
-
-                    moves1 = buildingPhase.getMoves(player, received.getBuilder());
-                    Boolean buildDome = player.getCard().getParameters().buildDome;
-
-
-                    if(player.getCard().getParameters().buildingPhaseMoves.equals("askForFemale")){
-                        if (received.getBuilder().sex.equals("female")) {
-                            received=netInterface.getBuildMove(moves1, builder1, true, player);
-                        }else if(player.getBuilderSize() ==2){
-                                Builder female = player.getFemale();
-                                moves2 = game.getRules().getBuildingRange(female);
-                                received = netInterface.getBothBuildMove(moves1,received.getBuilder(), moves2, female, true, player);
-                        }else
-                            received =netInterface.getBuildMove(moves1, received.getBuilder(), false, player);
-                    }else {
-                        received = netInterface.getBuildMove(moves1, builder1, buildDome, player);
-                    }
-
-
-                    buildingPhase.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
-                    //updateBoard(game.getBoard);
-                    if (game.getGameEnded())
-                        break;
-
-
-//specialPhase3
-                    lastPosition = received.getMove();
-                    moves1 = specialPhase3.getMoves(player, received.getBuilder() , lastPosition);
-                    received = netInterface.getBuildMove(moves1, builder1, buildDome,player);
-
-                    //gestire il caso in cui non restituisca mosse
-                    specialPhase3.actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
-                    //updateBoard(game.getBoard);
-
-                    if (game.getGameEnded())
-                        break;
-
-
-//loseCondition
-                }else{
-
-                    playerList.remove(i);
-                    i--;
-                    game.removePlayer(player);
-                    //loseMethod();
-                    //sendMessage("Il giocatore" + player + "ha perso", null); //per mandare in broadcast il campo player è null
-                    if(playerList.size() == 1){
-                        game.setWinningPlayer(playerList.get(0));
-                        game.setGameEnded(true);
-                        break;
-                    }
-                }
             }
         }
+
         endGame();
     }
 
