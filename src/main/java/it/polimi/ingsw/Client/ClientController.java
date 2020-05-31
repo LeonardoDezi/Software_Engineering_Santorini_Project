@@ -41,7 +41,7 @@ public class ClientController {
         netInterface.sendCard(card1, card2, card3, client.getServerSocket());
     }
 
-    public void playerChoiche(){
+    public void playerChoice(){
         //TODO in possiblecards there are all the available card, ask the player whitch does he want and put it in
         // card1
         Integer card1 = 1;

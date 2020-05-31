@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.NetworkHandler;
 
-import com.google.gson.JsonObject;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;

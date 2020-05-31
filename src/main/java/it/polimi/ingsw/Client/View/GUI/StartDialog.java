@@ -19,7 +19,7 @@ public class StartDialog extends JDialog {
     //private JComboBox<Choice> choices;
     private JButton confirmButton;
     private JFrame frame;
-    private String text;
+    private String[] text;
 
 
 
@@ -31,7 +31,7 @@ public class StartDialog extends JDialog {
         public void actionPerformed(ActionEvent e){
             try {
                 ClientApp.main(text);
-            } catch (IOException ioException) {    //TODO risolvere questo problema
+            } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
             StartDialog.this.dispose();
@@ -42,7 +42,7 @@ public class StartDialog extends JDialog {
     private class TextListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
-            text = textField.getText();
+            text[0] = textField.getText();
         }
     }
 

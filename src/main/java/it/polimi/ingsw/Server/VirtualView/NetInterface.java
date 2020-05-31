@@ -18,6 +18,7 @@ public class NetInterface {
 
     public NetInterface(Game game){
         this.game = game;
+        currentPlayer = new Player("Giocatore", "green", game, 1);
     }
 
     /**
@@ -34,7 +35,7 @@ public class NetInterface {
         this.currentPlayer=player;
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = "1@ " + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(builder2);
+        String message = "1@" + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(builder2);
         Sender.send(message, socket);
         message= Receiver.receive(socket);
         String[] choosenmove=message.split("@");
@@ -54,7 +55,7 @@ public class NetInterface {
     public Envelope getMovementMove(ArrayList<Square> moves, Builder builder, Player player) throws IOException {
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = "2@ " + arrayListSquareToString(moves) + builderToString(builder);
+        String message = "2@" + arrayListSquareToString(moves) + builderToString(builder);
         //TODO send to the player
         Sender.send(message, socket);
         message= Receiver.receive(socket);
@@ -80,7 +81,7 @@ public class NetInterface {
     public Envelope getBothBuildMove(ArrayList<Square> moves1, Builder builder1, ArrayList<Square> moves2, Builder female, Boolean canBuildADome, Player player) throws IOException {
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message ="4@ " + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(female) + wantsToBuildADome(canBuildADome);
+        String message ="4@" + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(female) + wantsToBuildADome(canBuildADome);
         //TODO send to the player
         Sender.send(message, socket);
         message= Receiver.receive(socket);
@@ -108,7 +109,7 @@ public class NetInterface {
     public Envelope getBuildMove(ArrayList<Square>moves, Builder builder, Boolean isDome, Player player) throws IOException {
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = "3@ " + arrayListSquareToString(moves) + builderToString(builder) + wantsToBuildADome(isDome);
+        String message = "3@" + arrayListSquareToString(moves) + builderToString(builder) + wantsToBuildADome(isDome);
         if(isDome){
             //sendMessage("vuoi costruire la cupola?", client);
         }
@@ -134,7 +135,7 @@ public class NetInterface {
      */
     public ArrayList<Integer> getCards(Client dealer, ArrayList<Card> deck) throws IOException {
         Socket socket = dealer.getSocket();
-        StringBuilder message = new StringBuilder("7@ ");
+        StringBuilder message = new StringBuilder("7@");
         String stringCard;
         for (Card value : deck) {
             stringCard = cardToString(value);
@@ -168,7 +169,7 @@ public class NetInterface {
             System.out.print("Attention! Client not found!");
             return 0;
         }
-        StringBuilder partial = new StringBuilder("8@ ");
+        StringBuilder partial = new StringBuilder("8@");
         for(int i=0; i<possibleCards.size(); i++){
             partial.append(String.valueOf(possibleCards.get(i).getNumber())).append(", ");
         }
@@ -196,7 +197,7 @@ public class NetInterface {
             System.out.print("Attention! Client not found!");
             return new Square(-1, -1);
         }
-        String message = "@9 " + arrayListSquareToString(possibleSquares) + "@ " +buildernumber;
+        String message = "9@" + arrayListSquareToString(possibleSquares) + buildernumber;
         Sender.send(message, socket);
         message = Receiver.receive(socket);
         return stringToSquare(message);
@@ -229,7 +230,7 @@ public class NetInterface {
      * @return a string with the x and y coordinates of the square separated by ","
      */
     public String squareToString(Square square){
-        return square.x + "," + square.y;
+        return square.x + "," + square.y + ":";
     }
 
     /**
@@ -238,7 +239,7 @@ public class NetInterface {
      * @return a string with the coordinates of all the squares of the arrayList
      * the x and y of the same Square are separated by ","
      * two different squares are separated by ":"
-     * the string ends with @
+     * the string ends with @.
      */
     public String arrayListSquareToString(ArrayList<Square> moves){
         if(moves.isEmpty()){
@@ -248,9 +249,9 @@ public class NetInterface {
         String partial;
         for (Square move : moves) {
             partial = squareToString(move);
-            stringMoves.append(" : ").append(partial);
+            stringMoves.append(partial);
         }
-        stringMoves.append("@ ");
+        stringMoves.append("@");
         return stringMoves.toString();
     }
 
@@ -261,7 +262,7 @@ public class NetInterface {
      */
     public String builderToString(Builder builder){
         Square position = builder.getPosition();
-        return squareToString(position) + "@ ";
+        return squareToString(position) + "@";
     }
 
     /**
@@ -285,7 +286,7 @@ public class NetInterface {
      */
     public Builder stringToBuilder(String string){
         Square square = stringToSquare(string);
-        return new Builder(square, currentPlayer.colour, null);
+        return new Builder(square, currentPlayer.colour, "not known");
     }
 
     /**
@@ -320,12 +321,12 @@ public class NetInterface {
      * @return a string with the name of the card "," the description of the card and ": " as separators
      */
     public String cardToString(Card card){
-        String string = card.name + "_" + card.getDescription() + ": ";
+        String string = card.name + "_" + card.getDescription() + ":";
         return string;
     }
 
     public void startGame() throws IOException {
-        String message = "10@ ";
+        String message = "10@";
         for(int i=0; i < game.numberOfPlayers; i++){
             Sender.send(message, clients.get(i).getSocket());
         }
@@ -348,6 +349,9 @@ public class NetInterface {
      * @return a Square with x and y coordinates and all the other values set to 0.
      */
     public Square stringToSquare(String string){
+        StringBuilder partial = new StringBuilder(string);
+        partial.delete(3,6);
+        string= partial.toString();
         String[] coordinates = string.split(",");
         int x;
         int y;

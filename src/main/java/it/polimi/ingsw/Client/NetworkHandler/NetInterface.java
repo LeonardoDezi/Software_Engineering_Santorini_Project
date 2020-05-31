@@ -91,7 +91,7 @@ public class NetInterface {
             for(int i=0; i<cards.length; i++){
                 card = stringToCard(cards[i]);
                 controller.possibleCards.add(card);
-                controller.playerChoiche();
+                controller.playerChoice();
             }
         }
         if(values[0].equals("9")){//player has to choose where to place the builder
@@ -143,7 +143,7 @@ public class NetInterface {
      */
     public String builderToString(Builder builder){
         Square position = builder.getPosition();
-        return squareToString(position) + "@ ";
+        return squareToString(position) + "@";
     }
 
     /**
@@ -152,7 +152,7 @@ public class NetInterface {
      * @return a string with the x and y coordinates of the square separated by ","
      */
     public String squareToString(Square square){
-        return square.x + "," + square.y;
+        return square.x + "," + square.y + ":";
     }
 
     /**
@@ -162,7 +162,7 @@ public class NetInterface {
      */
     public Builder stringToBuilder(String string){
         Square square = stringToSquare(string);
-        return new Builder(square, null, null);
+        return new Builder(square, "not known", "not known");
     }
 
     /**
@@ -182,6 +182,14 @@ public class NetInterface {
      * @return a Square with x and y coordinates and all the other values set to 0.
      */
     public Square stringToSquare(String string){
+        StringBuilder partial = new StringBuilder(string);
+        try{
+            partial.delete(3,6);
+        }
+        catch (StringIndexOutOfBoundsException e){
+            partial.delete(3,4);
+        }
+        string=partial.toString();
         String[] coordinates = string.split(",");
         int x;
         int y;
@@ -197,6 +205,9 @@ public class NetInterface {
      */
     public ArrayList<Square> stringToArrayListSquare(String value){
         ArrayList<Square> possiblemoves = new ArrayList<Square>();
+        StringBuilder lastRemove = new StringBuilder(value);
+        lastRemove.delete(value.length()-2, value.length());
+        value = lastRemove.toString();
         String[] squares = value.split(":");
         for(int i=0; i<squares.length; i++){
             Square square = stringToSquare(squares[i]);

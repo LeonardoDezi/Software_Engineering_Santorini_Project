@@ -20,7 +20,7 @@ public class Client implements Observer {
 
 
     @Override
-    public void update() { //TODO write the update method
+    public void update() { //TODO write the update method to update all the boards
 
     }
 

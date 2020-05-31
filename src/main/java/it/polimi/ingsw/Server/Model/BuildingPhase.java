@@ -59,7 +59,7 @@ public class BuildingPhase{
 
     public void addBuilderPosition(){
         Square position = builder.getPosition();
-        if(position.getLevel() < 3)   //dobbiamo accertarci di questo caso mai zeus si muovesse da una torre di tre a un' altra
+        if(position.getLevel() < 3)   //dobbiamo accertarci di questo casomai zeus si muovesse da una torre di tre a un' altra
             possibleMoves.add(position);
     }
 
