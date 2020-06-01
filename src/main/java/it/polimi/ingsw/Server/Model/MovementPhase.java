@@ -1,28 +1,45 @@
 package it.polimi.ingsw.Server.Model;
 
 import it.polimi.ingsw.Server.Controller.Context;
-import it.polimi.ingsw.Server.Controller.Phase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class represents the moment of the game in which the player makes its standard movement
+ */
 public class MovementPhase extends Phase {
 
+    /** represents the hashMap containing the keys related to the method getMoves() */
     private HashMap<String, Runnable> movesCommands;
+    /** represents the hashMap containing the keys related to the method actionMethod() */
     private HashMap<String, Runnable> actionCommands;
-
+    /** represents the current player's first worker */
     private Builder builder1;
+    /** represents the current player's second worker */
     private Builder builder2;
-
+    /** represents the current player's playing worker */
     private Builder playingBuilder;
-    //parametro generico usato sia da pushMoves che per segnarci lo square di destinazione
+    /** generic parameter used by actionMethod() to save the position where the extra move is going to be performed,
+     * or by getMoves() when examining the worker's possible moves */
     private Square position;
+    /** represents the possible moves that a worker can make */
     private ArrayList<Square> possibleMoves;
+    /** represents the player that is currently playing */
     private final Player player;
-
+    /** generic parameter used by pushMoves() to remove a Square from possibleMoves*/
     private int i;
 
+
+    /**
+     * used to create a new MovementPhase
+     * @param game represents the game
+     * @param context represents the context of the game
+     * @param player represents the current player
+     * @param builder1 represents the current player's first worker
+     * @param builder2 represents the current player's second worker
+     */
     public MovementPhase(Game game, Context context, Player player, Builder builder1, Builder builder2) {
         super(game, context);
         this.player = player;
@@ -31,9 +48,11 @@ public class MovementPhase extends Phase {
 
     }
 
-    public BasicRules getBasicRules(){return this.basicRules;}
+   // public BasicRules getBasicRules(){return this.basicRules;}
 
-
+    /** method used by the phase to develop the part of the game logic assigned. In the State Pattern, it represents the main method that has to be implemented.
+     *  It also includes the game's losing condition.
+     */
     public void handle() throws IOException {
 
         ArrayList<Square> moves1 = getMoves(builder1);
@@ -68,7 +87,7 @@ public class MovementPhase extends Phase {
     }
 
 
-
+    /** initializes the hashMaps related to the phase */
     public void map(){
         movesCommands = new HashMap<>();
         actionCommands = new HashMap<>();
@@ -87,7 +106,11 @@ public class MovementPhase extends Phase {
 
     }
 
-//getMoves
+    /**
+     * obtains the possible moves that a worker can make
+     * @param builder is the worker examined
+     * @return the arrayList of possible moves that the worker can make
+     */
     public ArrayList<Square> getMoves(Builder builder){
 
         if(builder == null)   // nel caso di builder non esistente
@@ -153,7 +176,11 @@ public class MovementPhase extends Phase {
 
 
 
-//movement
+    /**
+     * executes the move sent by the worker, according to the rules assigned by the game and/or the player's card
+     * @param builder is the worker who makes the move
+     * @param arrival is the position where the move is going to be performed
+     */
     public void actionMethod(Builder builder, Square arrival){
         this.playingBuilder = builder;
         this.position = arrival;

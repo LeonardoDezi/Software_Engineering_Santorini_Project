@@ -37,6 +37,7 @@ public class BoardTest {
         //builder2 è sopra un primo blocco e la sua destinazione è un edificio di due blocchi
         square = board.fullMap[0][4];
         square.setLevel(1);
+
         builder2 = new Builder(square, "Green", Player.SEX2);
         square = board.fullMap[1][4];
         square.setLevel(2);
@@ -135,6 +136,26 @@ public class BoardTest {
         assertEquals(1, board.fullMap[2][4].getLevel());
         assertEquals(2, board.fullMap[2][4].getValue());
         assertEquals(num, board.completedTowers);   // controlla che il valore di completedTowers non sia cambiato
+    }
+
+    /**
+     * tests when Zeus builds below its worker
+     */
+    @Test
+    public void buildSamePosition(){
+
+        builder2 = new Builder(square, "Green", Player.SEX2);
+        square = board.fullMap[1][4];
+        square.setBuilder(builder2);
+        square.setValue(1);
+        square.setLevel(2);   //builder2 è al secondo livello, sopra due blocchi
+        board.build(board.fullMap[1][4], false);
+        assertEquals(3, square.getLevel());  //si accerta che il livello sia aumentato
+        assertEquals(1, square.getValue());
+        assertEquals(builder2, square.getBuilder());
+
+
+
     }
 
 }

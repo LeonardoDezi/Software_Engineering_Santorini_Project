@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Server.Model;
 
 import it.polimi.ingsw.Server.Controller.Context;
-import it.polimi.ingsw.Server.Controller.Phase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,17 +38,16 @@ public class BuildingPhase extends Phase {
 
         if(player.getCard().getParameters().buildingPhaseMoves.equals("askForFemale")){   //se la carta è Selene
 
-            if (playingBuilder.sex.equals(Player.SEX2)) {
+            if (playingBuilder.sex.equals(Player.SEX2)) {  //se il worker giocante è femmina
                 received=context.getNetInterface().getBuildMove(moves1, playingBuilder, true, player);
-            }else if(player.getBuilderSize() ==2){
+            }else if(player.getBuilderSize() ==2){      //se il worker è maschio e il giocatore ha due workers
                 Builder female = player.getFemale();
                 ArrayList<Square> moves2 = basicRules.getBuildingRange(female);
                 received = context.getNetInterface().getBothBuildMove(moves1, playingBuilder, moves2, female, true, player);   //TODO usiamo canBuildADome per indicare che la femmina può costruire. Ricordarselo quando si implementa getBothBuildMove
-            }else
+            }else  //unico worker ed è maschio
                 received =context.getNetInterface().getBuildMove(moves1, playingBuilder, false, player);   //il worker è maschio e non può costruire cupole
 
-        }else
-
+        }else  //la carta non è selene
             received = context.getNetInterface().getBuildMove(moves1, playingBuilder, canBuildDome, player);
 
 
@@ -85,7 +83,7 @@ public class BuildingPhase extends Phase {
 
     public void addBuilderPosition(){
         Square currentPosition = playingBuilder.getPosition();
-        if (position.getLevel() < 3)   //dobbiamo accertarci di questo casomai zeus si muovesse da una torre di tre a un' altra
+        if (currentPosition.getLevel() < 3)   //dobbiamo accertarci di questo casomai zeus si muovesse da una torre di tre a un' altra
             possibleMoves.add(currentPosition);
     }
 
@@ -97,7 +95,7 @@ public class BuildingPhase extends Phase {
         this.isDome = isDome;
 
         actionCommands.get(player.getCard().parameters.buildingPhaseAction).run();
-        basicRules.build(player, position, this.isDome);
+        basicRules.build(player, this.position, this.isDome);
     }
 
 
@@ -105,7 +103,7 @@ public class BuildingPhase extends Phase {
     public void buildBelowYou(){
         if(position.equals(actionBuilder.getPosition())) {
             if (position.getLevel() < 3) {
-                position.setLevel(position.getLevel() + 1);   //TODO come aggiornare la GUI in questo caso?
+                board.build(position, false);
                 //updateBoard()?????
                 position = null;
             }

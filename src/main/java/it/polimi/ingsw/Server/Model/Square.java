@@ -48,7 +48,7 @@ public class Square {
      * 2 signifies that there is a dome on it.
      * @param value is the kind of object that is now on top of the square.
      */
-    public void setValue(int value) {
+    protected void setValue(int value) {
         this.value = value;
     }
 
@@ -56,13 +56,13 @@ public class Square {
      * is used to know if there is something on top of the square and what it is.
      * @return the number that signifies what is on top of the square.
      */
-    public int getValue(){ return this.value;}
+    protected int getValue(){ return this.value;}
 
     /**
      * is used to change the height of the square.
      * @param level is the new height of the square.
      */
-    public void setLevel(int level){
+    protected void setLevel(int level){
         this.level = level;
     }
 
@@ -70,7 +70,7 @@ public class Square {
      * is used to know the height of the square.
      * @return the height of the square.
      */
-    public int getLevel(){
+    protected int getLevel(){
         return this.level;
     }
 
@@ -78,13 +78,13 @@ public class Square {
      * puts a worker on the square.
      * @param builder is the worker to put on the square
      */
-    public void setBuilder(Builder builder){ this.builder = builder; }
+    protected void setBuilder(Builder builder){ this.builder = builder; }
 
     /**
      * is used to know the worker on the square.
      * @return the object of the worker on the square.
      */
-    public Builder getBuilder(){
+    protected Builder getBuilder(){
         return this.builder;
     }
 
@@ -92,7 +92,7 @@ public class Square {
     /**
      * is used to remove a worker from the square, and to delete all the traces of its presence.
      */
-    public void resetSquare(){
+    protected void resetSquare(){
         this.value = 0 ;
         this.builder = null;
     }

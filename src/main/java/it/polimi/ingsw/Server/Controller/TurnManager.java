@@ -61,11 +61,11 @@ public class TurnManager {
                 }
 
 
-                Context provaContext = new Context(netInterface);
-                provaContext.setPhase(new SpecialPhase1(game, provaContext, player, builder1, builder2));
+                Context context = new Context(netInterface);
+                context.setPhase(new SpecialPhase1(game, context, player, builder1, builder2));
 
-                while (!(game.getGameEnded()) && provaContext.getPhase() != null)
-                    provaContext.request();
+                while (!(game.getGameEnded()) && context.getPhase() != null)
+                    context.request();
 
                 if(game.getGameEnded())
                     break;

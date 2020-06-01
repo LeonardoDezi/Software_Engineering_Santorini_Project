@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.Controller;
 
+import it.polimi.ingsw.Server.Model.Phase;
 import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
 import java.io.IOException;

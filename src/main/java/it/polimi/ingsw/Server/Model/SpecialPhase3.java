@@ -1,7 +1,6 @@
 package it.polimi.ingsw.Server.Model;
 
 import it.polimi.ingsw.Server.Controller.Context;
-import it.polimi.ingsw.Server.Controller.Phase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class SpecialPhase3 extends Phase {
 
     public void handle() throws IOException{
 
-        ArrayList<Square> moves1 = getMoves(playingBuilder , position);
+        ArrayList<Square> moves1 = getMoves(playingBuilder);
         boolean buildDome = player.getCard().getParameters().buildDome;
         Envelope received = context.getNetInterface().getBuildMove(moves1, playingBuilder, buildDome ,player);
 
@@ -60,10 +59,9 @@ public class SpecialPhase3 extends Phase {
     }
 
 
-    public ArrayList<Square> getMoves(Builder builder, Square lastPosition){
+    public ArrayList<Square> getMoves(Builder builder){
 
         this.playingBuilder = builder;
-        this.position = lastPosition;
 
         possibleMoves= basicRules.getBuildingRange(builder);
         movesCommands.get(player.getCard().parameters.specialPhase3Moves).run();

@@ -48,7 +48,7 @@ public class Builder {
      * gets the colour of the builder.
      * @return the String representing the colour.
      */
-    public String getColour(){
+    protected String getColour(){
         return this.colour;
     }
 
@@ -56,7 +56,7 @@ public class Builder {
      * sets the new position of the worker
      * @param position is the square where the worker will be
      */
-    public void setPosition(Square position){
+    protected void setPosition(Square position){
         this.position = position;
     }
 }

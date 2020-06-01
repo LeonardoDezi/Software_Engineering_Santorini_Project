@@ -68,7 +68,7 @@
     "description" : "God of Blacksmiths/n Your worker may build an additional block on top of your first block.",
     "parameters":
   {
-        "buildingPhaseMoves": "sameSquareNotDome",
+        "specialPhase3Moves": "sameSquareNotDome",
         "buildDome": "false"
       }
 

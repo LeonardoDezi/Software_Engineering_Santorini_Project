@@ -1,28 +1,42 @@
 package it.polimi.ingsw.Server.Model;
 
 import it.polimi.ingsw.Server.Controller.Context;
-import it.polimi.ingsw.Server.Controller.Phase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/**
+ * This class represents the moment of the game in which the player can make an extra move (according to its card) before the standard movement
+ */
 public class SpecialPhase1 extends Phase {
 
+    /** represents the hashMap containing the keys related to the method getMoves() */
     private HashMap<String, Runnable> movesCommands;
+    /** represents the hashMap containing the keys related to the method actionMethod() */
     private HashMap<String, Runnable> actionCommands;
-
+    /** represents the current player's first worker */
     private Builder builder1;
+    /** represents the current player's second worker */
     private Builder builder2;
-
+    /** represents the current player's playing worker */
     private Builder playingBuilder;
+    /** generic parameter used by actionMethod() to save the position where the extra move is going to be performed */
     private Square position;
+    /** represents the possible moves that a worker can make */
     private ArrayList<Square> possibleMoves;
+    /** represents the player that is currently playing */
     private final Player player;
 
 
-
+    /**
+     * used to create a new specialPhase1
+     * @param game represents the game
+     * @param context represents the context of the game
+     * @param player represents the current player
+     * @param builder1 represents the current player's first worker
+     * @param builder2 represents the current player's second worker
+     */
     public SpecialPhase1(Game game, Context context, Player player, Builder builder1, Builder builder2) {
         super(game, context);
         this.player = player;
@@ -30,7 +44,7 @@ public class SpecialPhase1 extends Phase {
         this.builder2 = builder2;
     }
 
-
+    /** method used by the phase to develop the part of the game logic assigned. In the State Pattern, it represents the main method that has to be implemented */
     public void handle() throws IOException {
 
         //IMPORTANTE : TUTTE LE CARTE DEVONO PASSARE PER OGNI GETMOVES
@@ -51,7 +65,7 @@ public class SpecialPhase1 extends Phase {
     }
 
 
-
+    /** initializes the hashMaps related to the phase */
     public void map(){
         movesCommands = new HashMap<>();
         actionCommands = new HashMap<>();
@@ -68,7 +82,11 @@ public class SpecialPhase1 extends Phase {
         actionCommands.put("moveOpposite", this::moveOpposite);  //Caronte
     }
 
-
+    /**
+     * obtains the possible moves that a worker can make
+     * @param builder is the worker examined
+     * @return the arrayList of possible moves that the worker can make
+     */
     public ArrayList<Square> getMoves (Builder builder){
 
         if(builder == null)   // nel caso di builder non esistente
@@ -119,14 +137,19 @@ public class SpecialPhase1 extends Phase {
 
     }
 
+
+    /** restores the parameter maxHeight of basicRules to BasicRules.BASICMAXHEIGHT */
     public void restore(){   //se athena aveva modificato maxHeight questo lo ristabilirà
         basicRules.setMaxHeight(BasicRules.BASICMAXHEIGHT);
         possibleMoves = new ArrayList<>();
     }
 
 
-
-
+    /**
+     * executes the move sent by the worker, according to the rules assigned by the game and/or the player's card
+     * @param builder is the worker who makes the move
+     * @param position is the position where the move is going to be performed
+     */
     public void actionMethod(Builder builder, Square position){
         this.playingBuilder = builder;
         this.position = position;

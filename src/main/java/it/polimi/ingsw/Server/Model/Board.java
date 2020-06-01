@@ -88,7 +88,7 @@ public class Board {
             point.setLevel(point.getLevel() + 1);
         }
 
-    }   //la mossa deve essere legittima. non controlla se cìè già un builder o se è troppo in alto
+    }   //la mossa deve essere legittima. non controlla se c'è già un builder o se è troppo in alto
 
 }
 
