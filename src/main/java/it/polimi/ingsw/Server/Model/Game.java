@@ -34,7 +34,7 @@ public class Game {
 
     /** represents the player who wins the game */
     private Player winningPlayer;
-                           // identificatore numerico per differenziare le partite?
+
     /** represents the number of players in the game */
     public final int numberOfPlayers;
 
@@ -89,7 +89,7 @@ public class Game {
      * @param player is the player object.
      * @return 1, if the player has been successifully added, 0 otherwise
      */
-    //dealer?    // non controlla se due player abbiano clientID uguali
+    // TODO non controlla se due player abbiano clientID uguali
     public int addPlayer(Player player){
 
         if(this.playerList.size() < numberOfPlayers){
@@ -105,7 +105,7 @@ public class Game {
      * removes a player from the game.
      * @param player is the player object.
      */
-    public void removePlayer(Player player) {     //non consideriamo il caso in cui il giocatore non sia presente nella lista
+    public void removePlayer(Player player) {
         for (int i = 0; i < player.getBuilderSize(); i++) {
             player.removeBuilder(i);
             i--;

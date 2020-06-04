@@ -47,11 +47,11 @@ public class SpecialPhase1 extends Phase {
     /** method used by the phase to develop the part of the game logic assigned. In the State Pattern, it represents the main method that has to be implemented */
     public void handle() throws IOException {
 
-        //IMPORTANTE : TUTTE LE CARTE DEVONO PASSARE PER OGNI GETMOVES
+
         ArrayList<Square> moves1 = getMoves(builder1);
         ArrayList<Square> moves2 = getMoves(builder2);
 
-        //netInterface.sendMessage()
+        // TODO netInterface.sendMessage()
         Envelope received = context.getNetInterface().getBothMovementMove(moves1, builder1, moves2, builder2, player);
 
         if(received != null ) {   //TODO received sarà null?
@@ -98,6 +98,9 @@ public class SpecialPhase1 extends Phase {
     }
 
 
+    /**
+     * returns the list of neighboring opponent workers with an unoccupied opposite Square
+     */
     public void oppositeSideMoves(){
 
         possibleMoves = basicRules.proximity(playingBuilder);
@@ -156,9 +159,9 @@ public class SpecialPhase1 extends Phase {
         actionCommands.get(player.getCard().parameters.specialPhase1Action).run();
     }
 
-    //position deve essere legittima
+    /** lets the worker make an extra building move, as long as the next movement phase is performed by the same worker and it doesn't involve moving to a higher tower */
     public void specialBuild() {
-        if (position != null){  //TODO forse non servirà per via di received = null
+        if (position != null){
             basicRules.build(player, position, false);
             basicRules.setPreviousMaxHeight( basicRules.getMaxHeight());   //necessario in quanto maxHeight potrebbe essere != 1
             basicRules.setMaxHeight(0);
@@ -171,7 +174,11 @@ public class SpecialPhase1 extends Phase {
         }
     }
 
-    //position deve essere legittima
+    /**
+     * moves the worker set in @param position to the other side of the surroundings of the playing worker.
+     * This special movement can never resolve in the moved worker's victory
+     */
+
     public void moveOpposite(){
 
         int builderX = playingBuilder.getPosition().x;

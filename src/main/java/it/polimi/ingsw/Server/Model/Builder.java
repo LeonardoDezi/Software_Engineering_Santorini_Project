@@ -16,7 +16,6 @@ public class Builder {
     /** represents the sex of the worker */
     public final String sex;
 
-    // forse bisogna indicare anche a quale player appartiene per la GUI
 
 
     /**
@@ -42,7 +41,6 @@ public class Builder {
         return position;
     }
 
-    //il controller avrà già verificato che la posizione è libera e possibile
 
     /**
      * gets the colour of the builder.

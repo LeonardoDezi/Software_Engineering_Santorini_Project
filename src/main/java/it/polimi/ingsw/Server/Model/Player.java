@@ -57,7 +57,7 @@ public class Player {
     /**
      * assigns the God card chosen by the player to the player class.
      * @param possibleCards represents the list of cards from which the player can choose
-     * @param cardPosition represents the position of the card inside possibleCards
+     * @param cardPosition represents the position of the card inside the arrayList possibleCards
      * @return the list of cards that can still be chosen by the other players
      */
     //TODO per ora va per posizione. Possiamo sempre modificarla per farla andare per nome
@@ -89,7 +89,7 @@ public class Player {
      * @return the worker requested
      * @throws IndexOutOfBoundsException if there is no worker saved in builders, at the index represented by builderId.
      */
-    //magari modificarlo per IndexOutOfBounds e non ARRAYIndexOuTOfBounds
+    //TODO magari modificarlo per IndexOutOfBounds e non ARRAYIndexOuTOfBounds
     public Builder getBuilder(int BuilderId) throws ArrayIndexOutOfBoundsException{
 
         if(BuilderId >= builders.size())
@@ -114,8 +114,8 @@ public class Player {
      * If the new worker is the first one associated to the player, its sex will be SEX1, otherwise SEX2
      * @param position is the square where the new border will be.
      */
-    public void addBuilder(Square position){    //la posizione deve essere legittima!!
-        String sex;                             //la dimensione dell'array deve essere controllata più in alto
+    public void addBuilder(Square position){
+        String sex;
 
         if(builders.isEmpty())
             sex = SEX1;
@@ -123,14 +123,14 @@ public class Player {
             sex = SEX2;
 
         builders.add(new Builder(position, colour, sex));
-        //return builders.size() - 1;  // se magari vogliamo comunicare il numero della pedina che abbiamo appena messo
+
     }
 
     /**
      * removes a worker from the list builders and from the square that contained it
      * @param builderId is the index of the list builders where the worker is saved
      */
-    //al momento removeBuilder non implica la possibilità che builderId sia errato
+
     public void removeBuilder(int builderId){
 
         Square position = builders.get(builderId).getPosition();

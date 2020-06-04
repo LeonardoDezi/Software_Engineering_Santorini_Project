@@ -26,7 +26,7 @@ public class SpecialPhase2 extends Phase {
 
 
     /**
-     * used to create a new MovementPhase
+     * creates a new MovementPhase
      * @param game represents the game
      * @param context represents the context of the game
      * @param player represents the current player
@@ -51,7 +51,7 @@ public class SpecialPhase2 extends Phase {
 
         if(received != null)
             actionMethod(received.getBuilder(), received.getMove());   // TODO controllare che received.getBuilder() è sempre = playingBuilder
-            //updateBoard(game.getBoard);
+            // TODO updateBoard(game.getBoard);
 
         if(!(game.getGameEnded()))
             context.setPhase(new BuildingPhase(game, context, player, playingBuilder));
@@ -88,6 +88,7 @@ public class SpecialPhase2 extends Phase {
         return possibleMoves;
     }
 
+    /** returns a list of all the places where the playing worker can be moved, except for the place where the worker used to be before movementPhase */
     public void doubleNotSameMove(){
         //position è l'ultima posizione in cui si trovava la pedina
         possibleMoves = basicRules.proximity(playingBuilder);

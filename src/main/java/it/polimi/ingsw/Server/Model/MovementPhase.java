@@ -48,7 +48,7 @@ public class MovementPhase extends Phase {
 
     }
 
-   // public BasicRules getBasicRules(){return this.basicRules;}
+
 
     /** method used by the phase to develop the part of the game logic assigned. In the State Pattern, it represents the main method that has to be implemented.
      *  It also includes the game's losing condition.
@@ -73,7 +73,7 @@ public class MovementPhase extends Phase {
 
         }else{    //entrambi i worker sono incapaci di muoversi
 
-            game.removePlayer(player);
+            game.removePlayer(player);  //TODO
             //loseMethod();
             //sendMessage("Il giocatore" + player + "ha perso", null); //per mandare in broadcast il campo player è null
 
@@ -127,6 +127,7 @@ public class MovementPhase extends Phase {
         return possibleMoves;
     }
 
+    /** includes in possibleMoves the opponent workers surrounding the playing worker, it then calls the secondary function related to the player's card */
     public void swapMoves() {
 
         HashMap<String, Runnable> cardMap = new HashMap<>();
@@ -150,7 +151,7 @@ public class MovementPhase extends Phase {
     }
 
 
-
+    /** It includes in possibleMoves the opponent workers that can be pushed by the playing worker */
     public void pushMoves(){
         int builderX = playingBuilder.getPosition().x;
         int builderY = playingBuilder.getPosition().y;
@@ -189,6 +190,7 @@ public class MovementPhase extends Phase {
         basicRules.move(player, lastPosition, position);  //movimento effettivo
     }
 
+    /** if the playing worker moves up, it forces the other player to not move up their workers until it's this player's turn again */
     public void jumpUp(){
         int level1 = playingBuilder.getPosition().getLevel();
         int level2 = position.getLevel();
@@ -196,7 +198,7 @@ public class MovementPhase extends Phase {
             basicRules.setMaxHeight(0);
     }
 
-
+    /** lets a worker push one of the opponent workers surrounding it. This move can never resolve in the opponent worker's victory */
     public void pushAction(){
 
         if(position.getValue() == 1){
@@ -216,13 +218,18 @@ public class MovementPhase extends Phase {
 
     }
 
+    /**
+     * If maxHeight has been modified during SpecialPhase1, this method will set it back to the value saved in previousMaxHeight and setting
+     * previousMaxHeight back to BasicRules.BASICMAXHEIGHT
+     */
     public void restore(){
         basicRules.setMaxHeight(basicRules.getPreviousMaxHeight());  //ristabilisce maxHeight all'altezza precedente
         basicRules.setPreviousMaxHeight(BasicRules.BASICMAXHEIGHT);  //pone previousMaxHeight all'altezza base
     }
 
-
-
-
+    /**
+     * @return the game's basicRules
+     */
+    public BasicRules getBasicRules() { return this.basicRules; }
 }
 

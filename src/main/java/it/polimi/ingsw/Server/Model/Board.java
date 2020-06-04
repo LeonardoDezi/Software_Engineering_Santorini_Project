@@ -45,7 +45,6 @@ public class Board {
      * @param pointB is the second square.
       */
 
-    //che succede se pointA = pointB?   mai spostare una casella con cupola
     public void move(Square pointA, Square pointB){
 
         Builder tmp1 = pointA.getBuilder();
@@ -88,7 +87,7 @@ public class Board {
             point.setLevel(point.getLevel() + 1);
         }
 
-    }   //la mossa deve essere legittima. non controlla se c'è già un builder o se è troppo in alto
+    }
 
 }
 

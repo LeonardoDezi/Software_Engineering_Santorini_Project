@@ -69,7 +69,7 @@ public class BasicRulesTest {
 
     //Testiamo quando la pedina si sposta in posizioni diverse dalla condizione di vittoria
     @Test
-    public void testLosingConditions(){
+    public void testNotWinningConditions(){
 
 
         //1) il giocatore si trova ancora sulla posizione iniziale

@@ -42,7 +42,7 @@ public abstract class Phase {
     /** method used by the phase to develop the part of the game logic assigned. In the State Pattern, it represents the main method that has to be implemented */
     public abstract void handle() throws IOException;
 
-    /** used to initialize the hashMaps related to the phase */
+    /** initializes the hashMaps related to the phase */
     public abstract void map();
 
 }

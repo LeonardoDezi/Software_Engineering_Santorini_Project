@@ -65,7 +65,7 @@ public class BasicRules{
      * @param initialPosition is the place where the worker used to be before the examined move
      * @param finalPosition is the place where the worker is after the move
      */
-    //non controlla che siano square adiacenti
+
     public void winCondition(Player player, Square initialPosition, Square finalPosition) {
         if (initialPosition.getLevel() == INITIALLEVEL && initialPosition.getValue() == 0) {
             if (finalPosition.getLevel() == FINALLEVEL && finalPosition.getValue() == 1 && finalPosition.getBuilder().getColour().equals(player.getColour())) {
