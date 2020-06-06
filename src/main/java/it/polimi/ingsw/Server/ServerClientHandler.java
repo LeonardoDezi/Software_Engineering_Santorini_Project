@@ -13,27 +13,23 @@ import java.net.Socket;
 public class ServerClientHandler implements Runnable{
 
     private Socket socket;
+    private Lobby lobby;
 
-    public ServerClientHandler(final Socket socket) throws IOException {
+    public ServerClientHandler(final Socket socket, Lobby lobby) throws IOException {
         this.socket = socket;
+        this.lobby = lobby;
     }
 
     @Override
-    public void run () {
+    public void run () { //TODO controlliamo bene
+        Client client = new Client(socket);
         try {
-
-            JSONObject jsonObject = new JSONObject();
-            String message = jsonObject.toString();
-            Sender.send(message,socket);
-            Receiver.receive(socket);
-
-
+            lobby.addClient(client);
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            closeSocket();
         }
     }
+
     private void closeSocket(){
         try {
             socket.close();

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +19,7 @@ public class SpecialPhase1Test {
     private SpecialPhase1 specialPhase1;
 
     /** the game used for the test */
-    private Game game = new Game(3);
+    private Game game;
 
     /** the context used for the test*/
     private Context context = new Context(new NetInterface(game));
@@ -34,12 +35,15 @@ public class SpecialPhase1Test {
     /** the ArrayList of Squares used for the test*/
     private ArrayList<Square> possibleMoves;
 
+    private NetInterface netInterface = new NetInterface(game);
+
 
     /**
      * creates the players used in every test and sets the cards of player2 and player3 to Pan and Chronus
      */
     @Before
     public void create(){
+        game = new Game(3, netInterface);
         game.addPlayer(new Player("Marco", "Red", game, 0));
         game.addPlayer(new Player("Luca", "Blue", game, 1));
         game.addPlayer(new Player("Fra", "Green", game, 2));
@@ -120,7 +124,7 @@ public class SpecialPhase1Test {
      * other tests of the behaviour of getMoves() when the card is Charon
      */
     @Test
-    public void checkOppositeSideMoves2(){
+    public void checkOppositeSideMoves2() throws IOException {
         player1.setCard(game.getDeckCard(10));
         game.deployBuilder(player1, game.gameBoard.fullMap[4][2]);  //test di una pedina in un lato
         game.deployBuilder(game.playerList.get(1), game.gameBoard.fullMap[4][3]);

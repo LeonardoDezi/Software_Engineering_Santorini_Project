@@ -69,7 +69,13 @@ public class SpecialPhase2 extends Phase {
         movesCommands.put(null, ()->{possibleMoves = new ArrayList<>();});
 
         //actionMethod
-        actionCommands.put("doubleNotSame", ()->{basicRules.move(player, playingBuilder.getPosition(), position);});
+        actionCommands.put("doubleNotSame", ()->{
+            try {
+                basicRules.move(player, playingBuilder.getPosition(), position);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         actionCommands.put(null, ()->{});
     }
 

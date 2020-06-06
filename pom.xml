@@ -36,8 +36,8 @@
       <version>20180130</version>
     </dependency>
       <dependency>
-          <groupId>org.jetbrains</groupId>
-          <artifactId>annotations</artifactId>
+          <groupId>it.polimi.ingsw</groupId>
+          <artifactId>AM32</artifactId>
           <version>1.0-SNAPSHOT</version>
           <scope>compile</scope>
       </dependency>

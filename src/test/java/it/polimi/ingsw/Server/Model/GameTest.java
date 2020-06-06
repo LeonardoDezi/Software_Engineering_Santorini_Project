@@ -2,15 +2,13 @@ package it.polimi.ingsw.Server.Model;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
+import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -18,15 +16,17 @@ import java.util.ArrayList;
 
 
 public class GameTest {
-    Game game1;
-    Game game2;
+    private Game game1;
+    private Game game2;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private NetInterface netInterface = new NetInterface(game1);
+    private NetInterface netInterface2 = new NetInterface(game2);
 
 
     @Before          //pensare anche alle partite a due giocatori
     public void createGame() {
-        game1 = new Game(3);
-        game2 = new Game(2);
+        game1 = new Game(3, netInterface);
+        game2 = new Game(2, netInterface2);
     }
 
 
@@ -100,7 +100,7 @@ public class GameTest {
         game1.playerList = new ArrayList<>(); // reinizializza playerList
         game1.addPlayer(new Player("Marco", "Red", game1, 0));
         game1.addPlayer(new Player("Luca", "Blue", game1, 1));
-        game1.gameBoard = new Board();
+        game1.gameBoard = new Board(netInterface);
 
 
         //deployBuilder standard
@@ -131,7 +131,7 @@ public class GameTest {
     public void removePlayerCheck(){
         //reinizializza variabili
         game1.playerList = new ArrayList<>();
-        game1.gameBoard = new Board();
+        game1.gameBoard = new Board(netInterface);
 
         //aggiungi giocatori e builders
         int num1 =game1.addPlayer(new Player("Marco", "Red", game1, 0));

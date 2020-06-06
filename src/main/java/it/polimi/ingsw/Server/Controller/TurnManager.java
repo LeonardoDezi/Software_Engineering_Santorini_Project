@@ -69,7 +69,6 @@ public class TurnManager {
 
                 if(game.getGameEnded())
                     break;
-
             }
         }
 

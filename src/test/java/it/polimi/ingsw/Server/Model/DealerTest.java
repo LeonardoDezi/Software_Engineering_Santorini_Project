@@ -2,19 +2,22 @@ package it.polimi.ingsw.Server.Model;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import org.junit.Before;
 import org.junit.Test;
 
 public class DealerTest {
-    Dealer player1;
-    Dealer player2;
-    Game game1;
-    Game game2;
+    private Dealer player1;
+    private Dealer player2;
+    private Game game1;
+    private Game game2;
+    private NetInterface netInterface = new NetInterface(game1);
+    private NetInterface netInterface2 = new NetInterface(game2);
 
     @Before
     public void createGame(){
-        game1 = new Game(2);
-        game2 = new Game(3);
+        game1 = new Game(2, netInterface);
+        game2 = new Game(3, netInterface2);
         player1 = new Dealer("Marco", "RED", game1, 0);
         player2 = new Dealer("Leonardo", "Green", game2, 1);
         game1.addPlayer(player1);

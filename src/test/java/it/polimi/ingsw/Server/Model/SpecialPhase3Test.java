@@ -3,6 +3,7 @@ package it.polimi.ingsw.Server.Model;
 import it.polimi.ingsw.Server.Controller.Context;
 import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,39 +14,40 @@ import static org.junit.Assert.*;
  */
 public class SpecialPhase3Test {
     /** the object tested */
-    SpecialPhase3 specialPhase3;
+    private SpecialPhase3 specialPhase3;
     /** the object tested */
-    SpecialPhase3 specialPhase31;
+    private SpecialPhase3 specialPhase31;
     /** the two-player game used for the test */
-    Game game;
+    private Game game;
     /** the three-player game used for the test */
-    Game game1;
+    private Game game1;
     /** the player used for the test*/
-    Player player1;
+    private Player player1;
     /** the player used for the test*/
-    Player player2;
+    private Player player2;
     /** the player used for the test*/
-    Player player3;
+    private Player player3;
     /** the player used for the test*/
-    Player player4;
+    private Player player4;
     /** the player used for the test*/
-    Player player5;
+    private Player player5;
     /** the ArrayList of Squares used for the test*/
-    ArrayList<Square> possibleMoves;
+    private ArrayList<Square> possibleMoves;
     /** the context used for the test*/
     private Context context = new Context(new NetInterface(game));
     /** the context used for the test*/
     private Context context1 = new Context(new NetInterface(game1));
 
-
+    private NetInterface netInterface = new NetInterface(game);
+    private NetInterface netInterface2 = new NetInterface(game1);
 
     /**
      * creates the players and the games used in every test
      */
     @Before
     public void create(){
-        game = new Game(2);
-        game1 = new Game(3);
+        game = new Game(2, netInterface);
+        game1 = new Game(3, netInterface2);
 
         player1 = new Player("Marco", "Red", game, 0);
         player2 = new Player("Luca", "Blue", game, 1);
@@ -80,7 +82,7 @@ public class SpecialPhase3Test {
      * tests the behaviour of SpecialPhase3 when the card is Demeter
      */
     @Test
-    public void checkDemeterBehaviour(){
+    public void checkDemeterBehaviour() throws IOException {
 
         player1.setCard(game.getDeckCard(5)); //Demeter
         player2.setCard(game.getDeckCard(14)); //Zeus
@@ -119,7 +121,7 @@ public class SpecialPhase3Test {
      * tests the behaviour of SpecialPhase3 when the card is Hephaestus
      */
     @Test
-    public void checkHephaestusBehaviour(){
+    public void checkHephaestusBehaviour() throws IOException {
 
         player1.setCard(game.getDeckCard(6)); //Hephaestus
         player2.setCard(game.getDeckCard(14)); //Zeus
@@ -165,7 +167,7 @@ public class SpecialPhase3Test {
      * tests the behaviour of buildingPhase when the card is Hestia
      */
     @Test
-    public void checkHestiaBehaviour(){
+    public void checkHestiaBehaviour() throws IOException {
 
         player3.setCard(game1.getDeckCard(1));  //Apollo
         player4.setCard(game1.getDeckCard(14));   //Zeus

@@ -3,6 +3,7 @@ package it.polimi.ingsw.Server.Model;
 import it.polimi.ingsw.Server.Controller.Context;
 import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +37,7 @@ import static org.junit.Assert.*;
      private Context context = new Context(new NetInterface(game));
      /** the context used for the test*/
      private Context context1 = new Context(new NetInterface(game1));
+     private NetInterface netInterface = new NetInterface(game);
 
 
 
@@ -44,8 +46,8 @@ import static org.junit.Assert.*;
       */
      @Before
      public void create(){
-         game = new Game(2);
-         game1 = new Game(3);
+         game = new Game(2, netInterface);
+         game1 = new Game(3, netInterface);
 
          player1 = new Player("Marco", "Red", game, 0);
          player2 = new Player("Luca", "Blue", game, 1);
@@ -65,7 +67,7 @@ import static org.junit.Assert.*;
       * tests the behaviour of buildingPhase when the card has no special effect regarding BuildingPhase
       */
      @Test
-     public void checkNull(){
+     public void checkNull() throws IOException {
 
          player1.setCard(game.getDeckCard(6)); //Hephaestus
          player2.setCard(game.getDeckCard(14)); //Zeus
@@ -100,7 +102,7 @@ import static org.junit.Assert.*;
       * tests the behaviour of buildingPhase when the card is Zeus
       */
      @Test
-     public void checkZeusBehaviour(){
+     public void checkZeusBehaviour() throws IOException {
 
          player3.setCard(game1.getDeckCard(1));  //Apollo
          player4.setCard(game1.getDeckCard(14));   //Zeus

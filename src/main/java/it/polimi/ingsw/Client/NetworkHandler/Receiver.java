@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class Receiver {
-    public static String receive(Socket socket){
+    public String receive(Socket socket){
         //wait for the server answer on the socket
 
         BufferedReader bufferedReaderreader = null;

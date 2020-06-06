@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.Model;
 import it.polimi.ingsw.Parser.ParserManager;
+import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,8 +46,8 @@ public class Game {
      * creates a new game.
      * @param numberOfPlayers is the number of players that will partecipate in this match.
      */
-    public Game(int numberOfPlayers) {     //da mettere un identificativo partita?
-        gameBoard = new Board();
+    public Game(int numberOfPlayers, NetInterface netInterface) {     //da mettere un identificativo partita?
+        gameBoard = new Board(netInterface);
         gameEnded = false;
         playerList = new ArrayList<>();
         chosenCards = new ArrayList<>();

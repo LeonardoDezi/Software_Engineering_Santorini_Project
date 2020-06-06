@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.Model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -192,7 +193,7 @@ public class BasicRules{
      * @param isDome if true, indicates that the construction will be a dome
      */
     //potrebbe dare problemi quando il metodo viene eseguito e un giocatore ha già vinto
-    public void build(Player player, Square position, boolean isDome){
+    public void build(Player player, Square position, boolean isDome) throws IOException {
         if(position != null) {
             board.build(position, isDome);
             WinPhase winPhase = new WinPhase(game);
@@ -207,7 +208,7 @@ public class BasicRules{
      * @param position is the square where the worker is going to be.
      */
     //potrebbe dare problemi quando il metodo viene eseguito e un giocatore ha già vinto
-    public void move(Player player, Square initialPosition, Square position){
+    public void move(Player player, Square initialPosition, Square position) throws IOException {
         board.move(initialPosition, position);
         WinPhase winPhase = new WinPhase(game);
         winPhase.checkMovement(player, initialPosition, position);

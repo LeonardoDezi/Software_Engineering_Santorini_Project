@@ -5,6 +5,7 @@ import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -30,12 +31,14 @@ public class SpecialPhase2Test {
     /** the context used for the test*/
     private Context context = new Context(new NetInterface(game));
 
+    private NetInterface netInterface = new NetInterface(game);
+
     /**
      * creates the players and the game used in every test
      */
     @Before
     public void create(){
-        game = new Game(2);
+        game = new Game(2, netInterface);
         game.addPlayer(new Player("Marco", "Red", game, 0));
         game.addPlayer(new Player("Luca", "Blue", game, 1));
         player1 = game.playerList.get(0);
@@ -48,7 +51,7 @@ public class SpecialPhase2Test {
      * tests the behaviour of specialPhase2 when the card is Artemis
      */
     @Test
-    public void checkDoubleNotSameMove(){
+    public void checkDoubleNotSameMove() throws IOException {
         game.deployBuilder(player2, game.gameBoard.fullMap[4][2]);
         game.gameBoard.build(game.gameBoard.fullMap[3][3], true);  //cupola
         specialPhase2 = new SpecialPhase2(game, context, player2, builder, null);
@@ -67,7 +70,7 @@ public class SpecialPhase2Test {
      * tests the behaviour of specialPhase2 when the card has no special effect regarding SpecialPhase2
      */
     @Test
-    public void checkNull(){
+    public void checkNull() throws IOException {
         game.deployBuilder(player1, game.gameBoard.fullMap[4][2]);
         game.gameBoard.build(game.gameBoard.fullMap[3][3], true);  //cupola
         specialPhase2 = new SpecialPhase2(game, context, player1, builder, null);

@@ -7,7 +7,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class Sender {
-    public static void send(String message, Socket socket){
+    public void send(String message, Socket socket){
         if(message==null){
           //TODO send -1
         }

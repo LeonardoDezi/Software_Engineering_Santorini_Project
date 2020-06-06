@@ -117,7 +117,7 @@ public class BuildingPhase extends Phase {
      * @param position is the position where the move is going to be performed
      * @param isDome indicates whether the construction is going to be a block or a dome
      */
-    public void actionMethod(Builder builder, Square position, boolean isDome){
+    public void actionMethod(Builder builder, Square position, boolean isDome) throws IOException {
         this.actionBuilder = builder;
         this.position = position;
         this.isDome = isDome;
@@ -130,10 +130,15 @@ public class BuildingPhase extends Phase {
      * lets the playing worker build under itself, as long as the construction does not produce a complete tower.
      * This special move can never resolve in the player's victory
      */
-    public void buildBelowYou(){
+    public void buildBelowYou() {
         if(position.equals(actionBuilder.getPosition())) {
             if (position.getLevel() < 3) {
-                board.build(position, false);
+                try{
+                    board.build(position, false);
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
                 //updateBoard()?????
                 position = null;
             }

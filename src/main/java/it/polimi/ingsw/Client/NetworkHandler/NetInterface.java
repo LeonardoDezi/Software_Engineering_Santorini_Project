@@ -59,7 +59,8 @@ public class NetInterface {
             moves = new Moves(builder1, moves1, builder2, moves2, false, female);
         }
         if(values[0].equals("5")){ //text message
-
+            Integer messageType = parseInt(values[1]);
+            //TODO print on the screen the message recieved
             moves = null;
         }
         if(values[0].equals("6")){ //the client loses

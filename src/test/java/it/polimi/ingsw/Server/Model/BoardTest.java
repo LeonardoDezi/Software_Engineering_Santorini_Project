@@ -2,9 +2,11 @@ package it.polimi.ingsw.Server.Model;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
+import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
 
 /*Tre casi di test:
 * 1)Un builder a terra si muove su un altro square a terra
@@ -19,16 +21,19 @@ import org.junit.Test;
 //Da testare/ ritestare: costruttore, build(cupole)
 
 public class BoardTest {
-    Board board;
-    Builder builder1;
-    Builder builder2;
-    Builder builder3;
-    Builder builder4;
-    Square square;
+    private Board board;
+    private Builder builder1;
+    private Builder builder2;
+    private Builder builder3;
+    private Builder builder4;
+    private Square square;
+    private Game game;
+    private NetInterface netInterface = new NetInterface(game);
 
     @Before
     public void createElements() {
-        board = new Board();
+        game = new Game(3, netInterface);
+        board = new Board(netInterface);
 
         //builder1 è a terra
         square = board.fullMap[2][2];
@@ -60,7 +65,7 @@ public class BoardTest {
     }
 
     @Test
-    public void groundToGround() {
+    public void groundToGround() throws IOException {
         board.move(builder1.getPosition(), board.fullMap[2][3]);
 
         assertEquals(0, board.fullMap[2][2].getValue()); //controlla che la casella di partenza adesso risulti libera
@@ -72,7 +77,7 @@ public class BoardTest {
 
 
     @Test
-    public void differentFloor() {
+    public void differentFloor() throws IOException {
 
         int levelA = board.fullMap[0][4].getLevel();  //livelli di partenza e destinazione prima della mossa
         int levelB = board.fullMap[1][4].getLevel();
@@ -84,7 +89,7 @@ public class BoardTest {
     }
 
     @Test
-    public void swap() {
+    public void swap() throws IOException {
 
         int levelA = board.fullMap[1][3].getLevel();
         int levelB = board.fullMap[1][2].getLevel();
@@ -106,7 +111,7 @@ public class BoardTest {
 
 
     @Test
-    public void createBuilding() {
+    public void createBuilding() throws IOException {
         Square position = board.fullMap[0][0];
         assertEquals(1, board.fullMap[0][0].getLevel());
         assertEquals(0, board.fullMap[0][0].getValue());
@@ -118,7 +123,7 @@ public class BoardTest {
     }
 
     @Test
-    public void createDome() {
+    public void createDome() throws IOException {
         Square position = board.fullMap[0][1];
         int num = board.completedTowers;
         assertEquals(3, board.fullMap[0][1].getLevel());
@@ -142,7 +147,7 @@ public class BoardTest {
      * tests when Zeus builds below its worker
      */
     @Test
-    public void buildSamePosition(){
+    public void buildSamePosition() throws IOException {
 
         builder2 = new Builder(square, "Green", Player.SEX2);
         square = board.fullMap[1][4];

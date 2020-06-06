@@ -3,10 +3,12 @@ package it.polimi.ingsw.Server.Model;
 import static java.lang.Math.abs;
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class BasicRulesTest {
@@ -15,11 +17,11 @@ public class BasicRulesTest {
     private Board board;
     private Player player1;
     private BasicRules rules;
+    private NetInterface netInterface = new NetInterface(game);
 
     @Before
     public void createGameAndRules(){
-
-        game = new Game(3);
+        game = new Game(3, netInterface );
         board = game.getBoard();
         int num1 =game.addPlayer(new Player("Marco", "Red", game, 0));
         int num2 =game.addPlayer(new Player("Luca", "Blue", game, 1));
@@ -32,7 +34,7 @@ public class BasicRulesTest {
     @After
     public void clearAndRecreate(){
 
-        game = new Game(3);
+        game = new Game(3, netInterface);
         board = game.getBoard();
         int num1 =game.addPlayer(new Player("Marco", "Red", game, 0));
         int num2 =game.addPlayer(new Player("Luca", "Blue", game, 1));
@@ -42,7 +44,7 @@ public class BasicRulesTest {
     }
 
     @Test
-    public void testWinCondition(){
+    public void testWinCondition() throws IOException {
         board.build(board.fullMap[1][2], false);
         board.build(board.fullMap[1][2], false);  //costruiamo un edificio di due piani
         assertEquals(0, board.fullMap[1][2].getValue());
@@ -69,7 +71,7 @@ public class BasicRulesTest {
 
     //Testiamo quando la pedina si sposta in posizioni diverse dalla condizione di vittoria
     @Test
-    public void testNotWinningConditions(){
+    public void testNotWinningConditions() throws IOException {
 
 
         //1) il giocatore si trova ancora sulla posizione iniziale
@@ -189,7 +191,7 @@ public class BasicRulesTest {
 
 
     @Test
-    public void checkProximity() {
+    public void checkProximity() throws IOException {
 
         //1) Plancia vuota
         player1 = game.playerList.get(0);
@@ -248,7 +250,7 @@ public class BasicRulesTest {
     }
 
     @Test
-    public void checkRemoveBuilderSquare(){
+    public void checkRemoveBuilderSquare() throws IOException {
 
         player1 = game.playerList.get(0);
         game.deployBuilder(player1, board.fullMap[2][2]);
@@ -271,7 +273,7 @@ public class BasicRulesTest {
     }
 
     @Test
-    public void checkRemoveDomeSquare(){
+    public void checkRemoveDomeSquare() throws IOException {
 
         player1 = game.playerList.get(0);
         game.deployBuilder(player1, board.fullMap[2][2]);
@@ -297,7 +299,7 @@ public class BasicRulesTest {
     }
 
     @Test
-    public void checkGetFreeSquares(){
+    public void checkGetFreeSquares() throws IOException {
         player1 = game.playerList.get(0);
         game.deployBuilder(player1, board.fullMap[2][2]);
         Builder builder = player1.getBuilder(0);   //soggetto
@@ -331,7 +333,7 @@ public class BasicRulesTest {
     }
 
     @Test
-    public void checkGetBuilding(){
+    public void checkGetBuilding() throws IOException {
         player1 = game.playerList.get(0);
         game.deployBuilder(player1, board.fullMap[2][2]);
         Builder builder = player1.getBuilder(0);   //soggetto
@@ -359,7 +361,7 @@ public class BasicRulesTest {
     }
 
     @Test
-    public void checkRemoveTooHighPlaces(){
+    public void checkRemoveTooHighPlaces() throws IOException {
 
         //1) poniamo il builder sulla torre da un piano
         board.build(board.fullMap[2][2], false);

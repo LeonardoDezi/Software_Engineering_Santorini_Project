@@ -2,6 +2,7 @@ package it.polimi.ingsw.Server.Model;
 
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,9 +12,10 @@ import java.util.ArrayList;
 
 // da testare: costruttore, chooseCard, removeBuilders
 public class PlayerTest {
-    Player player1;
-    Player player2;
-    Game game = new Game(2);
+    private  Player player1;
+    private Player player2;
+    private Game game;
+    private NetInterface netInterface = new NetInterface(game);
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
@@ -21,6 +23,7 @@ public class PlayerTest {
 
     @Before
     public void createPlayers(){
+        game = new Game(2, netInterface);
         player1 = new Player("Marco", "Red", game, 0);
         player2 = new Player("Leonardo", "Green", game, 1);
     }

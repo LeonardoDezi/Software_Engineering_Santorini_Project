@@ -8,6 +8,8 @@ import java.util.concurrent.Executors;
 
 public class Server {
     private int port;
+    private Lobby lobby;
+    private GameMaster gameMaster;
 
     public Server(int port) {
         this.port = port;
@@ -24,11 +26,16 @@ public class Server {
                 System.err.println(e.getMessage()); //port not available
                 return;
             }
+
+            lobby = new Lobby();
+            gameMaster = new GameMaster();
+            lobby.addObserver(gameMaster);
+
             System.out.println("Server ready");
             while (true){
                 try{
                     Socket socket = serverSocket.accept();
-                    executor.submit( new ServerClientHandler(socket));
+                    executor.submit( new ServerClientHandler(socket, lobby));
                 }catch(IOException e){
                     break; //In case the serverSocket gets closed
                 }

@@ -56,7 +56,7 @@ public class Square {
      * is used to know if there is something on top of the square and what it is.
      * @return the number that signifies what is on top of the square.
      */
-    protected int getValue(){ return this.value;}
+    public int getValue(){ return this.value;}
 
     /**
      * is used to change the height of the square.
@@ -70,7 +70,7 @@ public class Square {
      * is used to know the height of the square.
      * @return the height of the square.
      */
-    protected int getLevel(){
+    public int getLevel(){
         return this.level;
     }
 

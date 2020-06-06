@@ -162,7 +162,12 @@ public class SpecialPhase1 extends Phase {
     /** lets the worker make an extra building move, as long as the next movement phase is performed by the same worker and it doesn't involve moving to a higher tower */
     public void specialBuild() {
         if (position != null){
-            basicRules.build(player, position, false);
+            try {
+                basicRules.build(player, position, false);
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
             basicRules.setPreviousMaxHeight( basicRules.getMaxHeight());   //necessario in quanto maxHeight potrebbe essere != 1
             basicRules.setMaxHeight(0);
 
@@ -179,7 +184,7 @@ public class SpecialPhase1 extends Phase {
      * This special movement can never resolve in the moved worker's victory
      */
 
-    public void moveOpposite(){
+    public void moveOpposite() {
 
         int builderX = playingBuilder.getPosition().x;
         int builderY = playingBuilder.getPosition().y;
@@ -191,7 +196,12 @@ public class SpecialPhase1 extends Phase {
         int b = 2 * builderY - positionY;
 
         Square destination = board.fullMap[a][b];
-        board.move(position, destination);
+        try {
+            board.move(position, destination);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
 
         if(!(playingBuilder.equals(builder1)))     //la fase successiva deve necessariamente essere eseguita dal worker che ha fatto la mossa speciale
             builder1 = null;

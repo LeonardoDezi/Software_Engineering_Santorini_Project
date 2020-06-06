@@ -1,7 +1,11 @@
 package it.polimi.ingsw.Server.Model;
 
+import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 //TODO magari fare più test con carte speciali move e carte speciali build insieme
@@ -12,11 +16,12 @@ public class WinPhaseTest {
     private Player player1;
     private Player player2;
     private Player player3;
+    private NetInterface netInterface = new NetInterface(game);
 
 
     @Before
     public void create(){
-        game = new Game(3);
+        game = new Game(3, netInterface);
         winPhase = new WinPhase(game);
         player1 = new Player("Marco", "RED", game, 0 );
         game.addPlayer(player1);
@@ -27,7 +32,7 @@ public class WinPhaseTest {
     }
 
     @Test
-    public void checkAtLeastFiveTowers(){
+    public void checkAtLeastFiveTowers() throws IOException {
         game.gameBoard.build(game.gameBoard.fullMap[0][0], false);
         game.gameBoard.build(game.gameBoard.fullMap[0][0], false);
         game.gameBoard.build(game.gameBoard.fullMap[0][0], false);
@@ -99,7 +104,7 @@ public class WinPhaseTest {
 
 
     @Test
-    public void checkJumpDownCondition(){
+    public void checkJumpDownCondition() throws IOException {
 
         //1) caso non vincente  //torre di tre piani - torre di due piani
         game.gameBoard.build(game.gameBoard.fullMap[3][3], false);   //torre di tre piani

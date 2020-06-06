@@ -182,7 +182,7 @@ public class MovementPhase extends Phase {
      * @param builder is the worker who makes the move
      * @param arrival is the position where the move is going to be performed
      */
-    public void actionMethod(Builder builder, Square arrival){
+    public void actionMethod(Builder builder, Square arrival) throws IOException {
         this.playingBuilder = builder;
         this.position = arrival;
         actionCommands.get(player.getCard().parameters.movementPhaseAction).run();
@@ -199,7 +199,7 @@ public class MovementPhase extends Phase {
     }
 
     /** lets a worker push one of the opponent workers surrounding it. This move can never resolve in the opponent worker's victory */
-    public void pushAction(){
+    public void pushAction() {
 
         if(position.getValue() == 1){
 
@@ -211,9 +211,12 @@ public class MovementPhase extends Phase {
 
             int a = 2 * positionX - builderX;
             int b = 2 * positionY - builderY;
-
-            board.move(position ,board.fullMap[a][b]);  //questa funzione dovrà limitarsi a spostare la pedina avversaria
-
+            try{
+                board.move(position ,board.fullMap[a][b]);  //questa funzione dovrà limitarsi a spostare la pedina avversaria
+            }
+            catch(IOException e){
+                e.printStackTrace();
+            }
         }
 
     }

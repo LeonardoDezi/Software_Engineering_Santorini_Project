@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import static java.lang.Integer.numberOfLeadingZeros;
 import static java.lang.Integer.parseInt;
 
 public class NetInterface {
@@ -56,7 +57,6 @@ public class NetInterface {
         Client client = getClient(player);
         Socket socket=client.getSocket();
         String message = "2@" + arrayListSquareToString(moves) + builderToString(builder);
-        //TODO send to the player
         Sender.send(message, socket);
         message= Receiver.receive(socket);
         if(message==null){
@@ -82,7 +82,6 @@ public class NetInterface {
         Client client = getClient(player);
         Socket socket=client.getSocket();
         String message ="4@" + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(female) + wantsToBuildADome(canBuildADome);
-        //TODO send to the player
         Sender.send(message, socket);
         message= Receiver.receive(socket);
         String[] choosenmove = message.split("@");
@@ -203,16 +202,18 @@ public class NetInterface {
         return stringToSquare(message);
     }
 
-    public void sendMessage(int x, String phase, Client client){ //TODO implement the method with the message hashmap
+    public void sendMessage(Integer messageType, Client client) throws IOException { //TODO implement the method with the message hashmap
         Socket socket;
+        String message = new String("5@" + messageType.toString());
         if(client == null){
             for(int i=0; i<game.numberOfPlayers;i++){
-
+                socket = clients.get(i).getSocket();
+                Sender.send(message, socket);
             }
         }
         else{
             socket=client.getSocket();
-
+            Sender.send(message, socket);
         }
     }
 
@@ -360,5 +361,31 @@ public class NetInterface {
         return new Square(x, y);
     }
 
+    public void updateBoard(Square square1, Square square2) throws IOException {
+        Socket socket;
+        String message = new String("11@");
+        message = message + boardSquare(square1);
+        if(square2 != null){
+            message = message + boardSquare(square2);
+        }
+        for(Integer i=0; i < game.numberOfPlayers; i++){
+            socket = clients.get(i).getSocket();
+            sender.send(message, socket);
+        }
+    }
+
+    public String boardSquare(Square square){
+        StringBuilder string = new StringBuilder();
+        string.append(square.x);
+        string.append(",");
+        string.append(square.y);
+        string.append(":");
+        string.append(square.getLevel());
+        string.append(",");
+        string.append((square.getValue()));
+        string.append("@");
+        String message = string.toString();
+        return  message;
+    }
 
 }

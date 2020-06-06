@@ -128,7 +128,7 @@ public class SpecialPhase3 extends Phase {
      * @param position is the position where the move is going to be performed
      * @param isDome indicates whether the construction is going to be a block or a dome
      */
-    public void actionMethod(Builder builder, Square position, boolean isDome){
+    public void actionMethod(Builder builder, Square position, boolean isDome) throws IOException {
         this.playingBuilder = builder;
         this.position = position;
 

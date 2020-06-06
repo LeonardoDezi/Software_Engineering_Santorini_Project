@@ -6,6 +6,8 @@ import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -14,29 +16,31 @@ import java.util.ArrayList;
  */
 public class MovementPhaseTest {
     /** the object tested */
-    MovementPhase movementPhase;
+    private MovementPhase movementPhase;
     /** the object tested */
-    MovementPhase movementPhase1;
+    private MovementPhase movementPhase1;
     /** the two-player game used for the test */
-    Game game;
+    private Game game;
     /** the three-player game used for the test */
-    Game game1;
+    private Game game1;
     /** the player used for the test*/
-    Player player1;
+    private Player player1;
     /** the player used for the test*/
-    Player player2;
+    private Player player2;
     /** the player used for the test*/
-    Player player3;
+    private Player player3;
     /** the player used for the test*/
-    Player player4;
+    private Player player4;
     /** the player used for the test*/
-    Player player5;
+    private Player player5;
     /** the ArrayList of Squares used for the test*/
-    ArrayList<Square> possibleMoves;
+    private ArrayList<Square> possibleMoves;
     /** the context used for the test*/
     private Context context = new Context(new NetInterface(game));
     /** the context used for the test*/
     private Context context1 = new Context(new NetInterface(game1));
+    private NetInterface netInterface = new NetInterface(game);
+    private NetInterface netInterface2 = new NetInterface(game1);
 
 
     /**
@@ -44,8 +48,8 @@ public class MovementPhaseTest {
      */
     @Before
     public void create(){
-        game = new Game(2);
-        game1 = new Game(3);
+        game = new Game(2, netInterface);
+        game1 = new Game(3, netInterface2);
 
         player1 = new Player("Marco", "Red", game, 0);
         player2 = new Player("Luca", "Blue", game, 1);
@@ -66,7 +70,7 @@ public class MovementPhaseTest {
      * tests the behaviour of getMoves() when the card is Apollo
      */
     @Test
-    public void checkSwapMoves(){
+    public void checkSwapMoves() throws IOException {
         player1.setCard(game.getDeckCard(1));  //Apollo
         player2.setCard(game.getDeckCard(7));   //Minotauro
 
@@ -94,7 +98,7 @@ public class MovementPhaseTest {
      * tests the behaviour of getMoves() when the card is Minotaur
      */
     @Test
-    public void checkSwapMoves2(){
+    public void checkSwapMoves2() throws IOException {
 
         player3.setCard(game1.getDeckCard(1));  //Apollo
         player4.setCard(game1.getDeckCard(7));   //Minotauro
@@ -122,7 +126,7 @@ public class MovementPhaseTest {
      * other tests of the behaviour of getMoves() when the card is Minotaur
      */
     @Test
-    public void checkSwapMoves3(){
+    public void checkSwapMoves3() throws IOException {
         player3.setCard(game1.getDeckCard(1));  //Apollo
         player4.setCard(game1.getDeckCard(7));   //Minotauro
 
@@ -148,7 +152,7 @@ public class MovementPhaseTest {
      * tests the behaviour of getMoves() when the card has no special effect regarding MovementPhase
      */
     @Test
-    public void checkNull(){
+    public void checkNull() throws IOException {
 
         player1.setCard(game.getDeckCard(6));
         player2.setCard(game.getDeckCard(3));
@@ -178,7 +182,7 @@ public class MovementPhaseTest {
      * tests the behaviour of actionMethod() when the card is Athena
      */
     @Test
-    public void checkJumpUp(){
+    public void checkJumpUp() throws IOException {
         player1.setCard(game.getDeckCard(3)); //Athena
         player2.setCard(game.getDeckCard(5)); //Demeter
 
@@ -206,7 +210,7 @@ public class MovementPhaseTest {
      * tests the behaviour of actionMethod() when the card is Minotaur
      */
     @Test
-    public void checkPushAction() {
+    public void checkPushAction() throws IOException {
         player3.setCard(game1.getDeckCard(7));
         player4.setCard(game1.getDeckCard(5));
         player5.setCard(game1.getDeckCard(10));
@@ -247,7 +251,7 @@ public class MovementPhaseTest {
      * tests the behaviour of actionMethod() when the card has no special effect regarding MovementPhase
      */
     @Test
-    public void checkNullAction(){
+    public void checkNullAction() throws IOException {
         player1.setCard(game.getDeckCard(1));   //Apollo
         player2.setCard(game.getDeckCard(13));  //Selene
 
@@ -284,7 +288,7 @@ public class MovementPhaseTest {
      * tests the behaviour of actionMethod() when the card is Prometheus
      */
     @Test
-    public void checkRestore(){
+    public void checkRestore() throws IOException {
         player1.setCard(game.getDeckCard(9));
         player2.setCard(game.getDeckCard(13));
         game.deployBuilder(player1, game.gameBoard.fullMap[2][2]);
@@ -316,7 +320,7 @@ public class MovementPhaseTest {
      * tests the behaviour of actionMethod() when the card is Pan
      */
     @Test
-    public void checkWinPan(){
+    public void checkWinPan() throws IOException {
         player1.setCard(game.getDeckCard(8));
         player2.setCard(game.getDeckCard(13));
 
