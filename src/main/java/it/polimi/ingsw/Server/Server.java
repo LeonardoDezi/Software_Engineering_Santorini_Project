@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
     private int port;
-    private Lobby lobby;
+    public Lobby lobby;
     private GameMaster gameMaster;
 
     public Server(int port) {

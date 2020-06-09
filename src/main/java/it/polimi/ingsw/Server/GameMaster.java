@@ -7,24 +7,21 @@ import java.io.IOException;
 import java.util.List;
 
 public class GameMaster implements Observer {
-public Lobby lobby;
 private List<GameInitializer> gameInitializers;
 
 
     @Override
-    public void update() throws IOException {
+    public Integer update(Client newClient) throws IOException {
 
         if (gameInitializers.isEmpty()){
-            Client client = lobby.getFirstClient();
-            GameInitializer gameInitializer = new GameInitializer(client);
+            GameInitializer gameInitializer = new GameInitializer(newClient);
             gameInitializers.add(gameInitializer);
         }
         else {
-            Client client = lobby.getFirstClient();
-            Integer outcome = gameInitializers.get(0).addPlayer(client);
+            Integer outcome = gameInitializers.get(0).addPlayer(newClient);
             if(outcome == 0){
                 gameInitializers.remove(0);
-                lobby.addClient(client);
+                return 0;
             }
         }
 
@@ -32,5 +29,6 @@ private List<GameInitializer> gameInitializers;
             gameInitializers.get(0).dealCards();
         }
 
+        return 1;
     }
 }

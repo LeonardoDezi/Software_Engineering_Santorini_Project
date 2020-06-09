@@ -36,9 +36,6 @@ public class GameInitializer implements Runnable{
     public void run() {
         this.netInterface = new NetInterface(game);
         netInterface.addClient(firstPlayer);
-        //TODO ask the player the number of players
-        // virtualView.sendmessage("Please insert the number of player")
-        // wait for virtualView
         int numberOfPlayers = 2; //get this from client
         Game game = new Game(numberOfPlayers, netInterface);
         this.game = game;

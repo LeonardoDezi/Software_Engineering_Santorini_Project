@@ -28,69 +28,6 @@ public class Client {
         this.port = port;
     }
 
-  /*  private boolean active = true;
-
-    public synchronized boolean isActive() {
-        return active;
-    }
-
-    public synchronized void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public Thread asyncReadFromSocket(final ObjectInputStream socketIn) {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (isActive()) {
-                        Object inputObject = socketIn.readObject();
-                        if (inputObject instanceof String) {
-                            System.out.println((String) inputObject);
-                        } else if (inputObject instanceof Board) {
-                            ((Board) inputObject).print();
-                        } else {
-                            throw new IllegalArgumentException();
-                        }
-                    }
-                } catch (Exception e) {
-                    setActive(false);
-                }
-            }
-        });
-        t.start();
-        return t;
-    }
-
-    public Thread asyncWriteToSocket(final Scanner stdin, final PrintWriter socketOut) {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (isActive()) {
-                        String inputLine = stdin.nextLine();
-                        socketOut.println(inputLine);
-                        socketOut.flush();
-                    }
-                } catch (Exception e) {
-                    setActive(false);
-                }
-            }
-        });
-        t.start();
-        return t;
-    }
-
-    public void startConnection() throws IOException {
-
-        Socket socket = new Socket(ip, port);
-        System.out.println("Connection established");
-        ObjectInputStream socketIn = new ObjectInputStream(socket.getInputStream());
-        PrintWriter socketOut = new PrintWriter(socket.getOutputStream());
-
-    }*/
-
-
     public void startClient() throws IOException {
 
         this.serverSocket = new Socket();
@@ -106,11 +43,6 @@ public class Client {
         clientController.matchSetup(serverSocket); //TODO here starts the client for the game
         clientController.play(serverSocket);
 
-        try {
-            serverSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         //TODO ask for rematch, if yes newgame if no close app
     }
 

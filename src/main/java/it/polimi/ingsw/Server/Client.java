@@ -10,18 +10,19 @@ public class Client implements Observer {
     private Socket socket;
     public final int clientID;
     private String username;
+    private int numberOfPlayers;
 
     public Client(Socket socket){
         this.clientID = clientCount.incrementAndGet();
         this.socket = socket;
-        //TODO ask the client for the name and save it
+
         //socket
     }
 
 
     @Override
-    public void update() { //TODO write the update method to update all the boards
-
+    public Integer update(Client client) { //TODO write the update method to update all the boards
+        return null;
     }
 
     public Socket getSocket() {
