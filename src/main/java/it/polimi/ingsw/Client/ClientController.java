@@ -25,7 +25,7 @@ public class ClientController {
      * this method loops until all the players are ready to play
      * @param socket is the socket from where the clients gets the information for the setup
      */
-    public void matchSetup(Socket socket){
+   public void matchSetup(Socket socket){
         setup = true;
         while(setup){
             netInterface.getMatchSetup(socket, this);

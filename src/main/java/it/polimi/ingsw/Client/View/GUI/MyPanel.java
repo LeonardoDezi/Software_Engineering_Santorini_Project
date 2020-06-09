@@ -52,14 +52,14 @@ class MyPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         /*g.drawString("This is my custom Panel!",10,20);
-        g.setColor(Color.RED);
+        g.setColor(Colour.RED);
         g.fillRect(squareX,squareY,squareW,squareH);
-        g.setColor(Color.BLACK);
+        g.setColor(Colour.BLACK);
         g.drawRect(squareX,squareY,squareW,squareH);
 
-        g.setColor(Color.GREEN);
+        g.setColor(Colour.GREEN);
         g.fillRect(squareX+20,squareY+20,squareW,squareH);
-        g.setColor(Color.BLACK);
+        g.setColor(Colour.BLACK);
         g.drawRect(squareX+20,squareY+20,squareW,squareH);  */
 
         //drawCards(g);

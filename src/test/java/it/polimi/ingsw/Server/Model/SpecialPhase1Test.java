@@ -41,7 +41,7 @@ public class SpecialPhase1Test {
     /**
      * creates the players used in every test and sets the cards of player2 and player3 to Pan and Chronus
      */
-    @Before
+ /*   @Before
     public void create(){
         game = new Game(3, netInterface);
         game.addPlayer(new Player("Marco", "Red", game, 0));

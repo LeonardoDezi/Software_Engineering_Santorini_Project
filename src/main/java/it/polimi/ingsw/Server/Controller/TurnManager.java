@@ -34,7 +34,7 @@ public class TurnManager {
     private final NetInterface netInterface;
 
 
-    public TurnManager(Game game, NetInterface netInterface){
+    public TurnManager(Game game, NetInterface netInterface) {
         this.game = game;
         this.netInterface = netInterface;
         this.playerList = game.getPlayerList();
@@ -48,7 +48,7 @@ public class TurnManager {
         netInterface.startGame();
 
 
-        while(!(game.getGameEnded())) {
+        while (!(game.getGameEnded())) {
 
             for (Player player : playerList) {  //succederà qualcosa se nel mentre rimuoviamo un giocatore?   cambierà la playerList di game?
 
@@ -67,7 +67,7 @@ public class TurnManager {
                 while (!(game.getGameEnded()) && context.getPhase() != null)
                     context.request();
 
-                if(game.getGameEnded())
+                if (game.getGameEnded())
                     break;
             }
         }
@@ -75,12 +75,8 @@ public class TurnManager {
         endGame();
     }
 
-
-    public void endGame(){
+    public void endGame() {
         //sendMessage("La partita è finita. Ha vinto game.currentPlayer!!!, null);
     }
-
-
-
 }
 

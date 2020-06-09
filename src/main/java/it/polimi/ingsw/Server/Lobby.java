@@ -5,26 +5,31 @@ import it.polimi.ingsw.Observer.Observer;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Lobby extends Observable {
-    private static LinkedList<Client> clients;
+    private ArrayList<Client> clients;
     private LinkedList<Observer> observers = new LinkedList<Observer>();
 
-    public void Lobby() throws IOException {
-        clients = new LinkedList<Client>();
+    public void lobby() throws IOException {
+        clients = new ArrayList<Client>();
     }
 
     public void addClient(Client client) throws IOException {
 
-        if(client==null) {
-            throw new IllegalArgumentException("'newClient' was null");
-        }
-        synchronized(clients){
-            if(clients.contains(client)) return;
-            clients.add(client);
-        }
+     //   if(client==null) {
+
+    //        throw new IllegalArgumentException("'newClient' was null");
+    //    }
+
+           // if(clients.contains(client)){
+             //   return;
+            //}
+        System.out.println("prima di add");
+        clients.add(0, client);
+        System.out.println("sono qui");
         update(getFirstClient());
         removeClient(getFirstClient());
     }

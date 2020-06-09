@@ -16,7 +16,7 @@ import static it.polimi.ingsw.Server.ServerApp.*;
 //int chosenCard = netInterface.getChosenCard(possibleCard, player);
 //messaggio per confermare che la carta è stata scelta?
 
-public class GameInitializer implements Runnable{
+public class GameInitializer implements Runnable {
 
     private Client firstPlayer;
     private String firstPlayerName;
@@ -24,7 +24,7 @@ public class GameInitializer implements Runnable{
     private NetInterface netInterface;
     private Game game;
 
-    public GameInitializer(Client client){
+    public GameInitializer(Client client) throws IOException {
         this.firstPlayer = client;
         firstPlayerName = firstPlayer.getUsername();
         this.clientID = client.clientID;
@@ -41,7 +41,7 @@ public class GameInitializer implements Runnable{
         this.game = game;
         Dealer player1 = new Dealer(firstPlayerName, COLOUR1, game, clientID);
         int outcome = game.addPlayer(player1);  //testare che non ci dia problemi quando facciamo addPlayer
-        if(outcome == 0){
+        if (outcome == 0) {
             //TODO send to the client "error in match creation, please retry"
             return;
         }
@@ -67,35 +67,34 @@ public class GameInitializer implements Runnable{
         }
     }
 
-    public int addPlayer(Client client){
+    public int addPlayer(Client client) throws IOException {
         int outcome;
         int playersInGame = game.getPlayerList().size();
-        if(playersInGame==1){
+        if (playersInGame == 1) {
             Player player = new Player(client.getUsername(), COLOUR2, game, client.clientID);
             outcome = game.addPlayer(player);
-            if(outcome==1){
+            if (outcome == 1) {
                 netInterface.addClient(client);
             }
-        }
-        else{
+        } else {
             Player player = new Player(client.getUsername(), COLOUR3, game, client.clientID);
             outcome = game.addPlayer(player);
-            if(outcome==1){
+            if (outcome == 1) {
                 netInterface.addClient(client);
             }
         }
-        if(outcome == 0){
+        if (outcome == 0) {
             return 0;
         }
         return 1;
     }
 
-    public boolean checkStatus(){
+    public boolean checkStatus() {
         return game.getPlayerList().size() == game.numberOfPlayers;
     }
 
 
-    public void setPlayers(){
+    public void setPlayers() {
 
         //TODO invia al dealer la lista dei giocatori e fa che ritorni il primo giocatore come player
         Player player = null;    //questo deve essere il giocatore ritornato lo inizializzo per compilare
@@ -113,18 +112,18 @@ public class GameInitializer implements Runnable{
 
         //Dealer dealer = (Dealer)game.getPlayerList().get(0);   //l'ho modificato
 
-        if(game.numberOfPlayers == 3)
+        if (game.numberOfPlayers == 3)
             game.getDealer().drawCards(cards.get(0), cards.get(1), cards.get(2));    //modificato
         else
             game.getDealer().drawCards(cards.get(0), cards.get(1));   //modificato
 
         ArrayList<Card> possibleCards = new ArrayList<>();
-        for(int i=0; i < game.getChosenCardsSize(); i++) {
+        for (int i = 0; i < game.getChosenCardsSize(); i++) {
             possibleCards.add(game.getChosenCard(i));
         }
 
 
-        for(int i= game.numberOfPlayers -1 ; i >= 0; i--){
+        for (int i = game.numberOfPlayers - 1; i >= 0; i--) {
             //TODO chosenCard al momento deve essere cardPosition non cardNumber in questo punto
             int chosenCard = netInterface.getChosenCard(possibleCards, game.getPlayerList().get(i).clientID);
             possibleCards = game.getPlayerList().get(i).chooseCard(possibleCards, chosenCard);
@@ -135,22 +134,20 @@ public class GameInitializer implements Runnable{
 
     public void setBuilders() throws IOException {
         ArrayList<Square> possibleSquares;
-        for(int i=0; i < game.numberOfPlayers; i++){
+        for (int i = 0; i < game.numberOfPlayers; i++) {
             Player player = game.getPlayerList().get(i);
-            possibleSquares=game.getBasic().getFreeSquares();
+            possibleSquares = game.getBasic().getFreeSquares();
             //TODO ask the player where he wants to place the builders
             Square square1 = netInterface.getBuilderPlacement(possibleSquares, player.clientID, 1);
-            if(square1.x == -1){
+            if (square1.x == -1) {
                 System.out.print("There has been an error with the recognition of the client, the player has not set the builders");
                 return;
             }
             game.deployBuilder(player, square1);
-            possibleSquares=game.getBasic().getFreeSquares();
+            possibleSquares = game.getBasic().getFreeSquares();
             Square square2 = netInterface.getBuilderPlacement(possibleSquares, player.clientID, 2);
             game.deployBuilder(player, square2);
         }
 
     }
-
-
 }

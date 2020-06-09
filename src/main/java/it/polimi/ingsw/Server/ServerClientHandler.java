@@ -1,13 +1,6 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.Server.VirtualView.Receiver;
-import it.polimi.ingsw.Server.VirtualView.Sender;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class ServerClientHandler implements Runnable{
@@ -22,8 +15,9 @@ public class ServerClientHandler implements Runnable{
 
     @Override
     public void run () { //TODO controlliamo bene
-        Client client = new Client(socket);
+        Client client = null;
         try {
+            client = new Client(socket);
             lobby.addClient(client);
         } catch (IOException e) {
             e.printStackTrace();

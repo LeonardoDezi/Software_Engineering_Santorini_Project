@@ -3,6 +3,7 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Server.Model.Builder;
 import it.polimi.ingsw.Server.Model.Square;
 
+import java.io.BufferedReader;
 import java.util.ArrayList;
 
 public class Moves {
@@ -24,14 +25,37 @@ public class Moves {
 
     public Builder getBuilder1(){return builder1;}
 
+    public void setBuilder1(Builder builder1){
+        this.builder1 = builder1;
+    }
+
     public Builder getBuilder2(){return builder2;}
 
-    public ArrayList<Square> getMove1(){ return moves1;}
+    public void setBuilder2(Builder builder2){
+        this.builder2 = builder2;
+    }
 
-    public ArrayList<Square> getMove2(){ return moves2;}
+    public ArrayList<Square> getMoves1(){ return moves1;}
 
+    public void setMoves1(ArrayList<Square> moves1){
+        this.moves1 = moves1;
+    }
 
-    public boolean getIsDome(){return this.isDome;}
+    public ArrayList<Square> getMoves2(){ return moves2;}
+
+    public void setMoves2(ArrayList<Square> moves2){
+        this.moves2 = moves2;
+    }
+
+    public boolean getIsDome(){return isDome;}
 
     public void setIsDome(boolean isDome){this.isDome = isDome;}
+
+    public boolean getFemale(){
+        return female;
+    }
+
+    public void setFemale(boolean female){
+        this.female = female;
+    }
 }

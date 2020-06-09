@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Server.VirtualView;
 
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import it.polimi.ingsw.Parser.Message;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,9 +15,11 @@ public class Receiver {
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 
+        Gson gson = new Gson();
         String line = bufferedReader.readLine();
-        JSONObject jsonObject = new JSONObject(line);
+        Message message = gson.fromJson(line, Message.class);
+        String m = message.getMessage();
 
-        return jsonObject.toString();
+        return m;
     }
 }

@@ -46,7 +46,7 @@ public class MovementPhaseTest {
     /**
      * creates the players and the games used in every test
      */
-    @Before
+/*    @Before
     public void create(){
         game = new Game(2, netInterface);
         game1 = new Game(3, netInterface2);

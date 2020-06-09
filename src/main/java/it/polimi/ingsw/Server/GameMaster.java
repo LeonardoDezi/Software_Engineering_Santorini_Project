@@ -9,7 +9,6 @@ import java.util.List;
 public class GameMaster implements Observer {
 private List<GameInitializer> gameInitializers;
 
-
     @Override
     public Integer update(Client newClient) throws IOException {
 

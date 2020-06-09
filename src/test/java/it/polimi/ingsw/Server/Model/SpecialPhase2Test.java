@@ -36,7 +36,7 @@ public class SpecialPhase2Test {
     /**
      * creates the players and the game used in every test
      */
-    @Before
+ /*   @Before
     public void create(){
         game = new Game(2, netInterface);
         game.addPlayer(new Player("Marco", "Red", game, 0));
