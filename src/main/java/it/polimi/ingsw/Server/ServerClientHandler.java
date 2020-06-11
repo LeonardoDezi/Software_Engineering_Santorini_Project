@@ -19,7 +19,7 @@ public class ServerClientHandler implements Runnable{
         try {
             client = new Client(socket);
             lobby.addClient(client);
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

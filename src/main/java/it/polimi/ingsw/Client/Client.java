@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import it.polimi.ingsw.Client.View.CLI.Cli;
 import it.polimi.ingsw.Parser.Message;
 import java.io.*;
 import java.net.Socket;
@@ -32,15 +31,8 @@ public class Client {
         }
 
         System.out.println("Connection established");
-        System.out.println("Choose game mode");
-        System.out.println("Write 1 for command line \nWrite 2 for graphic");
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        int gametype = Integer.parseInt(bufferedReader.readLine());
-
-        if (gametype == 1) {
-            Cli.startCli();
-        }
+        System.out.println("Write Username");
+        username = "user";
 
         //TODO ask the player for the username
 

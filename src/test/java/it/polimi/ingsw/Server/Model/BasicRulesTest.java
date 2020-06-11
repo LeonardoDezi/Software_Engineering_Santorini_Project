@@ -17,7 +17,7 @@ public class BasicRulesTest {
     private Board board;
     private Player player1;
     private BasicRules rules;
-    private NetInterface netInterface = new NetInterface(game);
+    private NetInterface netInterface = new NetInterface();
 
     @Before
     public void createGameAndRules(){

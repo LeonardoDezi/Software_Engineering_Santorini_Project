@@ -12,15 +12,27 @@ import static java.lang.Integer.parseInt;
 
 public class NetInterface {
     private ArrayList<Client> clients;
-    private final Game game;
+    private Game game;
+    private Boolean alreadyExecuted;
     private Player currentPlayer;
     private final Sender sender = new Sender();
     private final Receiver receiver = new Receiver();
 
-    public NetInterface(Game game){
-        this.game = game;
-        currentPlayer = new Player("Giocatore", "green", game, 1);
+    public NetInterface(){
+        alreadyExecuted = Boolean.FALSE;
+        clients = new ArrayList<Client>();
     }
+
+    public void setGame(Game game){
+        if(!alreadyExecuted){
+            this.game=game;
+        }
+        alreadyExecuted=true;
+    }
+
+    /*public void testSetFirstPlayer(){
+        currentPlayer = new Player("Giocatore", "green", game, 1);
+    }*/
 
     /**
      * sends to a specific client all the available moves with both builders and waits for the player response on whitch to use.

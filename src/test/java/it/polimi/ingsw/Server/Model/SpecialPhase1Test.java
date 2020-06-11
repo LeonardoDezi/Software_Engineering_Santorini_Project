@@ -22,7 +22,7 @@ public class SpecialPhase1Test {
     private Game game;
 
     /** the context used for the test*/
-    private Context context = new Context(new NetInterface(game));
+    private Context context = new Context(new NetInterface());
 
     /** the player used for the test*/
     private Player player1;
@@ -35,7 +35,7 @@ public class SpecialPhase1Test {
     /** the ArrayList of Squares used for the test*/
     private ArrayList<Square> possibleMoves;
 
-    private NetInterface netInterface = new NetInterface(game);
+    private NetInterface netInterface = new NetInterface();
 
 
     /**

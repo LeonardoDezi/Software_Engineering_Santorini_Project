@@ -19,8 +19,8 @@ public class GameTest {
     private Game game1;
     private Game game2;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private NetInterface netInterface = new NetInterface(game1);
-    private NetInterface netInterface2 = new NetInterface(game2);
+    private NetInterface netInterface = new NetInterface();
+    private NetInterface netInterface2 = new NetInterface();
 
 
     @Before          //pensare anche alle partite a due giocatori

@@ -28,7 +28,7 @@ public class BoardTest {
     private Builder builder4;
     private Square square;
     private Game game;
-    private NetInterface netInterface = new NetInterface(game);
+    private NetInterface netInterface = new NetInterface();
 
     @Before
     public void createElements() {

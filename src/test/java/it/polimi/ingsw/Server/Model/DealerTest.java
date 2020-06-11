@@ -11,8 +11,8 @@ public class DealerTest {
     private Dealer player2;
     private Game game1;
     private Game game2;
-    private NetInterface netInterface = new NetInterface(game1);
-    private NetInterface netInterface2 = new NetInterface(game2);
+    private NetInterface netInterface = new NetInterface();
+    private NetInterface netInterface2 = new NetInterface();
 
     @Before
     public void createGame(){

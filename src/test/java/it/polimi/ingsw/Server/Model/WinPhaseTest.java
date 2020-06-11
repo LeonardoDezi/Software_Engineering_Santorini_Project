@@ -16,7 +16,7 @@ public class WinPhaseTest {
     private Player player1;
     private Player player2;
     private Player player3;
-    private NetInterface netInterface = new NetInterface(game);
+    private NetInterface netInterface = new NetInterface();
 
 
     @Before

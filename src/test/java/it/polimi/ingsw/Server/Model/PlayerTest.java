@@ -15,7 +15,7 @@ public class PlayerTest {
     private  Player player1;
     private Player player2;
     private Game game;
-    private NetInterface netInterface = new NetInterface(game);
+    private NetInterface netInterface = new NetInterface();
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();

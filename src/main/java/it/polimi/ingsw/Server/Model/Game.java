@@ -2,7 +2,6 @@ package it.polimi.ingsw.Server.Model;
 import it.polimi.ingsw.Parser.ParserManager;
 import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -60,6 +59,7 @@ public class Game {
         deck = parserManager.getDeck();
 
     }
+
 
     /** used to get the list of the players of the game
      * @return is the list of the players playing

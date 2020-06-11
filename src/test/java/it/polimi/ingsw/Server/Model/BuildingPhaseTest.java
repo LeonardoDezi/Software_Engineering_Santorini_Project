@@ -34,10 +34,10 @@ import static org.junit.Assert.*;
      /** the ArrayList of Squares used for the test*/
      ArrayList<Square> possibleMoves;
      /** the context used for the test*/
-     private Context context = new Context(new NetInterface(game));
+     private Context context = new Context(new NetInterface());
      /** the context used for the test*/
-     private Context context1 = new Context(new NetInterface(game1));
-     private NetInterface netInterface = new NetInterface(game);
+     private Context context1 = new Context(new NetInterface());
+     private NetInterface netInterface = new NetInterface();
 
 
 

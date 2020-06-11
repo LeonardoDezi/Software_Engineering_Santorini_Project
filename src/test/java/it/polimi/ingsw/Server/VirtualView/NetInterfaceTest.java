@@ -31,7 +31,7 @@ public class NetInterfaceTest {
 
     @Before
     public void create(){
-        netInterface=new NetInterface(null);
+        netInterface=new NetInterface();
         string1 = "3,5:";
         string2 = "7,2:";
         for(int i=0; i<=1; i++){

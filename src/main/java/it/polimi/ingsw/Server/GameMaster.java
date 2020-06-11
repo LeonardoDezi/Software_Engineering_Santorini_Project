@@ -4,28 +4,34 @@ import it.polimi.ingsw.Observer.Observer;
 import it.polimi.ingsw.Server.Controller.GameInitializer;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 public class GameMaster implements Observer {
-private List<GameInitializer> gameInitializers;
+private ArrayList<GameInitializer> gameInitializers = new ArrayList<GameInitializer>();
 
     @Override
-    public Integer update(Client newClient) throws IOException {
+    public Integer update(Client newClient) throws IOException, InterruptedException {
 
-        if (gameInitializers.isEmpty()){
+        if (gameInitializers.size()==0){
             GameInitializer gameInitializer = new GameInitializer(newClient);
             gameInitializers.add(gameInitializer);
+            int x = gameInitializers.size();
+            System.out.print(x);
         }
         else {
             Integer outcome = gameInitializers.get(0).addPlayer(newClient);
             if(outcome == 0){
                 gameInitializers.remove(0);
+                System.out.print("problema aggiunta giocatori");
                 return 0;
             }
         }
 
         if(gameInitializers.get(0).checkStatus()){
             gameInitializers.get(0).dealCards();
+            gameInitializers.get(0).setPlayers();
+            gameInitializers.get(0).setBuilders();
+            gameInitializers.get(0).startGame();
         }
 
         return 1;

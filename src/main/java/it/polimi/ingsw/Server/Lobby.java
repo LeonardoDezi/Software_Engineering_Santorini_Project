@@ -4,34 +4,30 @@ import it.polimi.ingsw.Observer.Observable;
 import it.polimi.ingsw.Observer.Observer;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
+
 
 public class Lobby extends Observable {
-    private ArrayList<Client> clients;
+    private ArrayList<Client> clients = new ArrayList<Client>();
     private LinkedList<Observer> observers = new LinkedList<Observer>();
 
-    public void lobby() throws IOException {
-        clients = new ArrayList<Client>();
+
+    public void addClient(Client client) throws IOException, InterruptedException {
+
+       if(client==null) {
+
+            throw new IllegalArgumentException("'newClient' was null");
     }
 
-    public void addClient(Client client) throws IOException {
-
-     //   if(client==null) {
-
-    //        throw new IllegalArgumentException("'newClient' was null");
-    //    }
-
-           // if(clients.contains(client)){
-             //   return;
-            //}
-        System.out.println("prima di add");
+            if(clients.contains(client)){
+               return;
+            }
         clients.add(0, client);
-        System.out.println("sono qui");
+            if(observers.isEmpty()){
+                System.out.print("probblema");
+            }
         update(getFirstClient());
-        removeClient(getFirstClient());
     }
 
     public void removeClient(Client client) {
@@ -63,4 +59,23 @@ public class Lobby extends Observable {
         this.observers.remove(observer);
 
     }
+
+    public void update(Client client) throws IOException, InterruptedException {
+        for( int i = 0; i<observers.size(); i++){
+            Integer status = observers.get(i).update(client);
+            for(int j=0; j<10; j++){
+                if(status!=0){
+                    break;
+                }
+                if(j==9){
+                    System.out.print("Problems in match creation, please reset client, lobby.update");
+                    client.getSocket().close();
+                    return;
+                }
+                status=observers.get(i).update(client);
+            }
+        }
+        return;
+    }
+
 }

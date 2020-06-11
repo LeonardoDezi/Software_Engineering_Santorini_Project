@@ -34,7 +34,7 @@ public class GameInitializer implements Runnable {
 
     @Override
     public void run() {
-        this.netInterface = new NetInterface(game);
+        this.netInterface = new NetInterface();
         netInterface.addClient(firstPlayer);
         int numberOfPlayers = 2; //get this from client
         Game game = new Game(numberOfPlayers, netInterface);
@@ -45,26 +45,7 @@ public class GameInitializer implements Runnable {
             //TODO send to the client "error in match creation, please retry"
             return;
         }
-
-        // Wait until game.getPlayerList().size() == game.numberOfPlayers;
-
-        try {
-            dealCards();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        setPlayers();
-        try {
-            setBuilders();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        TurnManager myGameManager = new TurnManager(game, netInterface);   //possiamo spostarlo? se no in questo punto è inutile
-        try {
-            myGameManager.letsPlay();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return;
     }
 
     public int addPlayer(Client client) throws IOException {
@@ -104,7 +85,7 @@ public class GameInitializer implements Runnable {
     }
 
     public void dealCards() throws IOException {
-
+        System.out.print("siamo a dare le carte:\n");
         // TODO sendMessage("Sei stato scelto dagli Dei per decidere chi parteciperà al gioco. scegli " + game.numberOfPlayers + " carte", firstPlayer)
         ArrayList<Integer> cards = netInterface.getCards(firstPlayer, game.getDeck());
 
@@ -149,5 +130,10 @@ public class GameInitializer implements Runnable {
             game.deployBuilder(player, square2);
         }
 
+    }
+
+    public void startGame() throws IOException {
+        TurnManager myGameManager = new TurnManager(game, netInterface);
+        myGameManager.letsPlay();
     }
 }

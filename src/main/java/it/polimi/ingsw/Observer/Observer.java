@@ -6,6 +6,6 @@ import java.io.IOException;
 
 public interface Observer<T> {
 
-        Integer update(Client client) throws IOException;
+        Integer update(Client client) throws IOException, InterruptedException;
 }
 

@@ -29,9 +29,9 @@ public class SpecialPhase2Test {
     /** the ArrayList of Squares used for the test*/
     private ArrayList<Square> possibleMoves;
     /** the context used for the test*/
-    private Context context = new Context(new NetInterface(game));
+    private Context context = new Context(new NetInterface());
 
-    private NetInterface netInterface = new NetInterface(game);
+    private NetInterface netInterface = new NetInterface();
 
     /**
      * creates the players and the game used in every test
