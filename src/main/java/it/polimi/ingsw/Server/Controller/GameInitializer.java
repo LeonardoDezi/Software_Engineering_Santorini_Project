@@ -23,6 +23,7 @@ public class GameInitializer implements Runnable {
     private Integer clientID;
     private NetInterface netInterface;
     private Game game;
+    private ArrayList<Card> maialaImpestata = new ArrayList<Card>();
 
     public GameInitializer(Client client) throws IOException {
         this.firstPlayer = client;
@@ -36,7 +37,12 @@ public class GameInitializer implements Runnable {
     public void run() {
         this.netInterface = new NetInterface();
         netInterface.addClient(firstPlayer);
-        int numberOfPlayers = 2; //get this from client
+        Integer numberOfPlayers = 0;
+        try {
+            numberOfPlayers = netInterface.getNumberOfPlayers(firstPlayer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Game game = new Game(numberOfPlayers, netInterface);
         this.game = game;
         Dealer player1 = new Dealer(firstPlayerName, COLOUR1, game, clientID);
@@ -75,10 +81,9 @@ public class GameInitializer implements Runnable {
     }
 
 
-    public void setPlayers() {
+    public void setPlayers() throws IOException {
 
-        //TODO invia al dealer la lista dei giocatori e fa che ritorni il primo giocatore come player
-        Player player = null;    //questo deve essere il giocatore ritornato lo inizializzo per compilare
+        Player player = netInterface.askFirstPlayer(firstPlayer, game.getPlayerList());    //questo deve essere il giocatore ritornato lo inizializzo per compilare
         game.getPlayerList().remove(player);  //rimuovi il giocatore da playerList. posso anche farlo se mi mandi solo il nome
         game.getPlayerList().add(0, player); //inserisce il giocatore in testa a playerList
 
@@ -86,6 +91,7 @@ public class GameInitializer implements Runnable {
 
     public void dealCards() throws IOException {
         System.out.print("siamo a dare le carte:\n");
+        netInterface.sendNumber();
         // TODO sendMessage("Sei stato scelto dagli Dei per decidere chi parteciperà al gioco. scegli " + game.numberOfPlayers + " carte", firstPlayer)
         ArrayList<Integer> cards = netInterface.getCards(firstPlayer, game.getDeck());
 
@@ -105,7 +111,7 @@ public class GameInitializer implements Runnable {
 
 
         for (int i = game.numberOfPlayers - 1; i >= 0; i--) {
-            //TODO chosenCard al momento deve essere cardPosition non cardNumber in questo punto
+
             int chosenCard = netInterface.getChosenCard(possibleCards, game.getPlayerList().get(i).clientID);
             possibleCards = game.getPlayerList().get(i).chooseCard(possibleCards, chosenCard);
             //messaggio per confermare che la carta è stata scelta?

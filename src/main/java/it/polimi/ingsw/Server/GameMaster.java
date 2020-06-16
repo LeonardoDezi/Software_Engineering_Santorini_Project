@@ -15,8 +15,6 @@ private ArrayList<GameInitializer> gameInitializers = new ArrayList<GameInitiali
         if (gameInitializers.size()==0){
             GameInitializer gameInitializer = new GameInitializer(newClient);
             gameInitializers.add(gameInitializer);
-            int x = gameInitializers.size();
-            System.out.print(x);
         }
         else {
             Integer outcome = gameInitializers.get(0).addPlayer(newClient);

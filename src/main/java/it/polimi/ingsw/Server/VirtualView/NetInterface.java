@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.VirtualView;
 
+import com.google.gson.internal.$Gson$Preconditions;
 import it.polimi.ingsw.Server.Client;
 import it.polimi.ingsw.Server.Model.*;
 
@@ -17,6 +18,7 @@ public class NetInterface {
     private Player currentPlayer;
     private final Sender sender = new Sender();
     private final Receiver receiver = new Receiver();
+    private Integer numberOfPlayers;
 
     public NetInterface(){
         alreadyExecuted = Boolean.FALSE;
@@ -156,6 +158,7 @@ public class NetInterface {
         message = new StringBuilder(Receiver.receive(socket));
         String[] response = message.toString().split(",");
         ArrayList<Integer> choosenCards = new ArrayList<>();
+
         for (String s : response) {
             int x = parseInt(s);
             choosenCards.add(x);
@@ -171,9 +174,9 @@ public class NetInterface {
      */
     public Integer getChosenCard(ArrayList<Card> possibleCards, Integer clientID) throws IOException {
         Socket socket = new Socket();
-        for (Client client : clients) {
-            if (clientID == client.clientID) {
-                socket = client.getSocket();
+        for (int i=0; i<clients.size(); i++) {
+            if (clientID == clients.get(i).clientID) {
+                socket = clients.get(i).getSocket();
             }
         }
         if(socket==null){
@@ -181,13 +184,16 @@ public class NetInterface {
             return 0;
         }
         StringBuilder partial = new StringBuilder("8@");
-        for(int i=0; i<possibleCards.size(); i++){
-            partial.append(String.valueOf(possibleCards.get(i).getNumber())).append(", ");
+        String stringCard;
+        for (Card value : possibleCards) {
+            stringCard = cardToString(value);
+            partial.append(stringCard);
         }
         String message = partial.toString();
         Sender.send(message, socket);
         message = Receiver.receive(socket);
-        return stringToInt(message);
+        String[] recievedCard = message.split(",");
+        return stringToInt(recievedCard[0]);
     }
 
     /**
@@ -398,6 +404,43 @@ public class NetInterface {
         string.append("@");
         String message = string.toString();
         return  message;
+    }
+
+    public Integer getNumberOfPlayers(Client client) throws IOException {
+        Sender.send("11@", client.getSocket());
+        String numberOfP = Receiver.receive(client.getSocket());
+        Integer numberOfPlayers = parseInt(numberOfP);
+        this.setNumberOfPlayers(numberOfPlayers);
+        return numberOfPlayers;
+    }
+
+    public void sendNumber() throws IOException {
+        for(int i=0; i<clients.size(); i++){
+            Sender.send("12@"+String.valueOf(numberOfPlayers), clients.get(i).getSocket());
+        }
+    }
+
+    public void setNumberOfPlayers(Integer x){
+        this.numberOfPlayers = x;
+    }
+
+    public Player askFirstPlayer(Client dealer, ArrayList<Player> players) throws IOException {
+        StringBuilder partial = new StringBuilder("13@");
+        for(int i=0; i< players.size(); i++){
+            partial.append(players.get(i).playerID);
+            partial.append(":");
+        }
+        String message = partial.toString();
+        Sender.send(message, dealer.getSocket());
+        String firstID = receiver.receive(dealer.getSocket());
+        for(int j=0; j<players.size(); j++){
+            if(players.get(j).playerID.equals(firstID)){
+                System.out.println("the first Player is " + firstID);
+                return players.get(j);
+            }
+        }
+        System.out.println("Player not found, the Dealer begins.");
+        return players.get(0);
     }
 
 }

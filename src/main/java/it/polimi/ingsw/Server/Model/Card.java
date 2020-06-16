@@ -50,4 +50,8 @@ public class Card {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void setNumber(Integer number){
+        this.number = number;
+    }
 }

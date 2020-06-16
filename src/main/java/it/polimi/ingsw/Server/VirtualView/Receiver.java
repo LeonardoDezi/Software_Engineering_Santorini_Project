@@ -13,10 +13,9 @@ public class Receiver {
         //wait for the player answer on the socket
         //if the message is 0 return null(?)
 
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-
         Gson gson = new Gson();
-        String line = bufferedReader.readLine();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+        String line = reader.readLine();
         Message message = gson.fromJson(line, Message.class);
         String m = message.getMessage();
 

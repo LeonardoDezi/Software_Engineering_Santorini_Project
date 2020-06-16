@@ -3,6 +3,10 @@ package it.polimi.ingsw.Client.NetworkHandler;
 import it.polimi.ingsw.Client.ClientController;
 import it.polimi.ingsw.Client.Moves;
 import it.polimi.ingsw.Server.Model.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
 import static java.lang.Integer.parseInt;
@@ -23,100 +27,106 @@ public class NetInterface {
 
     /**
      * method used during the game to show the player what possibility has to choose and wait for the choice
+     *
      * @param socket is the Server socket.
      * @return the move chosen by the player depending on the phase of the game
      */
-    public Moves getMoves(Socket socket){
-         String availableMoves;
-        while ( (availableMoves = Receiver.receive(socket)) !=null ) {
-            String[] values = availableMoves.split("@");
-            if (values[0].equals("-1")) {
-                return null;
-            }
-            if (values[0].equals("1")) {
-                moves1 = stringToArrayListSquare(values[1]);
-                builder1 = stringToBuilder(values[2]);
-                moves2 = stringToArrayListSquare(values[3]);
-                builder2 = stringToBuilder(values[4]);
-                moves.setMoves1(moves1);
-                moves.setMoves2(moves2);
-                moves.setBuilder1(builder1);
-                moves.setBuilder2(builder2);
-                moves.setIsDome(false);
-                moves.setFemale(false);
-            }
-            if (values[0].equals("2")) {
-                moves1 = stringToArrayListSquare(values[1]);
-                builder2 = stringToBuilder(values[2]);
-                moves.setMoves1(moves1);
-                moves.setMoves2(null);
-                moves.setBuilder1(builder1);
-                moves.setBuilder2(null);
-                moves.setIsDome(false);
-                moves.setFemale(false);
-            }
-            if (values[0].equals("3")) {
-                moves1 = stringToArrayListSquare(values[1]);
-                builder2 = stringToBuilder(values[2]);
-                boolean isDome = stringToBool(values[3]);
-                moves.setMoves1(moves1);
-                moves.setMoves2(null);
-                moves.setBuilder1(builder1);
-                moves.setBuilder2(null);
-                moves.setIsDome(isDome);
-                moves.setFemale(false);
-            }
-            if (values[0].equals("4")) {
-                moves1 = stringToArrayListSquare(values[1]);
-                builder1 = stringToBuilder(values[2]);
-                moves2 = stringToArrayListSquare(values[3]);
-                builder2 = stringToBuilder(values[4]);
-                boolean female = stringToBool(values[5]);
-                moves.setMoves1(moves1);
-                moves.setMoves2(moves2);
-                moves.setBuilder1(builder1);
-                moves.setBuilder2(builder2);
-                moves.setIsDome(false);
-                moves.setFemale(female);
-            }
-            if (values[0].equals("5")) { //text message
-                Integer messageType = parseInt(values[1]);
-                //TODO print on the screen the message recieved
-                Moves moves = null;
-            }
-            if (values[0].equals("6")) { //the client loses
-                clientController.lost();
-            }
+    public Moves getMoves(Socket socket) throws IOException {
+        String availableMoves = Receiver.receive(socket);
+        String[] values = availableMoves.split("@");
+        if (values[0].equals("-1")) {
+            return null;
+        }
+        if (values[0].equals("1")) {
+            moves1 = stringToArrayListSquare(values[1]);
+            builder1 = stringToBuilder(values[2]);
+            moves2 = stringToArrayListSquare(values[3]);
+            builder2 = stringToBuilder(values[4]);
+            moves.setMoves1(moves1);
+            moves.setMoves2(moves2);
+            moves.setBuilder1(builder1);
+            moves.setBuilder2(builder2);
+            moves.setIsDome(false);
+            moves.setFemale(false);
+        }
+        if (values[0].equals("2")) {
+            moves1 = stringToArrayListSquare(values[1]);
+            builder2 = stringToBuilder(values[2]);
+            moves.setMoves1(moves1);
+            moves.setMoves2(null);
+            moves.setBuilder1(builder1);
+            moves.setBuilder2(null);
+            moves.setIsDome(false);
+            moves.setFemale(false);
+        }
+        if (values[0].equals("3")) {
+            moves1 = stringToArrayListSquare(values[1]);
+            builder2 = stringToBuilder(values[2]);
+            boolean isDome = stringToBool(values[3]);
+            moves.setMoves1(moves1);
+            moves.setMoves2(null);
+            moves.setBuilder1(builder1);
+            moves.setBuilder2(null);
+            moves.setIsDome(isDome);
+            moves.setFemale(false);
+        }
+        if (values[0].equals("4")) {
+            moves1 = stringToArrayListSquare(values[1]);
+            builder1 = stringToBuilder(values[2]);
+            moves2 = stringToArrayListSquare(values[3]);
+            builder2 = stringToBuilder(values[4]);
+            boolean female = stringToBool(values[5]);
+            moves.setMoves1(moves1);
+            moves.setMoves2(moves2);
+            moves.setBuilder1(builder1);
+            moves.setBuilder2(builder2);
+            moves.setIsDome(false);
+            moves.setFemale(female);
+        }
+        if (values[0].equals("5")) { //text message
+            Integer messageType = parseInt(values[1]);
+            //TODO print on the screen the message received
+            moves = null;
+        }
+        if (values[0].equals("6")) { //the client loses
+            clientController.lost();
+        }
+        if (values[0].equals("11")){
+            //TODO update board method
+            moves = null;
         }
         return moves;
-    }
+}
 
     /**
      * method used to get the cards and the available squares to place the builders.
      * @param socket is the serverSocket.
      * @param controller is the controller of the player.
      */
-    public void getMatchSetup(Socket socket, ClientController controller){
-        String availableMoves = null;
-        while ( (availableMoves = Receiver.receive(socket)) !=null ) {
+    public void getMatchSetup(Socket socket, ClientController controller) throws IOException {
+        String availableMoves = Receiver.receive(socket);
             String[] values = availableMoves.split("@");
             if (values[0].equals("7")) {//dealer has to choose all the cards
                 String[] cards = values[1].split(":");
                 Card card = new Card();
                 for (int i = 0; i < cards.length; i++) {
                     card = stringToCard(cards[i]);
+                    card.setNumber(i+1);
                     controller.possibleCards.add(card);
-                    controller.dealerChoice();
+                    System.out.println(card.getNumber() + "\n" + card.getName() + "\n" + card.getDescription() + "\n");
                 }
+                controller.dealerChoice();
             }
             if (values[0].equals("8")) {//player has to choose the card
                 String[] cards = values[1].split(":");
                 Card card = new Card();
                 for (int i = 0; i < cards.length; i++) {
                     card = stringToCard(cards[i]);
+                    card.setNumber(i+1);
                     controller.possibleCards.add(card);
-                    controller.playerChoice();
-                }
+                    System.out.println(card.getNumber() + "\n" + card.getName() + "\n" + card.getDescription() + "\n");
+                    }
+                controller.playerChoice();
             }
             if (values[0].equals("9")) {//player has to choose where to place the builder
 
@@ -124,32 +134,61 @@ public class NetInterface {
             if (values[0].equals("10")) { //la partita comincia
                 controller.setup = false;
             }
-        }
+            if (values[0].equals("11")) {
+                System.out.println("Select number of players");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                int numberOfPlayers = Integer.parseInt(reader.readLine());
+                String numberOfP = Integer.toString(numberOfPlayers);
+                Sender.send(numberOfP,socket);
+            }
+            if (values[0].equals("12")){
+                String number = values[1];
+                Integer numberOfPlayers = parseInt(number);
+                clientController.setNumberOfPlayers(numberOfPlayers);
+                System.out.println("Number of Players in game: " + numberOfPlayers);
+            }
+
+            if (values[0].equals("13")){
+                String received = values[1];
+                String[] names = received.split(":");
+                ArrayList<String> playerIDs = new ArrayList<String>();
+                System.out.println("Pick first player");
+                int j = 0;
+                for(int i=0; i<names.length; i++){
+                    j=i+1;
+                    playerIDs.add(names[i]);
+                    System.out.println(j + "for " + names[i] + "\n");
+                }
+                clientController.chooseBeginner(playerIDs);
+            }
+
     }
 
     /**
-     * sends the three cards chosen by the Dealer to the server
-     * @param card1 is the first card.
-     * @param card2 is the second card.
-     * @param card3 is the third card.
+     * sends the cards chosen by the Dealer to the server
+     * @param choosenCards is the ArrayList that contains all the cards.
      * @param socket is the server socket.
      */
-    public void sendCard(Integer card1, Integer card2, Integer card3, Socket socket){
-        String message = Integer.toString(card1) + ", " + Integer.toString(card2) + ", " + Integer.toString(card3);
+    public void sendCard(ArrayList<Integer> choosenCards, Socket socket) throws IOException {
+        String message = new String();
+        for(int i=0; i<choosenCards.size(); i++){
+            message = message + Integer.toString(choosenCards.get(i)) + ",";
+        }
         Sender.send(message,socket);
     }
 
     /**
      * sends the card chosen by the player to the server.
-     * @param card1 is the choosen card.
+     * @param card is the choosen card.
      * @param socket is the server socket.
      */
-    public void sendCard(Integer card1, Socket socket){
-        String message = Integer.toString(card1);
+    public void sendCard(Integer card, Socket socket) throws IOException {
+        card = card-1;
+        String message = Integer.toString(card);
         Sender.send(message, socket);
     }
 
-    public void sendMoves(Envelope envelope, Socket socket){
+    public void sendMoves(Envelope envelope, Socket socket) throws IOException {
         if(envelope == null){
             Sender.send("0", socket);
         }
@@ -265,6 +304,10 @@ public class NetInterface {
         card.name=name;
         card.setDescription(description);
         return card;
+    }
+
+    public void sendFirstPlayer(String player, Socket serverSocket) throws IOException {
+        Sender.send(player, serverSocket);
     }
 
 }

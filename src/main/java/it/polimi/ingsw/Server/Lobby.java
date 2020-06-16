@@ -25,7 +25,7 @@ public class Lobby extends Observable {
             }
         clients.add(0, client);
             if(observers.isEmpty()){
-                System.out.print("probblema");
+                System.out.print("Error");
             }
         update(getFirstClient());
     }

@@ -3,6 +3,9 @@ package it.polimi.ingsw.Client;
 import it.polimi.ingsw.Client.NetworkHandler.NetInterface;
 import it.polimi.ingsw.Server.Model.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -11,11 +14,12 @@ public class ClientController {
     private Client client;
     private Boolean stillPlaying;
     public Boolean setup;
-    public ArrayList<Card> possibleCards;
+    public ArrayList<Card> possibleCards = new ArrayList<Card>();
     private ArrayList<Square> moves1;
     private ArrayList<Square> moves2;
     private Builder builder1;
     private  Builder builder2;
+    private Integer numberOfPlayers;
 
     public ClientController(Client client) {
         this.client = client;
@@ -25,39 +29,37 @@ public class ClientController {
      * this method loops until all the players are ready to play
      * @param socket is the socket from where the clients gets the information for the setup
      */
-   public void matchSetup(Socket socket){
+   public void matchSetup(Socket socket) throws IOException {
         setup = true;
         while(setup){
             netInterface.getMatchSetup(socket, this);
         }
     }
 
-    public void dealerChoice(){
-        //TODO in possiblecards there are all the 15 card, ask the player whitch 2 or 3 he wants and put them in
-        // card1 card2 and card3
-        Integer card1 = 1;
-        Integer card2 = 2;
-        Integer card3 = 3;
-        netInterface.sendCard(card1, card2, card3, client.getServerSocket());
+    public void dealerChoice() throws IOException {
+        System.out.println("Choose "+ this.numberOfPlayers +" cards for the game");
+        ArrayList<Integer> chosenCards = this.chosenCards();
+        netInterface.sendCard(chosenCards, client.getServerSocket());
     }
 
-    public void playerChoice(){
-        //TODO in possiblecards there are all the available card, ask the player whitch does he want and put it in
-        // card1
-        Integer card1 = 1;
-        netInterface.sendCard(card1, client.getServerSocket());
+    public void playerChoice() throws IOException {
+        System.out.println("Pick a card for the game");
+        Integer card = this.pickACard();
+        netInterface.sendCard(card, client.getServerSocket());
     }
 
     /**
      * starts the game phase for the client and keeps spinning until the end of the game.
      * @param socket is the socket used to talk with the server.
      */
-    public void play(Socket socket){
+    public void play(Socket socket) throws IOException {
         stillPlaying=true;
         while(stillPlaying){
             Moves moves = netInterface.getMoves(socket);
-            Envelope envelope = chooseMove(moves);
-            netInterface.sendMoves(envelope, client.getServerSocket());
+            if(moves!=null){
+                Envelope envelope = chooseMove(moves);
+                netInterface.sendMoves(envelope, client.getServerSocket());
+            }
         }
         //TODO close the match
         //print message "you have lost"
@@ -80,4 +82,30 @@ public class ClientController {
         this.stillPlaying=false;
     }
 
+    public void setNumberOfPlayers(Integer numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public ArrayList<Integer> chosenCards() throws IOException {
+        ArrayList<Integer> chosenCards = new ArrayList<Integer>();
+        for (int i = 0; i<numberOfPlayers; i++){
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            int card = Integer.parseInt(reader.readLine());
+            chosenCards.add(i,card);
+        }
+        return chosenCards;
+    }
+
+    public Integer pickACard() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Integer card = Integer.parseInt(reader.readLine());
+        return card;
+    }
+
+    public void chooseBeginner(ArrayList<String> players) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int player = Integer.parseInt(reader.readLine());
+        String chosenOne = players.get(player-1);
+        netInterface.sendFirstPlayer(chosenOne,client.getServerSocket());
+    }
 }

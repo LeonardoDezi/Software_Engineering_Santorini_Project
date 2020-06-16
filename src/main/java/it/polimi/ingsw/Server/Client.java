@@ -1,10 +1,7 @@
 package it.polimi.ingsw.Server;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import it.polimi.ingsw.Observer.Observer;
-import it.polimi.ingsw.Parser.Message;
+import it.polimi.ingsw.Server.VirtualView.Receiver;
 
 import java.io.*;
 import java.net.Socket;
@@ -20,15 +17,7 @@ public class Client implements Observer{
     public Client(Socket socket) throws IOException {
         this.clientID = clientCount.incrementAndGet();
         this.socket = socket;
-
-        //TODO ask the client for the name
-        Gson gson = new Gson();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-        String line = reader.readLine();
-        Message message = gson.fromJson(line, Message.class);
-        this.username = message.getMessage();
-
-        System.out.println(username);
+        this.username = Receiver.receive(socket);
         //socket
     }
 

@@ -8,23 +8,14 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class Receiver {
-    private static String m;
-    public static String receive(Socket socket){
+    public static String receive(Socket socket) throws IOException {
         //wait for the server answer on the socket
 
         Gson gson = new Gson();
-
-        try {
-           BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-
-           String line = bufferedReader.readLine();
-
-               Message message = gson.fromJson(line, Message.class);
-               m = message.getMessage();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+        String line = reader.readLine();
+        Message message = gson.fromJson(line, Message.class);
+        String m = message.getMessage();
 
         return m;
     }

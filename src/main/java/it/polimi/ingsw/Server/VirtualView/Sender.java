@@ -10,36 +10,18 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class Sender {
-    public static void send(String message, Socket socket) throws IOException {
-        if (message == null) {
+    public static void send(String m, Socket socket) throws IOException {
+        if (m == null) {
             //TODO send -1
         }
-
-        Message m = new Message();
-        m.setMessage(message);
-
-        OutputStreamWriter writer = null;
-        try {
-            writer = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
+        Message message = new Message();
+        message.setMessage(m);
         Gson gson = new GsonBuilder().serializeNulls().create();
-        String json = gson.toJson(message);
-
+        String string = gson.toJson(message);
         JsonParser parser = new JsonParser();
-        JsonObject jsonObject = parser.parse(json).getAsJsonObject();
-
-        try {
-            writer.write(jsonObject.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        JsonObject jsonObject = parser.parse(string).getAsJsonObject();
+        writer.write(jsonObject.toString() + "\n");
+        writer.flush();
     }
 }

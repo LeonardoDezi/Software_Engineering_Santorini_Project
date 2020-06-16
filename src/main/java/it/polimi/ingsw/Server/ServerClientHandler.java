@@ -14,10 +14,9 @@ public class ServerClientHandler implements Runnable{
     }
 
     @Override
-    public void run () { //TODO controlliamo bene
-        Client client = null;
+    public void run () {
         try {
-            client = new Client(socket);
+            Client client = new Client(socket);
             lobby.addClient(client);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

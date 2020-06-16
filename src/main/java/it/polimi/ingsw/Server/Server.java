@@ -41,8 +41,5 @@ public class Server {
                     break; //In case the serverSocket gets closed
                 }
             }
-            executor.shutdown();
-            serverSocket.close();
         }
-
     }

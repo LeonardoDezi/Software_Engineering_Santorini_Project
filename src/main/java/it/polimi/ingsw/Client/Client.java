@@ -1,10 +1,7 @@
 package it.polimi.ingsw.Client;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import it.polimi.ingsw.Parser.Message;
+import it.polimi.ingsw.Server.VirtualView.Sender;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -30,24 +27,16 @@ public class Client {
             e.printStackTrace();
         }
 
+
         System.out.println("Connection established");
-        System.out.println("Write Username");
-        username = "user";
+        System.out.println("Insert Name");
 
-        //TODO ask the player for the username
+        username = getUsername();
 
-        OutputStreamWriter writer = new OutputStreamWriter(serverSocket.getOutputStream(), "UTF-8");
-        Message message = new Message();
-        message.setMessage(username);
-        Gson gson = new GsonBuilder().serializeNulls().create();
-        String string = gson.toJson(message);
-        JsonParser parser = new JsonParser();
-        JsonObject jsonObject = parser.parse(string).getAsJsonObject();
-        writer.write(jsonObject.toString() + "\n");
-        writer.flush();
+        Sender.send(username, serverSocket);
 
         ClientController clientController = new ClientController(this);
-        clientController.matchSetup(serverSocket);//TODO here starts the client for the game
+        clientController.matchSetup(serverSocket);
         clientController.play(serverSocket);
 
         //TODO ask for rematch, if yes newgame if no close app
@@ -70,4 +59,5 @@ public class Client {
         }
         return username;
     }
+
 }

@@ -2,7 +2,7 @@
   {
     "number": 1,
     "name": "Apollo",
-    "description": "God of Music/n during your turn your worker may move into an opponent Worker's space (using normal movement rules) and force their Worker to the space yours just vacated (swapping their position).",
+    "description": "God of Music\nDuring your turn your worker may move into an opponent Worker's space (using normal movement rules) and force their Worker to the space yours just vacated (swapping their position).",
     "parameters":
   {
         "movementPhaseMoves": "swap",
@@ -13,7 +13,7 @@
   {
     "number": 2,
     "name": "Artemis",
-    "description" : "Goddess of the Hunt/n Your worker can move an additional time but not back to the space it started on.",
+    "description" : "Goddess of the Hunt\nYour worker can move an additional time but not back to the space it started on.",
     "parameters":
   {
         "specialPhase2Moves": "doubleNotSameMove",
@@ -27,7 +27,7 @@
   {
     "number": 3,
     "name": "Athena",
-    "description" : "Goddess of Wisdom/n If one of your workers moved up during your last turn, opponent worker cannot move up this turn.",
+    "description" : "Goddess of Wisdom\nIf one of your workers moved up during your last turn, opponent worker cannot move up this turn.",
     "parameters":
   {
         "specialPhase1Moves": "restore",
@@ -41,7 +41,7 @@
   {
     "number": 4,
     "name": "Atlas",
-    "description": "Titan Shouldering the Heavens/n Your worker may build a dome at any level including the ground.",
+    "description": "Titan Shouldering the Heavens\nYour worker may build a dome at any level including the ground.",
     "parameters":
   {
         "buildDome": "true"
@@ -52,7 +52,7 @@
   {
     "number": 5,
     "name": "Demeter",
-    "description" : "Goddess of the Harvest/n Your worker may build an additional time but not on the same space.",
+    "description" : "Goddess of the Harvest\nYour worker may build an additional time but not on the same space.",
     "parameters":
   {
 
@@ -65,7 +65,7 @@
   {
     "number": 6,
     "name": "Hephaestus",
-    "description" : "God of Blacksmiths/n Your worker may build an additional block on top of your first block.",
+    "description" : "God of Blacksmiths\nYour worker may build an additional block on top of your first block.",
     "parameters":
   {
         "specialPhase3Moves": "sameSquareNotDome",
@@ -77,7 +77,7 @@
   {
     "number": 7,
     "name": "Minotaur",
-    "description" : "Bull-Headed Monster/n Your Worker may move into an opponent Worker's space (using normal movement rules), if the next space in the same direction is unoccupied. Their Worker is forced into that space (regardless of it's level).",
+    "description" : "Bull-Headed Monster\nYour Worker may move into an opponent Worker's space (using normal movement rules), if the next space in the same direction is unoccupied. Their Worker is forced into that space (regardless of it's level).",
     "parameters":
   {
         "movementPhaseMoves": "push",
@@ -90,7 +90,7 @@
   {
     "number": 8,
     "name": "Pan",
-    "description" : "God of the Wild/n You also win if your Worker moves down two or more levels.",
+    "description" : "God of the Wild\nYou also win if your Worker moves down two or more levels.",
     "parameters":
   {
         "buildDome": "false",
@@ -102,7 +102,7 @@
   {
     "number": 9,
     "name": "Prometheus",
-    "description" : "Titan Benefactor of Mankind/n If your worker does not move up it may build both before and after moving.",
+    "description" : "Titan Benefactor of Mankind\nIf your worker does not move up it may build both before and after moving.",
     "parameters":
   {
         "specialPhase1Moves": "additionalBuild",
@@ -116,7 +116,7 @@
   {
     "number": 10,
     "name": "Charon",
-    "description" : "Ferryman to the Underworld/n Before your Worker moves, you may force a neighboring opponent Worker to the space directly on the other side of your Worker, if that space is unoccupied.",
+    "description" : "Ferryman to the Underworld\nBefore your Worker moves, you may force a neighboring opponent Worker to the space directly on the other side of your Worker, if that space is unoccupied.",
     "parameters":
   {
         "specialPhase1Moves": "oppositeSideMoves",
@@ -129,7 +129,7 @@
   {
     "number": 11,
     "name": "Chronus",
-    "description": "God of Time/n You also win when there are at least five Complete Towers on the Board.",
+    "description": "God of Time\nYou also win when there are at least five Complete Towers on the Board.",
     "parameters":
   {
         "buildDome": "false",
@@ -141,7 +141,7 @@
   {
     "number": 12,
     "name": "Hestia",
-    "description" : "Goddess of Hearth and Home/n Your worker may build one additional time. The additional build cannot be on a perimeter space.",
+    "description" : "Goddess of Hearth and Home\nYour worker may build one additional time. The additional build cannot be on a perimeter space.",
     "parameters":
   {
         "buildDome": "false",
@@ -153,7 +153,7 @@
   {
     "number": 13,
     "name": "Selene",
-    "description" : "Goddess of the Moon/n instead of your normal build, you may build a dome at any level with your female Worker (even if your male Worker moved).",
+    "description" : "Goddess of the Moon\nInstead of your normal build, you may build a dome at any level with your female Worker (even if your male Worker moved).",
     "parameters":
   {
         "buildingPhaseMoves": "askForFemale",
@@ -166,7 +166,7 @@
   {
     "number": 14,
     "name": "Zeus",
-    "description" : "God of the Sky/n Your worker may build under itself in its current space, forcing it up one level. you do not win by forcing yourself up to the third level.",
+    "description" : "God of the Sky\nYour worker may build under itself in its current space, forcing it up one level. you do not win by forcing yourself up to the third level.",
     "parameters":
   {
         "buildingPhaseMoves": "addBuilderPosition",
