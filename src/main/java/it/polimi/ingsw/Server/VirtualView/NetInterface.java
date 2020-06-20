@@ -384,7 +384,10 @@ public class NetInterface {
         String message = new String("11@");
         message = message + boardSquare(square1);
         if(square2 != null){
-            message = message + boardSquare(square2);
+            message = message + "2@" + boardSquare(square2);
+        }
+        else{
+            message = message +"1@";
         }
         for(Integer i=0; i < game.numberOfPlayers; i++){
             socket = clients.get(i).getSocket();

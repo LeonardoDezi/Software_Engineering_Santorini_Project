@@ -92,14 +92,35 @@ public class NetInterface {
             clientController.lost();
         }
         if (values[0].equals("11")){
-            //TODO update board method
+            String[] square = values[1].split(":");
+            Square firstSquare = stringToFullSquare(square);
+            if(values[2].equals("2")){
+                String[] square2 = values[3].split(":");
+                Square secondSquare = stringToFullSquare(square2);
+                clientController.updateBoard(firstSquare, secondSquare);
+            }
+            clientController.updateBoard(firstSquare);
             moves = null;
         }
         return moves;
 }
 
     /**
-     * method used to get the cards and the available squares to place the builders.
+     * Converts a String to a Square including the "value" and "level" attributes.
+     * @param square2 is a String[] formatted as "x,y:level,value".
+     * @return the full Square with the attributes.
+     */
+    private Square stringToFullSquare(String[] square2) {
+        String[] coord2 = square2[0].split(",");
+        String[] attributes2 = square2[1].split(",");
+        Square square = new Square(parseInt(coord2[0]), parseInt(coord2[1]));
+        square.setLevel(parseInt(attributes2[0]));
+        square.setValue(parseInt(attributes2[1]));
+        return square;
+    }
+
+    /**
+     * method used to setup the match by getting the cards, the available squares to place the builders and to decide who will be the first player.
      * @param socket is the serverSocket.
      * @param controller is the controller of the player.
      */
@@ -129,7 +150,10 @@ public class NetInterface {
                 controller.playerChoice();
             }
             if (values[0].equals("9")) {//player has to choose where to place the builder
-
+                String places = values[1];
+                Integer builderNumber = parseInt(values[2]);
+                ArrayList<Square> freeSquares = stringToArrayListSquare(places);
+                controller.placeBuilder(freeSquares, builderNumber);
             }
             if (values[0].equals("10")) { //la partita comincia
                 controller.setup = false;

@@ -32,7 +32,9 @@ public class GameInitializer implements Runnable {
         this.run();
     }
 
-
+    /**
+     * Run method to start the class.
+     */
     @Override
     public void run() {
         this.netInterface = new NetInterface();
@@ -54,6 +56,12 @@ public class GameInitializer implements Runnable {
         return;
     }
 
+    /**
+     * Adds a new player to the game and links it to the users client.
+     * @param client is the new client logged for the match.
+     * @return "1" if the operation is successful.
+     * @throws IOException
+     */
     public int addPlayer(Client client) throws IOException {
         int outcome;
         int playersInGame = game.getPlayerList().size();
@@ -76,11 +84,18 @@ public class GameInitializer implements Runnable {
         return 1;
     }
 
+    /**
+     * Checks if the players that have logged are enough to start the match.
+     * @return "1" if the number of players is correct, "0" otherwise.
+     */
     public boolean checkStatus() {
         return game.getPlayerList().size() == game.numberOfPlayers;
     }
 
-
+    /**
+     * Sets as first player the player that is going to be the first to move.
+     * @throws IOException
+     */
     public void setPlayers() throws IOException {
 
         Player player = netInterface.askFirstPlayer(firstPlayer, game.getPlayerList());    //questo deve essere il giocatore ritornato lo inizializzo per compilare
@@ -89,6 +104,10 @@ public class GameInitializer implements Runnable {
 
     }
 
+    /**
+     * Makes the Challenger choose the GodCards that are going to be used for the match and the other players choose the one that they want.
+     * @throws IOException
+     */
     public void dealCards() throws IOException {
         System.out.print("siamo a dare le carte:\n");
         netInterface.sendNumber();
@@ -119,6 +138,10 @@ public class GameInitializer implements Runnable {
 
     }
 
+    /**
+     * Makes each Player choose where he wants to place its Workers.
+     * @throws IOException
+     */
     public void setBuilders() throws IOException {
         ArrayList<Square> possibleSquares;
         for (int i = 0; i < game.numberOfPlayers; i++) {
@@ -138,6 +161,10 @@ public class GameInitializer implements Runnable {
 
     }
 
+    /**
+     * Starts the game.
+     * @throws IOException
+     */
     public void startGame() throws IOException {
         TurnManager myGameManager = new TurnManager(game, netInterface);
         myGameManager.letsPlay();

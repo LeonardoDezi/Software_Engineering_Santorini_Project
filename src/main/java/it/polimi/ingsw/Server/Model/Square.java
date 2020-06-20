@@ -48,7 +48,7 @@ public class Square {
      * 2 signifies that there is a dome on it.
      * @param value is the kind of object that is now on top of the square.
      */
-    protected void setValue(int value) {
+    public void setValue(int value) {
         this.value = value;
     }
 
@@ -62,7 +62,7 @@ public class Square {
      * is used to change the height of the square.
      * @param level is the new height of the square.
      */
-    protected void setLevel(int level){
+    public void setLevel(int level){
         this.level = level;
     }
 
