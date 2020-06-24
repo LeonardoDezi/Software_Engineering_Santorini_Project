@@ -275,13 +275,13 @@ public class NetInterface {
     }
 
     /**
-     * converts a builder object to a string containing the coordinates of the position on the board.
+     * converts a builder object to a string containing the coordinates of the position on the board and its informations.
      * @param builder is the builder that is needed to have converted.
      * @return a string containing the builder.
      */
     public String builderToString(Builder builder){
         Square position = builder.getPosition();
-        return squareToString(position) + "@";
+        return squareToString(position) + builder.getColour() + ":" + builder.sex + "@";
     }
 
     /**
@@ -404,6 +404,15 @@ public class NetInterface {
         string.append(square.getLevel());
         string.append(",");
         string.append((square.getValue()));
+        if(square.getValue()==1){
+            string.append("@");
+            string.append(square.getBuilder().getColour());
+            string.append(",");
+            string.append((square.getBuilder().sex));
+        }
+        else{
+            string.append("@1");
+        }
         string.append("@");
         String message = string.toString();
         return  message;

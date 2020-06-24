@@ -84,7 +84,7 @@ public class Square {
      * is used to know the worker on the square.
      * @return the object of the worker on the square.
      */
-    protected Builder getBuilder(){
+    public Builder getBuilder(){
         return this.builder;
     }
 

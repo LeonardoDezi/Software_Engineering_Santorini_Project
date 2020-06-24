@@ -23,7 +23,6 @@ public class GameInitializer implements Runnable {
     private Integer clientID;
     private NetInterface netInterface;
     private Game game;
-    private ArrayList<Card> maialaImpestata = new ArrayList<Card>();
 
     public GameInitializer(Client client) throws IOException {
         this.firstPlayer = client;

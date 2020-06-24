@@ -46,7 +46,7 @@ public class Builder {
      * gets the colour of the builder.
      * @return the String representing the colour.
      */
-    protected String getColour(){
+    public String getColour(){
         return this.colour;
     }
 

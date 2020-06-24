@@ -94,12 +94,26 @@ public class NetInterface {
         if (values[0].equals("11")){
             String[] square = values[1].split(":");
             Square firstSquare = stringToFullSquare(square);
-            if(values[2].equals("2")){
-                String[] square2 = values[3].split(":");
-                Square secondSquare = stringToFullSquare(square2);
-                clientController.updateBoard(firstSquare, secondSquare);
+            if(!values[2].equals("1")){
+                String[] builderInfo = values[3].split(",");
+                Builder builder1 = new Builder(firstSquare, builderInfo[0], builderInfo[1]);
             }
-            clientController.updateBoard(firstSquare);
+            else{
+                Builder builder1 = null;
+            }
+            if(values[3].equals("2")){
+                String[] square2 = values[4].split(":");
+                Square secondSquare = stringToFullSquare(square2);
+                if(!values[4].equals("1")){
+                    String[] secondBuilderInfo = values[5].split(",");
+                    Builder builder2 = new Builder(firstSquare, secondBuilderInfo[0], secondBuilderInfo[1]);
+                }
+                else{
+                   Builder builder2 = null;
+                }
+                clientController.updateBoard(firstSquare, secondSquare, builder1, builder2);
+            }
+            clientController.updateBoard(firstSquare, builder1);
             moves = null;
         }
         return moves;
@@ -248,8 +262,9 @@ public class NetInterface {
      * @return a builder object.
      */
     public Builder stringToBuilder(String string){
-        Square square = stringToSquare(string);
-        return new Builder(square, "not known", "not known");
+        String[] builderInfo = string.split(":");
+        Square square = stringToSquare(builderInfo[0]);
+        return new Builder(square, builderInfo[1], builderInfo[2]);
     }
 
     /**
