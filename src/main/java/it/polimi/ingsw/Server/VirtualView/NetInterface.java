@@ -26,10 +26,10 @@ public class NetInterface {
     }
 
     public void setGame(Game game){
-        if(!alreadyExecuted){
+    //    if(!alreadyExecuted){
             this.game=game;
-        }
-        alreadyExecuted=true;
+     //   }
+      //  alreadyExecuted=true;
     }
 
     /*public void testSetFirstPlayer(){
@@ -381,7 +381,7 @@ public class NetInterface {
 
     public void updateBoard(Square square1, Square square2) throws IOException {
         Socket socket;
-        String message = new String("11@");
+        String message = new String("99@");
         message = message + boardSquare(square1);
         if(square2 != null){
             message = message + "2@" + boardSquare(square2);

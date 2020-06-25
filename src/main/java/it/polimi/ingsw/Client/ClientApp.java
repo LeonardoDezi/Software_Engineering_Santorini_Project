@@ -2,13 +2,18 @@ package it.polimi.ingsw.Client;
 
 //import it.polimi.ingsw.Client.View.CLI.Cli;
 
+import it.polimi.ingsw.Client.View.CLI.CliBoard;
+import it.polimi.ingsw.Client.View.ClientBoard;
+
 import java.io.*;
 
 public class ClientApp {
 
     public static void main(String[] args) throws IOException {
 
-    /*    System.out.println("Select game mode");
+    /*    ClientBoard clientboard = new ClientBoard();
+        CliBoard.drawBoard(clientboard);
+        System.out.println("Select game mode");
         if(args.length>0){
             Cli.startCli();
         }else

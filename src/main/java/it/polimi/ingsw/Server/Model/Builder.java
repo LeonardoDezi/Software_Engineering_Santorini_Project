@@ -57,4 +57,8 @@ public class Builder {
     protected void setPosition(Square position){
         this.position = position;
     }
+
+    public String getSex(){
+        return sex;
+    }
 }

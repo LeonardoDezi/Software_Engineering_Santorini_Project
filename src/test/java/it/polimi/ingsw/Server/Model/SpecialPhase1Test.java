@@ -61,7 +61,7 @@ public class SpecialPhase1Test {
      * getMoves() will return an empty ArrayList. Also, if the worker passed is null, getMoves() returns an empty arrayList
      */
     @Test
-    public void testNull(){
+    public void testNull() throws IOException {
 
         game.deployBuilder(player1, game.gameBoard.fullMap[2][2]);
         builder = player1.getBuilder(0);
@@ -79,7 +79,7 @@ public class SpecialPhase1Test {
      * tests the behaviour of getMoves() when the card is Prometheus
      */
     @Test
-    public void testAdditionalBuild(){
+    public void testAdditionalBuild() throws IOException {
         game.deployBuilder(player1, game.gameBoard.fullMap[2][2]);
         builder = player1.getBuilder(0);
         player1.setCard(game.getDeckCard(9));  //Prometeo
@@ -92,7 +92,7 @@ public class SpecialPhase1Test {
      * tests the behaviour of getMoves() when the card is Athena
      */
     @Test
-    public void checkRestore(){
+    public void checkRestore() throws IOException {
         game.deployBuilder(player1, game.gameBoard.fullMap[2][2]);
         builder = player1.getBuilder(0);
         player1.setCard(game.getDeckCard(3));
@@ -105,7 +105,7 @@ public class SpecialPhase1Test {
      * tests the behaviour of getMoves() when the card is Charon
      */
     @Test
-    public void checkOppositeSideMoves(){
+    public void checkOppositeSideMoves() throws IOException {
         game.deployBuilder(player1, game.gameBoard.fullMap[2][2]);
         builder = player1.getBuilder(0);
         player1.setCard(game.getDeckCard(10));
@@ -162,7 +162,7 @@ public class SpecialPhase1Test {
      * Checks that basicRules.maxHeight is now 0 nad previousMaxHeight 1.
      */
     @Test
-    public void checkSpecialBuild(){
+    public void checkSpecialBuild() throws IOException {
         player1.setCard(game.getDeckCard(9));
 
         game.deployBuilder(player1, game.gameBoard.fullMap[2][2]);
@@ -184,7 +184,7 @@ public class SpecialPhase1Test {
      * checks that the opponent worker has been moved
      */
     @Test
-    public void checkMoveOpposite(){
+    public void checkMoveOpposite() throws IOException {
         player1.setCard(game.getDeckCard(10));
         game.deployBuilder(player1, game.gameBoard.fullMap[4][2]);  //scenario preso da checkOppositeSideMoves2
         game.deployBuilder(game.playerList.get(1), game.gameBoard.fullMap[4][3]);

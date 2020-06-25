@@ -91,29 +91,31 @@ public class NetInterface {
         if (values[0].equals("6")) { //the client loses
             clientController.lost();
         }
-        if (values[0].equals("11")){
+        if (values[0].equals("99")){
+            Builder worker1;
+            Builder worker2;
             String[] square = values[1].split(":");
             Square firstSquare = stringToFullSquare(square);
             if(!values[2].equals("1")){
-                String[] builderInfo = values[3].split(",");
-                Builder builder1 = new Builder(firstSquare, builderInfo[0], builderInfo[1]);
+                String[] builderInfo = values[2].split(",");
+                worker1 = new Builder(firstSquare, builderInfo[0], builderInfo[1]);
             }
             else{
-                Builder builder1 = null;
+                worker1 = null;
             }
             if(values[3].equals("2")){
                 String[] square2 = values[4].split(":");
                 Square secondSquare = stringToFullSquare(square2);
-                if(!values[4].equals("1")){
+                if(!values[5].equals("1")){
                     String[] secondBuilderInfo = values[5].split(",");
-                    Builder builder2 = new Builder(firstSquare, secondBuilderInfo[0], secondBuilderInfo[1]);
+                    worker2 = new Builder(firstSquare, secondBuilderInfo[0], secondBuilderInfo[1]);
                 }
                 else{
-                   Builder builder2 = null;
+                   worker2 = null;
                 }
-                clientController.updateBoard(firstSquare, secondSquare, builder1, builder2);
+                clientController.updateBoard(firstSquare, secondSquare, worker1, worker2);
             }
-            clientController.updateBoard(firstSquare, builder1);
+            clientController.updateBoard(firstSquare, worker1);
             moves = null;
         }
         return moves;
@@ -199,6 +201,32 @@ public class NetInterface {
                 }
                 clientController.chooseBeginner(playerIDs);
             }
+        if (values[0].equals("99")){
+            Builder worker1;
+            Builder worker2;
+            String[] square = values[1].split(":");
+            Square firstSquare = stringToFullSquare(square);
+            if(!values[2].equals("1")){
+                String[] builderInfo = values[2].split(",");
+                worker1 = new Builder(firstSquare, builderInfo[0], builderInfo[1]);
+            }
+            else{
+                worker1 = null;
+            }
+            if(values[3].equals("2")){
+                String[] square2 = values[4].split(":");
+                Square secondSquare = stringToFullSquare(square2);
+                if(!values[5].equals("1")){
+                    String[] secondBuilderInfo = values[5].split(",");
+                    worker2 = new Builder(firstSquare, secondBuilderInfo[0], secondBuilderInfo[1]);
+                }
+                else{
+                    worker2 = null;
+                }
+                clientController.updateBoard(firstSquare, secondSquare, worker1, worker2);
+            }
+            clientController.updateBoard(firstSquare, worker1);
+        }
 
     }
 
@@ -235,6 +263,12 @@ public class NetInterface {
         Boolean dome = envelope.getIsDome();
         String coordinates = squareToString(square) + builderToString(builder) + booleanToString(dome);
         Sender.send(coordinates, socket);
+    }
+
+    public void sendSquare(Square square, Socket socket) throws IOException {
+
+        String message = squareToString(square);
+        Sender.send(message,socket);
     }
 
     /**
@@ -285,11 +319,13 @@ public class NetInterface {
      */
     public Square stringToSquare(String string){
         StringBuilder partial = new StringBuilder(string);
-        try{
-            partial.delete(3,6);
-        }
-        catch (StringIndexOutOfBoundsException e){
-            partial.delete(3,4);
+        if(string.length()>3){
+            try{
+                partial.delete(3,6);
+            }
+            catch (StringIndexOutOfBoundsException e){
+                partial.delete(3,4);
+            }
         }
         string=partial.toString();
         String[] coordinates = string.split(",");
@@ -308,7 +344,7 @@ public class NetInterface {
     public ArrayList<Square> stringToArrayListSquare(String value){
         ArrayList<Square> possiblemoves = new ArrayList<Square>();
         StringBuilder lastRemove = new StringBuilder(value);
-        lastRemove.delete(value.length()-2, value.length());
+        lastRemove.delete(value.length()-1, value.length());
         value = lastRemove.toString();
         String[] squares = value.split(":");
         for(int i=0; i<squares.length; i++){

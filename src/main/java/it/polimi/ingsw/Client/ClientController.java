@@ -1,13 +1,18 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Client.NetworkHandler.NetInterface;
+import it.polimi.ingsw.Client.View.CLI.CliBoard;
+import it.polimi.ingsw.Client.View.ClientBoard;
+import it.polimi.ingsw.Client.View.Pawn;
 import it.polimi.ingsw.Server.Model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PipedWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+
 
 public class ClientController {
     private NetInterface netInterface = new NetInterface(this);
@@ -20,6 +25,7 @@ public class ClientController {
     private Builder builder1;
     private  Builder builder2;
     private Integer numberOfPlayers;
+    private ClientBoard clientBoard = new ClientBoard();
 
     public ClientController(Client client) {
         this.client = client;
@@ -107,5 +113,42 @@ public class ClientController {
         int player = Integer.parseInt(reader.readLine());
         String chosenOne = players.get(player-1);
         netInterface.sendFirstPlayer(chosenOne,client.getServerSocket());
+    }
+
+    public void placeBuilder(ArrayList<Square> freeSquares, int number) throws IOException {
+        System.out.println("Place your builders: positions (x,y)");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String[] inputs = reader.readLine().split(",");
+        int[] array = new int[inputs.length];
+        for (int i=0; i<array.length; i++){
+            array[i] = Integer.parseInt(inputs[i]);
+        }
+        int x = array[0]-1;
+        int y = array[1]-1;
+        for (int i=0; i<freeSquares.size(); i++){
+            int tempX = freeSquares.get(i).x;
+            int tempY = freeSquares.get(i).y;
+            if( x == tempX && y == tempY){
+                Square square = freeSquares.get(i);
+                netInterface.sendSquare(square,client.getServerSocket());
+            }
+        }
+    }
+
+    public void updateBoard(Square firstSquare, Square secondSquare, Builder builder1, Builder builder2) {
+    }
+
+    public void updateBoard(Square firstSquare, Builder builder1) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (clientBoard.getCell(i, j).getX() == firstSquare.x && clientBoard.getCell(i, j).getY() == firstSquare.y) {
+                    clientBoard.getCell(i, j).setValue(firstSquare.getValue());
+                    clientBoard.getCell(i, j).setLevel(firstSquare.getLevel());
+                    Pawn pawn = new Pawn(builder1.getColour(),builder1.getSex());
+                    clientBoard.getCell(i, j).setPawn(pawn);
+                    CliBoard.drawBoard(clientBoard);
+                }
+            }
+        }
     }
 }

@@ -46,6 +46,7 @@ public class GameInitializer implements Runnable {
         }
         Game game = new Game(numberOfPlayers, netInterface);
         this.game = game;
+        netInterface.setGame(game);
         Dealer player1 = new Dealer(firstPlayerName, COLOUR1, game, clientID);
         int outcome = game.addPlayer(player1);  //testare che non ci dia problemi quando facciamo addPlayer
         if (outcome == 0) {

@@ -67,7 +67,7 @@ public class SpecialPhase3Test {
      * tests the behaviour of SpecialPhase3 when the card has no special effect regarding SpecialPhase3
      */
     @Test
-    public void checkNull(){
+    public void checkNull() throws IOException {
 
         player1.setCard(game.getDeckCard(14)); //Zeus
         player2.setCard(game.getDeckCard(10)); //Charon

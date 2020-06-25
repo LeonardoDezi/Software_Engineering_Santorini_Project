@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -96,7 +97,7 @@ public class GameTest {
     }
 
     @Test
-    public void deployBuilderCheck(){
+    public void deployBuilderCheck() throws IOException {
         game1.playerList = new ArrayList<>(); // reinizializza playerList
         game1.addPlayer(new Player("Marco", "Red", game1, 0));
         game1.addPlayer(new Player("Luca", "Blue", game1, 1));
@@ -128,7 +129,7 @@ public class GameTest {
     }
 
     @Test
-    public void removePlayerCheck(){
+    public void removePlayerCheck() throws IOException {
         //reinizializza variabili
         game1.playerList = new ArrayList<>();
         game1.gameBoard = new Board(netInterface);

@@ -2,6 +2,7 @@ package it.polimi.ingsw.Server.Model;
 import it.polimi.ingsw.Parser.ParserManager;
 import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -40,6 +41,8 @@ public class Game {
 
     /** represents the rules followed by all the players, regardless of their cards */
     protected BasicRules basic;
+    //TODO controllare
+    private final NetInterface netInterface;
 
     /**
      * creates a new game.
@@ -53,6 +56,7 @@ public class Game {
         basic = new BasicRules(gameBoard, this);
         winningPlayer = null;
         this.numberOfPlayers=numberOfPlayers;
+        this.netInterface = netInterface;
 
         ParserManager parserManager = new ParserManager();
         parserManager.uploadCards();
@@ -159,7 +163,7 @@ public class Game {
      * @param placement is the square where the player wants to put the worker.
      * @return the message regarding the outcome of the operation
      */
-    public String deployBuilder(Player player, Square placement){
+    public String deployBuilder(Player player, Square placement) throws IOException {
         int x = placement.x;
         int y = placement.y;
         String message;
@@ -170,6 +174,7 @@ public class Game {
                 message = "Error: Square already occupied by another player";
             else {
                 player.addBuilder(placement);   //aggiungi alla lista dei builder del giocatore
+                netInterface.updateBoard(placement, null);
                 message = "Builder deployed";  //non possiamo lasciare questo
             }
         }
