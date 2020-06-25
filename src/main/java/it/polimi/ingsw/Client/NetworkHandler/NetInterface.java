@@ -38,50 +38,90 @@ public class NetInterface {
             return null;
         }
         if (values[0].equals("1")) {
-            moves1 = stringToArrayListSquare(values[1]);
-            builder1 = stringToBuilder(values[2]);
-            moves2 = stringToArrayListSquare(values[3]);
-            builder2 = stringToBuilder(values[4]);
-            moves.setMoves1(moves1);
-            moves.setMoves2(moves2);
-            moves.setBuilder1(builder1);
-            moves.setBuilder2(builder2);
+            if(values[1].equals("null")){
+                moves.setMoves1(null);
+                moves.setBuilder1(null);
+            }
+            else{
+                moves1 = stringToArrayListSquare(values[1]);
+                builder1 = stringToBuilder(values[2]);
+                moves.setMoves1(moves1);
+                moves.setBuilder1(builder1);
+            }
+            if(values[3].equals("null")){
+                moves.setMoves2(null);
+                moves.setBuilder2(null);
+            }
+            else{
+                moves2 = stringToArrayListSquare(values[3]);
+                builder2 = stringToBuilder(values[4]);
+                moves.setMoves2(moves2);
+                moves.setBuilder2(builder2);
+            }
             moves.setIsDome(false);
             moves.setFemale(false);
+
         }
         if (values[0].equals("2")) {
-            moves1 = stringToArrayListSquare(values[1]);
-            builder2 = stringToBuilder(values[2]);
-            moves.setMoves1(moves1);
+            if(values[1].equals("null")){
+                moves.setMoves1(null);
+                moves.setBuilder1(null);
+            }
+            else{
+                moves1 = stringToArrayListSquare(values[1]);
+                builder1 = stringToBuilder(values[2]);
+                moves.setMoves1(moves1);
+                moves.setBuilder1(builder1);
+            }
             moves.setMoves2(null);
-            moves.setBuilder1(builder1);
             moves.setBuilder2(null);
             moves.setIsDome(false);
             moves.setFemale(false);
         }
         if (values[0].equals("3")) {
-            moves1 = stringToArrayListSquare(values[1]);
-            builder2 = stringToBuilder(values[2]);
-            boolean isDome = stringToBool(values[3]);
-            moves.setMoves1(moves1);
+            if(values[1].equals("null")){
+                moves.setMoves1(null);
+                moves.setBuilder1(null);
+                boolean isDome = stringToBool(values[3]);
+                moves.setIsDome(isDome);
+            }
+            else{
+                moves1 = stringToArrayListSquare(values[1]);
+                builder1 = stringToBuilder(values[2]);
+                moves.setMoves1(moves1);
+                moves.setBuilder1(builder1);
+            }
+            moves.setIsDome(false);
             moves.setMoves2(null);
-            moves.setBuilder1(builder1);
             moves.setBuilder2(null);
-            moves.setIsDome(isDome);
             moves.setFemale(false);
         }
         if (values[0].equals("4")) {
-            moves1 = stringToArrayListSquare(values[1]);
-            builder1 = stringToBuilder(values[2]);
-            moves2 = stringToArrayListSquare(values[3]);
-            builder2 = stringToBuilder(values[4]);
-            boolean female = stringToBool(values[5]);
-            moves.setMoves1(moves1);
-            moves.setMoves2(moves2);
-            moves.setBuilder1(builder1);
-            moves.setBuilder2(builder2);
-            moves.setIsDome(false);
-            moves.setFemale(female);
+            if(values[1].equals("null")){
+                moves.setMoves1(null);
+                moves.setBuilder1(null);
+                moves.setIsDome(false);
+            }
+            else{
+                moves1 = stringToArrayListSquare(values[1]);
+                builder1 = stringToBuilder(values[2]);
+                moves.setMoves1(moves1);
+                moves.setBuilder1(builder1);
+                moves.setIsDome(false);
+            }
+            if(values[3].equals("null")){
+                moves.setBuilder2(null);
+                moves.setMoves2(null);
+                moves.setFemale(false);
+            }
+            else{
+                moves2 = stringToArrayListSquare(values[3]);
+                builder2 = stringToBuilder(values[4]);
+                boolean female = stringToBool(values[5]);
+                moves.setMoves2(moves2);
+                moves.setBuilder2(builder2);
+                moves.setFemale(female);
+            }
         }
         if (values[0].equals("5")) { //text message
             Integer messageType = parseInt(values[1]);
