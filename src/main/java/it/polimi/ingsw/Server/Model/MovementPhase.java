@@ -65,7 +65,6 @@ public class MovementPhase extends Phase {
 
             Square lastPosition = received.getBuilder().getPosition();
             actionMethod(received.getBuilder(), received.getMove());
-            //updateBoard(game.getBoard);
 
             if(!(game.getGameEnded()))
                 context.setPhase(new SpecialPhase2(game, context, player, playingBuilder, lastPosition));

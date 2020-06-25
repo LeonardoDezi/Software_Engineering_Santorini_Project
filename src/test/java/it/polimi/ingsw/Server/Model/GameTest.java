@@ -12,19 +12,26 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)
 
-
-
-
+/**
+ * this class is used to test the behaviour of Game
+ */
 public class GameTest {
+    /** the three-player game used for the test */
     private Game game1;
+    /** the two-player game used for the test */
     private Game game2;
+
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    /** the netInterface used by game1 */
     private NetInterface netInterface = new NetInterface();
+    /** the netInterface used by game2 */
     private NetInterface netInterface2 = new NetInterface();
 
 
-    @Before          //pensare anche alle partite a due giocatori
+    /** creates the games */
+    @Before
     public void createGame() {
         game1 = new Game(3, netInterface);
         game2 = new Game(2, netInterface2);
@@ -34,14 +41,8 @@ public class GameTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
-    //DA RILEGGERE
-    //addPlayer
-    //@requires playerList != null     (controllare)
-    //@ensures playerList.size() <=3
-    //@ensures if playerList.size() = 3 && addPlayer(new, new) il comando non avrà alcun effetto
-    //@ensures (\forall int i; 0 <= i < playerList.size(); (\forall int j; i != j && 0 <= i < playerList.size();
-    // playerList.get(i).getColour() != playerList.get(j).getColour));
 
+    /** tests the behaviour of addPlayer(), especially when adding more players than expected */
     @Test
     public void addPlayerCheck(){
 
@@ -75,7 +76,7 @@ public class GameTest {
         assertEquals(0, game2.playerList.size());
         num1 =game2.addPlayer(new Player("Marco", "Red", game2, 0));
         num2 =game2.addPlayer(new Player("Luca", "Blue", game2, 1));
-        num3 =game2.addPlayer(new Player("Fra", "Green", game2, 2));
+        num3 =game2.addPlayer(new Player("error", "Green", game2, 2));
         num4 =game2.addPlayer(new Player("error", "White", game2, 3));
 
         assertEquals(2, game2.playerList.size());
@@ -96,6 +97,12 @@ public class GameTest {
 
     }
 
+
+    /** tests the behaviour of deployBuilder().
+     * 1) standard deployBuilder()
+     * 2) square already occupied by another worker
+     * 3) builders already full
+     * 4) the player has already deployed all the workers*/
     @Test
     public void deployBuilderCheck() throws IOException {
         game1.playerList = new ArrayList<>(); // reinizializza playerList
@@ -128,7 +135,10 @@ public class GameTest {
         assertEquals(2, game1.playerList.get(0).getBuilderSize());
     }
 
-    @Test
+ /** tests the behaviour of deployBuilder(). It checks if all the player's workers have been removed
+ *   and if the player has been removed from playerList
+ */
+ @Test
     public void removePlayerCheck() throws IOException {
         //reinizializza variabili
         game1.playerList = new ArrayList<>();
@@ -161,7 +171,7 @@ public class GameTest {
 
     }
 
-
+/** tests the behaviour of addChosenCard() */
     @Test
     public void checkAddChosenCard(){
         assertEquals(0, game1.getChosenCardsSize());

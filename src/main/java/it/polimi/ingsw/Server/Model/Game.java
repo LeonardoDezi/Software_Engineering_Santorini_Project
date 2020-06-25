@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @since 1.5
  */
 public class Game {
-    //rivedere tutti i private, protected e public
+
     /** represents the maximum number of workers that a player can have */
     private static final int MAXNUMBUILDERS = 2;
 
@@ -41,8 +41,10 @@ public class Game {
 
     /** represents the rules followed by all the players, regardless of their cards */
     protected BasicRules basic;
-    //TODO controllare
+
+    /** represents the interface used by the server to communicate with the clients */
     private final NetInterface netInterface;
+
 
     /**
      * creates a new game.
@@ -65,25 +67,25 @@ public class Game {
     }
 
 
-    /** used to get the list of the players of the game
+    /** gets the list of the players of the game
      * @return is the list of the players playing
      */
     public ArrayList<Player> getPlayerList() {
        return this.playerList;
     }
 
-    /** used to get the cards chosen by the Challenger
+    /** gets the cards chosen by the Challenger
      * @return is the list of the cards that will be used in this game
      */
     public ArrayList<Card> getChosenCards(){return this.chosenCards;}
 
-    /** used to get gameEnded
+    /** gets gameEnded
      * @return is the boolean that indicated if the game has ended
      */
     public boolean getGameEnded(){return this.gameEnded;}
 
     /**
-     * used to communicate if the game has ended, setting gameEnded
+     * communicates if the game has ended, setting gameEnded
      * @param value If True, indicates that the game has ended.
      */
     public void setGameEnded(boolean value){this.gameEnded = value;}
@@ -94,7 +96,6 @@ public class Game {
      * @param player is the player object.
      * @return 1, if the player has been successifully added, 0 otherwise
      */
-    // TODO non controlla se due player abbiano clientID uguali
     public int addPlayer(Player player){
 
         if(this.playerList.size() < numberOfPlayers){

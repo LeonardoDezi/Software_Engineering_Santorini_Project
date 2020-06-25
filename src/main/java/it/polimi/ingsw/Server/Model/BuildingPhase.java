@@ -69,7 +69,6 @@ public class BuildingPhase extends Phase {
 
 
         actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
-        //updateBoard(game.getBoard);  ????
 
         if(!(game.getGameEnded()))
             context.setPhase(new SpecialPhase3(game, context, player, actionBuilder, position));

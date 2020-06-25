@@ -50,8 +50,7 @@ public class SpecialPhase2 extends Phase {
         Envelope received = context.getNetInterface().getMovementMove(moves1, playingBuilder, player);
 
         if(received != null)
-            actionMethod(received.getBuilder(), received.getMove());   // TODO controllare che received.getBuilder() è sempre = playingBuilder
-            // TODO updateBoard(game.getBoard);
+            actionMethod(received.getBuilder(), received.getMove());   // TODO controllare che received.getBuilder() è sempre = playingBuilder?
 
         if(!(game.getGameEnded()))
             context.setPhase(new BuildingPhase(game, context, player, playingBuilder));

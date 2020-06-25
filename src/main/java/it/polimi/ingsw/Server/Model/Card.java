@@ -51,7 +51,6 @@ public class Card {
         this.description = description;
     }
 
-    public void setNumber(Integer number){
-        this.number = number;
-    }
+    /** sets the number of the card */
+    public void setNumber(int number){ this.number = number; }
 }

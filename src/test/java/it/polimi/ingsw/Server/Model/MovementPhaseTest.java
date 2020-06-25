@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
+//ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)
+// e Game.deployBuilder()  (riga 178)
+
 /**
  * this class is used to test the behaviour of MovementPhase
  */
@@ -46,7 +49,7 @@ public class MovementPhaseTest {
     /**
      * creates the players and the games used in every test
      */
-/*    @Before
+   @Before
     public void create(){
         game = new Game(2, netInterface);
         game1 = new Game(3, netInterface2);

@@ -97,6 +97,7 @@ public class Board {
 
     }
 
+    public Square getSquare(int x, int y){ return fullMap[x][y];}
 }
 
 

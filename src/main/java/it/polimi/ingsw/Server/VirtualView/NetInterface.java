@@ -56,7 +56,7 @@ public class NetInterface {
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
-        return new Envelope(chosenBuilder, chosenSquare);
+        return new Envelope(chosenBuilder, chosenSquare, game);
     }
 
     /**
@@ -79,7 +79,7 @@ public class NetInterface {
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
-        return new Envelope(chosenBuilder, chosenSquare);
+        return new Envelope(chosenBuilder, chosenSquare, game);
     }
 
     /**
@@ -102,7 +102,7 @@ public class NetInterface {
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
         Boolean femaleDome = stringToBool(choosenmove[2]);
-        Envelope envelope = new Envelope(chosenBuilder, chosenSquare);
+        Envelope envelope = new Envelope(chosenBuilder, chosenSquare, game);
         envelope.setIsDome(femaleDome);
         return envelope;
 
@@ -135,7 +135,7 @@ public class NetInterface {
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
         Boolean hasChosenADome = stringToBool(choosenmove[2]);
-        Envelope envelope = new Envelope(chosenBuilder, chosenSquare);
+        Envelope envelope = new Envelope(chosenBuilder, chosenSquare, game);
         envelope.setIsDome(hasChosenADome);
         return envelope;
     }

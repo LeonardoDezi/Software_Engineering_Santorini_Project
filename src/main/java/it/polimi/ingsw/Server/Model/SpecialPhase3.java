@@ -52,7 +52,6 @@ public class SpecialPhase3 extends Phase {
 
         if(received.getMove() != null)  //TODO received != null ???
             actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
-            //TODO updateBoard(game.getBoard);
 
         if(!(game.getGameEnded()))
             context.setPhase(null);

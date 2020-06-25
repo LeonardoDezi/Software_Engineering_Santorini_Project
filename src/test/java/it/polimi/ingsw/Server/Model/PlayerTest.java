@@ -10,17 +10,25 @@ import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 
-// da testare: costruttore, chooseCard, removeBuilders
+//ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)
+
+/**
+ * this class is used to test the behaviour of Player
+ */
 public class PlayerTest {
+    /** the first player used in the game*/
     private  Player player1;
+    /** the second player used in the game */
     private Player player2;
+    /** the two-player game used in the test */
     private Game game;
+    /** the netInterface used in the test */
     private NetInterface netInterface = new NetInterface();
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
-
+    /** creates the game */
     @Before
     public void createPlayers(){
         game = new Game(2, netInterface);
@@ -29,16 +37,17 @@ public class PlayerTest {
     }
 
 
+    /** checks that when the player is created, the list of associated workers is empty */
     @Test
     public void checkEmptyBuilders(){
-
         exception.expect(ArrayIndexOutOfBoundsException.class);
         Builder builder = player1.getBuilder(0);
         assertTrue(player1.builders.isEmpty());
     }
 
-    @Test
 
+    /** checks the behaviour of addBuilder() and getBuilder() */
+    @Test
     public void checkAddAndGetBuilder(){   //li fondo per convenienza
         int num = player2.getBuilderSize();
         Square square = new Square(1, 2);
@@ -51,6 +60,9 @@ public class PlayerTest {
         player2.removeBuilder(0);
     }
 
+    /** checks that the first worker created is a male and that the second one is female.
+     * checks that when there are no female worker associated to the player, getFemale() returns null
+     */
     @Test
     public void checkForSex(){
         player2.addBuilder(new Square(3,3));
@@ -75,8 +87,9 @@ public class PlayerTest {
 
     }
 
+    /** checks the behaviour of removeBuilder() */
     @Test
-    public void checkRemove(){
+    public void checkRemoveBuilder(){
         player1.addBuilder(new Square(2,2));
         player1.removeBuilder(0);
         assertEquals(0, player1.builders.size());  //controlla che venga rimosso un builder
@@ -91,7 +104,9 @@ public class PlayerTest {
         player1.removeBuilder(0);
     }
 
-
+    /** checks the behaviour of chooseCard(). In particular, it checks if the card chosen by the player has been assigned to
+     * the player and that the card has been removed from the cards chosen by the Challenger
+     */
     @Test
     public void checkChooseCard(){
 

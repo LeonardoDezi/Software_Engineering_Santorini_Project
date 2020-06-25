@@ -11,14 +11,29 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)
+
+
+/**
+ * this class is used to test the behaviour of MovementPhase
+ */
 public class BasicRulesTest {
 
+    /** the three-player game used for the test */
     private Game game;
+    /** the board used by the game */
     private Board board;
+    /** the player used for the test*/
     private Player player1;
+    /** the basic rules used in the game */
     private BasicRules rules;
+    /** the netInterface used in the game */
     private NetInterface netInterface = new NetInterface();
 
+
+    /**
+     * creates the players and the games used in every test
+     */
     @Before
     public void createGameAndRules(){
         game = new Game(3, netInterface );
@@ -31,18 +46,8 @@ public class BasicRulesTest {
     }
 
 
-    @After
-    public void clearAndRecreate(){
-
-        game = new Game(3, netInterface);
-        board = game.getBoard();
-        int num1 =game.addPlayer(new Player("Marco", "Red", game, 0));
-        int num2 =game.addPlayer(new Player("Luca", "Blue", game, 1));
-        int num3 =game.addPlayer(new Player("Fra", "Green", game, 2));
-        rules = new BasicRules(board, game);
-
-    }
-
+    /** checks the basic winning condition according to the general rules of the game: a worker moving from a
+     * two-floor building to a three-floor building */
     @Test
     public void testWinCondition() throws IOException {
         board.build(board.fullMap[1][2], false);
@@ -62,14 +67,19 @@ public class BasicRulesTest {
         assertEquals(1, board.fullMap[2][2].getValue());  // verifichiamo che sia stata posta
         assertFalse(game.getGameEnded());
         assertNull(game.getWinningPlayer());
-        rules.winCondition(player1, board.fullMap[1][2], board.fullMap[2][2]);
+        rules.winCondition(player1, board.fullMap[1][2], board.fullMap[2][2]);  //chiamiamo winCondition() ponendo come parametri la torre di due piani e quella di tre
         assertTrue(game.getGameEnded());
         assertEquals(player1, game.getWinningPlayer());
 
-
     }
 
-    //Testiamo quando la pedina si sposta in posizioni diverse dalla condizione di vittoria
+    /** checks for unexpected behaviours in winCondition() that could result in the player's wrong victory
+     * 1) The worker hasn't moved from initialPosition
+     * 2) There's a worker in finalPosition, but the examined worker has stayed in initialPosition
+     * 3) finalPosition has not the right level in order to win
+     * 4) initialPosition has not the right level in order to win
+     * 5) the worker in finalPosition does not belong to the examined player
+     * */
     @Test
     public void testNotWinningConditions() throws IOException {
 
@@ -190,6 +200,12 @@ public class BasicRulesTest {
     }
 
 
+    /** checks the correct behaviour of the method proximity.
+     * 1) Empty board. Checks that all the squares in possibleMoves are actually neighboring the examined worker.
+     * 2) Adding a dome, a worker and a three-level building in the proximity of the worker
+     * 3) The examined worker is placed at a corner of the board
+     * 4) The examined worker is placed on the border side of the board
+     */
     @Test
     public void checkProximity() throws IOException {
 
@@ -249,6 +265,11 @@ public class BasicRulesTest {
 
     }
 
+
+    /** checks the correct behaviour of the method removeBuilderSquare().
+     * 1) In the worker's surroundings there are a dome, a three-floor building, an opponent worker and a worker belonging
+     * to the examined player
+     */
     @Test
     public void checkRemoveBuilderSquare() throws IOException {
 
@@ -272,6 +293,10 @@ public class BasicRulesTest {
 
     }
 
+    /** checks the correct behaviour of the method removeDomeSquare().
+     * 1) In the worker's surroundings there are a dome, a three-floor building, an opponent worker, a worker belonging
+     * to the examined player and a complete tower.
+     */
     @Test
     public void checkRemoveDomeSquare() throws IOException {
 
@@ -298,11 +323,16 @@ public class BasicRulesTest {
         assertEquals(6, posssibleMoves.size());
     }
 
+
+/** checks the correct behaviour of the method getFreeSquares().
+ * 1) Inside the board there are three workers, a complete tower and a dome
+ * */
+
     @Test
     public void checkGetFreeSquares() throws IOException {
         player1 = game.playerList.get(0);
         game.deployBuilder(player1, board.fullMap[2][2]);
-        Builder builder = player1.getBuilder(0);   //soggetto
+        Builder builder = player1.getBuilder(0);
 
         game.deployBuilder(player1, board.fullMap[2][3]);   //aggiunta di due pedine
         game.deployBuilder(game.playerList.get(1), board.fullMap[3][2]);
@@ -332,8 +362,14 @@ public class BasicRulesTest {
 
     }
 
+
+
+    /** checks the correct behaviour of the method getBuildingRange().
+     * 1) In the worker's surroundings there are two workers, a complete tower, a three-floor tower and
+     * a dome.
+     * */
     @Test
-    public void checkGetBuilding() throws IOException {
+    public void checkGetBuildingRange() throws IOException {
         player1 = game.playerList.get(0);
         game.deployBuilder(player1, board.fullMap[2][2]);
         Builder builder = player1.getBuilder(0);   //soggetto
@@ -360,6 +396,12 @@ public class BasicRulesTest {
 
     }
 
+
+    /** checks the correct behaviour of the method removeTooHighPlaces().
+     * 1) The worker is on a one-floor building and there are a three-floor building, a two_floor building in its surroundings
+     * 2) The worker is on the ground and there are a worker a three-floor tower and a two-floor tower in its surroundings
+     * 3) The worker is on a three-floor building and a three-floor building and a one-floor building in its surroundings
+     */
     @Test
     public void checkRemoveTooHighPlaces() throws IOException {
 
@@ -414,7 +456,7 @@ public class BasicRulesTest {
         board.build(board.fullMap[0][1], false);  //torre di un piano
 
         player1 = game.playerList.get(2);
-        game.deployBuilder(player1, board.fullMap[0][0]); // la pedina si trova sulla torre di un piano
+        game.deployBuilder(player1, board.fullMap[0][0]);
         builder = player1.getBuilder(0);
 
         possibleMoves = rules.proximity(builder);

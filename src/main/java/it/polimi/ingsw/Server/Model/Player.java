@@ -149,7 +149,6 @@ public class Player {
     /** is used to get the female worker associated to the player.
       * @return the female worker. Returns null if there is no female worker.
      */
-
     public Builder getFemale(){
         Builder builder = null;
         for (Builder value : builders)

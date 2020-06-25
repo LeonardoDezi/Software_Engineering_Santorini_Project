@@ -6,14 +6,26 @@ import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import org.junit.Before;
 import org.junit.Test;
 
+//ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)
+
+/**
+ * this class is used to test the behaviour of Dealer
+ */
 public class DealerTest {
+    /** the Challenger of game 1*/
     private Dealer player1;
+    /** the Challenger in game2 */
     private Dealer player2;
+    /** the two-player game used for the test */
     private Game game1;
+    /** the three-player game used for the test */
     private Game game2;
+    /** the netInterface used by game1 */
     private NetInterface netInterface = new NetInterface();
+    /** the netInterface used by game2 */
     private NetInterface netInterface2 = new NetInterface();
 
+    /** creates the games and the Challenger */
     @Before
     public void createGame(){
         game1 = new Game(2, netInterface);
@@ -25,6 +37,7 @@ public class DealerTest {
 
     }
 
+    /** checks the behaviour of drawCards() methods */
     @Test
     public void checkDrawCards(){
 

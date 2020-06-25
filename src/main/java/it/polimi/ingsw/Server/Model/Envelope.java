@@ -14,9 +14,20 @@ public class Envelope {
      * @param builder is the worker associated to the move that is received
      * @param move represents the move made by the worker
      * */
-    public Envelope(Builder builder, Square move){
-        this.builder = builder;
-        this.move = move;
+    public Envelope(Builder builder, Square move, Game game){
+
+        for(Player player: game.getPlayerList()){
+            if(player.getColour().equals(builder.getColour())){
+
+                if(player.getBuilder(0).sex.equals(builder.sex))
+                    this.builder = player.getBuilder(0);
+                else
+                    this.builder = player.getBuilder(1);
+
+            }
+        }
+
+        this.move = game.getBoard().getSquare(move.x, move.y);
     }
 
     /**

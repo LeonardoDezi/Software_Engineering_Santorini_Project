@@ -153,9 +153,12 @@ public class GameInitializer implements Runnable {
                 System.out.print("There has been an error with the recognition of the client, the player has not set the builders");
                 return;
             }
+            square1 = game.getBoard().getSquare(square1.x, square1.y);   //TODO modificato qui
             game.deployBuilder(player, square1);
+
             possibleSquares = game.getBasic().getFreeSquares();
             Square square2 = netInterface.getBuilderPlacement(possibleSquares, player.clientID, 2);
+            square2 = game.getBoard().getSquare(square2.x, square2.y);   //TODO modificato qui
             game.deployBuilder(player, square2);
         }
 

@@ -8,28 +8,31 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-/*Tre casi di test:
-* 1)Un builder a terra si muove su un altro square a terra
-  2)Un builder al primo piano sale di un livello
-  3) Due builder fanno uno swap
 
-  Cose da controllare:
-  I value degli square vengano aggiornati
-  I position dei builders vengano aggiornati ( sia in caso di swap che tradizionale)
+//ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)
+
+/**
+ * this class is used to test the behaviour of Board
  */
-
-//Da testare/ ritestare: costruttore, build(cupole)
-
 public class BoardTest {
+    /** the board used by the game */
     private Board board;
+    /** the worker used in the test */
     private Builder builder1;
+    /** the worker used in the test */
     private Builder builder2;
+    /** the worker used in the test */
     private Builder builder3;
+    /** the worker used in the test */
     private Builder builder4;
+    /** a square used in the test */
     private Square square;
+    /** the game used in the test */
     private Game game;
+    /** the netInterface used in the test */
     private NetInterface netInterface = new NetInterface();
 
+    /** creates the board and the workers used during the tests*/
     @Before
     public void createElements() {
         game = new Game(3, netInterface);
@@ -64,6 +67,7 @@ public class BoardTest {
 
     }
 
+    /** checks the behaviour of method move() when a worker moves from a ground level into another ground level */
     @Test
     public void groundToGround() throws IOException {
         board.move(builder1.getPosition(), board.fullMap[2][3]);
@@ -75,7 +79,7 @@ public class BoardTest {
         assertSame(builder1.getPosition(), board.fullMap[2][3]);
     }
 
-
+    /** checks the behaviour of method move() when a worker moves on a tower of a different level */
     @Test
     public void differentFloor() throws IOException {
 
@@ -88,6 +92,8 @@ public class BoardTest {
         assertEquals(board.fullMap[1][4].getLevel(), levelB);
     }
 
+
+    /** checks the behaviour of method move() when it has to swap two workers */
     @Test
     public void swap() throws IOException {
 
@@ -96,20 +102,20 @@ public class BoardTest {
 
         board.move(builder3.getPosition(), board.fullMap[1][2]);
 
-        assertSame(board.fullMap[1][2].getBuilder(), builder3);
+        assertSame(board.fullMap[1][2].getBuilder(), builder3);  // controlla che negli square risultino i builder scambiati
         assertSame(board.fullMap[1][3].getBuilder(), builder4);
 
         assertEquals(1, board.fullMap[1][2].getValue());  //controlla che il value sia ancora impostato a 1
         assertEquals(1, board.fullMap[1][3].getValue());
 
-        assertSame(builder3.getPosition(), board.fullMap[1][2]);
+        assertSame(builder3.getPosition(), board.fullMap[1][2]);  // controlla che nei builder sia registrata la nuova posizione
         assertSame(builder4.getPosition(), board.fullMap[1][3]);
 
-        assertEquals(levelB, builder3.getPosition().getLevel());
+        assertEquals(levelB, builder3.getPosition().getLevel());  // controlla che il livello degli square sia rimasto inalterato
         assertEquals(levelA, builder4.getPosition().getLevel());
     }
 
-
+    /** checks the behaviour of method build() when it has to build blocks */
     @Test
     public void createBuilding() throws IOException {
         Square position = board.fullMap[0][0];
@@ -122,6 +128,8 @@ public class BoardTest {
         assertNull(board.fullMap[0][0].getBuilder());
     }
 
+    /** checks the behaviour of method build() when it has to build domes, complete towers included, and that
+     * the parameter completedTowers is updated only when a complete tower is built */
     @Test
     public void createDome() throws IOException {
         Square position = board.fullMap[0][1];

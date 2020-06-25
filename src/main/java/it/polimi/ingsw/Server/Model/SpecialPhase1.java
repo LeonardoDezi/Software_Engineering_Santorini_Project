@@ -56,7 +56,6 @@ public class SpecialPhase1 extends Phase {
 
         if(received != null ) {   //TODO received sarà null?
             actionMethod(received.getBuilder(), received.getMove());
-            //updateBoard(game.getBoard);
         }
 
         if(!(game.getGameEnded()))

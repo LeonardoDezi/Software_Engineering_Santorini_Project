@@ -35,9 +35,11 @@ public class Dealer extends Player {
      * @param card1 is the first card selected
      * @param card2 is the second card selected
      */
-    //i numeri devono essere legittimi
     public void drawCards(int card1, int card2){
         game.addChosenCard(card1);
         game.addChosenCard(card2);
     }
+
+
+    //TODO mancano i metodi per scegliere il primo giocatore
 }

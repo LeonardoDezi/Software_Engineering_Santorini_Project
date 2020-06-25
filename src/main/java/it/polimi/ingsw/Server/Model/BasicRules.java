@@ -61,7 +61,8 @@ public class BasicRules{
     }
 
     /**
-     * checks if the move made by the player results in its victory, according to the generic winning rules
+     * checks if the move made by the player results in its victory, according to the generic winning rules.
+     * If the player ha won, the method will set game.gameEnded to true and set the winning player as the worker's owner.
      * @param player is the player that made the move passed to the method
      * @param initialPosition is the place where the worker used to be before the examined move
      * @param finalPosition is the place where the worker is after the move
@@ -95,7 +96,7 @@ public class BasicRules{
     }
 
     /**
-     * used to have a list of all the squares that surround the worker, independently of their content.
+     * returns a list of all the squares that surround the worker, independently of their content.
      * @param builder is the worker of which we want the surrounding squares.
      * @return an arraylist containing all the surrounding squares.
      */
@@ -149,7 +150,8 @@ public class BasicRules{
 
     /**
      * removes the squares inside the list proximity that contain a dome
-     * @param proximity is the list of squares from which we will remove the ones containing a dome
+     * @param proximity is the list of squares from which we will remove the ones containing a dome, complete
+     *                  towers included.
      * @return the proximity list without the squares containing domes
      */
     public ArrayList<Square> removeDomeSquare(ArrayList<Square> proximity) {
@@ -170,7 +172,6 @@ public class BasicRules{
      * @param builder is the worker of which we want to know the possibleMoves
      * @return the proximity list without the squares containing too high towers
      */
-    //proximity non toglie le caselle con cupole o pedine
     public ArrayList<Square> removeTooHighPlaces(ArrayList<Square> proximity, Builder builder) {
         Square position = builder.getPosition();
         int playerHeight = position.getLevel();
@@ -192,7 +193,6 @@ public class BasicRules{
      * @param position is the square where the builing is made
      * @param isDome if true, indicates that the construction will be a dome
      */
-    //potrebbe dare problemi quando il metodo viene eseguito e un giocatore ha già vinto
     public void build(Player player, Square position, boolean isDome) throws IOException {
         if(position != null) {
             board.build(position, isDome);
@@ -207,7 +207,6 @@ public class BasicRules{
      * @param initialPosition is the square where the worker is initially placed
      * @param position is the square where the worker is going to be.
      */
-    //potrebbe dare problemi quando il metodo viene eseguito e un giocatore ha già vinto
     public void move(Player player, Square initialPosition, Square position) throws IOException {
         board.move(initialPosition, position);
         WinPhase winPhase = new WinPhase(game);

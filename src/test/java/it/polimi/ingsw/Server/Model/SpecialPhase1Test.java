@@ -10,6 +10,8 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)
+
 /**
  * this class is used to test the behaviour of SpecialPhase1
  */
@@ -41,7 +43,7 @@ public class SpecialPhase1Test {
     /**
      * creates the players used in every test and sets the cards of player2 and player3 to Pan and Chronus
      */
- /*   @Before
+    @Before
     public void create(){
         game = new Game(3, netInterface);
         game.addPlayer(new Player("Marco", "Red", game, 0));

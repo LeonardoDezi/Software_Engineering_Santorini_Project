@@ -22,6 +22,8 @@ public class ParserManager {
 
     public ArrayList<Card> getDeck(){ return cards;}
 
+    public int getCardSize(){return cards.size();}
+
     public void uploadCards() {
 
         Gson gson = new GsonBuilder().serializeNulls().create();

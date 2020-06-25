@@ -9,6 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+
+//ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)
+
  /**
   * this class is used to test the behaviour of MovementPhase
   */
@@ -37,7 +40,11 @@ import static org.junit.Assert.*;
      private Context context = new Context(new NetInterface());
      /** the context used for the test*/
      private Context context1 = new Context(new NetInterface());
+     /** the netInterface used for the test*/
      private NetInterface netInterface = new NetInterface();
+
+
+
 
 
 

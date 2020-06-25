@@ -8,17 +8,24 @@ import java.io.IOException;
 
 import static org.junit.Assert.*;
 
-//TODO magari fare più test con carte speciali move e carte speciali build insieme
+//ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)
 
-public class WinPhaseTest {
+/**  this class is used to test the behaviour of Game  */
+ public class WinPhaseTest {
+    /** the winPhase tested */
     private WinPhase winPhase;
+    /** the three-player game used by the test */
     private Game game;
+    /** the player used in the test */
     private Player player1;
+    /** the player used in the test */
     private Player player2;
+    /** the player used in the test */
     private Player player3;
+    /** the netInterface used in the test */
     private NetInterface netInterface = new NetInterface();
 
-
+    /** creates the game and the players */
     @Before
     public void create(){
         game = new Game(3, netInterface);
@@ -31,6 +38,12 @@ public class WinPhaseTest {
         game.addPlayer(player3);
     }
 
+    /** checks the behaviour of WinPhase when
+     * 1) There are less than five towers
+     * 2) There are five towers and one of the players has the Chronus card
+     * 3) There are five towers and the player currently playing has the Chronus card
+     * 4) There are five towers and no player has the Chronus card
+     * */
     @Test
     public void checkAtLeastFiveTowers() throws IOException {
         game.gameBoard.build(game.gameBoard.fullMap[0][0], false);
@@ -102,7 +115,14 @@ public class WinPhaseTest {
 
     }
 
-
+/** checks the behaviour of WinPhase when
+    1) The move made cannot result in a special victory. (From a three-block tower to a two-block tower)
+    2) The move made cannot result in a special victory. (From a two-block tower to a three-block tower)
+    3) The move made can result in a special victory but the current player doesn't have the Pan card. (From a three-block tower to the ground)
+    4) The move made can result in a special victory and the current player has the Pan card. (From a three-block tower to the ground)
+    5) The move made cannot result in a special victory and the current player has the Pan card. (From a one-block tower to a three-block tower)
+    6) The move made can result in a special victory but no player has the Pan card.
+ */
     @Test
     public void checkJumpDownCondition() throws IOException {
 
@@ -138,7 +158,7 @@ public class WinPhaseTest {
 
 
 
-        //3) caso vincente e il giocatore ha la carta speciale      //torre di 3 piani - torre di un piano
+        //4) caso vincente e il giocatore ha la carta speciale      //torre di 3 piani - torre di un piano
         game.gameBoard.build(game.gameBoard.fullMap[4][4], false);   //torre di un piano
         winPhase.checkMovement(player3, game.gameBoard.fullMap[3][3],game.gameBoard.fullMap[4][4]);
         assertTrue(game.getGameEnded());
@@ -147,13 +167,13 @@ public class WinPhaseTest {
         game.setGameEnded(false);
         game.setWinningPlayer(null);    //reinizializzazione
 
-        //4) caso non vincente e il giocatore ha la carta speciale      //torre di un piano  - torre di tre piani
+        //5) caso non vincente e il giocatore ha la carta speciale      //torre di un piano  - torre di tre piani
         winPhase.checkMovement(player3, game.gameBoard.fullMap[4][4],game.gameBoard.fullMap[3][3]);
         assertFalse(game.getGameEnded());
         assertNull(game.getWinningPlayer());   // si accerta che nessuno abbia vinto
 
 
-        //5) caso vincente e nessuno ha la carta speciale
+        //6) caso vincente e nessuno ha la carta speciale
         player3.setCard(game.getDeckCard(4));    //Apollo
         assertFalse(game.getGameEnded());
         assertNull(game.getWinningPlayer());   // si accerta che nessuno abbia vinto
