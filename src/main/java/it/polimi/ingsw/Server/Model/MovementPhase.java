@@ -61,7 +61,7 @@ public class MovementPhase extends Phase {
 
         if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {
 
-            Envelope received = context.getNetInterface().getBothMovementMove(moves1, builder1, moves2, builder2, player);
+            Envelope received = context.getNetInterface().getBothMovementMove(moves1, builder1, moves2, builder2, player, false);
 
             Square lastPosition = received.getBuilder().getPosition();
             actionMethod(received.getBuilder(), received.getMove());
@@ -72,7 +72,7 @@ public class MovementPhase extends Phase {
 
         }else{    //entrambi i worker sono incapaci di muoversi
 
-            game.removePlayer(player);  //TODO
+            game.removePlayer(player);  //TODO  verificare che non ci siano problemi quando rimuoviamo un giocatore
             //loseMethod();
             //sendMessage("Il giocatore" + player + "ha perso", null); //per mandare in broadcast il campo player è null
 

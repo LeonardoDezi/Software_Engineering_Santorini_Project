@@ -51,11 +51,14 @@ public class SpecialPhase1 extends Phase {
         ArrayList<Square> moves1 = getMoves(builder1);
         ArrayList<Square> moves2 = getMoves(builder2);
 
-        // TODO netInterface.sendMessage()
-        Envelope received = context.getNetInterface().getBothMovementMove(moves1, builder1, moves2, builder2, player);
+        if(!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // il giocatore può fare mosse
 
-        if(received != null ) {   //TODO received sarà null?
-            actionMethod(received.getBuilder(), received.getMove());
+            Envelope received = context.getNetInterface().getBothMovementMove(moves1, builder1, moves2, builder2, player, true);
+
+            if (received != null) {
+                actionMethod(received.getBuilder(), received.getMove());
+            }
+
         }
 
         if(!(game.getGameEnded()))

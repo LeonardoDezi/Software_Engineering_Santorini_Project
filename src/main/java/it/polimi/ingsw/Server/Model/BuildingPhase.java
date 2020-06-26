@@ -56,16 +56,16 @@ public class BuildingPhase extends Phase {
         if(player.getCard().getParameters().buildingPhaseMoves.equals("askForFemale")){   //se la carta è Selene
 
             if (playingBuilder.sex.equals(Player.SEX2)) {  //se il worker giocante è femmina
-                received=context.getNetInterface().getBuildMove(moves1, playingBuilder, true, player);
+                received=context.getNetInterface().getBuildMove(moves1, playingBuilder, true, player, false);
             }else if(player.getBuilderSize() ==2){      //se il worker è maschio e il giocatore ha due workers
                 Builder female = player.getFemale();
                 ArrayList<Square> moves2 = basicRules.getBuildingRange(female);
-                received = context.getNetInterface().getBothBuildMove(moves1, playingBuilder, moves2, female, true, player);   //TODO usiamo canBuildADome per indicare che la femmina può costruire solo cupole. Ricordarselo quando si implementa getBothBuildMove
+                received = context.getNetInterface().getBothBuildMove(moves1, playingBuilder, moves2, female, true, player, false);   //TODO usiamo canBuildADome per indicare che la femmina può costruire solo cupole. Ricordarselo quando si implementa getBothBuildMove
             }else  //unico worker ed è maschio
-                received =context.getNetInterface().getBuildMove(moves1, playingBuilder, false, player);   //il worker è maschio e non può costruire cupole
+                received =context.getNetInterface().getBuildMove(moves1, playingBuilder, false, player, false);   //il worker è maschio e non può costruire cupole
 
         }else  //la carta non è selene
-            received = context.getNetInterface().getBuildMove(moves1, playingBuilder, canBuildDome, player);
+            received = context.getNetInterface().getBuildMove(moves1, playingBuilder, canBuildDome, player, false);
 
 
         actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
