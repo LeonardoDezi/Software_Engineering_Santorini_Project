@@ -262,7 +262,7 @@ public class NetInterface {
      */
     public String arrayListSquareToString(ArrayList<Square> moves){
         if(moves.isEmpty()){
-            return null;
+            return "null@";
         }
         StringBuilder stringMoves= new StringBuilder();
         String partial;
@@ -280,6 +280,9 @@ public class NetInterface {
      * @return a string containing the builder.
      */
     public String builderToString(Builder builder){
+        if(builder.equals(null)){
+            return "null@";
+        }
         Square position = builder.getPosition();
         return squareToString(position) + builder.getColour() + ":" + builder.sex + "@";
     }
