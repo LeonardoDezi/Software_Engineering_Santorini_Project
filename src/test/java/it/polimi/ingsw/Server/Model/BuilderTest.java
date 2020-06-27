@@ -2,7 +2,7 @@ package it.polimi.ingsw.Server.Model;
 
 import static org.junit.Assert.*;
 
-//import it.polimi.ingsw.Server.ServerApp;
+//import it.polimi.ingsw.Server.SantoriniApp;
 import org.junit.Test;
 
 //ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)

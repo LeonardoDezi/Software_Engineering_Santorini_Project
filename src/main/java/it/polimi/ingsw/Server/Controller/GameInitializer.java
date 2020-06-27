@@ -7,7 +7,7 @@ import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static it.polimi.ingsw.Server.ServerApp.*;
+import static it.polimi.ingsw.Server.SantoriniApp.*;
 
 
 
