@@ -51,7 +51,7 @@ public class SpecialPhase3 extends Phase {
 
         if(!(moves1.isEmpty())) {   // il giocatore può fare mosse
 
-            Envelope received = context.getNetInterface().getBuildMove(moves1, playingBuilder, buildDome, player, true);
+            Envelope received = context.getNetInterface().getBuildMove(moves1, playingBuilder, buildDome, player,true);
 
             if (received != null)
                 actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());

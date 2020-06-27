@@ -49,7 +49,7 @@ public class SpecialPhase2 extends Phase {
 
         if(!(moves1.isEmpty())) {    // il giocatore può fare mosse
 
-            Envelope received = context.getNetInterface().getMovementMove(moves1, playingBuilder, player, true);
+            Envelope received = context.getNetInterface().getMovementMove(moves1, playingBuilder, player,true);
 
             if (received != null)
                 actionMethod(received.getBuilder(), received.getMove());   // TODO controllare che received.getBuilder() è sempre = playingBuilder? tecnicamente non dovrebbe essere necessario

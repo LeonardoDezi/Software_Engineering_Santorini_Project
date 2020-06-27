@@ -53,7 +53,7 @@ public class SpecialPhase1 extends Phase {
 
         if(!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // il giocatore può fare mosse
 
-            Envelope received = context.getNetInterface().getBothMovementMove(moves1, builder1, moves2, builder2, player, true);
+            Envelope received = context.getNetInterface().getBothMovementMove(moves1, builder1, moves2, builder2, player,true);
 
             if (received != null) {
                 actionMethod(received.getBuilder(), received.getMove());

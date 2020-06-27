@@ -17,7 +17,7 @@ public class ClientApp {
         if(args.length>0){
             Cli.startCli();
         }else
-            Cli.startCli();
+            Cli.startGui();
 */
         Client client = new Client("localhost", 8080);
         try {

@@ -318,15 +318,17 @@ public class NetInterface {
         Sender.send(message, socket);
     }
 
-    public void sendMoves(Envelope envelope, Socket socket) throws IOException {
+    public void sendMoves(Moves envelope, Socket socket) throws IOException {
         if(envelope == null){
             Sender.send("0", socket);
         }
-        Square square = envelope.getMove();
-        Builder builder = envelope.getBuilder();
-        Boolean dome = envelope.getIsDome();
-        String coordinates = squareToString(square) + builderToString(builder) + booleanToString(dome);
-        Sender.send(coordinates, socket);
+        if (envelope != null) {
+            Square square = envelope.getMoves1().get(0);
+            Builder builder = envelope.getBuilder1();
+            Boolean dome = envelope.getIsDome();
+            String coordinates = squareToString(square) + builderToString(builder) + booleanToString(dome);
+            Sender.send(coordinates, socket);
+        }
     }
 
     public void sendSquare(Square square, Socket socket) throws IOException {

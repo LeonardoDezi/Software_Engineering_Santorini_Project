@@ -6,13 +6,13 @@ public class CliBoard {
 
     public static void drawBoard(ClientBoard clientBoard){
 
-        char[] firstLine = {'╔', '═', '═', '═', '╤', '═', '═', '═', '╤', '═', '═', '═', '╤', '═', '═', '═', '╤', '═', '═', '═', '╗'};
-        char[] lastLine = {'╚', '═', '═', '═', '╧', '═', '═', '═', '╧', '═', '═', '═', '╧', '═', '═', '═', '╧', '═', '═', '═', '╝'};
-        char[] inline = {'╟', '─', '─', '─', '┼', '─', '─', '─', '┼', '─', '─', '─', '┼', '─', '─', '─', '┼', '─', '─', '─', '╢'};
-        char[] startLine = {'║', ' '};
-        char[] midLine = {' ', '│', ' '};
-        char[] endLine = {' ', '║'};
-        System.out.println("  1   2   3   4   5");
+        String firstLine = "╔════╤════╤════╤════╤════╗";
+        String lastLine = "╚════╧════╧════╧════╧════╝";
+        String inline = "╟────┼────┼────┼────┼────╢";
+        String startLine = "║ ";
+        String midLine = " │ ";
+        String endLine = " ║";
+        System.out.println("  1    2    3    4    5");
         System.out.println(firstLine);
 
         for(int i=0; i<5; i++){
@@ -25,7 +25,7 @@ public class CliBoard {
             }
             System.out.print(endLine);
             int x =i+1;
-            System.out.println(" " + x);
+            System.out.println("  " + x);
             if(i != 4){
                 System.out.println(inline);
             }

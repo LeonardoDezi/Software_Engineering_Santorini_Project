@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Client.View;
 
+import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Client.View.CLI.Colour;
 
 import java.util.HashMap;
@@ -22,49 +23,71 @@ public class Cell {
 
     private String r ;
 
+    private int colour;
+
     public Cell(int i, int j){
         this.x = i;
         this.y = j;
         this.level = 0;
         this.pawn = null;
         this.value = 0;
+        this.colour = 0;
         maps();
     }
 
     public String drawCell(int i, int j){
 
+        if (colour == 0) {
 
-        Cell z = ClientBoard.getCell(i,j);
+            Cell z = ClientBoard.getCell(i, j);
 
-        if( z.value == 0){
-            r = buildings.get(level);
-            return r;
+            if (z.value == 0) {
+                r = buildings.get(level);
+                return r;
+            }
+
+            if (value == 1) {
+                r = pawn.getColours().get(pawn.getColour()) + pawn.getGender().get(pawn.getSex()) + levels.get(level);
+                return r;
+
+            }
+
+            if (z.value == 2) {
+                r = Colour.ANSI_BLUE + buildings.get(4) ;
+                return r;
+            }
         }
 
-        if ( value == 1){
-            r = pawn.getColours().get(pawn.getColour()) + pawn.getGender().get(pawn.getSex()) + levels.get(level) ;
-            return r;
+        if (colour == 1){
 
-        }
+            Cell z = ClientBoard.getCell(i, j);
 
-        if(z.value == 2){
-            r = buildings.get(4) + Colour.ANSI_BLUE;
-            return r;
+            if (z.value == 0) {
+                r = Colour.ANSI_GREEN + buildings.get(level);
+                return r;
+            }
+
+            if (value == 1) {
+                r = Colour.ANSI_GREEN + pawn.getGender().get(pawn.getSex()) + levels.get(level);
+            }
+
+            if (value == 2) {
+                r = Colour.ANSI_GREEN + buildings.get(4);
+            }
         }
 
         return r;
-
     }
 
     public void maps() {
         buildings = new HashMap<>();
         levels = new  HashMap<>();
 
-        buildings.put(0," ");
-        buildings.put(1,"\u2460");
-        buildings.put(2,"\u2461");
-        buildings.put(3,"\u2462");
-        buildings.put(4, "\u23fa");
+        buildings.put(0,"\u24ea ");
+        buildings.put(1,"\u2460 ");
+        buildings.put(2,"\u2461 ");
+        buildings.put(3,"\u2462 ");
+        buildings.put(4, "\u23fa ");
 
         levels.put(0,"\u2080");
         levels.put(1,"\u2081");
@@ -95,5 +118,9 @@ public class Cell {
 
     public void setPawn(Pawn pawn){
         this.pawn = pawn;
+    }
+
+    public void setColour(int colour){
+        this.colour = colour;
     }
 }

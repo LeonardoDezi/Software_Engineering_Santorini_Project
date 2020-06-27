@@ -9,7 +9,6 @@ import it.polimi.ingsw.Server.Model.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PipedWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -44,7 +43,7 @@ public class ClientController {
 
     /**
      * calls the method to ask the Challenger which cards he want to use for the game and sends them back to the server.
-     * @throws IOException
+     * throws IOException
      */
     public void dealerChoice() throws IOException {
         System.out.println("Choose "+ this.numberOfPlayers +" cards for the game");
@@ -54,7 +53,7 @@ public class ClientController {
 
     /**
      * calls the method to ask the player which card he wants to choose from the cards chosen by the Challenger.
-     * @throws IOException
+     * throws IOException
      */
     public void playerChoice() throws IOException {
         System.out.println("Pick a card for the game");
@@ -71,7 +70,7 @@ public class ClientController {
         while(stillPlaying){
             Moves moves = netInterface.getMoves(socket);
             if(moves!=null){
-                Envelope envelope = chooseMove(moves);
+                Moves envelope = chooseMove(moves);
                 netInterface.sendMoves(envelope, client.getServerSocket());
             }
         }
@@ -84,8 +83,82 @@ public class ClientController {
      * @param moves all the moves that the player can do.
      * @return the single move chosen by the player with the builder that is going to do that move.
      */
-    public Envelope chooseMove(Moves moves){
+    public Moves chooseMove(Moves moves) throws IOException {
         //TODO moves contains all the moves that the player can do, return an envelope with the chosen move
+        if(moves.getMoves1() != null){
+            for (int i=0; i<moves.getMoves1().size(); i++){
+                for (int j=0; j<5; j++){
+                    for (int k=0; k<5; k++){
+                        if (clientBoard.getCell(j, k).getX() == moves.getMoves1().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves1().get(i).y){
+                            clientBoard.getCell(j, k).setColour(1);
+                        }
+                    }
+                }
+            }
+        }
+        if(moves.getMoves2() != null){
+            for (int i=0; i<moves.getMoves2().size(); i++){
+                for (int j=0; j<5; j++){
+                    for (int k=0; k<5; k++){
+                        if (clientBoard.getCell(j, k).getX() == moves.getMoves2().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves2().get(i).y) {
+                            clientBoard.getCell(j, k).setColour(1);
+                        }
+                    }
+                }
+            }
+        }
+        CliBoard.drawBoard(clientBoard);
+        this.resetBoard();
+
+        System.out.println("Pick a worker: position (x,y)");
+        int[] array = getPosition();
+        int x = array[1]-1;
+        int y = array[0]-1;
+
+        if (x == moves.getBuilder1().getPosition().x && y == moves.getBuilder1().getPosition().y){
+            for (int i=0; i<moves.getMoves1().size(); i++){
+                for (int j=0; j<5; j++){
+                    for (int k=0; k<5; k++){
+                        if (clientBoard.getCell(j, k).getX() == moves.getMoves1().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves1().get(i).y){
+                            clientBoard.getCell(j, k).setColour(1);
+
+                        }
+                    }
+                }
+            }
+            CliBoard.drawBoard(clientBoard);
+        }
+
+        if (x == moves.getBuilder2().getPosition().x && y == moves.getBuilder2().getPosition().y){
+            for (int i=0; i<moves.getMoves2().size(); i++){
+                for (int j=0; j<5; j++){
+                    for (int k=0; k<5; k++){
+                        if (clientBoard.getCell(j, k).getX() == moves.getMoves2().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves2().get(i).y){
+                            clientBoard.getCell(j, k).setColour(1);
+
+                        }
+                    }
+                }
+            }
+            CliBoard.drawBoard(clientBoard);
+        }
+
+        this.resetBoard();
+        System.out.println("Select move: (x,y)");
+        int[] array2 = getPosition();
+        int x2 = array[1]-1;
+        int y2 = array[0]-1;
+
+
+
+        ArrayList<Square> chosen = new ArrayList<Square>();
+
+        //arrayList <Square> chosen -> square scelto
+        // builder che fa la mossa -> builder scelto
+        // se costruisci una cupola per effetto speciale isDome ->true
+        //female sempre false
+        //Moves chosenMove = new Moves();
+
     return  null;
     }
 
@@ -144,14 +217,9 @@ public class ClientController {
 
     public void placeBuilder(ArrayList<Square> freeSquares, int number) throws IOException {
         System.out.println("Place your builders: positions (x,y)");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String[] inputs = reader.readLine().split(",");
-        int[] array = new int[inputs.length];
-        for (int i=0; i<array.length; i++){
-            array[i] = Integer.parseInt(inputs[i]);
-        }
-        int x = array[0]-1;
-        int y = array[1]-1;
+        int [] array = getPosition();
+        int x = array[1]-1;
+        int y = array[0]-1;
         for (int i=0; i<freeSquares.size(); i++){
             int tempX = freeSquares.get(i).x;
             int tempY = freeSquares.get(i).y;
@@ -163,6 +231,27 @@ public class ClientController {
     }
 
     public void updateBoard(Square firstSquare, Square secondSquare, Builder builder1, Builder builder2) {
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j < 5; j++){
+                if (clientBoard.getCell(i, j).getX() == firstSquare.x && clientBoard.getCell(i, j).getY() == firstSquare.y) {
+                    clientBoard.getCell(i, j).setValue(firstSquare.getValue());
+                    clientBoard.getCell(i, j).setLevel(firstSquare.getLevel());
+                    if (firstSquare.getValue() == 1) {
+                        Pawn pawn1 = new Pawn(builder1.getColour(), builder1.getSex());
+                        clientBoard.getCell(i, j).setPawn(pawn1);
+                    }
+                }
+                if (clientBoard.getCell(i, j).getX() == secondSquare.x && clientBoard.getCell(i, j).getY() == secondSquare.y) {
+                    clientBoard.getCell(i, j).setValue(secondSquare.getValue());
+                    clientBoard.getCell(i, j).setLevel(secondSquare.getLevel());
+                    if (secondSquare.getValue() == 1) {
+                        Pawn pawn2 = new Pawn(builder2.getColour(), builder2.getSex());
+                        clientBoard.getCell(i, j).setPawn(pawn2);
+                        CliBoard.drawBoard(clientBoard);
+                    }
+                }
+            }
+        }
     }
 
     public void updateBoard(Square firstSquare, Builder builder1) {
@@ -177,5 +266,23 @@ public class ClientController {
                 }
             }
         }
+    }
+
+    private void resetBoard(){
+        for (int i=0; i<5; i++){
+            for (int j=0; j<5; j++){
+                clientBoard.getCell(i,j).setColour(0);
+            }
+        }
+    }
+
+    public int[] getPosition() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String[] inputs = reader.readLine().split(",");
+        int[] array = new int[inputs.length];
+        for (int i=0; i<array.length; i++){
+            array[i] = Integer.parseInt(inputs[i]);
+        }
+        return array;
     }
 }
