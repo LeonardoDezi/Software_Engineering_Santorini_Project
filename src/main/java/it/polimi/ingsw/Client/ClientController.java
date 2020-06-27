@@ -42,12 +42,20 @@ public class ClientController {
         }
     }
 
+    /**
+     * calls the method to ask the Challenger which cards he want to use for the game and sends them back to the server.
+     * @throws IOException
+     */
     public void dealerChoice() throws IOException {
         System.out.println("Choose "+ this.numberOfPlayers +" cards for the game");
         ArrayList<Integer> chosenCards = this.chosenCards();
         netInterface.sendCard(chosenCards, client.getServerSocket());
     }
 
+    /**
+     * calls the method to ask the player which card he wants to choose from the cards chosen by the Challenger.
+     * @throws IOException
+     */
     public void playerChoice() throws IOException {
         System.out.println("Pick a card for the game");
         Integer card = this.pickACard();
@@ -88,10 +96,19 @@ public class ClientController {
         this.stillPlaying=false;
     }
 
+    /**
+     * sets the number of players of the game locally.
+     * @param numberOfPlayers is the number of players in game.
+     */
     public void setNumberOfPlayers(Integer numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
     }
 
+    /**
+     * shows on screen all the 15 cards and waits for the Challenger choice.
+     * @return the 2 or 3 chosen cards.
+     * @throws IOException
+     */
     public ArrayList<Integer> chosenCards() throws IOException {
         ArrayList<Integer> chosenCards = new ArrayList<Integer>();
         for (int i = 0; i<numberOfPlayers; i++){
@@ -102,12 +119,22 @@ public class ClientController {
         return chosenCards;
     }
 
+    /**
+     * Shows on screen the 2 or 3 cards chosen by the Challenger (or the remaining ones) and waits for the player choice.
+     * @return The chosen card.
+     * @throws IOException
+     */
     public Integer pickACard() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Integer card = Integer.parseInt(reader.readLine());
         return card;
     }
 
+    /**
+     * asks the Challenger to choose
+     * @param players
+     * @throws IOException
+     */
     public void chooseBeginner(ArrayList<String> players) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int player = Integer.parseInt(reader.readLine());

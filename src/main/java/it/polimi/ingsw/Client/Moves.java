@@ -13,7 +13,17 @@ public class Moves {
     private  Builder builder2;
     private boolean isDome;
     private boolean female;
+    private boolean skippable;
 
+    /**
+     * class used to comunicate to the client all the available moves of the actual phase.
+     * @param builder1 is the first builder.
+     * @param moves1 all the places where the first builder can move or build.
+     * @param builder2 is the second builder.
+     * @param moves2 all the places where the second builder can move or build.
+     * @param isDome boolean that indicates if the player can build a dome thanks to a god power.
+     * @param female to indicate that the female worker has a special effect.
+     */
     public Moves(Builder builder1, ArrayList<Square> moves1, Builder builder2, ArrayList<Square> moves2, boolean isDome, boolean female){
         this.builder1 = builder1;
         this.builder2 = builder2;
@@ -23,8 +33,16 @@ public class Moves {
         this.female = female;
     }
 
+    /**
+     * returns the first builder of the class.
+     * @return the first builder of the class.
+     */
     public Builder getBuilder1(){return builder1;}
 
+    /**
+     * sets the informations of the first builder of the class.
+     * @param builder1 the builder that is going to be set as first builder.
+     */
     public void setBuilder1(Builder builder1){
         this.builder1 = builder1;
     }
@@ -57,5 +75,9 @@ public class Moves {
 
     public void setFemale(boolean female){
         this.female = female;
+    }
+
+    public void setSkippable(boolean skippable){
+        this.skippable=skippable;
     }
 }

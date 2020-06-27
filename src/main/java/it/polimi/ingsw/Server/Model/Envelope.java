@@ -6,7 +6,7 @@ public class Envelope {
     /** represents the worker associated to the move that is received */
     private Builder builder;
     /** represents the move made by the worker. When the player makes no moves, move is set to null */
-    private Square move = null;
+    private Square move;
     /** represents the type of construction that the player wants to make. */
     private boolean isDome = false;
 
@@ -54,5 +54,6 @@ public class Envelope {
      * @param isDome represents the type of construction that the player wants to make.
      */
     public void setIsDome(boolean isDome){this.isDome = isDome;}
+
 
 }

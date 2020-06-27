@@ -48,13 +48,19 @@ public class NetInterface {
                 moves.setMoves1(moves1);
                 moves.setBuilder1(builder1);
             }
-            if(values[3].equals("null")){
+            if(values[3].equals("true")){
+                moves.setSkippable(true);
+            }
+            else{
+                moves.setSkippable(false);
+            }
+            if(values[4].equals("null")){
                 moves.setMoves2(null);
                 moves.setBuilder2(null);
             }
             else{
-                moves2 = stringToArrayListSquare(values[3]);
-                builder2 = stringToBuilder(values[4]);
+                moves2 = stringToArrayListSquare(values[4]);
+                builder2 = stringToBuilder(values[5]);
                 moves.setMoves2(moves2);
                 moves.setBuilder2(builder2);
             }
@@ -73,6 +79,12 @@ public class NetInterface {
                 moves.setMoves1(moves1);
                 moves.setBuilder1(builder1);
             }
+            if(values[3].equals("true")){
+                moves.setSkippable(true);
+            }
+            else {
+                moves.setSkippable(false);
+            }
             moves.setMoves2(null);
             moves.setBuilder2(null);
             moves.setIsDome(false);
@@ -82,16 +94,22 @@ public class NetInterface {
             if(values[1].equals("null")){
                 moves.setMoves1(null);
                 moves.setBuilder1(null);
-                boolean isDome = stringToBool(values[3]);
-                moves.setIsDome(isDome);
+                moves.setIsDome(false);
             }
             else{
                 moves1 = stringToArrayListSquare(values[1]);
                 builder1 = stringToBuilder(values[2]);
                 moves.setMoves1(moves1);
                 moves.setBuilder1(builder1);
+                boolean isDome = stringToBool(values[3]);
+                moves.setIsDome(isDome);
+                if(values[4].equals("true")){
+                    moves.setSkippable(true);
+                }
+                else{
+                    moves.setSkippable(false);
+                }
             }
-            moves.setIsDome(false);
             moves.setMoves2(null);
             moves.setBuilder2(null);
             moves.setFemale(false);
@@ -109,15 +127,21 @@ public class NetInterface {
                 moves.setBuilder1(builder1);
                 moves.setIsDome(false);
             }
-            if(values[3].equals("null")){
+            if(values[3].equals("true")){
+                moves.setSkippable(true);
+            }
+            else{
+                moves.setSkippable(false);
+            }
+            if(values[4].equals("null")){
                 moves.setBuilder2(null);
                 moves.setMoves2(null);
                 moves.setFemale(false);
             }
             else{
-                moves2 = stringToArrayListSquare(values[3]);
-                builder2 = stringToBuilder(values[4]);
-                boolean female = stringToBool(values[5]);
+                moves2 = stringToArrayListSquare(values[4]);
+                builder2 = stringToBuilder(values[5]);
+                boolean female = stringToBool(values[6]);
                 moves.setMoves2(moves2);
                 moves.setBuilder2(builder2);
                 moves.setFemale(female);

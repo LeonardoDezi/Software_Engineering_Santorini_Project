@@ -46,13 +46,20 @@ public class NetInterface {
      * @param player the player that has to choose the move.
      * @return the move that the player has choosen.
      */
-    public Envelope getBothMovementMove(ArrayList<Square> moves1, Builder builder1,ArrayList<Square> moves2, Builder builder2, Player player) throws IOException {
+    public Envelope getBothMovementMove(ArrayList<Square> moves1, Builder builder1,ArrayList<Square> moves2, Builder builder2, Player player, boolean skippable) throws IOException {
         this.currentPlayer=player;
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = "1@" + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(builder2);
+        String message = "1@" + arrayListSquareToString(moves1) + builderToString(builder1) + skippable + "@" + arrayListSquareToString(moves2) + builderToString(builder2);
         Sender.send(message, socket);
         message= Receiver.receive(socket);
+        try{
+            Integer x = parseInt(message);
+            if(x.equals(0)){
+                return null;
+            }
+        }
+        catch (NumberFormatException e){}
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
@@ -67,14 +74,19 @@ public class NetInterface {
      * @param player is the player that has to choose.
      * @return the move chosen by the player or null if the player choses not to take a special action.
      */
-    public Envelope getMovementMove(ArrayList<Square> moves, Builder builder, Player player) throws IOException {
+    public Envelope getMovementMove(ArrayList<Square> moves, Builder builder, Player player, boolean skippable) throws IOException {
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = "2@" + arrayListSquareToString(moves) + builderToString(builder);
+        String message = "2@" + arrayListSquareToString(moves) + builderToString(builder) + skippable;
         Sender.send(message, socket);
         message= Receiver.receive(socket);
-        if(message==null){
-            return null;
+        try{
+            Integer x = parseInt(message);
+            if(x.equals(0)){
+                return null;
+            }
+        }
+        catch (NumberFormatException e){
         }
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
@@ -92,12 +104,20 @@ public class NetInterface {
      * @param player the player that has to choose where to build.
      * @return an Envelope Object with the choice of the player.
      */
-    public Envelope getBothBuildMove(ArrayList<Square> moves1, Builder builder1, ArrayList<Square> moves2, Builder female, Boolean canBuildADome, Player player) throws IOException {
+    public Envelope getBothBuildMove(ArrayList<Square> moves1, Builder builder1, ArrayList<Square> moves2, Builder female, Boolean canBuildADome, Player player, boolean skippable) throws IOException {
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message ="4@" + arrayListSquareToString(moves1) + builderToString(builder1) + arrayListSquareToString(moves2) + builderToString(female) + wantsToBuildADome(canBuildADome);
+        String message ="4@" + arrayListSquareToString(moves1) + builderToString(builder1) + skippable + "@" + arrayListSquareToString(moves2) + builderToString(female) + wantsToBuildADome(canBuildADome);
         Sender.send(message, socket);
         message= Receiver.receive(socket);
+        try{
+            Integer x = parseInt(message);
+            if(x.equals(0)){
+                return null;
+            }
+        }
+        catch (NumberFormatException e){
+        }
         String[] choosenmove = message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
@@ -119,17 +139,22 @@ public class NetInterface {
      * @return and Envelope Object containing where the player wants to build and if he wants to build a dome.
      * if the player has the opportunity to choose to build or not the method can return null if the choice is to not build anything.
      */
-    public Envelope getBuildMove(ArrayList<Square>moves, Builder builder, Boolean isDome, Player player) throws IOException {
+    public Envelope getBuildMove(ArrayList<Square>moves, Builder builder, Boolean isDome, Player player, boolean skippable) throws IOException {
         Client client = getClient(player);
         Socket socket=client.getSocket();
-        String message = "3@" + arrayListSquareToString(moves) + builderToString(builder) + wantsToBuildADome(isDome);
+        String message = "3@" + arrayListSquareToString(moves) + builderToString(builder) + wantsToBuildADome(isDome) + skippable;
         if(isDome){
             //sendMessage("vuoi costruire la cupola?", client);
         }
         Sender.send(message, socket);
         message= Receiver.receive(socket);
-        if(message==null){
-            return null;
+        try{
+            Integer x = parseInt(message);
+            if(x.equals(0)){
+                return null;
+            }
+        }
+        catch (NumberFormatException e){
         }
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
@@ -294,9 +319,9 @@ public class NetInterface {
      */
     public String wantsToBuildADome(Boolean isDome){
         if(isDome){
-            return "1";
+            return "1@";
         }
-        return "0";
+        return "0@";
     }
 
 
