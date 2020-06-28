@@ -238,13 +238,15 @@ public class NetInterface {
             if (values[0].equals("10")) { //la partita comincia
                 controller.setup = false;
             }
-            if (values[0].equals("11")) {
-                System.out.println("Select number of players");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                int numberOfPlayers = Integer.parseInt(reader.readLine());
-                String numberOfP = Integer.toString(numberOfPlayers);
-                Sender.send(numberOfP,socket);
+
+            if (values[0].equals("11")) {    //TODO modificato qui
+
+                controller.chooseNumberOfPlayers();
+                //Sender.send(numberOfP,socket);
+
             }
+
+
             if (values[0].equals("12")){
                 String number = values[1];
                 Integer numberOfPlayers = parseInt(number);

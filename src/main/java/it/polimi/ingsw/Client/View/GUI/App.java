@@ -1,38 +1,23 @@
 package it.polimi.ingsw.Client.View.GUI;
-import javax.swing.*;
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
 
+import javax.swing.*;
+
+/** this class contains the main method used to start the creation of the GUI */
 public class App {
 
-
-
+    /** main method used to start the creation of the GUI*/
     public static void main(String[] args) {
+
         SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
+            public void run() { createAndShowGUI(); }});
     }
 
+    /** starts the creation of the GUI and of the first window */
     private static void createAndShowGUI() {
         System.out.println("Created GUI on EDT? "+
                 SwingUtilities.isEventDispatchThread());
 
-        JFrame mainFrame = new JFrame("SANTORINI");
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        MyPanel mainPanel = new MyPanel();
-        mainFrame.add(mainPanel);
-        mainFrame.pack();
-        mainFrame.setVisible(true);
-        mainFrame.setLocationRelativeTo(null);
-
-        new StartDialog(mainFrame);
-
+        new IntroFrame();
 
     }
 
