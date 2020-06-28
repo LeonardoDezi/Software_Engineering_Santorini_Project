@@ -240,10 +240,14 @@ public class NetInterface {
             }
 
             if (values[0].equals("11")) {    //TODO modificato qui
-
-                controller.chooseNumberOfPlayers();
-                //Sender.send(numberOfP,socket);
-
+                System.out.println("Select number of players");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                int numberOfPlayers = Integer.parseInt(reader.readLine());
+                String numberOfP = Integer.toString(numberOfPlayers);
+                Sender.send(numberOfP,socket);
+                /* numberOfP =controller.chooseNumberOfPlayers();
+                    Sender.send(numberOfP, socket);
+                 */
             }
 
 
