@@ -78,7 +78,7 @@ public class Square {
      * puts a worker on the square.
      * @param builder is the worker to put on the square
      */
-    protected void setBuilder(Builder builder){ this.builder = builder; }
+    public void setBuilder(Builder builder){ this.builder = builder; }
 
     /**
      * is used to know the worker on the square.

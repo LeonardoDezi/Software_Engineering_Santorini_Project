@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client.View.GUI;
 
-import it.polimi.ingsw.Client.ClientApp;
+
+import it.polimi.ingsw.Server.SantoriniApp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,13 +30,13 @@ public class StartDialog extends JDialog {
     private class ConfirmListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
-            try {
-                ClientApp.main(text);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-            StartDialog.this.dispose();
-            new PlayerNumberDialog(frame);
+           // try {
+           //    SantoriniApp.main(text);
+            //} catch (IOException ioException) {
+              //  ioException.printStackTrace();
+            //}
+            //StartDialog.this.dispose();
+            //new PlayerNumberDialog(frame);
         }
     }
 

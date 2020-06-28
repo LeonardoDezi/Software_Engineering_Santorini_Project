@@ -63,7 +63,10 @@ public class NetInterface {
         String[] choosenmove=message.split("@");
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
-        return new Envelope(chosenBuilder, chosenSquare, game);
+        boolean choice = stringToBool(choosenmove[2]);
+        Envelope result = new Envelope(chosenBuilder, chosenSquare,game);
+        result.setIsDome(choice);
+        return result;
     }
 
     /**

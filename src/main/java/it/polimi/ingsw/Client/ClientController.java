@@ -111,55 +111,38 @@ public class ClientController {
         this.resetBoard();
 
         System.out.println("Pick a worker: position (x,y)");
-        int[] array = getPosition();
-        int x = array[1]-1;
-        int y = array[0]-1;
+        Square builderSquare = getPosition();
+        ArrayList<Square> possibleMoves = chosenBuilder(moves,builderSquare);
 
-        if (x == moves.getBuilder1().getPosition().x && y == moves.getBuilder1().getPosition().y){
-            for (int i=0; i<moves.getMoves1().size(); i++){
-                for (int j=0; j<5; j++){
-                    for (int k=0; k<5; k++){
-                        if (clientBoard.getCell(j, k).getX() == moves.getMoves1().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves1().get(i).y){
-                            clientBoard.getCell(j, k).setColour(1);
+        while (possibleMoves == null){
+            System.out.println("Invalid pick, chose more wisely");
+            builderSquare = getPosition();
+            possibleMoves = chosenBuilder(moves,builderSquare);
 
-                        }
-                    }
-                }
-            }
-            CliBoard.drawBoard(clientBoard);
         }
 
-        if (x == moves.getBuilder2().getPosition().x && y == moves.getBuilder2().getPosition().y){
-            for (int i=0; i<moves.getMoves2().size(); i++){
-                for (int j=0; j<5; j++){
-                    for (int k=0; k<5; k++){
-                        if (clientBoard.getCell(j, k).getX() == moves.getMoves2().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves2().get(i).y){
-                            clientBoard.getCell(j, k).setColour(1);
-
-                        }
-                    }
-                }
-            }
-            CliBoard.drawBoard(clientBoard);
-        }
+        CliBoard.drawBoard(clientBoard);
 
         this.resetBoard();
+
         System.out.println("Select move: (x,y)");
-        int[] array2 = getPosition();
-        int x2 = array[1]-1;
-        int y2 = array[0]-1;
 
+        Square chosen = getPosition();
 
+        while(!searchArray(possibleMoves,chosen)){
+            System.out.println("Invalid pick, chose more wisely");
+            chosen = getPosition();
+        }
 
-        ArrayList<Square> chosen = new ArrayList<Square>();
+        ArrayList<Square> selected = new ArrayList<Square>();
+        selected.add(chosen);
 
-        //arrayList <Square> chosen -> square scelto
-        // builder che fa la mossa -> builder scelto
+        Moves chosenMove = new Moves(returnBuilder(builderSquare,moves),selected,null,null,false,false);
+
         // se costruisci una cupola per effetto speciale isDome ->true
         //female sempre false
-        //Moves chosenMove = new Moves();
 
-    return  null;
+    return  chosenMove;
     }
 
     /**
@@ -215,52 +198,59 @@ public class ClientController {
         netInterface.sendFirstPlayer(chosenOne,client.getServerSocket());
     }
 
+    /**
+     *
+     * @param freeSquares
+     * @param number
+     * @throws IOException
+     */
     public void placeBuilder(ArrayList<Square> freeSquares, int number) throws IOException {
         System.out.println("Place your builders: positions (x,y)");
-        int [] array = getPosition();
-        int x = array[1]-1;
-        int y = array[0]-1;
+        Square square1 = getPosition();
         for (int i=0; i<freeSquares.size(); i++){
             int tempX = freeSquares.get(i).x;
             int tempY = freeSquares.get(i).y;
-            if( x == tempX && y == tempY){
-                Square square = freeSquares.get(i);
-                netInterface.sendSquare(square,client.getServerSocket());
+            if( square1.x == tempX && square1.y == tempY){
+                Square square2 = freeSquares.get(i);
+                netInterface.sendSquare(square2,client.getServerSocket());
             }
         }
     }
 
-    public void updateBoard(Square firstSquare, Square secondSquare, Builder builder1, Builder builder2) {
+    public void updateBoard(Square firstSquare, Square secondSquare) {
         for (int i = 0; i < 5; i++){
             for (int j = 0; j < 5; j++){
                 if (clientBoard.getCell(i, j).getX() == firstSquare.x && clientBoard.getCell(i, j).getY() == firstSquare.y) {
                     clientBoard.getCell(i, j).setValue(firstSquare.getValue());
                     clientBoard.getCell(i, j).setLevel(firstSquare.getLevel());
                     if (firstSquare.getValue() == 1) {
-                        Pawn pawn1 = new Pawn(builder1.getColour(), builder1.getSex());
+                        Pawn pawn1 = new Pawn(firstSquare.getBuilder().getColour(), firstSquare.getBuilder().getSex());
                         clientBoard.getCell(i, j).setPawn(pawn1);
                     }
+
                 }
                 if (clientBoard.getCell(i, j).getX() == secondSquare.x && clientBoard.getCell(i, j).getY() == secondSquare.y) {
                     clientBoard.getCell(i, j).setValue(secondSquare.getValue());
                     clientBoard.getCell(i, j).setLevel(secondSquare.getLevel());
                     if (secondSquare.getValue() == 1) {
-                        Pawn pawn2 = new Pawn(builder2.getColour(), builder2.getSex());
+                        Pawn pawn2 = new Pawn(secondSquare.getBuilder().getColour(), secondSquare.getBuilder().getSex());
                         clientBoard.getCell(i, j).setPawn(pawn2);
-                        CliBoard.drawBoard(clientBoard);
+
                     }
+
                 }
             }
         }
+        CliBoard.drawBoard(clientBoard);
     }
 
-    public void updateBoard(Square firstSquare, Builder builder1) {
+    public void updateBoard(Square firstSquare) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (clientBoard.getCell(i, j).getX() == firstSquare.x && clientBoard.getCell(i, j).getY() == firstSquare.y) {
                     clientBoard.getCell(i, j).setValue(firstSquare.getValue());
                     clientBoard.getCell(i, j).setLevel(firstSquare.getLevel());
-                    Pawn pawn = new Pawn(builder1.getColour(),builder1.getSex());
+                    Pawn pawn = new Pawn(firstSquare.getBuilder().getColour(),firstSquare.getBuilder().getSex());
                     clientBoard.getCell(i, j).setPawn(pawn);
                     CliBoard.drawBoard(clientBoard);
                 }
@@ -276,13 +266,67 @@ public class ClientController {
         }
     }
 
-    public int[] getPosition() throws IOException {
+    public Square getPosition() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String[] inputs = reader.readLine().split(",");
         int[] array = new int[inputs.length];
         for (int i=0; i<array.length; i++){
             array[i] = Integer.parseInt(inputs[i]);
         }
-        return array;
+        int x = array[1]-1;
+        int y = array[0]-1;
+        return new Square(x, y);
     }
+
+    public ArrayList<Square> chosenBuilder(Moves moves, Square builderSquare){
+
+        if (builderSquare.x == moves.getBuilder1().getPosition().x && builderSquare.y == moves.getBuilder1().getPosition().y){
+            for (int i=0; i<moves.getMoves1().size(); i++){
+                for (int j=0; j<5; j++){
+                    for (int k=0; k<5; k++){
+                        if (clientBoard.getCell(j, k).getX() == moves.getMoves1().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves1().get(i).y){
+                            clientBoard.getCell(j, k).setColour(1);
+                        }
+                    }
+                }
+            }
+            return moves.getMoves1();
+        }
+
+        if (builderSquare.x == moves.getBuilder2().getPosition().x && builderSquare.y == moves.getBuilder2().getPosition().y){
+            for (int i=0; i<moves.getMoves2().size(); i++){
+                for (int j=0; j<5; j++){
+                    for (int k=0; k<5; k++){
+                        if (clientBoard.getCell(j, k).getX() == moves.getMoves2().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves2().get(i).y){
+                            clientBoard.getCell(j, k).setColour(1);
+                        }
+                    }
+                }
+            }
+            return moves.getMoves2();
+        }
+        return null;
+    }
+
+    public boolean searchArray(ArrayList<Square> possibleMoves, Square chosen){
+        for(int i=0; i<possibleMoves.size(); i++){
+            if(chosen.x == possibleMoves.get(i).x && chosen.y == possibleMoves.get(i).y){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Builder returnBuilder(Square builderSquare, Moves moves){
+        if(builderSquare.x == moves.getBuilder1().getPosition().x && builderSquare.y == moves.getBuilder1().getPosition().y){
+            return moves.getBuilder1();
+        }
+        if (builderSquare.x == moves.getBuilder2().getPosition().x && builderSquare.y == moves.getBuilder2().getPosition().y){
+            return moves.getBuilder2();
+        }
+        else
+            return null;
+
+    }
+
 }

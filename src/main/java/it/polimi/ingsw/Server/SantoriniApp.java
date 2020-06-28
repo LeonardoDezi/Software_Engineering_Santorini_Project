@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.Client.Client;
+
 import java.io.*;
 
 public class SantoriniApp {
@@ -39,6 +41,12 @@ public class SantoriniApp {
 
     public static void runCli(){
         System.out.println("starting cli");
+        it.polimi.ingsw.Client.Client client = new Client("localhost", 8080);
+        try {
+            client.startClient();
+        }catch (IOException e){
+            System.err.println(e.getMessage());
+        }
     }
 
 

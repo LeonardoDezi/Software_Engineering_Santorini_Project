@@ -20,6 +20,8 @@ public class NetInterface {
     private Builder builder2;
     private ClientController clientController;
     private Moves moves = new Moves(builder1, moves1, builder2, moves2, false, false);
+    private Square firstSquare;
+    private Square secondSquare;
 
     public NetInterface(ClientController clientController) {
         this.clientController = clientController;
@@ -160,26 +162,30 @@ public class NetInterface {
             Builder worker2;
             String[] square = values[1].split(":");
             Square firstSquare = stringToFullSquare(square);
-            if(!values[2].equals("1")){
-                String[] builderInfo = values[2].split(",");
-                worker1 = new Builder(firstSquare, builderInfo[0], builderInfo[1]);
+            if(values[2].equals("1")){
+                worker1 = null;
+                firstSquare.setBuilder(worker1);
             }
             else{
-                worker1 = null;
+                String[] builderInfo = values[2].split(",");
+                worker1 = new Builder(firstSquare, builderInfo[0], builderInfo[1]);
+                firstSquare.setBuilder(worker1);
             }
             if(values[3].equals("2")){
                 String[] square2 = values[4].split(":");
                 Square secondSquare = stringToFullSquare(square2);
-                if(!values[5].equals("1")){
-                    String[] secondBuilderInfo = values[5].split(",");
-                    worker2 = new Builder(firstSquare, secondBuilderInfo[0], secondBuilderInfo[1]);
+                if(values[5].equals("1")){
+                    worker2 = null;
+                    secondSquare.setBuilder(worker2);
                 }
                 else{
-                   worker2 = null;
+                    String[] secondBuilderInfo = values[5].split(",");
+                    worker2 = new Builder(firstSquare, secondBuilderInfo[0], secondBuilderInfo[1]);
+                    secondSquare.setBuilder(worker2);
                 }
-                clientController.updateBoard(firstSquare, secondSquare, worker1, worker2);
+                clientController.updateBoard(firstSquare, secondSquare);
             }
-            clientController.updateBoard(firstSquare, worker1);
+            clientController.updateBoard(firstSquare);
             moves = null;
         }
         return moves;
@@ -269,27 +275,31 @@ public class NetInterface {
             Builder worker1;
             Builder worker2;
             String[] square = values[1].split(":");
-            Square firstSquare = stringToFullSquare(square);
+            firstSquare = stringToFullSquare(square);
             if(!values[2].equals("1")){
                 String[] builderInfo = values[2].split(",");
                 worker1 = new Builder(firstSquare, builderInfo[0], builderInfo[1]);
+                firstSquare.setBuilder(worker1);
             }
             else{
                 worker1 = null;
+                firstSquare.setBuilder(worker1);
             }
             if(values[3].equals("2")){
                 String[] square2 = values[4].split(":");
-                Square secondSquare = stringToFullSquare(square2);
+                secondSquare = stringToFullSquare(square2);
                 if(!values[5].equals("1")){
                     String[] secondBuilderInfo = values[5].split(",");
                     worker2 = new Builder(firstSquare, secondBuilderInfo[0], secondBuilderInfo[1]);
+                    secondSquare.setBuilder(worker2);
                 }
                 else{
                     worker2 = null;
+                    secondSquare.setBuilder(worker2);
                 }
-                clientController.updateBoard(firstSquare, secondSquare, worker1, worker2);
+                clientController.updateBoard(firstSquare, secondSquare);
             }
-            clientController.updateBoard(firstSquare, worker1);
+            clientController.updateBoard(firstSquare);
         }
 
     }
@@ -344,7 +354,7 @@ public class NetInterface {
      */
     public String builderToString(Builder builder){
         Square position = builder.getPosition();
-        return squareToString(position) + "@";
+        return squareToString(position);
     }
 
     /**
@@ -353,7 +363,7 @@ public class NetInterface {
      * @return a string with the x and y coordinates of the square separated by ","
      */
     public String squareToString(Square square){
-        return square.x + "," + square.y + ":";
+        return square.x + "," + square.y + "@";
     }
 
     /**

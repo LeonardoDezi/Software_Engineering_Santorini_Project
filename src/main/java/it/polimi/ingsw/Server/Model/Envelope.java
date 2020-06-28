@@ -19,7 +19,7 @@ public class Envelope {
         for(Player player: game.getPlayerList()){
             if(player.getColour().equals(builder.getColour())){
 
-                if(player.getBuilder(0).sex.equals(builder.sex))
+                if(player.getBuilder(0).getPosition().x == builder.getPosition().x  && player.getBuilder(0).getPosition().y == builder.getPosition().y)
                     this.builder = player.getBuilder(0);
                 else
                     this.builder = player.getBuilder(1);
