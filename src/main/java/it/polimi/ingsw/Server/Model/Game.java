@@ -184,8 +184,6 @@ public class Game {
     }
 
 
-    //TODO verificare che non dia problemi
-
     /**
      * set the Challenger of the game
      * @param player is the player that is going to be the challenger

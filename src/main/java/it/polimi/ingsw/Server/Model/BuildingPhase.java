@@ -52,8 +52,9 @@ public class BuildingPhase extends Phase {
         Boolean canBuildDome = player.getCard().getParameters().buildDome;
         Envelope received;
 
+        String BPmoves = player.getCard().getParameters().buildingPhaseMoves;
 
-        if(player.getCard().getParameters().buildingPhaseMoves.equals("askForFemale")){   //se la carta è Selene
+        if(BPmoves != null && BPmoves.equals("askForFemale")){   //se la carta è Selene
 
             if (playingBuilder.sex.equals(Player.SEX2)) {  //se il worker giocante è femmina
                 received=context.getNetInterface().getBuildMove(moves1, playingBuilder, true, player, false);

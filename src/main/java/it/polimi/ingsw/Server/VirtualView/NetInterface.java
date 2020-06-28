@@ -55,7 +55,7 @@ public class NetInterface {
         message= Receiver.receive(socket);
         try{
             Integer x = parseInt(message);
-            if(x.equals(0)){
+            if(x == 0){
                 return null;
             }
         }
@@ -85,7 +85,7 @@ public class NetInterface {
         message= Receiver.receive(socket);
         try{
             Integer x = parseInt(message);
-            if(x.equals(0)){
+            if(x == 0){
                 return null;
             }
         }
@@ -115,7 +115,7 @@ public class NetInterface {
         message= Receiver.receive(socket);
         try{
             Integer x = parseInt(message);
-            if(x.equals(0)){
+            if(x == 0){
                 return null;
             }
         }
@@ -153,7 +153,7 @@ public class NetInterface {
         message= Receiver.receive(socket);
         try{
             Integer x = parseInt(message);
-            if(x.equals(0)){
+            if(x == 0){
                 return null;
             }
         }

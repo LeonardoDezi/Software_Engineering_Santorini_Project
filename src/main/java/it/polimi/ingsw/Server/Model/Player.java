@@ -60,7 +60,7 @@ public class Player {
      * @param cardPosition represents the position of the card inside the arrayList possibleCards
      * @return the list of cards that can still be chosen by the other players
      */
-    //TODO per ora va per posizione. Possiamo sempre modificarla per farla andare per nome
+
     public ArrayList<Card> chooseCard(ArrayList<Card> possibleCards, int cardPosition){   //cardPosition è la posizione della carta nell'array
         if(card == null) {
             this.card = possibleCards.get(cardPosition);

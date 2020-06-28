@@ -71,8 +71,19 @@ public class ClientController {
         while(stillPlaying){
             Moves moves = netInterface.getMoves(socket);
             if(!moves.getUpdate()){
-                Moves envelope = chooseMove(moves);
-                netInterface.sendMoves(envelope, client.getServerSocket());
+                if (moves.getSkippable()){
+                    System.out.println("Do you want to perform special card effect? y/n");
+                    if (!returnSkip()){
+                        Sender.send("0",client.getServerSocket());
+                    }
+                    else {
+                        Moves envelope = chooseMove(moves);
+                    }
+                }
+                else {
+                    Moves envelope = chooseMove(moves);
+                    netInterface.sendMoves(envelope, client.getServerSocket());
+                }
             }
         }
         //TODO close the match
@@ -85,7 +96,6 @@ public class ClientController {
      * @return the single move chosen by the player with the builder that is going to do that move.
      */
     public Moves chooseMove(Moves moves) throws IOException {
-        //TODO moves contains all the moves that the player can do, return an envelope with the chosen move
         if(moves.getMoves1() != null){
             for (int i=0; i<moves.getMoves1().size(); i++){
                 for (int j=0; j<5; j++){
@@ -114,13 +124,7 @@ public class ClientController {
 
         System.out.println("Pick a worker: position (x,y)");
 
-        if (moves.getSkippable()){
-            System.out.println("Do you want to perform special card effect? y/n");
-            if (!returnSkip()){
-                Sender.send("0",client.getServerSocket());
-                return null;
-            }
-        }
+
 
         Square builderSquare = getPosition();
         ArrayList<Square> possibleMoves = chosenBuilder(moves,builderSquare);
@@ -261,9 +265,11 @@ public class ClientController {
                 if (clientBoard.getCell(i, j).getX() == firstSquare.x && clientBoard.getCell(i, j).getY() == firstSquare.y) {
                     clientBoard.getCell(i, j).setValue(firstSquare.getValue());
                     clientBoard.getCell(i, j).setLevel(firstSquare.getLevel());
-                    Pawn pawn = new Pawn(firstSquare.getBuilder().getColour(),firstSquare.getBuilder().getSex());
-                    clientBoard.getCell(i, j).setPawn(pawn);
-                    CliBoard.drawBoard(clientBoard);
+                    if (firstSquare.getValue() ==1) {
+                        Pawn pawn = new Pawn(firstSquare.getBuilder().getColour(), firstSquare.getBuilder().getSex());
+                        clientBoard.getCell(i, j).setPawn(pawn);
+                        CliBoard.drawBoard(clientBoard);
+                    }
                 }
             }
         }

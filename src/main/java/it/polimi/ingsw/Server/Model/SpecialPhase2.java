@@ -52,7 +52,7 @@ public class SpecialPhase2 extends Phase {
             Envelope received = context.getNetInterface().getMovementMove(moves1, playingBuilder, player,true);
 
             if (received != null)
-                actionMethod(received.getBuilder(), received.getMove());   // TODO controllare che received.getBuilder() è sempre = playingBuilder? tecnicamente non dovrebbe essere necessario
+                actionMethod(received.getBuilder(), received.getMove());
 
         }
 

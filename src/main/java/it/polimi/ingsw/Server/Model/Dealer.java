@@ -40,6 +40,4 @@ public class Dealer extends Player {
         game.addChosenCard(card2);
     }
 
-
-    //TODO mancano i metodi per scegliere il primo giocatore
 }
