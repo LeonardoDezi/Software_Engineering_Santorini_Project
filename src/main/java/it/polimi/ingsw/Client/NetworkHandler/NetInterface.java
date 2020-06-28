@@ -36,6 +36,9 @@ public class NetInterface {
     public Moves getMoves(Socket socket) throws IOException {
         String availableMoves = Receiver.receive(socket);
         String[] values = availableMoves.split("@");
+        if (moves.getUpdate()){
+            moves.setUpdate(false);
+        }
         if (values[0].equals("-1")) {
             return null;
         }
@@ -180,13 +183,16 @@ public class NetInterface {
                 }
                 else{
                     String[] secondBuilderInfo = values[5].split(",");
-                    worker2 = new Builder(firstSquare, secondBuilderInfo[0], secondBuilderInfo[1]);
+                    worker2 = new Builder(secondSquare, secondBuilderInfo[0], secondBuilderInfo[1]);
                     secondSquare.setBuilder(worker2);
                 }
+                moves.setUpdate(true);
                 clientController.updateBoard(firstSquare, secondSquare);
             }
-            clientController.updateBoard(firstSquare);
-            moves = null;
+            else{
+                moves.setUpdate(true);
+                clientController.updateBoard(firstSquare);
+            }
         }
         return moves;
 }
@@ -290,7 +296,7 @@ public class NetInterface {
                 secondSquare = stringToFullSquare(square2);
                 if(!values[5].equals("1")){
                     String[] secondBuilderInfo = values[5].split(",");
-                    worker2 = new Builder(firstSquare, secondBuilderInfo[0], secondBuilderInfo[1]);
+                    worker2 = new Builder(secondSquare, secondBuilderInfo[0], secondBuilderInfo[1]);
                     secondSquare.setBuilder(worker2);
                 }
                 else{
@@ -299,7 +305,10 @@ public class NetInterface {
                 }
                 clientController.updateBoard(firstSquare, secondSquare);
             }
-            clientController.updateBoard(firstSquare);
+            else {
+                clientController.updateBoard(firstSquare);
+            }
+
         }
 
     }

@@ -42,11 +42,11 @@ public class StartWindow extends JFrame {
 
                 StartWindow.this.dispose();
 
-                try {
+           /*     try {
                     mainFrame.getClient().startClient(text);   //TODO questa funzione deve limitarsi a inviare lo username e tornare
                 } catch (IOException e) {
                     new FatalErrorWindow();
-                }
+                }*/
 
             }
             new PlayerNumberWindow(mainFrame);

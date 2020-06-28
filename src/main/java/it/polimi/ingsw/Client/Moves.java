@@ -14,6 +14,7 @@ public class Moves {
     private boolean isDome;
     private boolean female;
     private boolean skippable;
+    private boolean update;
 
     /**
      * class used to comunicate to the client all the available moves of the actual phase.
@@ -79,5 +80,17 @@ public class Moves {
 
     public void setSkippable(boolean skippable){
         this.skippable=skippable;
+    }
+
+    public void setUpdate(boolean update){
+        this.update=update;
+    }
+
+    public boolean getUpdate(){
+        return update;
+    }
+
+    public boolean getSkippable(){
+        return skippable;
     }
 }

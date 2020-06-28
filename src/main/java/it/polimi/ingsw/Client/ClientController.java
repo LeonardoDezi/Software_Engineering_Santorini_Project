@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Client.NetworkHandler.NetInterface;
+import it.polimi.ingsw.Client.NetworkHandler.Sender;
 import it.polimi.ingsw.Client.View.CLI.CliBoard;
 import it.polimi.ingsw.Client.View.ClientBoard;
 import it.polimi.ingsw.Client.View.Pawn;
@@ -69,7 +70,7 @@ public class ClientController {
         stillPlaying=true;
         while(stillPlaying){
             Moves moves = netInterface.getMoves(socket);
-            if(moves!=null){
+            if(!moves.getUpdate()){
                 Moves envelope = chooseMove(moves);
                 netInterface.sendMoves(envelope, client.getServerSocket());
             }
@@ -110,7 +111,17 @@ public class ClientController {
         CliBoard.drawBoard(clientBoard);
         this.resetBoard();
 
+
         System.out.println("Pick a worker: position (x,y)");
+
+        if (moves.getSkippable()){
+            System.out.println("Do you want to perform special card effect? y/n");
+            if (!returnSkip()){
+                Sender.send("0",client.getServerSocket());
+                return null;
+            }
+        }
+
         Square builderSquare = getPosition();
         ArrayList<Square> possibleMoves = chosenBuilder(moves,builderSquare);
 
@@ -326,6 +337,20 @@ public class ClientController {
         }
         else
             return null;
+
+    }
+
+    public boolean returnSkip() throws IOException{
+
+        String flag;
+
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+        flag = bufferRead.readLine();
+
+        if (flag.equals("y") || flag.equals("yes")){
+            return true;
+        }
+        return false;
 
     }
 
