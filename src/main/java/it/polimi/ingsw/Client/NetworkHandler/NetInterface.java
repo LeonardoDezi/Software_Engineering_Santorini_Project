@@ -157,8 +157,11 @@ public class NetInterface {
             //TODO print on the screen the message received
             moves = null;
         }
-        if (values[0].equals("6")) { //the client loses
+        if (values[0].equals("66")) { //the client loses
             clientController.lost();
+        }
+        if(values[0].equals("73")){ //the client wins
+            clientController.win();
         }
         if (values[0].equals("99")){
             Builder worker1;
@@ -221,25 +224,11 @@ public class NetInterface {
             String[] values = availableMoves.split("@");
             if (values[0].equals("7")) {//dealer has to choose all the cards
                 String[] cards = values[1].split(":");
-                Card card = new Card();
-                for (int i = 0; i < cards.length; i++) {
-                    card = stringToCard(cards[i]);
-                    card.setNumber(i+1);
-                    controller.possibleCards.add(card);
-                    System.out.println(card.getNumber() + "\n" + card.getName() + "\n" + card.getDescription() + "\n");
-                }
-                controller.dealerChoice();
+                controller.dealerChoice(cards);
             }
             if (values[0].equals("8")) {//player has to choose the card
                 String[] cards = values[1].split(":");
-                Card card = new Card();
-                for (int i = 0; i < cards.length; i++) {
-                    card = stringToCard(cards[i]);
-                    card.setNumber(i+1);
-                    controller.possibleCards.add(card);
-                    System.out.println(card.getNumber() + "\n" + card.getName() + "\n" + card.getDescription() + "\n");
-                    }
-                controller.playerChoice();
+                controller.playerChoice(cards);
             }
             if (values[0].equals("9")) {//player has to choose where to place the builder
                 String places = values[1];
@@ -263,15 +252,7 @@ public class NetInterface {
             if (values[0].equals("13")){
                 String received = values[1];
                 String[] names = received.split(":");
-                ArrayList<String> playerIDs = new ArrayList<String>();
-                System.out.println("Pick first player");
-                int j;
-                for(int i=0; i<names.length; i++){
-                    j=i+1;
-                    playerIDs.add(names[i]);
-                    System.out.println(j + "for " + names[i] + "\n");
-                }
-                clientController.chooseBeginner(playerIDs);
+                clientController.printPlayersInGame(names);
             }
         if (values[0].equals("99")){
             Builder worker1;

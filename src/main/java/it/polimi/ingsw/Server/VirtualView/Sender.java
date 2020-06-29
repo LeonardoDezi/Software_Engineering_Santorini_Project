@@ -19,8 +19,7 @@ public class Sender {
         message.setMessage(m);
         Gson gson = new GsonBuilder().serializeNulls().create();
         String string = gson.toJson(message);
-        JsonParser parser = new JsonParser();
-        JsonObject jsonObject = parser.parse(string).getAsJsonObject();
+        JsonObject jsonObject = JsonParser.parseString(string).getAsJsonObject();
         writer.write(jsonObject.toString() + "\n");
         writer.flush();
     }

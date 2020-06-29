@@ -93,8 +93,15 @@ public class TurnManager {
     /**
      * manages the ending of the game
      */
-    public void endGame(){     //TODO: finire endGame()
-        //sendMessage("La partita è finita. Ha vinto game.currentPlayer!!!, null);
+    public void endGame() throws IOException {
+        for(int i=0; i<game.getPlayerList().size(); i++){
+            if(game.getPlayerList().get(i).equals(game.getWinningPlayer())){
+                netInterface.winner(game.getPlayerList().get(i));
+            }
+            else{
+                netInterface.loseMethod(game.getPlayerList().get(i));
+            }
+        }
     }
 
 

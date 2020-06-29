@@ -41,6 +41,10 @@ public class Client {
         clientController.play(serverSocket);
 
         //TODO ask for rematch, if yes newgame if no close app
+        System.out.println("Do you want to play another game? y/n");
+        if (clientController.returnBoolean()){
+            startClient();
+        }
     }
 
 

@@ -229,4 +229,8 @@ public class Game {
      * @param player is the player to be set as winner
      */
     public void setWinningPlayer(Player player){ this.winningPlayer = player;}
+
+    public NetInterface getNetInterface(){
+        return this.netInterface;
+    }
 }

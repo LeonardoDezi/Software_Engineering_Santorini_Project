@@ -45,7 +45,8 @@ public class ClientController {
      * calls the method to ask the Challenger which cards he want to use for the game and sends them back to the server.
      * throws IOException
      */
-    public void dealerChoice() throws IOException {
+    public void dealerChoice(String[] cards) throws IOException {
+        printCards(cards);
         System.out.println("Choose "+ this.numberOfPlayers +" cards for the game");
         ArrayList<Integer> chosenCards = this.chosenCards();
         netInterface.sendCard(chosenCards, client.getServerSocket());
@@ -55,10 +56,28 @@ public class ClientController {
      * calls the method to ask the player which card he wants to choose from the cards chosen by the Challenger.
      * throws IOException
      */
-    public void playerChoice() throws IOException {
+    public void playerChoice(String[] cards) throws IOException {
+        printCards(cards);
         System.out.println("Pick a card for the game");
         Integer card = this.pickACard();
-        netInterface.sendCard(card, client.getServerSocket());
+        if (card < 1 || card > cards.length){
+            System.out.println("Select a card with available number");
+            playerChoice(cards);
+        }
+        else {
+            netInterface.sendCard(card, client.getServerSocket());
+        }
+
+    }
+
+    public void printCards(String[] cards){
+        Card card;
+        for (int i = 0; i < cards.length; i++) {
+            card = netInterface.stringToCard(cards[i]);
+            card.setNumber(i+1);
+            possibleCards.add(card);
+            System.out.println(card.getNumber() + "\n" + card.getName() + "\n" + card.getDescription() + "\n");
+        }
     }
 
     /**
@@ -87,8 +106,6 @@ public class ClientController {
                 }
             }
         }
-        //TODO close the match
-        //print message "you have lost"
     }
 
     /**
@@ -171,9 +188,7 @@ public class ClientController {
             dome = false;
         }
 
-        Moves chosenMove = new Moves(returnBuilder(builderSquare,moves),selected,null,null,dome,false);
-
-    return  chosenMove;
+        return new Moves(returnBuilder(builderSquare,moves),selected,null,null,dome,false);
     }
 
     /**
@@ -181,6 +196,12 @@ public class ClientController {
      */
     public void lost(){
         this.stillPlaying=false;
+        System.out.println("Sorry, you lost.");
+    }
+
+    public void win(){
+        this.stillPlaying=false;
+        System.out.println("Congratulations! You won!");
     }
 
     /**
@@ -200,11 +221,28 @@ public class ClientController {
     public ArrayList<Integer> chosenCards() throws IOException {
         ArrayList<Integer> chosenCards = new ArrayList<Integer>();
         for (int i = 0; i<numberOfPlayers; i++){
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            int card = Integer.parseInt(reader.readLine());
-            chosenCards.add(i,card);
+            int card = pickACard();
+            if(i == 0 && card>0 && card<15){
+                chosenCards.add(card);
+            }
+            else if(checkCard(chosenCards,card) && card>0 && card<15){
+                chosenCards.add(card);
+            }
+            else{
+                System.out.println("Please choose an available card");
+                i--;
+            }
         }
         return chosenCards;
+    }
+
+    public boolean checkCard(ArrayList<Integer> choosenCards, int pick){
+        for(int i= 0; i<choosenCards.size(); i++){
+            if (choosenCards.get(i) == pick){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -214,39 +252,78 @@ public class ClientController {
      */
     public Integer pickACard() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        Integer card = Integer.parseInt(reader.readLine());
-        return card;
+        int godNumber = -1;
+
+        while (godNumber == -1){
+
+            try {
+                godNumber = Integer.parseInt(reader.readLine());
+            } catch (NumberFormatException e){
+                System.out.println("Please insert a number");
+            }
+        }
+
+        return godNumber;
     }
 
     /**
-     * asks the Challenger to choose
-     * @param players
-     * @throws IOException
+     * asks the Challenger to choose who will begin the match.
+     * @param players is an ArrayList that contains the playerIDs.
+     * @throws IOException exception
      */
     public void chooseBeginner(ArrayList<String> players) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int player = Integer.parseInt(reader.readLine());
+        int player = 0;
+        while (player < 1 || player > players.size()){
+            try{
+                System.out.println("Insert the number");
+                player = Integer.parseInt(reader.readLine());
+
+            }catch (NumberFormatException e){
+                System.out.println("Please insert a number");
+            }
+        }
         String chosenOne = players.get(player-1);
         netInterface.sendFirstPlayer(chosenOne,client.getServerSocket());
     }
 
+    public void printPlayersInGame(String[] names) throws IOException {
+        ArrayList<String> playerIDs = new ArrayList<String>();
+        System.out.println("Pick first player");
+        int j;
+        for(int i=0; i<names.length; i++){
+            j=i+1;
+            playerIDs.add(names[i]);
+            System.out.println(j + " for " + names[i] + "\n");
+        }
+        chooseBeginner(playerIDs);
+    }
+
     /**
      *
-     * @param freeSquares
-     * @param number
-     * @throws IOException
+     * @param freeSquares an ArrayList that contains the available squares to place the worker.
+     * @param number is the id of the builder.
+     * @throws IOException exception.
      */
     public void placeBuilder(ArrayList<Square> freeSquares, int number) throws IOException {
-        System.out.println("Place your builders: positions (x,y)");
-        Square square1 = getPosition();
+
+        Square square = getPosition();
+        if(checkSquare(freeSquares, square)){
+            netInterface.sendSquare(square,client.getServerSocket());
+        }
+       else{
+           System.out.println("please Insert available square.");
+           placeBuilder(freeSquares, number);
+        }
+    }
+
+    public boolean checkSquare(ArrayList<Square> freeSquares, Square square) throws IOException {
         for (int i=0; i<freeSquares.size(); i++){
-            int tempX = freeSquares.get(i).x;
-            int tempY = freeSquares.get(i).y;
-            if( square1.x == tempX && square1.y == tempY){
-                Square square2 = freeSquares.get(i);
-                netInterface.sendSquare(square2,client.getServerSocket());
+            if( square.x == freeSquares.get(i).x && square.y == freeSquares.get(i).y){
+               return true;
             }
         }
+        return false;
     }
 
     public void updateBoard(Square firstSquare, Square secondSquare) {
@@ -301,15 +378,32 @@ public class ClientController {
     }
 
     public Square getPosition() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String[] inputs = reader.readLine().split(",");
-        int[] array = new int[inputs.length];
-        for (int i=0; i<array.length; i++){
-            array[i] = Integer.parseInt(inputs[i]);
-        }
-        int x = array[1]-1;
-        int y = array[0]-1;
-        return new Square(x, y);
+        int x = -1;
+        int y = -1;
+       while (x<0 || x >4 || y<0 || y>4 ) {
+           System.out.println("Place your builders: positions (x,y) between 1 and 5");
+           BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+           String[] inputs = reader.readLine().split(",");
+           int[] array = new int[2];
+
+           for (int i = 0; i < array.length; i++) {
+               try {
+                   array[i] = Integer.parseInt(inputs[i]);
+               } catch (NumberFormatException e) {
+                   System.out.println("Please insert correct format (x,y)");
+                   inputs = reader.readLine().split(",");
+                   i--;
+               }
+               catch (ArrayIndexOutOfBoundsException ex){
+                   System.out.println("Please insert correct format (x,y)");
+                   inputs = reader.readLine().split(",");
+                   i--;
+               }
+           }
+           x = array[1] - 1;
+           y = array[0] - 1;
+       }
+        return new Square(x,y);
     }
 
     public ArrayList<Square> chosenBuilder(Moves moves, Square builderSquare){
@@ -378,23 +472,23 @@ public class ClientController {
     }
 
     public String askNumberOfPlayers() throws IOException {
-        System.out.println("Select number of players (2 or 3)");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Select number of players\n");
 
         int number = 0;
 
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (number <2 || number > 3){
             try {
+                System.out.println("Please insert 2 or 3.");
                 number = Integer.parseInt(reader.readLine());
 
-            }catch (NumberFormatException e)
-            {
-                System.out.println("Please insert 2 or 3");
+            }catch (NumberFormatException e) {
+                System.out.println("Please insert a number");
             }
+
         }
 
-        String numberOfP = Integer.toString(number);
-        return numberOfP;
+        return Integer.toString(number);
     }
 
 }

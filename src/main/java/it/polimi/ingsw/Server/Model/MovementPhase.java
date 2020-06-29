@@ -73,7 +73,7 @@ public class MovementPhase extends Phase {
         }else{    //entrambi i worker sono incapaci di muoversi
 
             game.removePlayer(player);  //TODO  verificare che non ci siano problemi quando rimuoviamo un giocatore
-            //loseMethod();
+            game.getNetInterface().loseMethod(player);
             //sendMessage("Il giocatore" + player + "ha perso", null); //per mandare in broadcast il campo player è null
 
             if(game.getPlayerList().size() == 1) {   //è rimasto solo un giocatore

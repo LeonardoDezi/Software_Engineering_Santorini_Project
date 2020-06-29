@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Server.VirtualView;
 
 import com.google.gson.internal.$Gson$Preconditions;
+import it.polimi.ingsw.Client.View.CLI.CliBoard;
 import it.polimi.ingsw.Server.Client;
 import it.polimi.ingsw.Server.Model.*;
 
@@ -486,4 +487,24 @@ public class NetInterface {
         return players.get(0);
     }
 
+
+    public void loseMethod(Player player) throws IOException {
+        Client loser = findClient(player);
+        Sender.send("66@", loser.getSocket());
+    }
+
+    public void winner(Player player) throws IOException {
+        Client winnerClient = findClient(player);
+        Sender.send("73@", winnerClient.getSocket());
+    }
+
+    public Client findClient(Player player) throws IOException {
+        for(int i=0; i< clients.size(); i++){
+            if(clients.get(i).clientID == player.clientID){
+               return clients.get(i);
+            }
+        }
+            System.out.println("Error, Client non existent <<LoseMethod>>");
+        return null;
+    }
 }
