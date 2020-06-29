@@ -251,17 +251,13 @@ public class NetInterface {
                 controller.setup = false;
             }
             if (values[0].equals("11")) {
-                System.out.println("Select number of players");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                int numberOfPlayers = Integer.parseInt(reader.readLine());
-                String numberOfP = Integer.toString(numberOfPlayers);
+                String numberOfP = clientController.askNumberOfPlayers();
                 Sender.send(numberOfP,socket);
             }
             if (values[0].equals("12")){
                 String number = values[1];
                 Integer numberOfPlayers = parseInt(number);
                 clientController.setNumberOfPlayers(numberOfPlayers);
-                System.out.println("Number of Players in game: " + numberOfPlayers);
             }
 
             if (values[0].equals("13")){
@@ -269,7 +265,7 @@ public class NetInterface {
                 String[] names = received.split(":");
                 ArrayList<String> playerIDs = new ArrayList<String>();
                 System.out.println("Pick first player");
-                int j = 0;
+                int j;
                 for(int i=0; i<names.length; i++){
                     j=i+1;
                     playerIDs.add(names[i]);

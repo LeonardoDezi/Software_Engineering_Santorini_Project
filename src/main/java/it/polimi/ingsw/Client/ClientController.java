@@ -189,6 +189,7 @@ public class ClientController {
      */
     public void setNumberOfPlayers(Integer numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
+        System.out.println("Number of Players in game: " + numberOfPlayers);
     }
 
     /**
@@ -374,6 +375,26 @@ public class ClientController {
         }
         return false;
 
+    }
+
+    public String askNumberOfPlayers() throws IOException {
+        System.out.println("Select number of players (2 or 3)");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        int number = 0;
+
+        while (number <2 || number > 3){
+            try {
+                number = Integer.parseInt(reader.readLine());
+
+            }catch (NumberFormatException e)
+            {
+                System.out.println("Please insert 2 or 3");
+            }
+        }
+
+        String numberOfP = Integer.toString(number);
+        return numberOfP;
     }
 
 }
