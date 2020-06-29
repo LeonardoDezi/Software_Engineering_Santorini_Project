@@ -20,12 +20,11 @@ public class ClientController {
     private Boolean stillPlaying;
     public Boolean setup;
     public ArrayList<Card> possibleCards = new ArrayList<Card>();
-    private ArrayList<Square> moves1;
-    private ArrayList<Square> moves2;
-    private Builder builder1;
-    private  Builder builder2;
     private Integer numberOfPlayers;
     private ClientBoard clientBoard = new ClientBoard();
+    private Square builderSquare;
+    private ArrayList<Square> possibleMoves;
+    private boolean dome;
 
     public ClientController(Client client) {
         this.client = client;
@@ -70,18 +69,20 @@ public class ClientController {
         stillPlaying=true;
         while(stillPlaying){
             Moves moves = netInterface.getMoves(socket);
+            Moves envelope;
             if(!moves.getUpdate()){
                 if (moves.getSkippable()){
                     System.out.println("Do you want to perform special card effect? y/n");
-                    if (!returnSkip()){
+                    if (!returnBoolean()){
                         Sender.send("0",client.getServerSocket());
                     }
                     else {
-                        Moves envelope = chooseMove(moves);
+                        envelope = chooseMove(moves);
+                        netInterface.sendMoves(envelope, client.getServerSocket());
                     }
                 }
                 else {
-                    Moves envelope = chooseMove(moves);
+                    envelope = chooseMove(moves);
                     netInterface.sendMoves(envelope, client.getServerSocket());
                 }
             }
@@ -121,26 +122,36 @@ public class ClientController {
         CliBoard.drawBoard(clientBoard);
         this.resetBoard();
 
+        if (moves.getMoves2() != null){
+            System.out.println("Pick a worker: position (x,y)");
 
-        System.out.println("Pick a worker: position (x,y)");
-
-
-
-        Square builderSquare = getPosition();
-        ArrayList<Square> possibleMoves = chosenBuilder(moves,builderSquare);
-
-        while (possibleMoves == null){
-            System.out.println("Invalid pick, chose more wisely");
             builderSquare = getPosition();
             possibleMoves = chosenBuilder(moves,builderSquare);
 
+            while (possibleMoves == null){
+                System.out.println("Invalid pick, chose more wisely");
+                builderSquare = getPosition();
+                possibleMoves = chosenBuilder(moves,builderSquare);
+
+            }
+            CliBoard.drawBoard(clientBoard);
+
+            this.resetBoard();
+
+        }else {
+            builderSquare = moves.getBuilder1().getPosition();
+            possibleMoves = chosenBuilder(moves,builderSquare);
+
+            CliBoard.drawBoard(clientBoard);
+
+            this.resetBoard();
         }
 
-        CliBoard.drawBoard(clientBoard);
-
-        this.resetBoard();
 
         System.out.println("Select move: (x,y)");
+        if(moves.getIsDome()){
+            System.out.println("You can build a dome by your god's card power");
+        }
 
         Square chosen = getPosition();
 
@@ -152,10 +163,15 @@ public class ClientController {
         ArrayList<Square> selected = new ArrayList<Square>();
         selected.add(chosen);
 
-        Moves chosenMove = new Moves(returnBuilder(builderSquare,moves),selected,null,null,false,false);
+        if(moves.getIsDome()){
+            System.out.println("Do you want to build a Dome? y/n");
+            dome = returnBoolean();
+        }
+        else {
+            dome = false;
+        }
 
-        // se costruisci una cupola per effetto speciale isDome ->true
-        //female sempre false
+        Moves chosenMove = new Moves(returnBuilder(builderSquare,moves),selected,null,null,dome,false);
 
     return  chosenMove;
     }
@@ -346,7 +362,7 @@ public class ClientController {
 
     }
 
-    public boolean returnSkip() throws IOException{
+    public boolean returnBoolean() throws IOException{
 
         String flag;
 

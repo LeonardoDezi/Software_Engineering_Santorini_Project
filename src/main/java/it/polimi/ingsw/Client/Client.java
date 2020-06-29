@@ -24,7 +24,8 @@ public class Client {
         try {
             serverSocket = new Socket(ip, port);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("The server is not responding.\n Please retry later.\n");
+            return;
         }
 
 

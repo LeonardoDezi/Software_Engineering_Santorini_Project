@@ -92,7 +92,7 @@ public class Cell {
         levels.put(0,"\u2080");
         levels.put(1,"\u2081");
         levels.put(2,"\u2082");
-        levels.put(3,"\u2084");
+        levels.put(3,"\u2083");
 
     }
 
