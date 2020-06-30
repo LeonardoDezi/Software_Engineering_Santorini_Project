@@ -409,31 +409,34 @@ public class ClientController {
     }
 
     public ArrayList<Square> chosenBuilder(Moves moves, Square builderSquare){
-
-        if (builderSquare.x == moves.getBuilder1().getPosition().x && builderSquare.y == moves.getBuilder1().getPosition().y){
-            for (int i=0; i<moves.getMoves1().size(); i++){
-                for (int j=0; j<5; j++){
-                    for (int k=0; k<5; k++){
-                        if (clientBoard.getCell(j, k).getX() == moves.getMoves1().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves1().get(i).y){
-                            clientBoard.getCell(j, k).setColour(1);
+        if (moves.getMoves1() != null){
+            if (builderSquare.x == moves.getBuilder1().getPosition().x && builderSquare.y == moves.getBuilder1().getPosition().y) {
+                for (int i = 0; i < moves.getMoves1().size(); i++) {
+                    for (int j = 0; j < 5; j++) {
+                        for (int k = 0; k < 5; k++) {
+                            if (clientBoard.getCell(j, k).getX() == moves.getMoves1().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves1().get(i).y) {
+                                clientBoard.getCell(j, k).setColour(1);
+                            }
                         }
                     }
                 }
+                return moves.getMoves1();
             }
-            return moves.getMoves1();
         }
 
-        if (builderSquare.x == moves.getBuilder2().getPosition().x && builderSquare.y == moves.getBuilder2().getPosition().y){
-            for (int i=0; i<moves.getMoves2().size(); i++){
-                for (int j=0; j<5; j++){
-                    for (int k=0; k<5; k++){
-                        if (clientBoard.getCell(j, k).getX() == moves.getMoves2().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves2().get(i).y){
-                            clientBoard.getCell(j, k).setColour(1);
+        if (moves.getMoves2() != null){
+            if (builderSquare.x == moves.getBuilder2().getPosition().x && builderSquare.y == moves.getBuilder2().getPosition().y) {
+                for (int i = 0; i < moves.getMoves2().size(); i++) {
+                    for (int j = 0; j < 5; j++) {
+                        for (int k = 0; k < 5; k++) {
+                            if (clientBoard.getCell(j, k).getX() == moves.getMoves2().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves2().get(i).y) {
+                                clientBoard.getCell(j, k).setColour(1);
+                            }
                         }
                     }
                 }
+                return moves.getMoves2();
             }
-            return moves.getMoves2();
         }
         return null;
     }
