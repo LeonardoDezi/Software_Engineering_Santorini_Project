@@ -27,9 +27,20 @@ private ArrayList<GameInitializer> gameInitializers = new ArrayList<GameInitiali
 
         if(gameInitializers.get(0).checkStatus()){
             gameInitializers.get(0).dealCards();
-            gameInitializers.get(0).setPlayers();
-            gameInitializers.get(0).setBuilders();
-            gameInitializers.get(0).startGame();
+            if (gameInitializers.get(0).getGame().getDisconnect()){
+                gameInitializers.get(0).disconnectAll();
+            }else {
+                gameInitializers.get(0).setPlayers();
+                if (gameInitializers.get(0).getGame().getDisconnect()){
+                    gameInitializers.get(0).disconnectAll();
+                }
+                gameInitializers.get(0).setBuilders();
+                if (gameInitializers.get(0).getGame().getDisconnect()){
+                    gameInitializers.get(0).disconnectAll();
+                }else {
+                    gameInitializers.get(0).startGame();
+                }
+            }
         }
 
         return 1;

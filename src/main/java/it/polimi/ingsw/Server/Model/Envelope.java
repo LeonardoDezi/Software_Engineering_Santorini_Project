@@ -26,8 +26,12 @@ public class Envelope {
 
             }
         }
-
-        this.move = game.getBoard().getSquare(move.x, move.y);
+        if(move.x==20){
+            this.move = move;
+        }
+        else{
+            this.move = game.getBoard().getSquare(move.x, move.y);
+        }
     }
 
     /**

@@ -44,6 +44,9 @@ public class GameInitializer implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (numberOfPlayers == -1){
+           return;  //TODO controllare
+        }
         Game game = new Game(numberOfPlayers, netInterface);
         this.game = game;
         netInterface.setGame(game);
@@ -99,6 +102,10 @@ public class GameInitializer implements Runnable {
     public void setPlayers() throws IOException {
 
         Player player = netInterface.askFirstPlayer(firstPlayer, game.getPlayerList());    //questo deve essere il giocatore ritornato lo inizializzo per compilare
+        if (player.clientID == -1){
+            game.setDisconnect(true);
+            game.setGameEnded(true);
+        }
         game.getPlayerList().remove(player);  //rimuovi il giocatore da playerList. posso anche farlo se mi mandi solo il nome
         game.getPlayerList().add(0, player); //inserisce il giocatore in testa a playerList
 
@@ -113,6 +120,12 @@ public class GameInitializer implements Runnable {
         netInterface.sendNumber();
         // TODO sendMessage("Sei stato scelto dagli Dei per decidere chi parteciperà al gioco. scegli " + game.numberOfPlayers + " carte", firstPlayer)
         ArrayList<Integer> cards = netInterface.getCards(firstPlayer, game.getDeck());
+
+        if (cards.get(0) == -1){
+            game.setGameEnded(true);
+            game.setDisconnect(true);
+            return;
+        }
 
         game.setDealer(game.getPlayerList().get(0));
 
@@ -132,8 +145,14 @@ public class GameInitializer implements Runnable {
         for (int i = game.numberOfPlayers - 1; i >= 0; i--) {
 
             int chosenCard = netInterface.getChosenCard(possibleCards, game.getPlayerList().get(i).clientID);
-            possibleCards = game.getPlayerList().get(i).chooseCard(possibleCards, chosenCard);
-            //messaggio per confermare che la carta è stata scelta?
+            if(chosenCard == -1){
+                game.setGameEnded(true);
+                game.setDisconnect(true);
+            }
+            else {
+                possibleCards = game.getPlayerList().get(i).chooseCard(possibleCards, chosenCard);
+                //messaggio per confermare che la carta è stata scelta?
+            }
         }
 
     }
@@ -147,17 +166,24 @@ public class GameInitializer implements Runnable {
         for (int i = 0; i < game.numberOfPlayers; i++) {
             Player player = game.getPlayerList().get(i);
             possibleSquares = game.getBasic().getFreeSquares();
-            //TODO ask the player where he wants to place the builders
             Square square1 = netInterface.getBuilderPlacement(possibleSquares, player.clientID, 1);
             if (square1.x == -1) {
                 System.out.print("There has been an error with the recognition of the client, the player has not set the builders");
                 return;
+            }
+            if (square1.x == 20){
+                game.setGameEnded(true);
+                game.setDisconnect(true);
             }
             square1 = game.getBoard().getSquare(square1.x, square1.y);
             game.deployBuilder(player, square1);
 
             possibleSquares = game.getBasic().getFreeSquares();
             Square square2 = netInterface.getBuilderPlacement(possibleSquares, player.clientID, 2);
+            if (square2.x == 20){
+                game.setGameEnded(true);
+                game.setDisconnect(true);
+            }
             square2 = game.getBoard().getSquare(square2.x, square2.y);
             game.deployBuilder(player, square2);
         }
@@ -171,5 +197,14 @@ public class GameInitializer implements Runnable {
     public void startGame() throws IOException {
         TurnManager myGameManager = new TurnManager(game, netInterface);
         myGameManager.letsPlay();
+    }
+
+    public Game getGame(){
+        return game;
+    }
+
+    //TODO da fare
+    public void disconnectAll() {
+        System.out.println("Sconnesso");
     }
 }

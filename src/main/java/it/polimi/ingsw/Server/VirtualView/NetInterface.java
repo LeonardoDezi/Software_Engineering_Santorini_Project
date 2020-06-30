@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Server.VirtualView;
 
+import it.polimi.ingsw.Parser.Message;
+import it.polimi.ingsw.Parser.Receiver;
+import it.polimi.ingsw.Parser.Sender;
 import it.polimi.ingsw.Server.Client;
 import it.polimi.ingsw.Server.Model.*;
 
@@ -15,8 +18,6 @@ public class NetInterface {
     private Game game;
     private Boolean alreadyExecuted;
     private Player currentPlayer;
-    private final Sender sender = new Sender();
-    private final Receiver receiver = new Receiver();
     private Integer numberOfPlayers;
 
     public NetInterface(){
@@ -58,8 +59,12 @@ public class NetInterface {
                 return null;
             }
         }
-        catch (NumberFormatException e){}
+        catch (NumberFormatException e){
+        }
         String[] choosenmove=message.split("@");
+        if (choosenmove[0].equals("-1")) {
+            return new Envelope(builder1,new Square(20,20),game);
+        }
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
         boolean choice = stringToBool(choosenmove[2]);
@@ -91,6 +96,9 @@ public class NetInterface {
         catch (NumberFormatException e){
         }
         String[] choosenmove=message.split("@");
+        if (choosenmove[0].equals("-1")) {
+            return new Envelope(builder,new Square(20,20),game);
+        }
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
         return new Envelope(chosenBuilder, chosenSquare, game);
@@ -121,6 +129,9 @@ public class NetInterface {
         catch (NumberFormatException e){
         }
         String[] choosenmove = message.split("@");
+        if (choosenmove[0].equals("-1")) {
+            return new Envelope(builder1,new Square(20,20),game);
+        }
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
         Boolean femaleDome = stringToBool(choosenmove[2]);
@@ -128,9 +139,7 @@ public class NetInterface {
         envelope.setIsDome(femaleDome);
         return envelope;
 
-    } //TODO remember that the second builder is the female so ask the player if he wants to build a dome
-      // is possible ONLY for the female one
-
+    }
 
     /**
      * asks the player where does he want to build this turn
@@ -159,6 +168,9 @@ public class NetInterface {
         catch (NumberFormatException e){
         }
         String[] choosenmove=message.split("@");
+        if (choosenmove[0].equals("-1")) {
+            return new Envelope(builder,new Square(20,20),game);
+        }
         Square chosenSquare = stringToSquare(choosenmove[0]);
         Builder chosenBuilder = stringToBuilder(choosenmove[1]);
         Boolean hasChosenADome = stringToBool(choosenmove[2]);
@@ -183,7 +195,14 @@ public class NetInterface {
         }
         Sender.send(message.toString(), socket);
         message = new StringBuilder(Receiver.receive(socket));
-        String[] response = message.toString().split(",");
+        String[] received = message.toString().split("@");
+        String mex = received[0];
+        if(mex.equals("-1")){
+            ArrayList<Integer> endMessage = new ArrayList<Integer>();
+            endMessage.add(0,-1);
+            return endMessage;
+        }
+        String[] response = mex.split(",");
         ArrayList<Integer> choosenCards = new ArrayList<>();
 
         for (String s : response) {
@@ -219,6 +238,11 @@ public class NetInterface {
         String message = partial.toString();
         Sender.send(message, socket);
         message = Receiver.receive(socket);
+        String[] received = message.split("@");
+        message = received[0];
+        if(message.equals("-1")){
+            return -1;
+        }
         String[] recievedCard = message.split(",");
         return stringToInt(recievedCard[0]);
     }
@@ -244,6 +268,11 @@ public class NetInterface {
         String message = "9@" + arrayListSquareToString(possibleSquares) + buildernumber;
         Sender.send(message, socket);
         message = Receiver.receive(socket);
+        String[] received = message.split("@");
+        message = received[0];
+        if(message.equals("-1")){
+            return new Square(20,20);
+        }
         return stringToSquare(message);
     }
 
@@ -421,7 +450,7 @@ public class NetInterface {
         }
         for(Integer i=0; i < game.numberOfPlayers; i++){
             socket = clients.get(i).getSocket();
-            sender.send(message, socket);
+            Sender.send(message, socket);
         }
     }
 
@@ -450,7 +479,12 @@ public class NetInterface {
 
     public Integer getNumberOfPlayers(Client client) throws IOException {
         Sender.send("11@", client.getSocket());
-        String numberOfP = Receiver.receive(client.getSocket());
+        String recieved = Receiver.receive(client.getSocket());
+        String[] numbers = recieved.split("@");
+        String numberOfP = numbers[0];
+        if(numberOfP.equals("-1")){
+            return -1;
+        }
         Integer numberOfPlayers = parseInt(numberOfP);
         this.setNumberOfPlayers(numberOfPlayers);
         return numberOfPlayers;
@@ -474,7 +508,12 @@ public class NetInterface {
         }
         String message = partial.toString();
         Sender.send(message, dealer.getSocket());
-        String firstID = receiver.receive(dealer.getSocket());
+        String recieved = Receiver.receive(dealer.getSocket());
+        String[] ids = recieved.split("@");
+        String firstID = ids[0];
+        if(firstID.equals("-1")){
+            return new Player("-1","purple",game,-1);
+        }
         for(int j=0; j<players.size(); j++){
             if(players.get(j).playerID.equals(firstID)){
                 System.out.println("the first Player is " + firstID);
@@ -513,5 +552,9 @@ public class NetInterface {
         }
             System.out.println("Error, Client non existent <<LoseMethod>>");
         return null;
+    }
+
+    public ArrayList<Client> getClients(){
+        return clients;
     }
 }

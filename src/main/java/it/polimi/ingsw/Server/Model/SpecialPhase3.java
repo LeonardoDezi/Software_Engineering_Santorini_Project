@@ -53,9 +53,14 @@ public class SpecialPhase3 extends Phase {
 
             Envelope received = context.getNetInterface().getBuildMove(moves1, playingBuilder, buildDome, player,true);
 
-            if (received != null)
+            if (received != null){
+                if(received.getMove().x == 20) {
+                    game.setGameEnded(true);
+                    game.setDisconnect(true);
+                }
+            }else {
                 actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
-
+            }
         }
 
         if(!(game.getGameEnded()))

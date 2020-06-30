@@ -2,18 +2,16 @@ package it.polimi.ingsw.Client.NetworkHandler;
 
 import it.polimi.ingsw.Client.ClientController;
 import it.polimi.ingsw.Client.Moves;
+import it.polimi.ingsw.Parser.Receiver;
+import it.polimi.ingsw.Parser.Sender;
 import it.polimi.ingsw.Server.Model.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
 import static java.lang.Integer.parseInt;
 
 public class NetInterface {
-    private Sender sender;
-    private Receiver receiver;
     private ArrayList<Square> moves1;
     private ArrayList<Square> moves2;
     private Builder builder1;
@@ -39,8 +37,11 @@ public class NetInterface {
         if (moves.getUpdate()){
             moves.setUpdate(false);
         }
-        if (values[0].equals("-1")) {
+        if (values[0].equals("0")) {
             return null;
+        }
+        if (values[0].equals("-1")){
+            clientController.disconnected();
         }
         if (values[0].equals("1")) {
             if(values[1].equals("null")){
@@ -222,6 +223,9 @@ public class NetInterface {
     public void getMatchSetup(Socket socket, ClientController controller) throws IOException {
         String availableMoves = Receiver.receive(socket);
             String[] values = availableMoves.split("@");
+            if(values[0].equals("-1")){
+                clientController.disconnected();
+            }
             if (values[0].equals("7")) {//dealer has to choose all the cards
                 String[] cards = values[1].split(":");
                 controller.dealerChoice(cards);
@@ -241,6 +245,7 @@ public class NetInterface {
             }
             if (values[0].equals("11")) {
                 String numberOfP = clientController.askNumberOfPlayers();
+                numberOfP = numberOfP + "@";
                 Sender.send(numberOfP,socket);
             }
             if (values[0].equals("12")){
@@ -300,6 +305,7 @@ public class NetInterface {
         for(int i=0; i<choosenCards.size(); i++){
             message = message + Integer.toString(choosenCards.get(i)) + ",";
         }
+        message = message + "@";
         Sender.send(message,socket);
     }
 
@@ -311,6 +317,7 @@ public class NetInterface {
     public void sendCard(Integer card, Socket socket) throws IOException {
         card = card-1;
         String message = Integer.toString(card);
+        message = message + "@";
         Sender.send(message, socket);
     }
 

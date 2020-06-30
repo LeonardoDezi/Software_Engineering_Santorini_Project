@@ -9,23 +9,6 @@ import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import java.io.IOException;
 import java.util.ArrayList;
 
-// received != null: quando il giocatore non fa alcuna mossa getMove mi deve restituire received= null
-
-
-
-//public Envelope getBothMovementMove(ArrayList<Square> moves1, Builder builder1, ArrayList<Square> moves2, Builder builder2, Player player)
-//public Envelope getMovementMove(ArrayList<Square> moves, Builder builder, Player player); P.S. potremmo accorparlo a
-//                                                                          getBothMovementMove e mettere
-//                                                                             moves2 e builder 2 a null
-//public Envelope getBuildMove(ArrayList<Square> moves1, Builder builder, boolean buildDome, Player player);
-//public Envelope getBothBuildMove(ArrayList<Square> moves1, Builder builder1, boolean buildDome1, ArrayList<Square> moves2, Builder builder2, boolean buildDome2);
-
-
-//loseMethod(): questo metodo dovrebbe inviare un messaggio al giocatore che ha perso comunicandogli la sconfitta,
-//per poi chiudere la connessione. Non so come chiudere la connessione quindi non so specificare il prototipo
-
-//broadcastMessage(String message): manda in broadcast il messaggio contenuto in message
-//updateBoard(Board board): aggiorna in broadcast tutte le board dei giocatori
 
 /**
  * this class manages the players' turns and the turn's current phase during the game
@@ -85,9 +68,12 @@ public class TurnManager {
 
             }
         }
-
-        endGame();
-
+        if (game.getDisconnect()){
+            game.disconnectClients();
+        }
+        else {
+            endGame();
+        }
     }
 
     /**

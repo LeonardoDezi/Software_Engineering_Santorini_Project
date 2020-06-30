@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Observer.Observer;
-import it.polimi.ingsw.Server.VirtualView.Receiver;
+import it.polimi.ingsw.Parser.Receiver;
 
 import java.io.*;
 import java.net.Socket;

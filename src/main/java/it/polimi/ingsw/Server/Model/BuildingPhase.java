@@ -68,9 +68,14 @@ public class BuildingPhase extends Phase {
         }else  //la carta non è selene
             received = context.getNetInterface().getBuildMove(moves1, playingBuilder, canBuildDome, player,false);
 
+        if (received.getMove().x == 20){
+            game.setGameEnded(true);
+            game.setDisconnect(true);
 
-        actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
-
+        }else {
+            actionMethod(received.getBuilder(), received.getMove(), received.getIsDome());
+        }
+        
         if(!(game.getGameEnded()))
             context.setPhase(new SpecialPhase3(game, context, player, actionBuilder, position));
 
@@ -83,6 +88,7 @@ public class BuildingPhase extends Phase {
 
 //getMoves
         movesCommands.put(null, () ->{});
+        movesCommands.put("askForFemale", () ->{});
         movesCommands.put("addBuilderPosition", this::addBuilderPosition);  //Zeus
 //building
         actionCommands.put("buildBelowYou", this::buildBelowYou);

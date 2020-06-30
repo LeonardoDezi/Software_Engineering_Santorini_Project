@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.Model;
 import it.polimi.ingsw.Parser.ParserManager;
+import it.polimi.ingsw.Parser.Sender;
 import it.polimi.ingsw.Server.VirtualView.NetInterface;
 
 import java.io.IOException;
@@ -45,6 +46,8 @@ public class Game {
     /** represents the interface used by the server to communicate with the clients */
     private final NetInterface netInterface;
 
+    private Boolean disconnect;
+
 
     /**
      * creates a new game.
@@ -53,6 +56,7 @@ public class Game {
     public Game(int numberOfPlayers, NetInterface netInterface) {     //da mettere un identificativo partita?
         gameBoard = new Board(netInterface);
         gameEnded = false;
+        disconnect = false;
         playerList = new ArrayList<>();
         chosenCards = new ArrayList<>();
         basic = new BasicRules(gameBoard, this);
@@ -232,5 +236,20 @@ public class Game {
 
     public NetInterface getNetInterface(){
         return this.netInterface;
+    }
+
+    public void setDisconnect(Boolean disconnect){
+         this.disconnect = disconnect;
+    }
+
+    public Boolean getDisconnect(){
+        return disconnect;
+    }
+
+    public void disconnectClients() throws IOException {
+
+            for (int i =0; i<netInterface.getClients().size(); i++)
+                Sender.send("-1@",netInterface.getClients().get(i).getSocket());
+
     }
 }

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Client.NetworkHandler.NetInterface;
-import it.polimi.ingsw.Client.NetworkHandler.Sender;
+import it.polimi.ingsw.Parser.Sender;
 import it.polimi.ingsw.Client.View.CLI.CliBoard;
 import it.polimi.ingsw.Client.View.ClientBoard;
 import it.polimi.ingsw.Client.View.Pawn;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class ClientController {
@@ -25,9 +26,19 @@ public class ClientController {
     private Square builderSquare;
     private ArrayList<Square> possibleMoves;
     private boolean dome;
+    private HashMap<Integer,String > messages;
 
     public ClientController(Client client) {
         this.client = client;
+        stillPlaying = true;
+        messageMap();
+    }
+
+    private void messageMap() {
+        messages = new HashMap<>();
+
+        messages.put(0,"");
+
     }
 
     /**
@@ -36,7 +47,7 @@ public class ClientController {
      */
    public void matchSetup(Socket socket) throws IOException {
         setup = true;
-        while(setup){
+        while(setup && stillPlaying){
             netInterface.getMatchSetup(socket, this);
         }
     }
@@ -85,7 +96,7 @@ public class ClientController {
      * @param socket is the socket used to talk with the server.
      */
     public void play(Socket socket) throws IOException {
-        stillPlaying=true;
+       // stillPlaying=true;
         Moves moves = new Moves(null, null, null, null, false, false);
         moves.setUpdate(true);
         while(stillPlaying){
@@ -101,6 +112,10 @@ public class ClientController {
                         netInterface.sendMoves(envelope, client.getServerSocket());
                     }
                 }
+                else if(moves.getFemale()){
+                    envelope = getSpecialBuild(moves);
+                    netInterface.sendMoves(envelope, client.getServerSocket());
+                }
                 else {
                     envelope = chooseMove(moves);
                     netInterface.sendMoves(envelope, client.getServerSocket());
@@ -110,23 +125,66 @@ public class ClientController {
         }
     }
 
-    /**
-     * Shows on the screen all the possible moves that the player can do and waits for the choice.
-     * @param moves all the moves that the player can do.
-     * @return the single move chosen by the player with the builder that is going to do that move.
-     */
-    public Moves chooseMove(Moves moves) throws IOException {
+    public Moves getSpecialBuild(Moves moves) throws IOException {
+        highlightSquares(moves);
+
+        if (moves.getMoves2() != null){
+            System.out.println("Pick a worker: position (x,y)");
+
+            builderSquare = getPosition();
+            possibleMoves = chosenBuilder(moves,builderSquare);
+
+            while (possibleMoves == null){
+                System.out.println("Invalid pick, chose more wisely");
+                builderSquare = getPosition();
+                possibleMoves = chosenBuilder(moves,builderSquare);
+
+            }
+            CliBoard.drawBoard(clientBoard);
+
+            this.resetBoard();
+
+        }else {
+            builderSquare = moves.getBuilder1().getPosition();
+            possibleMoves = chosenBuilder(moves,builderSquare);
+
+            CliBoard.drawBoard(clientBoard);
+
+            this.resetBoard();
+        }
+
+        System.out.println("Select move: (x,y)");
+
+        Square chosen = getPosition();
+
+        while(!searchArray(possibleMoves,chosen)){
+            System.out.println("Invalid pick, chose more wisely");
+            chosen = getPosition();
+        }
+
+        ArrayList<Square> selected = new ArrayList<Square>();
+        selected.add(chosen);
+
+        if (returnBuilder(builderSquare,moves).getSex().equals("Female")){
+            System.out.println("Do you want to build a Dome? y/n");
+            dome = returnBoolean();
+        }
+
+        return new Moves(returnBuilder(builderSquare,moves),selected,null,null,dome,false);
+    }
+
+    public void highlightSquares(Moves moves) {
         if(moves.getMoves1() != null){
-            for (int i=0; i<moves.getMoves1().size(); i++){
-                for (int j=0; j<5; j++){
-                    for (int k=0; k<5; k++){
-                        if (clientBoard.getCell(j, k).getX() == moves.getMoves1().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves1().get(i).y){
-                            clientBoard.getCell(j, k).setColour(1);
-                        }
+        for (int i=0; i<moves.getMoves1().size(); i++){
+            for (int j=0; j<5; j++){
+                for (int k=0; k<5; k++){
+                    if (clientBoard.getCell(j, k).getX() == moves.getMoves1().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves1().get(i).y){
+                        clientBoard.getCell(j, k).setColour(1);
                     }
                 }
             }
         }
+    }
         if(moves.getMoves2() != null){
             for (int i=0; i<moves.getMoves2().size(); i++){
                 for (int j=0; j<5; j++){
@@ -140,6 +198,15 @@ public class ClientController {
         }
         CliBoard.drawBoard(clientBoard);
         this.resetBoard();
+    }
+
+    /**
+     * Shows on the screen all the possible moves that the player can do and waits for the choice.
+     * @param moves all the moves that the player can do.
+     * @return the single move chosen by the player with the builder that is going to do that move.
+     */
+    public Moves chooseMove(Moves moves) throws IOException {
+        highlightSquares(moves);
 
         if (moves.getMoves2() != null){
             System.out.println("Pick a worker: position (x,y)");
@@ -199,6 +266,11 @@ public class ClientController {
     public void lost(){
         this.stillPlaying=false;
         System.out.println("Sorry, you lost.");
+    }
+
+    public void disconnected(){
+        this.stillPlaying=false;
+        System.out.println("You have been disconnected");
     }
 
     public void win(){
@@ -391,12 +463,7 @@ public class ClientController {
            for (int i = 0; i < array.length; i++) {
                try {
                    array[i] = Integer.parseInt(inputs[i]);
-               } catch (NumberFormatException e) {
-                   System.out.println("Please insert correct format (x,y)");
-                   inputs = reader.readLine().split(",");
-                   i--;
-               }
-               catch (ArrayIndexOutOfBoundsException ex){
+               } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                    System.out.println("Please insert correct format (x,y)");
                    inputs = reader.readLine().split(",");
                    i--;
@@ -404,6 +471,9 @@ public class ClientController {
            }
            x = array[1] - 1;
            y = array[0] - 1;
+           if (x<0 || x>4 || y<0 || y>4){
+               System.out.println("Please insert number between 1 and 5");
+           }
        }
         return new Square(x,y);
     }

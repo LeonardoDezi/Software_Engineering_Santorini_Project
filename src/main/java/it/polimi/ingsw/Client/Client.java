@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.Server.VirtualView.Sender;
+import it.polimi.ingsw.Parser.Sender;
 
 import java.io.*;
 import java.net.Socket;
