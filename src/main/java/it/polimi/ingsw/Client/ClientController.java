@@ -86,8 +86,9 @@ public class ClientController {
      */
     public void play(Socket socket) throws IOException {
         stillPlaying=true;
+        Moves moves = new Moves(null, null, null, null, false, false);
+        moves.setUpdate(true);
         while(stillPlaying){
-            Moves moves = netInterface.getMoves(socket);
             Moves envelope;
             if(!moves.getUpdate()){
                 if (moves.getSkippable()){
@@ -105,6 +106,7 @@ public class ClientController {
                     netInterface.sendMoves(envelope, client.getServerSocket());
                 }
             }
+            moves = netInterface.getMoves(socket);
         }
     }
 
@@ -306,7 +308,7 @@ public class ClientController {
      * @throws IOException exception.
      */
     public void placeBuilder(ArrayList<Square> freeSquares, int number) throws IOException {
-
+        System.out.println("Place your builders: positions (x,y) between 1 and 5");
         Square square = getPosition();
         if(checkSquare(freeSquares, square)){
             netInterface.sendSquare(square,client.getServerSocket());
@@ -381,7 +383,7 @@ public class ClientController {
         int x = -1;
         int y = -1;
        while (x<0 || x >4 || y<0 || y>4 ) {
-           System.out.println("Place your builders: positions (x,y) between 1 and 5");
+
            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
            String[] inputs = reader.readLine().split(",");
            int[] array = new int[2];

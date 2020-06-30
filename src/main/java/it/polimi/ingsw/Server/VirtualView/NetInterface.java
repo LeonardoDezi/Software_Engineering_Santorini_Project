@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Server.VirtualView;
 
-import com.google.gson.internal.$Gson$Preconditions;
-import it.polimi.ingsw.Client.View.CLI.CliBoard;
 import it.polimi.ingsw.Server.Client;
 import it.polimi.ingsw.Server.Model.*;
 
@@ -490,12 +488,21 @@ public class NetInterface {
 
     public void loseMethod(Player player) throws IOException {
         Client loser = findClient(player);
-        Sender.send("66@", loser.getSocket());
+        try {
+            Sender.send("66@", loser.getSocket());
+        }catch (IOException e){
+            System.out.println("Client disconnected");
+        }
+
     }
 
     public void winner(Player player) throws IOException {
         Client winnerClient = findClient(player);
-        Sender.send("73@", winnerClient.getSocket());
+        try{
+            Sender.send("73@", winnerClient.getSocket());
+        }catch (IOException e){
+            System.out.println("Client disconnected");
+        }
     }
 
     public Client findClient(Player player) throws IOException {

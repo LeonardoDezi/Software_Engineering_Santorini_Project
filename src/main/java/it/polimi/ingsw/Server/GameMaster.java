@@ -20,7 +20,7 @@ private ArrayList<GameInitializer> gameInitializers = new ArrayList<GameInitiali
             Integer outcome = gameInitializers.get(0).addPlayer(newClient);
             if(outcome == 0){
                 gameInitializers.remove(0);
-                System.out.print("problema aggiunta giocatori");
+                System.out.print("Problem in adding player");
                 return 0;
             }
         }

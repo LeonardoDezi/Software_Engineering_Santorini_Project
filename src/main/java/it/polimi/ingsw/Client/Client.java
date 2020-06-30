@@ -40,7 +40,13 @@ public class Client {
         clientController.matchSetup(serverSocket);
         clientController.play(serverSocket);
 
-        //TODO ask for rematch, if yes newgame if no close app
+        try{
+            serverSocket.close();
+        } catch (IOException e){
+            System.out.println("Disconnected from server");
+
+        }
+
         System.out.println("Do you want to play another game? y/n");
         if (clientController.returnBoolean()){
             startClient();

@@ -109,7 +109,7 @@ public class GameInitializer implements Runnable {
      * @throws IOException
      */
     public void dealCards() throws IOException {
-        System.out.print("siamo a dare le carte:\n");
+
         netInterface.sendNumber();
         // TODO sendMessage("Sei stato scelto dagli Dei per decidere chi parteciperà al gioco. scegli " + game.numberOfPlayers + " carte", firstPlayer)
         ArrayList<Integer> cards = netInterface.getCards(firstPlayer, game.getDeck());
