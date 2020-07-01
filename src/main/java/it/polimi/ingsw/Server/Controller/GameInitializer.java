@@ -45,10 +45,12 @@ public class GameInitializer implements Runnable {
             e.printStackTrace();
         }
         if (numberOfPlayers == -1){
-           return;  //TODO controllare
+             game = new Game(numberOfPlayers,netInterface);
+             game.setGameEnded(true);
+             game.setDisconnect(true);
+             return;
         }
-        Game game = new Game(numberOfPlayers, netInterface);
-        this.game = game;
+        game = new Game(numberOfPlayers, netInterface);
         netInterface.setGame(game);
         Dealer player1 = new Dealer(firstPlayerName, COLOUR1, game, clientID);
         int outcome = game.addPlayer(player1);  //testare che non ci dia problemi quando facciamo addPlayer
@@ -145,7 +147,11 @@ public class GameInitializer implements Runnable {
         for (int i = game.numberOfPlayers - 1; i >= 0; i--) {
 
             int chosenCard = netInterface.getChosenCard(possibleCards, game.getPlayerList().get(i).clientID);
-            if(chosenCard == -1){
+            //TODO da riprovare
+            if (netInterface.getClients().size() == game.numberOfPlayers-1){
+                game.setGameEnded(true);
+                game.setDisconnect(true);
+            }else if(chosenCard == -1){
                 game.setGameEnded(true);
                 game.setDisconnect(true);
             }
@@ -184,8 +190,10 @@ public class GameInitializer implements Runnable {
                 game.setGameEnded(true);
                 game.setDisconnect(true);
             }
-            square2 = game.getBoard().getSquare(square2.x, square2.y);
-            game.deployBuilder(player, square2);
+            else {
+                square2 = game.getBoard().getSquare(square2.x, square2.y);
+                game.deployBuilder(player, square2);
+            }
         }
 
     }
@@ -204,7 +212,7 @@ public class GameInitializer implements Runnable {
     }
 
     //TODO da fare
-    public void disconnectAll() {
-        System.out.println("Sconnesso");
+    public void disconnectAll() throws IOException {
+        game.disconnectClients();
     }
 }

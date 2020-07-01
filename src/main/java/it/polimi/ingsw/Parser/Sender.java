@@ -26,7 +26,7 @@ public class Sender {
             writer.write(jsonObject.toString() + "\n");
             writer.flush();
         } catch (SocketException e){
-            System.out.println("Error sender");
+           // System.out.println("Error sender");
         }
     }
 }

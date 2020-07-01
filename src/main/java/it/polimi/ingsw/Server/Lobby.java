@@ -63,11 +63,11 @@ public class Lobby extends Observable {
     public void update(Client client) throws IOException, InterruptedException {
         for( int i = 0; i<observers.size(); i++){
             Integer status = observers.get(i).update(client);
-            for(int j=0; j<10; j++){
+            for(int j=0; j<4; j++){
                 if(status!=0){
                     break;
                 }
-                if(j==9){
+                if(j==3){
                     System.out.print("Problems in match creation, please reset client, lobby.update");
                     client.getSocket().close();
                     return;

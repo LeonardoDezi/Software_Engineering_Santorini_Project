@@ -14,6 +14,10 @@ private ArrayList<GameInitializer> gameInitializers = new ArrayList<GameInitiali
 
         if (gameInitializers.size()==0){
             GameInitializer gameInitializer = new GameInitializer(newClient);
+            if (gameInitializer.getGame().getDisconnect()){
+                gameInitializer.getGame().disconnectClients();
+                return 0;
+            }
             gameInitializers.add(gameInitializer);
         }
         else {
@@ -29,14 +33,17 @@ private ArrayList<GameInitializer> gameInitializers = new ArrayList<GameInitiali
             gameInitializers.get(0).dealCards();
             if (gameInitializers.get(0).getGame().getDisconnect()){
                 gameInitializers.get(0).disconnectAll();
+                gameInitializers.remove(0);
             }else {
                 gameInitializers.get(0).setPlayers();
                 if (gameInitializers.get(0).getGame().getDisconnect()){
                     gameInitializers.get(0).disconnectAll();
+                    gameInitializers.remove(0);
                 }
                 gameInitializers.get(0).setBuilders();
                 if (gameInitializers.get(0).getGame().getDisconnect()){
                     gameInitializers.get(0).disconnectAll();
+                    gameInitializers.remove(0);
                 }else {
                     gameInitializers.get(0).startGame();
                 }

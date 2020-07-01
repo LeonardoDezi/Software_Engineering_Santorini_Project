@@ -436,11 +436,11 @@ public class ClientController {
                     if (firstSquare.getValue() ==1) {
                         Pawn pawn = new Pawn(firstSquare.getBuilder().getColour(), firstSquare.getBuilder().getSex());
                         clientBoard.getCell(i, j).setPawn(pawn);
-                        CliBoard.drawBoard(clientBoard);
                     }
                 }
             }
         }
+        CliBoard.drawBoard(clientBoard);
     }
 
     private void resetBoard(){

@@ -20,7 +20,7 @@ public class Receiver {
 
             return m;
         } catch (SocketException e){
-            System.out.println("Error receiver");
+            //System.out.println("Error receiver");
             return "-1@";
         }
 
