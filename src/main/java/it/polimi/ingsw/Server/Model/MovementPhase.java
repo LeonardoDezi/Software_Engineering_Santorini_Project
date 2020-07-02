@@ -79,13 +79,21 @@ public class MovementPhase extends Phase {
         }else{    //entrambi i worker sono incapaci di muoversi
 
             game.removePlayer(player);  //TODO  verificare che non ci siano problemi quando rimuoviamo un giocatore
-            game.getNetInterface().loseMethod(player);
-            //sendMessage("Il giocatore" + player + "ha perso", null); //per mandare in broadcast il campo player è null
 
             if(game.getPlayerList().size() == 1) {   //è rimasto solo un giocatore
                 game.setWinningPlayer(game.playerList.get(0));
                 game.setGameEnded(true);
             }
+            String winnerID;
+            if (game.getWinningPlayer() == null ) {
+                winnerID = "null";
+            }
+            else{
+                winnerID = game.getWinningPlayer().playerID;
+            }
+
+            game.getNetInterface().loseMethod(player, winnerID);
+            //sendMessage("Il giocatore" + player + "ha perso", null); //per mandare in broadcast il campo player è null
 
             context.setPhase(null);
         }

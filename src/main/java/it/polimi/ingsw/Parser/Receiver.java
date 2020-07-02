@@ -19,7 +19,7 @@ public class Receiver {
             String m = message.getMessage();
 
             return m;
-        } catch (SocketException e){
+        } catch (SocketException | NullPointerException e){
             //System.out.println("Error receiver");
             return "-1@";
         }

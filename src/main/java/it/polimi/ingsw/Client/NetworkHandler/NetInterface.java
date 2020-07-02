@@ -176,7 +176,10 @@ public class NetInterface {
             moves = null;
         }
         if (values[0].equals("66")) { //the client loses
-            clientController.lost();
+            String winnerID;
+            winnerID = values[1];
+            clientController.lost(winnerID);
+
         }
         if(values[0].equals("73")){ //the client wins
             clientController.win();

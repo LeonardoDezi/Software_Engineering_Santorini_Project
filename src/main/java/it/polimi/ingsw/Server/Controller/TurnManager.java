@@ -80,7 +80,7 @@ public class TurnManager {
                 netInterface.winner(game.getPlayerList().get(i));
             }
             else{
-                netInterface.loseMethod(game.getPlayerList().get(i));
+                netInterface.loseMethod(game.getPlayerList().get(i), game.getWinningPlayer().playerID);
             }
         }
     }

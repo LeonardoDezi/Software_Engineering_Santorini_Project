@@ -525,10 +525,11 @@ public class NetInterface {
     }
 
 
-    public void loseMethod(Player player) throws IOException {
+    public void loseMethod(Player player, String winnerID) throws IOException {
         Client loser = findClient(player);
+        String loseMessage = new String("66@"+winnerID);
         try {
-            Sender.send("66@", loser.getSocket());
+            Sender.send(loseMessage, loser.getSocket());
         }catch (IOException e){
             System.out.println("Client disconnected");
         }

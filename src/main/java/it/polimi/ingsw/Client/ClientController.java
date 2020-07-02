@@ -305,9 +305,12 @@ public class ClientController {
      * prints that the player has lost
      * sets the stillPlaying flag to false to end the game.
      */
-    public void lost(){
+    public void lost(String winnerID){
         this.stillPlaying=false;
         System.out.println("Sorry, you lost.");
+        if (!(winnerID.equals("null"))){
+            System.out.println(winnerID + " has won");
+        }
     }
 
     /**
