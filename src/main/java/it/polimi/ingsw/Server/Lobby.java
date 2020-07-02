@@ -23,7 +23,7 @@ public class Lobby extends Observable {
             if(clients.contains(client)){
                return;
             }
-        clients.add(0, client);
+        clients.add(client);
             if(observers.isEmpty()){
                 System.out.print("Error");
             }
@@ -62,20 +62,14 @@ public class Lobby extends Observable {
 
     public void update(Client client) throws IOException, InterruptedException {
         for( int i = 0; i<observers.size(); i++){
+            System.out.println(observers.size());
             Integer status = observers.get(i).update(client);
-            for(int j=0; j<4; j++){
-                if(status!=0){
-                    break;
-                }
-                if(j==3){
-                    System.out.print("Problems in match creation, please reset client.\n");
-                    client.getSocket().close();
-                    return;
-                }
-                status=observers.get(i).update(client);
+
+            if(status == 0){
+                System.out.print("Problems in match creation, please reset client.\n");
+                client.getSocket().close();
             }
         }
-        return;
     }
 
 }

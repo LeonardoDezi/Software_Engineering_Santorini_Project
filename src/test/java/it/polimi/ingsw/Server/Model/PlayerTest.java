@@ -8,6 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 //ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)
@@ -48,7 +49,7 @@ public class PlayerTest {
 
     /** checks the behaviour of addBuilder() and getBuilder() */
     @Test
-    public void checkAddAndGetBuilder(){   //li fondo per convenienza
+    public void checkAddAndGetBuilder() throws IOException {   //li fondo per convenienza
         int num = player2.getBuilderSize();
         Square square = new Square(1, 2);
         player2.addBuilder(square);
@@ -64,7 +65,7 @@ public class PlayerTest {
      * checks that when there are no female worker associated to the player, getFemale() returns null
      */
     @Test
-    public void checkForSex(){
+    public void checkForSex() throws IOException {
         player2.addBuilder(new Square(3,3));
         player2.addBuilder(new Square(1,2));
         assertEquals(2, player2.getBuilderSize());  //controlla che builders sia di dimensione due
@@ -89,7 +90,7 @@ public class PlayerTest {
 
     /** checks the behaviour of removeBuilder() */
     @Test
-    public void checkRemoveBuilder(){
+    public void checkRemoveBuilder() throws IOException {
         player1.addBuilder(new Square(2,2));
         player1.removeBuilder(0);
         assertEquals(0, player1.builders.size());  //controlla che venga rimosso un builder

@@ -16,8 +16,7 @@ import java.util.ArrayList;
 public class TurnManager {
     /** represents the game that is currently being played */
     private final Game game;
-    /** represents the list of the players that play in the game */
-    private final ArrayList<Player> playerList;
+
     /** represents the interface used by the server to communicate with the clients */
     private final NetInterface netInterface;
 
@@ -30,7 +29,6 @@ public class TurnManager {
     public TurnManager(Game game, NetInterface netInterface){
         this.game = game;
         this.netInterface = netInterface;
-        this.playerList = game.getPlayerList();
     }
 
 
@@ -44,9 +42,11 @@ public class TurnManager {
 
         netInterface.startGame();
 
+        Player player = game.getPlayerList().get(0);
+
         while(!(game.getGameEnded())) {
 
-            for (Player player : playerList) {  //TODO testare se succederà qualcosa se nel mentre rimuoviamo un giocatore?   cambierà la playerList di game?
+              //TODO testare se succederà qualcosa se nel mentre rimuoviamo un giocatore?   cambierà la playerList di game?
 
                 builder1 = player.getBuilder(0);
 
@@ -58,10 +58,10 @@ public class TurnManager {
                 while (!(game.getGameEnded()) && context.getPhase() != null)
                     context.request();
 
-                if (game.getGameEnded())
-                    break;
+                if (!game.getGameEnded())
+                    player = game.getNextPlayer(player);
 
-            }
+
         }
         if (game.getDisconnect()){
             game.disconnectClients();

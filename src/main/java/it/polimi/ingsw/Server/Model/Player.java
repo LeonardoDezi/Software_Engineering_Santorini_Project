@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.Model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 //TODO decidere cosa fare per removeBuilder
@@ -130,11 +131,12 @@ public class Player {
      * @param builderId is the index of the list builders where the worker is saved
      */
 
-    public void removeBuilder(int builderId){
+    public void removeBuilder(int builderId) throws IOException {
 
         Square position = builders.get(builderId).getPosition();
         position.resetSquare();
         builders.remove(builderId);
+        game.getNetInterface().updateBoard(position,null);
 
     }
 

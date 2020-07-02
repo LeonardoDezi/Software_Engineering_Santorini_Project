@@ -486,6 +486,7 @@ public class ClientController {
                         clientBoard.getCell(i, j).setPawn(pawn1);
                     }
 
+
                 }
                 if (clientBoard.getCell(i, j).getX() == secondSquare.x && clientBoard.getCell(i, j).getY() == secondSquare.y) {
                     clientBoard.getCell(i, j).setValue(secondSquare.getValue());
@@ -493,8 +494,8 @@ public class ClientController {
                     if (secondSquare.getValue() == 1) {
                         Pawn pawn2 = new Pawn(secondSquare.getBuilder().getColour(), secondSquare.getBuilder().getSex());
                         clientBoard.getCell(i, j).setPawn(pawn2);
-
                     }
+
 
                 }
             }
@@ -514,6 +515,10 @@ public class ClientController {
                     clientBoard.getCell(i, j).setLevel(firstSquare.getLevel());
                     if (firstSquare.getValue() ==1) {
                         Pawn pawn = new Pawn(firstSquare.getBuilder().getColour(), firstSquare.getBuilder().getSex());
+                        clientBoard.getCell(i, j).setPawn(pawn);
+                    }
+                    else {
+                        Pawn pawn = null;
                         clientBoard.getCell(i, j).setPawn(pawn);
                     }
                 }
@@ -627,15 +632,17 @@ public class ClientController {
      * @return builder on the square if it is on it, null otherwise
      */
     public Builder returnBuilder(Square builderSquare, Moves moves){
-        if(builderSquare.x == moves.getBuilder1().getPosition().x && builderSquare.y == moves.getBuilder1().getPosition().y){
-            return moves.getBuilder1();
+        if(moves.getMoves1() != null){
+            if(builderSquare.x == moves.getBuilder1().getPosition().x && builderSquare.y == moves.getBuilder1().getPosition().y){
+                return moves.getBuilder1();
+            }
         }
-        if (builderSquare.x == moves.getBuilder2().getPosition().x && builderSquare.y == moves.getBuilder2().getPosition().y){
-            return moves.getBuilder2();
+        if (moves.getMoves2() != null) {
+            if (builderSquare.x == moves.getBuilder2().getPosition().x && builderSquare.y == moves.getBuilder2().getPosition().y) {
+                return moves.getBuilder2();
+            }
         }
-        else
-            return null;
-
+        return null;
     }
 
     /**

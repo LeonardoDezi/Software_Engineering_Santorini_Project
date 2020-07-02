@@ -87,8 +87,16 @@ public class GameInitializer implements Runnable {
             if (outcome == 1) {
                 netInterface.addClient(client);
             }
-        } else {
+        }
+        else {
+
             Player player = new Player(client.getUsername(), COLOUR3, game, client.clientID);
+            for (int i=0; i<game.getPlayerList().size(); i++) {
+                if (player.playerID.equals(game.getPlayerList().get(i).playerID)) {
+                    Sender.send("89@", client.getSocket());
+                    return 0;
+                }
+            }
             outcome = game.addPlayer(player);
             if (outcome == 1) {
                 netInterface.addClient(client);

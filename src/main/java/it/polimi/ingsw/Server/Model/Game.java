@@ -115,7 +115,7 @@ public class Game {
      * removes a player from the game.
      * @param player is the player object.
      */
-    public void removePlayer(Player player) {
+    public void removePlayer(Player player) throws IOException {
         for (int i = 0; i < player.getBuilderSize(); i++) {
             player.removeBuilder(i);
             i--;
@@ -251,5 +251,14 @@ public class Game {
             for (int i =0; i<netInterface.getClients().size(); i++)
                 Sender.send("-1@",netInterface.getClients().get(i).getSocket());
 
+    }
+
+    public Player getNextPlayer(Player player){
+        int index = playerList.indexOf(player) + 1;
+
+        if (index < playerList.size())
+            return playerList.get(index);
+        else
+            return playerList.get(0);
     }
 }
