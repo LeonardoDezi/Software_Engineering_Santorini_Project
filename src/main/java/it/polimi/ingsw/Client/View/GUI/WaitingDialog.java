@@ -42,7 +42,7 @@ public class WaitingDialog extends JFrame{
         add(mainPanel);
         pack();
         setMinimumSize(new Dimension(300, 30));
-        setVisible(true);
+        setLocationRelativeTo(null);
 
 
     }

@@ -166,14 +166,14 @@ public class SpecialPhase1Test {
     @Test
     public void checkSpecialBuild() throws IOException {
         player1.setCard(game.getDeckCard(9));
-
+        game.deployBuilder(player1, game.gameBoard.fullMap[0][0]);
         game.deployBuilder(player1, game.gameBoard.fullMap[2][2]);
-        specialPhase1 = new SpecialPhase1(game, context, player1, player1.getBuilder(0), null);
-        possibleMoves = specialPhase1.getMoves(player1.getBuilder(0));
+        specialPhase1 = new SpecialPhase1(game, context, player1, player1.getBuilder(0), player1.getBuilder(1));
+        possibleMoves = specialPhase1.getMoves(player1.getBuilder(1));
 
         assertEquals(0, game.gameBoard.fullMap[3][3].getLevel());
 
-        specialPhase1.actionMethod(player1.getBuilder(0), game.gameBoard.fullMap[3][3]);
+        specialPhase1.actionMethod(player1.getBuilder(1), game.gameBoard.fullMap[3][3]);
 
         assertEquals(1, game.gameBoard.fullMap[3][3].getLevel());
 
@@ -189,10 +189,11 @@ public class SpecialPhase1Test {
     public void checkMoveOpposite() throws IOException {
         player1.setCard(game.getDeckCard(10));
         game.deployBuilder(player1, game.gameBoard.fullMap[4][2]);  //scenario preso da checkOppositeSideMoves2
+        game.deployBuilder(player1, game.gameBoard.fullMap[0][0]);
         game.deployBuilder(game.playerList.get(1), game.gameBoard.fullMap[4][3]);
         builder = player1.getBuilder(0);
 
-        specialPhase1 = new SpecialPhase1(game, context, player1, player1.getBuilder(0), null);
+        specialPhase1 = new SpecialPhase1(game, context, player1, player1.getBuilder(0), player1.getBuilder(1));
 
         possibleMoves = specialPhase1.getMoves(player1.getBuilder(0));
         specialPhase1.actionMethod(builder, possibleMoves.get(0));

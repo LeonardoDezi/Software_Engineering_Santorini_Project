@@ -130,11 +130,11 @@ public class SpecialPhase1 extends Phase {
                     int b = 2 * builderY - positionY;
 
                     try{
-                        if(board.fullMap[a][b].getValue() != 0) {    //casella non libera
+                        if(board.fullMap[a][b].getValue() != 0) {    //occupied square
                             possibleMoves.remove(i);
                             i--;
                         }
-                    }catch(ArrayIndexOutOfBoundsException e){   //TODO controllare che sia l'exception giusto: caso in cui la casella non esiste
+                    }catch(Exception e){       //not existing block
                         possibleMoves.remove(i);
                         i--;
                     }

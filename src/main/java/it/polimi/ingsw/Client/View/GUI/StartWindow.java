@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import static java.awt.BorderLayout.PAGE_END;
 
@@ -31,6 +32,8 @@ public class StartWindow extends JFrame {
     /** the name of the file containing the start button icon */
     protected static final String BUTTONNAME = new String("Start.png");
 
+
+
     /** the actionListener assigned to the start button. When the button is pressed, it closes
      * the startDialog, sends the username to the server and creates a waitingDialog */
     private class ConfirmListener implements ActionListener {
@@ -42,26 +45,16 @@ public class StartWindow extends JFrame {
 
                 StartWindow.this.dispose();
 
-           /*     try {
-                    mainFrame.getClient().startClient(text);   //TODO questa funzione deve limitarsi a inviare lo username e tornare
-                } catch (IOException e) {
+                try {
+                    mainFrame.getClient().startClient(text, mainFrame);
+                } catch (IOException | InterruptedException | InvocationTargetException e) {
                     new FatalErrorWindow();
-                }*/
+                }
 
             }
-            new PlayerNumberWindow(mainFrame);
         }
     }
 
-    /*
-    1) creare il JLabel con l'immagine di sfondo
-    2) aggiungerlo al frame/dialog con un semplice add
-    3) prendere il JLayeredPane
-    4) Fare il pannello che conterrà i componenti
-    5) setSize() del pannello che conterrà i componenti
-    5) inserire i componenti nel pannello
-    6) aggiungere il pannello con pane.add() e Integer.valueOf(2)
-     */
 
 
     /**
@@ -115,11 +108,6 @@ public class StartWindow extends JFrame {
         mainPanel.add(confirmButton, PAGE_END);
 
 
-/*
-        confirmButton = new JButton("Start!!");
-        confirmButton.addActionListener(new ConfirmListener());  //TODO cancellare
-        mainPanel.add(confirmButton, BorderLayout.PAGE_END);
-*/
         pane.add(mainPanel, Integer.valueOf(2));
         pack();
         setLocationRelativeTo(null);

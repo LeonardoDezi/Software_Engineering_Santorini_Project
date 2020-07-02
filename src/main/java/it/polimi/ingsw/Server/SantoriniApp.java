@@ -1,7 +1,9 @@
 package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Client.Client;
+import it.polimi.ingsw.Client.View.GUI.IntroFrame;
 
+import javax.swing.*;
 import java.io.*;
 
 public class SantoriniApp {
@@ -23,6 +25,8 @@ public class SantoriniApp {
 
     private static void runGui() {
         System.out.println("starting gui");
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() { createAndShowGUI(); }});
     }
 
     private static void runServer(){
@@ -55,6 +59,16 @@ public class SantoriniApp {
         }catch (IOException e){
             System.err.println(e.getMessage());
         }
+    }
+
+
+    /** starts the creation of the GUI and of the first window */
+    private static void createAndShowGUI() {
+        System.out.println("Created GUI on EDT? "+
+                SwingUtilities.isEventDispatchThread());
+
+        new IntroFrame();
+
     }
 
 

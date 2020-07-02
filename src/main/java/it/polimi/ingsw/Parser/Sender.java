@@ -22,7 +22,7 @@ public class Sender {
             Gson gson = new GsonBuilder().serializeNulls().create();
             String string = gson.toJson(message);
             JsonObject jsonObject = JsonParser.parseString(string).getAsJsonObject();
-            sleep(200);
+            sleep(100);
             writer.write(jsonObject.toString() + "\n");
             writer.flush();
         } catch (SocketException | InterruptedException e){

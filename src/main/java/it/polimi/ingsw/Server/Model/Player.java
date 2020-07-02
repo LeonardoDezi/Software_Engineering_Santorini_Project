@@ -86,11 +86,10 @@ public class Player {
     /**
      * is used to get a worker of the player.
      * @param BuilderId is the position of the worker inside the ArrayList builders.
-     * @return the worker requested
-     * @throws IndexOutOfBoundsException if there is no worker saved in builders, at the index represented by builderId.
+     * @return the worker requested or null if the worker does not exist.
      */
 
-    public Builder getBuilder(int BuilderId) throws ArrayIndexOutOfBoundsException{
+    public Builder getBuilder(int BuilderId) {
 
         if(BuilderId >= builders.size())
             return null;

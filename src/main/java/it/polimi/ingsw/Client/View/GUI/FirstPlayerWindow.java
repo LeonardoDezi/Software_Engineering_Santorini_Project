@@ -11,33 +11,32 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.Socket;
+import java.util.ArrayList;
 
 import static it.polimi.ingsw.Client.View.GUI.IntroFrame.getScaledImage;
 import static java.awt.BorderLayout.PAGE_END;
 
 
 /** this class represents the dialog where the Challenger chooses how many players will participate in the game */
-public class PlayerNumberWindow extends JFrame {
+public class FirstPlayerWindow extends JFrame {
     /** the name of the file containing the go button icon */
     protected static final String BUTTONNAME = new String("Avanti.png");
-    /** the radioButton representing the "2" option */
-    JRadioButton twoPlayersButton = new JRadioButton("2");
-    /** the radioButton representing the "3" option */
-    JRadioButton threePlayersButton = new JRadioButton("3");
+
+
+
+
 
 
     private MainFrame mainFrame;
 
-    private GUIClientController controller;
+
+    private JPanel mainPanel;
 
 
+    private static String firstPlayerName;
 
 
-    private static String numberOfPlayers;
-
-
-
-    public static String getNumberOfPlayers(){return numberOfPlayers;}
 
 
     /** the actionListener assigned to the button. When the button is pressed, it closes
@@ -46,32 +45,28 @@ public class PlayerNumberWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-
-
-            if(numberOfPlayers != null) {
-                int num = Integer.parseInt(numberOfPlayers);
-                mainFrame.setNumberOfPlayers(num);
+            if(firstPlayerName != null) {
 
                 try {
-                    Sender.send(numberOfPlayers, controller.getClient().getServerSocket());
+                    Socket serverSocket = mainFrame.getClient().getServerSocket();
+                    mainFrame.getController().getNetInterface().sendFirstPlayer(firstPlayerName, serverSocket);
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
 
+                FirstPlayerWindow.this.dispose();
+
                 mainFrame.waitingDialog.setVisible(true);
-                PlayerNumberWindow.this.dispose();
 
 
                 SwingWorker worker = new SwingWorker() {
                     @Override
                     protected Object doInBackground() throws Exception {
                         try {
-
-                            controller.matchSetup(mainFrame.getClient().getServerSocket());
-                        } catch (IOException | InterruptedException ioException) {
+                            System.out.println("jhg");
+                            mainFrame.getController().matchSetup(mainFrame.getClient().getServerSocket());
+                        } catch (IOException | InterruptedException | InvocationTargetException ioException) {
                             ioException.printStackTrace();
-                        } catch (InvocationTargetException invocationTargetException) {
-                            invocationTargetException.printStackTrace();
                         }
                         return null;
                     }
@@ -89,19 +84,17 @@ public class PlayerNumberWindow extends JFrame {
     private static class RadioButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {   //TODO inserire implementazione mancante
-            numberOfPlayers = e.getActionCommand();
+            firstPlayerName = e.getActionCommand();
         }
     }
 
 
-    public void setController(){
-        this.controller = mainFrame.getClient().getController();
-    }
+
 
     /**
      * creates a new playerNumber Dialog
      */
-    public PlayerNumberWindow(MainFrame frame) {
+    public FirstPlayerWindow(MainFrame frame) {
         super("Player choice");
 
         this.mainFrame = frame;
@@ -119,12 +112,13 @@ public class PlayerNumberWindow extends JFrame {
 
         add(imageLabel);
 
-        JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         mainPanel.setSize(300, 300);
         mainPanel.setOpaque(false);
         mainPanel.setLayout(new BorderLayout(50, 50));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 30, 10));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 20, 10));
 
+        /*
         twoPlayersButton.setMnemonic(KeyEvent.VK_2);
         threePlayersButton.setMnemonic(KeyEvent.VK_3);
 
@@ -139,13 +133,15 @@ public class PlayerNumberWindow extends JFrame {
         twoPlayersButton.addActionListener(new RadioButtonListener());
         threePlayersButton.addActionListener(new RadioButtonListener());
 
-        JPanel radioPanel = new JPanel(new GridLayout(0,1));
+         */
+/*        JPanel radioPanel = new JPanel(new GridLayout(3,0));
+        //JPanel radioPanel = new JPanel(new GridLayout(0,2));
         radioPanel.setBackground(Color.WHITE);
         radioPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        radioPanel.add(twoPlayersButton);
-        radioPanel.add(threePlayersButton);
+        //radioPanel.add(twoPlayersButton);
+        //radioPanel.add(threePlayersButton);
         mainPanel.add(radioPanel, BorderLayout.CENTER);
-
+*/
         JLabel title = new JLabel(" Scegli il numero di giocatori della partita");
         title.setFont(new Font("Diogenes", Font.BOLD, 13));
         mainPanel.add(title, BorderLayout.PAGE_START);
@@ -173,13 +169,29 @@ public class PlayerNumberWindow extends JFrame {
         pane.add(mainPanel, Integer.valueOf(2));
         pack();
         setLocationRelativeTo(null);
-        //setVisible(true);
 
 
     }
 
-    public static void main(String[] args) {
-        new PlayerNumberWindow(null);
+    public void displayNames(ArrayList<String> playerList){
+
+        ButtonGroup group = new ButtonGroup();
+        JPanel radioPanel = new JPanel(new GridLayout(3,0));
+        radioPanel.setBackground(Color.lightGray);
+        radioPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        for(String name : playerList){
+            JRadioButton button = new JRadioButton(name);
+            button.setActionCommand(name);
+            button.addActionListener(new RadioButtonListener());
+            group.add(button);
+            radioPanel.add(button);
+        }
+
+        mainPanel.add(radioPanel, BorderLayout.CENTER);
+
     }
+
+
 
 }

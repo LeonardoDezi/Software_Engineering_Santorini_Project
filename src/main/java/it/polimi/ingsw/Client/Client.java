@@ -1,8 +1,11 @@
 package it.polimi.ingsw.Client;
 
+import it.polimi.ingsw.Client.View.GUI.*;
 import it.polimi.ingsw.Parser.Sender;
 
+import javax.swing.*;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 
 /**
@@ -23,6 +26,8 @@ public class Client {
 
     /** represents the client own socket that interfaces with the server */
     private Socket serverSocket;
+
+    private GUIClientController guiClientController;
 
     /**
      * create and initialize the client
@@ -97,5 +102,42 @@ public class Client {
         }
         return username;
     }
+
+    public void startClient(String text, MainFrame frame) throws IOException, InterruptedException, InvocationTargetException {
+
+        this.serverSocket = new Socket();
+
+        try {
+            serverSocket = new Socket(ip, port);
+        } catch (IOException e) {
+            new FatalErrorWindow();
+            return;
+        }
+
+
+        Client.username = text;
+
+        Sender.send(username, serverSocket);
+
+        guiClientController = new GUIClientController(this, frame);
+        frame.setController( guiClientController);
+
+
+        SwingWorker worker = new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                guiClientController.matchSetup(serverSocket);
+                return null;
+            }
+        };
+
+        worker.execute();
+
+
+    }
+
+    public GUIClientController getController(){ return this.guiClientController;}
+
+
 
 }

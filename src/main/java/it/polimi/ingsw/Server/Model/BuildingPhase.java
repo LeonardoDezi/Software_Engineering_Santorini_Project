@@ -145,7 +145,6 @@ public class BuildingPhase extends Phase {
                 catch (IOException e){
                     e.printStackTrace();
                 }
-                //updateBoard()?????
                 position = null;
             }
         }

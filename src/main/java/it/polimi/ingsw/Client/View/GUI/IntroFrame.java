@@ -67,7 +67,6 @@ public class IntroFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event){
             IntroFrame.this.dispose();
-
             Client client = new Client("localhost", 8080);
             MainFrame frame = new MainFrame(client);
             new StartWindow(frame);
@@ -107,13 +106,8 @@ public class IntroFrame extends JFrame {
         playButton.addActionListener(new ButtonListener());
         playButton.setContentAreaFilled(false);
 
-        //button.setSize(100, 60);
-                                        //TODO cancellare i commenti
-        //button.setSize();
         playButton.setVisible(true);
 
-    //    button.setLocation(20, 520);
-    //    pane.add(button, Integer.valueOf(2));
 
         JPanel panel = new JPanel(new GridLayout());
         panel.add(playButton);
@@ -129,11 +123,6 @@ public class IntroFrame extends JFrame {
 
     }
 
-/*
-    public static void main(String[] args) {
-        IntroFrame frame = new IntroFrame();
-    }
-*/
 
 
 

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.Client.View.GUI;
 
+import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Client.GUIClientController;
+import it.polimi.ingsw.Client.NetworkHandler.GUINetInterface;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,13 +16,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static it.polimi.ingsw.Client.View.GUI.IntroFrame.getScaledImage;
 import static it.polimi.ingsw.Client.View.GUI.StartWindow.IMAGENAME;
 
 
 /** this class represents the dialog where the Challenger chooses the cards that will be used in the game */
-public class CardChoosingDialog extends JDialog {
+public class CardPickingDialog extends JDialog {
 
     /** represents the main panel of the window */
     private final JPanel mainPanel;
@@ -39,33 +42,31 @@ public class CardChoosingDialog extends JDialog {
     /** the name of the file containing the  button icon */
     protected static final String UNDOBUTTONNAME = new String("Annulla.png");
 
-    /** the number of cards selected */
-    private int cardNumber = 0;
-    /** the list of cards selected */
-    private ArrayList<Integer> cardList = new ArrayList<>();
-    /** the list of the buttons inside the window */
-    private ArrayList<JButton> buttonList = new ArrayList<JButton>();
+    /** the number of the card selected */
+    private int chosenCard;
+    /** the list of the buttons inside the window */  //TODO modifica javadoc
+    private JButton chosenButton = null;
     /** the label indicating an error */
     private JLabel errorLabel = new JLabel("Errore: Non hai ancora scelto abbastanza carte.");
 
 
-    private int numberOfPlayers;
+    private boolean blocked = true;
 
 
-    private JTextArea textField;
 
 
     /** creates a new cardChoosingDialog
      * @param frame is the mainFrame
      */
-    public CardChoosingDialog(MainFrame frame) {
+    public CardPickingDialog(MainFrame frame) {
 
         super(frame, "Player choice");
         this.frame = frame;
 
+
         setResizable(false);
 
-        this.setSize(new Dimension(850, 490));
+        this.setSize(new Dimension(760, 420));
 
 
         ClassLoader cl = this.getClass().getClassLoader();
@@ -78,21 +79,21 @@ public class CardChoosingDialog extends JDialog {
         JLayeredPane pane = this.getLayeredPane();
 
         mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout(50, 50));
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         mainPanel.setSize(this.getSize());
 
-
-        textField = new JTextArea();
-        textField.setOpaque(false);
-        textField.setEditable(false);
-        textField.setFont(new Font("Diogenes", Font.BOLD, 16));
-
+        JLabel label = new JLabel(("SCEGLI UNA CARTA"));
+        label.setFont(new Font("Papyrus", Font.BOLD, 16));
+        label.setForeground(Color.BLACK);
         JPanel titlePanel = new JPanel();
         titlePanel.setOpaque(false);
-        titlePanel.add(textField);
-        mainPanel.add(titlePanel);
+        titlePanel.add(label);
+        mainPanel.add(titlePanel, BorderLayout.PAGE_START);
 
-        cardPanel = new JPanel(new GridLayout(2,7));
+
+        cardPanel = new JPanel();
+        cardPanel.setOpaque(false);
 
 
         img = IntroFrame.getImage(cl, CONFIRMBUTTONNAME);
@@ -116,15 +117,13 @@ public class CardChoosingDialog extends JDialog {
         undoButton.addActionListener(new Undo());
 
 
-        displayCards();
-
         mainPanel.add(cardPanel);
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(confirmButton);
         buttonPanel.add(undoButton);
         buttonPanel.add(errorLabel);
         buttonPanel.setOpaque(false);
-        mainPanel.add(buttonPanel);
+        mainPanel.add(buttonPanel, BorderLayout.PAGE_END);
 
         mainPanel.setOpaque(false);
 
@@ -139,40 +138,31 @@ public class CardChoosingDialog extends JDialog {
 
 
     /** displays the cards on the window */
-    private void displayCards() {
+    public void displayCards() {
 
         ClassLoader cl = this.getClass().getClassLoader();
-        String[] cardNames = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12","13", "14"};
-
-
         ArrayList<JButton> cardDeck = new ArrayList<JButton>();
 
-        for (String item : cardNames) {
+        for(int i=0; i < frame.getCardList().size(); i++) {
 
-            InputStream url = cl.getResourceAsStream(item + ".png");
-            BufferedImage img = null;
-            try {
-                img = ImageIO.read(url);     //TODO togliere il try/catch
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
+            String cardName = frame.getCardList().get(i);
+            String num = frame.translate(cardName) + ".png";
+            BufferedImage img = IntroFrame.getImage(cl, num);
 
             int W = img.getWidth();
             int H = img.getHeight();
 
-
             JButton button = new JButton(new ImageIcon(getScaledImage(img, W / 8, H / 8)));
             button.setBorder(BASICBORDER);
+            button.setContentAreaFilled(false);
             button.addActionListener(new CardChooser());
-            button.setActionCommand(item);
+            button.setActionCommand(Integer.toString(i + 1));
 
             cardDeck.add(button);
-
         }
 
-        for (JButton button : cardDeck)
-            cardPanel.add(button, ComponentOrientation.LEFT_TO_RIGHT);
+        for (JButton b : cardDeck)
+            cardPanel.add(b, ComponentOrientation.LEFT_TO_RIGHT);
 
     }
 
@@ -188,11 +178,9 @@ public class CardChoosingDialog extends JDialog {
             mainPanel.revalidate();
             mainPanel.repaint();
 
-            if(!(buttonList.isEmpty())) {
-                JButton button = buttonList.get(buttonList.size() - 1);
-                button.setBorder(BASICBORDER);
-                buttonList.remove(button);
-                cardNumber --;
+            if(chosenButton != null) {
+                chosenButton.setBorder(BASICBORDER);
+                chosenButton = null;
             }
         }
     }
@@ -208,7 +196,7 @@ public class CardChoosingDialog extends JDialog {
             mainPanel.revalidate();
             mainPanel.repaint();
 
-            if (cardNumber < numberOfPlayers) {
+            if (chosenButton == null) {
 
                 errorLabel.setVisible(true);
                 mainPanel.revalidate();
@@ -216,21 +204,20 @@ public class CardChoosingDialog extends JDialog {
 
             }else{
 
-                for(JButton button : buttonList){
-                    String text = button.getActionCommand();
-                    int num = Integer.parseInt(text);
-                    cardList.add(num);
-                }
-
+                String text = chosenButton.getActionCommand();
+                int num = Integer.parseInt(text);
 
 
                 try {
-                    frame.getController().getNetInterface().sendCard(cardList, frame.getClient().getServerSocket());
+                    frame.getController().getNetInterface().sendCard(num, frame.getClient().getServerSocket());
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
 
-                CardChoosingDialog.this.dispose();
+                frame.setPlayerCard( frame.getCardList().get(num - 1));
+
+
+                CardPickingDialog.this.dispose();
                 frame.waitingDialog.setVisible(true);
 
                 SwingWorker worker = new SwingWorker() {
@@ -246,8 +233,6 @@ public class CardChoosingDialog extends JDialog {
                 };
 
                 worker.execute();
-
-
             }
         }
     }
@@ -264,21 +249,33 @@ public class CardChoosingDialog extends JDialog {
             mainPanel.revalidate();
             mainPanel.repaint();
 
-            if (cardNumber < numberOfPlayers) {
+            if (chosenButton == null) {
                 JButton button = (JButton) e.getSource();
                 if(button.getBorder().equals(BASICBORDER)) {
                     button.setBorder(REDBORDER);
-                    buttonList.add(button);
-                    cardNumber++;
+                    chosenButton = button;
                 }
             }
+
         }
     }
 
-    public void setNumberOfPlayers(){
-        numberOfPlayers = frame.getNumberOfPlayers();
-        textField.setText("SCEGLI "+ numberOfPlayers + " CARTE");
-    }
+    public static void main(String[] args) {
+        MainFrame frame = new MainFrame(new Client("ciao", 3));
+        frame.getCardList().add("Selene");
+        frame.getCardList().add("Selene");
+        frame.getCardList().add("Artemis");
 
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                frame.cardPickingDialog.displayCards();
+                //frame.cardPickingDialog.setVisible(true);
+            }
+        });
+
+        //frame.waitingDialog.setVisible(true);
+
+    }
 
 }

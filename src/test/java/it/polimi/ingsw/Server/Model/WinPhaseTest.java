@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 //ATTENZIONE: prima di eseguire i test, commentare updateBoard() in Board.move() e Board.build() (righe 96 e 73)
 
-/**  this class is used to test the behaviour of Game  */
+/**  this class is used to test the behaviour of WinPhase  */
  public class WinPhaseTest {
     /** the winPhase tested */
     private WinPhase winPhase;
