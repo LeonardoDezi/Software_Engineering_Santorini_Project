@@ -33,8 +33,10 @@ public class GUINetInterface {
      * @param socket is the Server socket.
      * @return the move chosen by the player depending on the phase of the game
      */
-    public Moves getMoves(Socket socket) throws IOException {
+    public Moves getMoves(Socket socket) throws IOException, InvocationTargetException, InterruptedException {
+        System.out.println("aperto");
         String availableMoves = Receiver.receive(socket);
+        System.out.println("ciao");
         String[] values = availableMoves.split("@");
 
         if (moves.getUpdate()){
@@ -180,6 +182,8 @@ public class GUINetInterface {
             Builder worker2;
             String[] square = values[1].split(":");
             Square firstSquare = stringToFullSquare(square);
+
+
             if(values[2].equals("1")){
                 worker1 = null;
                 firstSquare.setBuilder(worker1);
@@ -189,6 +193,7 @@ public class GUINetInterface {
                 worker1 = new Builder(firstSquare, builderInfo[0], builderInfo[1]);
                 firstSquare.setBuilder(worker1);
             }
+
             if(values[3].equals("2")){
                 String[] square2 = values[4].split(":");
                 Square secondSquare = stringToFullSquare(square2);
@@ -208,6 +213,7 @@ public class GUINetInterface {
                 moves.setUpdate(true);
                 clientController.updateBoard(firstSquare);
             }
+
         }
         return moves;
     }
@@ -257,7 +263,8 @@ public class GUINetInterface {
             controller.placeBuilder(freeSquares, builderNumber);
         }
         if (values[0].equals("10")) { //la partita comincia
-            controller.startMatch();
+            controller.getFrame().setup = false;
+            controller.play();
         }
         if (values[0].equals("11")) {
             controller.chooseNumberOfPlayers();

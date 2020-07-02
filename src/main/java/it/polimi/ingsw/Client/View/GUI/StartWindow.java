@@ -6,26 +6,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
-import static java.awt.BorderLayout.PAGE_END;
+import static java.awt.BorderLayout.*;
 
 
 /** this class represents the window where the user can enter its username */
 public class StartWindow extends JFrame {
     /** the textArea where the user will write its username */
-    private final JTextArea textField;
+    private final JTextArea usernameTextField;
+    /** the textArea where the user will write the ip address */
+    private final JTextArea ipTextField;
 
     /** the text representing the user's username */
-    private static String text;
+    private String username;
 
+    /** the text representing the ip address */
+    private String ipAddress;
 
-
+    /** the frame where the game will be played*/
     private MainFrame mainFrame;
 
-
-    private boolean finished = false;
 
     /** the name of the file containing the background image */
     protected static final String IMAGENAME = new String("startDialog.png");
@@ -35,21 +35,21 @@ public class StartWindow extends JFrame {
 
 
     /** the actionListener assigned to the start button. When the button is pressed, it closes
-     * the startDialog, sends the username to the server and creates a waitingDialog */
+     * the startDialog and sends the username and the ip address to the server and sets visible the waiting dialog */
     private class ConfirmListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent event){
 
-            text = textField.getText();
-            if(!(text.isEmpty())) {
+            username = usernameTextField.getText();
+            ipAddress = ipTextField.getText();
+
+            if(!(username.isEmpty()) && !(ipAddress.isEmpty())) {
 
                 StartWindow.this.dispose();
 
-                try {
-                    mainFrame.getClient().startClient(text, mainFrame);
-                } catch (IOException | InterruptedException | InvocationTargetException e) {
-                    new FatalErrorWindow();
-                }
+                mainFrame.setClient(new Client(ipAddress, 8080));
+                mainFrame.getClient().startClient(username, mainFrame);
+                mainFrame.waitingDialog.setVisible(true);
 
             }
         }
@@ -83,16 +83,35 @@ public class StartWindow extends JFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setSize(300,300);
         mainPanel.setOpaque(false);
-        mainPanel.setLayout(new BorderLayout(50, 50));  //50
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(60, 20, 40, 20));
+        mainPanel.setLayout(new BorderLayout(50, 50));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        textField = new JTextArea();
-        textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        mainPanel.add(textField, BorderLayout.CENTER);
 
-        JLabel title = new JLabel("Benvenuto! Inserisci il tuo username");
-        title.setFont(new Font("Diogenes", Font.BOLD, 14));
-        mainPanel.add(title, BorderLayout.PAGE_START);
+        JTextArea textField = new JTextArea();
+        textField.setOpaque(false);
+        textField.setEditable(false);
+        textField.setLineWrap(true);
+        textField.setWrapStyleWord(true);
+        textField.setFont(new Font("Diogenes", Font.BOLD, 14));
+        textField.setText("Welcome! Please enter your username and the IP address");
+        mainPanel.add(textField, PAGE_START);
+
+
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new BorderLayout(20, 20));
+        textPanel.setOpaque(false);
+
+        usernameTextField = new JTextArea();
+        usernameTextField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        textPanel.add(usernameTextField , BorderLayout.PAGE_START);
+
+        ipTextField = new JTextArea();
+        ipTextField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        textPanel.add(ipTextField, PAGE_END);
+
+
+        mainPanel.add(textPanel, CENTER);
+
 
 
 
@@ -105,7 +124,7 @@ public class StartWindow extends JFrame {
         confirmButton.setContentAreaFilled(false);
         confirmButton.setBorderPainted(false);
         confirmButton.addActionListener(new ConfirmListener());
-        mainPanel.add(confirmButton, PAGE_END);
+        mainPanel.add(confirmButton, SOUTH);
 
 
         pane.add(mainPanel, Integer.valueOf(2));

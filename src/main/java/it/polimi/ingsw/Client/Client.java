@@ -103,21 +103,27 @@ public class Client {
         return username;
     }
 
-    public void startClient(String text, MainFrame frame) throws IOException, InterruptedException, InvocationTargetException {
+    public void startClient(String text, MainFrame frame) {
 
         this.serverSocket = new Socket();
 
         try {
             serverSocket = new Socket(ip, port);
         } catch (IOException e) {
-            new FatalErrorWindow();
+            new FatalErrorWindow(frame);
             return;
         }
 
 
         Client.username = text;
 
-        Sender.send(username, serverSocket);
+        try {
+            Sender.send(username, serverSocket);
+        }catch(IOException e){
+            frame.waitingDialog.setVisible(false);
+            new FatalErrorWindow(frame);
+            return;
+        }
 
         guiClientController = new GUIClientController(this, frame);
         frame.setController( guiClientController);

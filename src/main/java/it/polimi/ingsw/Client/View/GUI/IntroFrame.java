@@ -67,8 +67,7 @@ public class IntroFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event){
             IntroFrame.this.dispose();
-            Client client = new Client("localhost", 8080);
-            MainFrame frame = new MainFrame(client);
+            MainFrame frame = new MainFrame();
             new StartWindow(frame);
         }
     }

@@ -133,10 +133,6 @@ public class ErrorDialog extends JDialog{
 
         }
 
-    public static void main(String[] args) {
-        ErrorDialog d = new ErrorDialog(new MainFrame(null));
-    }
-
 }
 
 

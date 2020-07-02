@@ -32,6 +32,8 @@ public class GUIClientController {
     private MainFrame frame;
 
 
+    public MainFrame getFrame(){return this.frame;}
+
     public GUIClientController(Client client, MainFrame frame) {
         this.client = client;
         this.frame = frame;
@@ -125,31 +127,30 @@ public class GUIClientController {
     /**
      * starts the game phase for the client and keeps spinning until the end of the game.
      */
-     public void play() throws IOException {
+     public void play() throws IOException, InvocationTargetException, InterruptedException {
          Moves moves = netInterface.getMoves(client.getServerSocket());
 
+         if(frame.stillPlaying) {
+             SwingUtilities.invokeAndWait(new Runnable() {           //TODO invoke and wait
+                 public void run() {
 
-         SwingUtilities.invokeLater(new Runnable() {           //TODO invoke and wait
-             public void run() {
+                     if (moves.getSkippable()) {
+                         frame.skipButton.setVisible(true);
+                         frame.skipButton.setEnabled(true);
+                     }
 
-                 if(moves.getSkippable()) {
-                     frame.skipButton.setVisible(true);
-                     frame.skipButton.setEnabled(true);
+
+                     if (moves.getIsDome()) {
+                         frame.domeButton.setVisible(true);
+                         frame.domeButton.setEnabled(true);
+                     }
+
+                     frame.setMoves(moves);
                  }
+             });
+         }else{
 
-                 if(moves.getFemale()){
-
-                 }
-
-                 if(moves.getIsDome()){
-                     frame.domeButton.setVisible(true);
-                     frame.domeButton.setEnabled(true);
-                 }
-
-                 frame.setMoves(moves);
-             }
-         });
-
+         }
 
      }
 
@@ -327,9 +328,13 @@ public class GUIClientController {
          * @throws IOException
          */
         public void placeBuilder(ArrayList<Square> freeSquares, int number) throws IOException, InvocationTargetException, InterruptedException {
-            System.out.println("Place your builders: positions (x,y)");
 
+            frame.waitingDialog.setVisible(false);
+            frame.displayCard();
+            frame.paintPossibleSquares(freeSquares);
+            frame.setVisible(true);
 
+            /*
             SwingUtilities.invokeAndWait(new Runnable() {   //invokeLater
                 @Override
                 public void run() {
@@ -339,15 +344,18 @@ public class GUIClientController {
                     frame.setVisible(true);
                 }
             });
-
+            */
 
         }
 
-        public void updateBoard(Square firstSquare, Square secondSquare) {
+        //TODO cancellare?
+        public void updateBoard(Square firstSquare, Square secondSquare) throws InterruptedException, IOException, InvocationTargetException {
             frame.updateBoard(firstSquare, secondSquare);
         }
 
-        public void updateBoard(Square firstSquare) {
+
+        //TODO cancellare?
+        public void updateBoard(Square firstSquare) throws InterruptedException, IOException, InvocationTargetException {
             frame.updateBoard(firstSquare);
         }
 
@@ -436,8 +444,6 @@ public class GUIClientController {
 
         }
 
-
-        public void startMatch(){frame.setup = false;}
 
 
 

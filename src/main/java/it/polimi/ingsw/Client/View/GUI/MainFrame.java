@@ -5,6 +5,7 @@ import it.polimi.ingsw.Client.Moves;
 import it.polimi.ingsw.Client.NetworkHandler.GUINetInterface;
 import it.polimi.ingsw.Server.Model.Board;
 import it.polimi.ingsw.Server.Model.Builder;
+import it.polimi.ingsw.Server.Model.Envelope;
 import it.polimi.ingsw.Server.Model.Square;
 
 import javax.imageio.ImageIO;
@@ -17,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +96,7 @@ public class MainFrame extends JFrame {
 
     public boolean setup;
 
-    public boolean stillPlaying;
+    public boolean stillPlaying = true;
 
     public JButton domeButton;
 
@@ -111,6 +113,14 @@ public class MainFrame extends JFrame {
     private ArrayList<Square> moves1;
     private ArrayList<Square> moves2;
 
+    private boolean part1 = false;
+
+    private Builder playingBuilder;
+
+    /** boolean used for the implementation of the Selene card. If true,  */
+    private boolean female = false;
+
+    private boolean isDome = false;
 
 
     public ArrayList<String> getCardList(){return cardList;}
@@ -123,23 +133,29 @@ public class MainFrame extends JFrame {
     /** the actionListener assigned to the square button. When the button is pressed, if the move has not been chosen
      * sets moveChosen to true and gets the coordinates of the SquareButton
      */
+
     private class SquareListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
+
+            if(moveChosen){
+                squareList[x][y].setBorder(YELLOWBORDER);   // set the previous button to YELLOWBORDER
+            }
+
             SquareButton button = (SquareButton) e.getSource();
-            if(button.getBorder().equals(YELLOWBORDER) && !(moveChosen)){
+            if(button.getBorder().equals(YELLOWBORDER)){
                 button.setBorder(REDBORDER);
-                x = button.getXvalue();
+                x = button.getXvalue();                     //new button to REDBORDER
                 y = button.getYvalue();
                 moveChosen = true;
-
-                if(button.equals(builder1Button) || button.equals(builder2Button)){
-
-                }
 
             }
         }
     }
+
+
+
+
 
     /** the actionListener assigned to the undo button. When the button is pressed, if the move has been chosen
      * it resets the selected square button
@@ -147,63 +163,132 @@ public class MainFrame extends JFrame {
     private class Undo implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+
             if(moveChosen) {
-                JButton button = squareList[x][y];
-                button.setBorder(YELLOWBORDER);
-                moveChosen = false;
-                x = -1;
-                y = -1;
+
+                squareList[x][y].setBorder(YELLOWBORDER);
+
+                if (squareList[x][y].equals(builder1Button)) {      // repaints the possible workers
+                    if(builder2Button != null){
+                        builder2Button.setBorder(YELLOWBORDER);
+                    }
+                    for(Square s : moves1)
+                        squareList[s.x][s.y].setBorder(BASICBORDER);
+                    part1 = true;
+                    playingBuilder = null;
+                } else if (squareList[x][y].equals(builder2Button)) {
+                    builder1Button.setBorder(YELLOWBORDER);
+                    for(Square s: moves2)
+                        squareList[s.x][s.y].setBorder(BASICBORDER);
+                    part1 = true;
+                    playingBuilder = null;
+                }
             }
+
+            revalidate();
+            repaint();
         }
+
     }
+
+
+
+
 
     private class Confirm implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
-            if(moveChosen) {
+            if (moveChosen) {
 
                 moveChosen = false;
-                Square square = new Square(x,y);
 
-                try {
-                    getController().getNetInterface().sendSquare(square, getClient().getServerSocket());
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+                if(part1) {                                             //choose possible move
+                    squareList[x][y].setBorder(BASICBORDER);
+                    playingBuilder = squareList[x][y].getSquare().getBuilder();
 
-
-                for(int i = 0 ; i < Board.BOARDSIZEX; i++) {
-                    for (int j = 0; j < Board.BOARDSIZEY; j++) {
-
-                        squareList[i][j].setBorder(BASICBORDER);
-                        squareList[i][j].setEnabled(false);
+                    if(squareList[x][y].equals(builder1Button)){
+                        if(builder2Button != null) {
+                            builder2Button.setBorder(BASICBORDER);
+                        }
+                        paintPossibleSquares(moves1);
+                    }else {
+                        builder1Button.setBorder(BASICBORDER);
+                        paintPossibleSquares(moves2);
                     }
-                }
+                    part1 = false;
+                    moveChosen = true;
 
-                revalidate();
-                repaint();
+                }else {
 
 
-                SwingWorker worker =new SwingWorker() {
-                    @Override
-                    protected Object doInBackground() throws Exception {
-                        if(setup){
-                            getController().getNetInterface().getMatchSetup(getClient().getServerSocket(), getController());
-                        }else
-                            getController().getNetInterface().getMoves(getClient().getServerSocket());
-                        return null;
+                    if(setup) {
+
+                        Square square = new Square(x, y);
+                        try {
+                            getController().getNetInterface().sendSquare(square, getClient().getServerSocket());
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+
+
+                    }else{
+
+                        Moves container = createContainer(new Square(x,y));
+
+                        try {
+                            getController().getNetInterface().sendMoves(container, getClient().getServerSocket());
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+
+                        playingBuilder = null;
+                        moves1 = null;
+                        moves2 = null;
+
                     }
-                };
 
-                worker.execute();
 
+                    for (int i = 0; i < Board.BOARDSIZEX; i++) {
+                        for (int j = 0; j < Board.BOARDSIZEY; j++) {
+                            squareList[i][j].setBorder(BASICBORDER);
+                        }
+                    }
+
+
+                    SwingWorker worker = new SwingWorker() {
+                        @Override
+                        protected Object doInBackground() throws Exception {
+                            if (setup) {
+                                try {
+                                    getController().getNetInterface().getMatchSetup(getClient().getServerSocket(), getController());
+                                } catch (IOException | InterruptedException | InvocationTargetException ioException) {
+                                    ioException.printStackTrace();
+                                }
+                            } else {
+                                try {
+                                    getController().play();
+                                } catch (IOException | InvocationTargetException | InterruptedException ioException) {
+                                    ioException.printStackTrace();
+                                }
+                            }
+                            return null;
+                        }
+                    };
+
+                    worker.execute();
+
+                }
 
 
             }
 
+
         }
+
     }
+
+
+
 
 
 
@@ -235,8 +320,9 @@ public class MainFrame extends JFrame {
 
     public void setPlayerCard(String name){ this.playerCard = name;}
 
+
     /** creates a new MainFrame */
-    public MainFrame(Client client) {
+    public MainFrame() {
 
         super("SANTORINI");
 
@@ -245,7 +331,7 @@ public class MainFrame extends JFrame {
 
         this.stillPlaying = true;
 
-        this.client = client;
+
         JLayeredPane pane = getLayeredPane();
 
         setResizable(false);
@@ -262,9 +348,6 @@ public class MainFrame extends JFrame {
 
 
         JPanel glass = new JPanel(new GridLayout(5,5));
-
-       //glass.addMouseListener(ma);
-       //glass.addMouseMotionListener(ma);
 
         squareList = new SquareButton[Board.BOARDSIZEX][Board.BOARDSIZEY];
 
@@ -290,8 +373,6 @@ public class MainFrame extends JFrame {
         JPanel controlPanel = new JPanel();
         controlPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         add(controlPanel, BorderLayout.SOUTH);
-        //pack();
-
 
 
         JButton undoButton = new JButton("Undo");
@@ -318,20 +399,9 @@ public class MainFrame extends JFrame {
 
 
 
-/*
-        displayCard();
-        JPanel piecePanel = new JPanel();
-        piecePanel.add(playerCard);
-        add(piecePanel, BorderLayout.EAST);
-*/
         pack();
         setLocationRelativeTo(null);
 
-
-       // prova1();
-       // tryMethod();
-
-        //tryMethod2();
 
     }
 
@@ -367,12 +437,6 @@ public class MainFrame extends JFrame {
     }
 
 
-    public void prova1(){
-        //squareList[0][1].setBorder(WHITEBORDER);
-        squareList[1][2].setBorder(WHITEBORDER);
-        squareList[2][2].setBorder(WHITEBORDER);
-        squareList[3][2].setBorder(WHITEBORDER);
-    }
 
     /** obtains the icons representing the pieces and saves them inside attribute pieces */
     public void createPieces() {
@@ -426,52 +490,11 @@ public class MainFrame extends JFrame {
     }
 
 
-    //metodo di prova
-    public void tryMethod(){
 
 
+    public void paintPossibleSquares(ArrayList<Square> list){
 
-        squareList[1][2].setIcon((new ImageIcon(blocks.get(1))));
-        squareList[1][2].setDisabledIcon((new ImageIcon(blocks.get(1))));
-
-        squareList[2][2].setIcon((new ImageIcon(blocks.get(2))));
-        squareList[2][2].setDisabledIcon((new ImageIcon(blocks.get(2))));
-
-        squareList[3][2].setIcon((new ImageIcon(blocks.get(3))));
-        squareList[3][2].setDisabledIcon((new ImageIcon(blocks.get(3))));
-
-        JLabel label;
-        int num = 0;
-
-        for(int i=0 ; i<5; i++){
-            label = new JLabel(new ImageIcon(pieces.get(i)));
-            //label.addMouseListener(listener);
-           // label.setTransferHandler(new TransferHandler("icon"));  //QUI
-            squareList[i][2].add(label);
-            label.setAlignmentX((float) 0.5);
-           // pack();
-        }
-
-        label = new JLabel(new ImageIcon(pieces.get(5)));
-       // label.addMouseListener(listener);
-        //label.setTransferHandler(new TransferHandler("icon"));  //QUI
-        squareList[0][3].add(label);
-        label.setAlignmentX((float) 0.5);
-
-        squareList[0][1].setIcon(new ImageIcon(blocks.get(3)));
-        squareList[0][1].setDisabledIcon(new ImageIcon(blocks.get(3)));
-        label = new JLabel(new ImageIcon(blocks.get(0)));
-        squareList[0][1].add(label);
-        label.setAlignmentX((float) 0.5);
-
-
-
-    }
-
-
-    public void placeBuilder(ArrayList<Square> freeSquares){
-
-        for(Square s : freeSquares){
+        for(Square s : list){
             int x = s.x;
             int y = s.y;
             squareList[x][y].setBorder(YELLOWBORDER);
@@ -497,31 +520,22 @@ public class MainFrame extends JFrame {
     }
 
 
-    public void updateBoard(Square square){
-
-
-        SwingWorker worker =new SwingWorker() {
-            @Override
-            protected Object doInBackground() throws Exception {
-                if(setup){
-                    getController().getNetInterface().getMatchSetup(getClient().getServerSocket(), getController());
-                }else
-                    if(stillPlaying)    //TODO else?
-                        getController().play();
-                return null;
-            }
-        };
-
-        worker.execute();
+    public void updateBoard(Square square) throws IOException, InvocationTargetException, InterruptedException {
 
         int a = square.x;
         int b = square.y;
         squareList[a][b].setSquare(square);
         repaintSquare(squareList[a][b]);
 
+
+        if(setup){
+            getController().getNetInterface().getMatchSetup(getClient().getServerSocket(), getController());
+        }else
+            getController().play();
+
     }
 
-    public void updateBoard(Square firstSquare, Square secondSquare){
+    public void updateBoard(Square firstSquare, Square secondSquare) throws InterruptedException, IOException, InvocationTargetException {
 
         int a = firstSquare.x;
         int b = firstSquare.y;
@@ -530,22 +544,14 @@ public class MainFrame extends JFrame {
 
         a = secondSquare.x;
         b = secondSquare.y;
-        squareList[a][b].setSquare(firstSquare);
+        squareList[a][b].setSquare(secondSquare);
         repaintSquare(squareList[a][b]);
 
 
-        SwingWorker worker =new SwingWorker() {
-            @Override
-            protected Object doInBackground() throws Exception {
-                if(setup){
-                    getController().getNetInterface().getMatchSetup(getClient().getServerSocket(), getController());
-                }else
-                    getController().getNetInterface().getMoves(getClient().getServerSocket());
-                return null;
-            }
-        };
-
-        worker.execute();
+        if(setup){
+            getController().getNetInterface().getMatchSetup(getClient().getServerSocket(), getController());
+        }else
+            getController().play();
 
     }
 
@@ -588,11 +594,21 @@ public class MainFrame extends JFrame {
             button.add(label);   //TODO sostituirà con quello precedente?
             label.setAlignmentX((float) 0.5);
 
-            revalidate();
-            repaint();
 
 
         }
+
+
+        SwingWorker worker = new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                revalidate();
+                repaint();
+                return null;
+            }
+        };
+
+        worker.execute();
 
 
     }
@@ -632,16 +648,22 @@ public class MainFrame extends JFrame {
             Square square = builder1.getPosition();
             int a = square.x;
             int b = square.y;
-            squareList[a][b] = builder1Button;
+            builder1Button = squareList[a][b];
+            builder1Button.setEnabled(true);
+            builder1Button.addActionListener(new SquareListener());
+            builder1Button.setBorder(YELLOWBORDER);
         }else
             builder1Button = null;
 
-        Builder builder2 = moves.getBuilder1();
+        Builder builder2 = moves.getBuilder2();
         if(builder2 != null){
             Square square = builder2.getPosition();
             int a = square.x;
             int b = square.y;
-            squareList[a][b] = builder2Button;
+            builder2Button = squareList[a][b];
+            builder2Button.setEnabled(true);
+            builder2Button.addActionListener(new SquareListener());
+            builder2Button.setBorder(YELLOWBORDER);
         }else
             builder2Button = null;
 
@@ -649,14 +671,28 @@ public class MainFrame extends JFrame {
         moves1 = moves.getMoves1();
         moves2 = moves.getMoves2();
 
-        if(builder1Button != null)
-            builder1Button.setBorder(YELLOWBORDER);
-
-        if(builder2Button != null)
-            builder2Button.setBorder(YELLOWBORDER);
-
+        part1 = true;
         revalidate();
         repaint();
+
+    }
+
+
+    public Moves createContainer(Square move){
+
+        Moves container = new Moves(null, null, null, null, false, false);
+        container.setBuilder1(playingBuilder);
+
+        ArrayList<Square> chosen = new ArrayList<>();
+        chosen.add(move);
+
+        container.setMoves1(chosen);
+
+        container.setIsDome(isDome);
+
+        container.setFemale(female);
+
+        return container;
 
     }
 

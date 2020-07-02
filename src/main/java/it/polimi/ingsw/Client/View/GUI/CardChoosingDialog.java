@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Client.View.GUI;
 
-import it.polimi.ingsw.Client.GUIClientController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -46,13 +45,13 @@ public class CardChoosingDialog extends JDialog {
     /** the list of the buttons inside the window */
     private ArrayList<JButton> buttonList = new ArrayList<JButton>();
     /** the label indicating an error */
-    private JLabel errorLabel = new JLabel("Errore: Non hai ancora scelto abbastanza carte.");
+    private JLabel errorLabel = new JLabel("Error: You haven't picked enough cards yet.");
 
-
+    /** the number of players that will play the game */
     private int numberOfPlayers;
 
 
-    private JTextArea textField;
+    private JTextArea title;
 
 
     /** creates a new cardChoosingDialog
@@ -82,14 +81,14 @@ public class CardChoosingDialog extends JDialog {
         mainPanel.setSize(this.getSize());
 
 
-        textField = new JTextArea();
-        textField.setOpaque(false);
-        textField.setEditable(false);
-        textField.setFont(new Font("Diogenes", Font.BOLD, 16));
+        title = new JTextArea();
+        title.setOpaque(false);
+        title.setEditable(false);
+        title.setFont(new Font("Diogenes", Font.BOLD, 16));
 
         JPanel titlePanel = new JPanel();
         titlePanel.setOpaque(false);
-        titlePanel.add(textField);
+        titlePanel.add(title);
         mainPanel.add(titlePanel);
 
         cardPanel = new JPanel(new GridLayout(2,7));
@@ -277,7 +276,7 @@ public class CardChoosingDialog extends JDialog {
 
     public void setNumberOfPlayers(){
         numberOfPlayers = frame.getNumberOfPlayers();
-        textField.setText("SCEGLI "+ numberOfPlayers + " CARTE");
+        title.setText("CHOOSE "+ numberOfPlayers + " CARDS");
     }
 
 

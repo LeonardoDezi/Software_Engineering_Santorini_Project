@@ -42,15 +42,11 @@ public class CardPickingDialog extends JDialog {
     /** the name of the file containing the  button icon */
     protected static final String UNDOBUTTONNAME = new String("Annulla.png");
 
-    /** the number of the card selected */
-    private int chosenCard;
-    /** the list of the buttons inside the window */  //TODO modifica javadoc
+
+    /** the button of the card chosen by the player */
     private JButton chosenButton = null;
     /** the label indicating an error */
-    private JLabel errorLabel = new JLabel("Errore: Non hai ancora scelto abbastanza carte.");
-
-
-    private boolean blocked = true;
+    private JLabel errorLabel = new JLabel("Error: You haven't picked enough cards yet.");
 
 
 
@@ -83,7 +79,7 @@ public class CardPickingDialog extends JDialog {
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
         mainPanel.setSize(this.getSize());
 
-        JLabel label = new JLabel(("SCEGLI UNA CARTA"));
+        JLabel label = new JLabel(("CHOOSE A CARD"));
         label.setFont(new Font("Papyrus", Font.BOLD, 16));
         label.setForeground(Color.BLACK);
         JPanel titlePanel = new JPanel();
@@ -260,22 +256,6 @@ public class CardPickingDialog extends JDialog {
         }
     }
 
-    public static void main(String[] args) {
-        MainFrame frame = new MainFrame(new Client("ciao", 3));
-        frame.getCardList().add("Selene");
-        frame.getCardList().add("Selene");
-        frame.getCardList().add("Artemis");
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                frame.cardPickingDialog.displayCards();
-                //frame.cardPickingDialog.setVisible(true);
-            }
-        });
-
-        //frame.waitingDialog.setVisible(true);
-
-    }
 
 }

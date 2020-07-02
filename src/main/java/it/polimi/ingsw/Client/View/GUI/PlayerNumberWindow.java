@@ -24,24 +24,18 @@ public class PlayerNumberWindow extends JFrame {
     JRadioButton twoPlayersButton = new JRadioButton("2");
     /** the radioButton representing the "3" option */
     JRadioButton threePlayersButton = new JRadioButton("3");
-
-
+    /** the mainFrame where the game will be played */
     private MainFrame mainFrame;
-
+    /** the controller of the GUI */
     private GUIClientController controller;
-
-
-
-
+    /** the number of player that play in the game */
     private static String numberOfPlayers;
 
 
 
-    public static String getNumberOfPlayers(){return numberOfPlayers;}
-
 
     /** the actionListener assigned to the button. When the button is pressed, it closes
-     * the startDialog, sends the number of players to the server and creates a waitingDialog */
+     * the PlayerNumberWindow, sends the number of players to the server and creates a waitingDialog */
     private class ConfirmListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -123,7 +117,7 @@ public class PlayerNumberWindow extends JFrame {
         mainPanel.setSize(300, 300);
         mainPanel.setOpaque(false);
         mainPanel.setLayout(new BorderLayout(50, 50));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 30, 10));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(30, 10, 30, 10));
 
         twoPlayersButton.setMnemonic(KeyEvent.VK_2);
         threePlayersButton.setMnemonic(KeyEvent.VK_3);
@@ -146,9 +140,16 @@ public class PlayerNumberWindow extends JFrame {
         radioPanel.add(threePlayersButton);
         mainPanel.add(radioPanel, BorderLayout.CENTER);
 
-        JLabel title = new JLabel(" Scegli il numero di giocatori della partita");
-        title.setFont(new Font("Diogenes", Font.BOLD, 13));
-        mainPanel.add(title, BorderLayout.PAGE_START);
+
+        JTextArea textField = new JTextArea();
+        textField.setOpaque(false);
+        textField.setEditable(false);
+        textField.setLineWrap(true);
+        textField.setWrapStyleWord(true);
+        textField.setFont(new Font("Diogenes", Font.BOLD, 14));
+        textField.setText("Choose the number of players of the game");
+        mainPanel.add(textField, BorderLayout.PAGE_START);
+
 
 
         img = IntroFrame.getImage(cl, BUTTONNAME);
@@ -163,23 +164,13 @@ public class PlayerNumberWindow extends JFrame {
         confirmButton.addActionListener(new ConfirmListener());
         mainPanel.add(confirmButton, PAGE_END);
 
-
-
-    /*
-        JButton confirmButton = new JButton("Go");
-        confirmButton.addActionListener(new ConfirmListener());
-        mainPanel.add(confirmButton, BorderLayout.PAGE_END);
-    */
         pane.add(mainPanel, Integer.valueOf(2));
         pack();
         setLocationRelativeTo(null);
-        //setVisible(true);
 
 
     }
 
-    public static void main(String[] args) {
-        new PlayerNumberWindow(null);
-    }
+    public static String getNumberOfPlayers(){return numberOfPlayers;}
 
 }
