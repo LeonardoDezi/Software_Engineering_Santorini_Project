@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Server.Controller;
 
+import it.polimi.ingsw.Parser.Sender;
 import it.polimi.ingsw.Server.Client;
 import it.polimi.ingsw.Server.Model.*;
 import it.polimi.ingsw.Server.VirtualView.NetInterface;
@@ -23,6 +24,9 @@ public class GameInitializer implements Runnable {
     private Integer clientID;
     private NetInterface netInterface;
     private Game game;
+    public static final String COLOUR1 = "red";
+    public static final String COLOUR2 = "blue";
+    public static final String COLOUR3 = "white";
 
     public GameInitializer(Client client) throws IOException {
         this.firstPlayer = client;
@@ -72,6 +76,13 @@ public class GameInitializer implements Runnable {
         int playersInGame = game.getPlayerList().size();
         if (playersInGame == 1) {
             Player player = new Player(client.getUsername(), COLOUR2, game, client.clientID);
+            for (int i=0; i<game.getPlayerList().size(); i++){
+                if (player.playerID.equals(game.getPlayerList().get(i).playerID)){
+                    Sender.send("89@",client.getSocket());
+                    return 0;
+                }
+            }
+
             outcome = game.addPlayer(player);
             if (outcome == 1) {
                 netInterface.addClient(client);

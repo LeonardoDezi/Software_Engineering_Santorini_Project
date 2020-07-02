@@ -5,19 +5,39 @@ import it.polimi.ingsw.Parser.Sender;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * represents the client that connects to the game
+ */
 public class Client {
 
     private int clientID;
+
+    /** represents the players username */
     private static String username;
+
+    /** represents the server ip to which the client connects */
     private String ip;
+
+    /** represents the server port to which the client connects */
     private int port;
+
+    /** represents the client own socket that interfaces with the server */
     private Socket serverSocket;
 
+    /**
+     * create and initialize the client
+     * @param ip is the server ip
+     * @param port is the server port
+     */
     public Client(String ip, int port) {
         this.ip = ip;
         this.port = port;
     }
 
+    /**
+     * starts the client application
+     * @throws IOException exception
+     */
     public void startClient() throws IOException {
 
         this.serverSocket = new Socket();
@@ -53,11 +73,18 @@ public class Client {
         }
     }
 
-
+    /**
+     * gives back the client socket linked to the server
+     * @return serverSocket
+     */
     public Socket getServerSocket(){
         return this.serverSocket;
     }
 
+    /**
+     * ask to the client its username
+     * @return username
+     */
     public static String getUsername(){
 
         try{

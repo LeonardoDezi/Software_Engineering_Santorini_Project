@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Client.View.CLI;
 
+/**
+ * represents the colours displayed by the Cli.
+ */
 public class Colour {
     public static final String ANSI_RED = "\u001b[31m";
     public static final String ANSI_GREEN = "\u001b[32m";

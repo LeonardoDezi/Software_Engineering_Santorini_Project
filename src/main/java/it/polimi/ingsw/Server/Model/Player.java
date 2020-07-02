@@ -89,11 +89,11 @@ public class Player {
      * @return the worker requested
      * @throws IndexOutOfBoundsException if there is no worker saved in builders, at the index represented by builderId.
      */
-    //TODO magari modificarlo per IndexOutOfBounds e non ARRAYIndexOuTOfBounds
+
     public Builder getBuilder(int BuilderId) throws ArrayIndexOutOfBoundsException{
 
         if(BuilderId >= builders.size())
-            throw new ArrayIndexOutOfBoundsException();
+            return null;
         else
             return builders.get(BuilderId);
 

@@ -2,8 +2,15 @@ package it.polimi.ingsw.Client.View.CLI;
 
 import it.polimi.ingsw.Client.View.ClientBoard;
 
+/**
+ * represents the Board for a command line interface.
+ */
 public class CliBoard {
 
+    /**
+     * prints all the CliBoard
+     * @param clientBoard is the Board contained by the Client
+     */
     public static void drawBoard(ClientBoard clientBoard){
 
         String firstLine = "╔════╤════╤════╤════╤════╗";
@@ -18,7 +25,7 @@ public class CliBoard {
         for(int i=0; i<5; i++){
             System.out.print(startLine);
             for(int j=0; j<5; j++){
-                System.out.print(ClientBoard.getCell(i,j).drawCell(i,j) + Colour.RESET);
+                System.out.print(clientBoard.getCell(i,j).drawCell(i,j) + Colour.RESET);
                 if(j != 4) {
                     System.out.print(midLine);
                 }

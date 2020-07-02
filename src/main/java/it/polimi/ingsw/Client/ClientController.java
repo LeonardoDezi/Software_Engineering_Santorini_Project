@@ -14,20 +14,47 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/**
+ * represents the controller in the client side
+ */
 public class ClientController {
+
+    /** represents the netInterface on the client side linked to the controller */
     private NetInterface netInterface = new NetInterface(this);
+
+    /** represent the client to which the controller is linked */
     private Client client;
+
+    /** represent the boolean that tells if the client is still in the game or not */
     private Boolean stillPlaying;
+
+    /** represents the boolean that tells if the client is in the setup phase or not */
     public Boolean setup;
+
+    /** represents the possible cards available to the player */
     public ArrayList<Card> possibleCards = new ArrayList<Card>();
+
+    /** represents the number of players in the game */
     private Integer numberOfPlayers;
+
+    /** represents the board on the client side */
     private ClientBoard clientBoard = new ClientBoard();
+
+    /** represents the square on which the builder is placed */
     private Square builderSquare;
+
+    /** represents all the possible moves available to a builder */
     private ArrayList<Square> possibleMoves;
+
+    /** represents the boolean that tells if the player is building a dome */
     private boolean dome;
+
+
     private HashMap<Integer,String > messages;
 
+    /**
+     * create and initialize the client controller
+     */
     public ClientController(Client client) {
         this.client = client;
         stillPlaying = true;
@@ -81,6 +108,10 @@ public class ClientController {
 
     }
 
+    /**
+     * prints all the card available to the player
+     * @param cards is the list of all the cards
+     */
     public void printCards(String[] cards){
         Card card;
         for (int i = 0; i < cards.length; i++) {
@@ -125,6 +156,12 @@ public class ClientController {
         }
     }
 
+    /**
+     * special method for selene card effect
+     * @param moves contains the ArrayList of all the possible moves
+     * @return the move made by the player with selene
+     * @throws IOException exception for getPosition method
+     */
     public Moves getSpecialBuild(Moves moves) throws IOException {
         highlightSquares(moves);
 
@@ -173,6 +210,10 @@ public class ClientController {
         return new Moves(returnBuilder(builderSquare,moves),selected,null,null,dome,false);
     }
 
+    /**
+     * shows to the player all the possible moves at the beginning of the turn by both pawns
+     * @param moves contains the ArrayList of the possible moves for both pawns
+     */
     public void highlightSquares(Moves moves) {
         if(moves.getMoves1() != null){
         for (int i=0; i<moves.getMoves1().size(); i++){
@@ -261,6 +302,7 @@ public class ClientController {
     }
 
     /**
+     * prints that the player has lost
      * sets the stillPlaying flag to false to end the game.
      */
     public void lost(){
@@ -268,11 +310,19 @@ public class ClientController {
         System.out.println("Sorry, you lost.");
     }
 
+    /**
+     * prints that the player has been disconnected
+     * sets the stillPlaying flag to false to end the game.
+     */
     public void disconnected(){
         this.stillPlaying=false;
         System.out.println("You have been disconnected");
     }
 
+    /**
+     * prints that the player has won
+     * sets the stillPlaying flag to false to end the game.
+     */
     public void win(){
         this.stillPlaying=false;
         System.out.println("Congratulations! You won!");
@@ -310,6 +360,12 @@ public class ClientController {
         return chosenCards;
     }
 
+    /**
+     * checks that the card chosen isn't already been chosen by another player
+     * @param choosenCards are all the cards chosen by the other players
+     * @param pick is the number of the card chosen by the current player
+     * @return the boolean false if the card is already chosen, false otherwise
+     */
     public boolean checkCard(ArrayList<Integer> choosenCards, int pick){
         for(int i= 0; i<choosenCards.size(); i++){
             if (choosenCards.get(i) == pick){
@@ -361,6 +417,11 @@ public class ClientController {
         netInterface.sendFirstPlayer(chosenOne,client.getServerSocket());
     }
 
+    /**
+     * shows to the dealer of the players
+     * @param names are the players names
+     * @throws IOException exception for chooseBeginner method
+     */
     public void printPlayersInGame(String[] names) throws IOException {
         ArrayList<String> playerIDs = new ArrayList<String>();
         System.out.println("Pick first player");
@@ -391,7 +452,13 @@ public class ClientController {
         }
     }
 
-    public boolean checkSquare(ArrayList<Square> freeSquares, Square square) throws IOException {
+    /**
+     * checks that the move is possible
+     * @param freeSquares is the ArrayList of all the unoccupied squares
+     * @param square is the square chosen by the player
+     * @return boolean true if the move is possible, false otherwise
+     */
+    public boolean checkSquare(ArrayList<Square> freeSquares, Square square)  {
         for (int i=0; i<freeSquares.size(); i++){
             if( square.x == freeSquares.get(i).x && square.y == freeSquares.get(i).y){
                return true;
@@ -400,6 +467,11 @@ public class ClientController {
         return false;
     }
 
+    /**
+     * updates the board for all the players when two squares are changed
+     * @param firstSquare is the first changed square
+     * @param secondSquare is the second changed square
+     */
     public void updateBoard(Square firstSquare, Square secondSquare) {
         for (int i = 0; i < 5; i++){
             for (int j = 0; j < 5; j++){
@@ -427,6 +499,10 @@ public class ClientController {
         CliBoard.drawBoard(clientBoard);
     }
 
+    /**
+     * updates the board for all the players when just a square is changed
+     * @param firstSquare the square that has changed
+     */
     public void updateBoard(Square firstSquare) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -443,6 +519,9 @@ public class ClientController {
         CliBoard.drawBoard(clientBoard);
     }
 
+    /**
+     * clears the client board of the colored possible squares back to white
+     */
     private void resetBoard(){
         for (int i=0; i<5; i++){
             for (int j=0; j<5; j++){
@@ -451,6 +530,12 @@ public class ClientController {
         }
     }
 
+    /**
+     * get the player inputs to where place the builders both in placement, move and build phases
+     * and checks that the move is within the board limits
+     * @return the chosen square to move
+     * @throws IOException exception if the input is not formatted correct
+     */
     public Square getPosition() throws IOException {
         int x = -1;
         int y = -1;
@@ -478,6 +563,12 @@ public class ClientController {
         return new Square(x,y);
     }
 
+    /**
+     * highlights the squares of a single pawn
+     * @param moves contains the ArrayList of the possible moves for the pawn
+     * @param builderSquare is the square where the builder is
+     * @return ArrayList of all the possible moves
+     */
     public ArrayList<Square> chosenBuilder(Moves moves, Square builderSquare){
         if (moves.getMoves1() != null){
             if (builderSquare.x == moves.getBuilder1().getPosition().x && builderSquare.y == moves.getBuilder1().getPosition().y) {
@@ -511,6 +602,12 @@ public class ClientController {
         return null;
     }
 
+    /**
+     * search in the array if the move is possible to perform
+     * @param possibleMoves is the ArrayList of squares of all the possible moves
+     * @param chosen is the square chosen to perform the build
+     * @return boolean, true if the move is possible, false otherwise
+     */
     public boolean searchArray(ArrayList<Square> possibleMoves, Square chosen){
         for(int i=0; i<possibleMoves.size(); i++){
             if(chosen.x == possibleMoves.get(i).x && chosen.y == possibleMoves.get(i).y){
@@ -520,6 +617,12 @@ public class ClientController {
         return false;
     }
 
+    /**
+     * gives back the builder on the given square
+     * @param builderSquare is the square where the builder is placed
+     * @param moves are the moves that are possible to perform
+     * @return builder on the square if it is on it, null otherwise
+     */
     public Builder returnBuilder(Square builderSquare, Moves moves){
         if(builderSquare.x == moves.getBuilder1().getPosition().x && builderSquare.y == moves.getBuilder1().getPosition().y){
             return moves.getBuilder1();
@@ -532,6 +635,11 @@ public class ClientController {
 
     }
 
+    /**
+     * gives back if the player wants to perform a special move
+     * @return the decision via boolean parameter, true if yes, false otherwise
+     * @throws IOException exception for the send method
+     */
     public boolean returnBoolean() throws IOException{
 
         String flag;
@@ -546,6 +654,11 @@ public class ClientController {
 
     }
 
+    /**
+     * asks the dealer which player has to begin the game
+     * @return the player number
+     * @throws IOException exception if the input format is not correct
+     */
     public String askNumberOfPlayers() throws IOException {
         System.out.println("Select number of players\n");
 
@@ -566,4 +679,11 @@ public class ClientController {
         return Integer.toString(number);
     }
 
+    /**
+     *
+     */
+    public void wrongUserName() {
+        System.out.println("Username already taken, please insert another one");
+        this.disconnected();
+    }
 }

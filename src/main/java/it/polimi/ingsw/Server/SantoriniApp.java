@@ -5,10 +5,7 @@ import it.polimi.ingsw.Client.Client;
 import java.io.*;
 
 public class SantoriniApp {
-    //TODO spostare
-    public static String COLOUR1 = "red";
-    public static String COLOUR2 = "blue";
-    public static String COLOUR3 = "white";
+
     public static void main( String[] args ) throws IOException {
 
         if (args.length > 0) {
@@ -41,7 +38,18 @@ public class SantoriniApp {
 
     public static void runCli(){
         System.out.println("starting cli");
-        Client client = new Client("localhost", 8080);
+        System.out.println("insert Server ip or url");
+
+        String ip = new String();
+        try{
+            BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+            ip = bufferRead.readLine();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        Client client = new Client(ip, 8080);
         try {
             client.startClient();
         }catch (IOException e){

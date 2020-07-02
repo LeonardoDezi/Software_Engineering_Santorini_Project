@@ -68,7 +68,7 @@ public class Lobby extends Observable {
                     break;
                 }
                 if(j==3){
-                    System.out.print("Problems in match creation, please reset client, lobby.update");
+                    System.out.print("Problems in match creation, please reset client.\n");
                     client.getSocket().close();
                     return;
                 }

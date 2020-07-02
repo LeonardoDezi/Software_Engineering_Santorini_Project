@@ -23,8 +23,7 @@ private ArrayList<GameInitializer> gameInitializers = new ArrayList<GameInitiali
         else {
             Integer outcome = gameInitializers.get(0).addPlayer(newClient);
             if(outcome == 0){
-                gameInitializers.remove(0);
-                System.out.print("Problem in adding player");
+                System.out.print("Problem in adding player\n");
                 return 0;
             }
         }

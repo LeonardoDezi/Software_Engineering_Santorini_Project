@@ -50,12 +50,7 @@ public class TurnManager {
 
                 builder1 = player.getBuilder(0);
 
-                try {
-                    builder2 = player.getBuilder(1);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    builder2 = null;
-                }
-
+                builder2 = player.getBuilder(1);
 
                 Context context = new Context(netInterface);
                 context.setPhase(new SpecialPhase1(game, context, player, builder1, builder2));

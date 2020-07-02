@@ -10,12 +10,11 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.SocketException;
 
+import static java.lang.Thread.sleep;
+
 public class Sender {
     public static void send(String m, Socket socket) throws IOException {
         try {
-            if(m==null){
-                //TODO send -1
-            }
 
             OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
             Message message = new Message();
@@ -23,9 +22,10 @@ public class Sender {
             Gson gson = new GsonBuilder().serializeNulls().create();
             String string = gson.toJson(message);
             JsonObject jsonObject = JsonParser.parseString(string).getAsJsonObject();
+            sleep(200);
             writer.write(jsonObject.toString() + "\n");
             writer.flush();
-        } catch (SocketException e){
+        } catch (SocketException | InterruptedException e){
            // System.out.println("Error sender");
         }
     }
