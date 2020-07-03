@@ -2,6 +2,7 @@ package it.polimi.ingsw.Server.Model;
 
 import it.polimi.ingsw.Server.Controller.Context;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +62,13 @@ public class MovementPhase extends Phase {
 
         if (!(moves1.isEmpty()) || !(moves2.isEmpty())) {
 
-            Envelope received = context.getNetInterface().getBothMovementMove(moves1, builder1, moves2, builder2, player,false);
+            Envelope received;
+
+            if(builder2 != null)
+                received = context.getNetInterface().getBothMovementMove(moves1, builder1, moves2, builder2, player,false);
+            else
+                received = context.getNetInterface().getMovementMove(moves1, builder1, player, false);
+
             Square lastPosition =new Square(0,0);
 
             if (received.getMove().x == 20 ){

@@ -34,9 +34,7 @@ public class GUINetInterface {
      * @return the move chosen by the player depending on the phase of the game
      */
     public Moves getMoves(Socket socket) throws IOException, InvocationTargetException, InterruptedException {
-        System.out.println("aperto");
         String availableMoves = Receiver.receive(socket);
-        System.out.println("ciao");
         String[] values = availableMoves.split("@");
 
         if (moves.getUpdate()){

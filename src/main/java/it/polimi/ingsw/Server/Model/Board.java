@@ -83,12 +83,11 @@ public class Board {
         if(point != null) {
 
             if (point.getLevel() == 3) {
-                isDome = true;
+                point.setValue(2);
                 completedTowers++;
-            }
-
-            if (isDome) {
+            } else if(isDome){
                 point.setValue(2);   // 2 = cupola
+                point.setLevel(point.getLevel() - 1);
             }
 
             point.setLevel(point.getLevel() + 1);

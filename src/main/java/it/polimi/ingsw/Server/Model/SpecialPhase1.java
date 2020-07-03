@@ -178,8 +178,10 @@ public class SpecialPhase1 extends Phase {
             basicRules.setPreviousMaxHeight( basicRules.getMaxHeight());   //necessario in quanto maxHeight potrebbe essere != 1
             basicRules.setMaxHeight(0);
 
-            if(!(playingBuilder.equals(builder1)))     //la fase successiva deve necessariamente essere eseguita dal worker che ha fatto la mossa speciale
-                builder1 = null;
+            if(!(playingBuilder.equals(builder1))) {     //la fase successiva deve necessariamente essere eseguita dal worker che ha fatto la mossa speciale
+                builder1 = builder2;
+                builder2 = null;
+            }
             else
                 builder2 = null;
 
@@ -210,10 +212,15 @@ public class SpecialPhase1 extends Phase {
             e.printStackTrace();
         }
 
-        if(!(playingBuilder.equals(builder1)))     //la fase successiva deve necessariamente essere eseguita dal worker che ha fatto la mossa speciale
-            builder1 = null;
+
+        if(!(playingBuilder.equals(builder1))) {     //la fase successiva deve necessariamente essere eseguita dal worker che ha fatto la mossa speciale
+            builder1 = builder2;
+            builder2 = null;
+        }
         else
             builder2 = null;
+
+
 
     }
 

@@ -3,6 +3,7 @@ import it.polimi.ingsw.Client.Client;
 import it.polimi.ingsw.Client.GUIClientController;
 import it.polimi.ingsw.Client.Moves;
 import it.polimi.ingsw.Client.NetworkHandler.GUINetInterface;
+import it.polimi.ingsw.Parser.Sender;
 import it.polimi.ingsw.Server.Model.Board;
 import it.polimi.ingsw.Server.Model.Builder;
 import it.polimi.ingsw.Server.Model.Envelope;
@@ -42,13 +43,13 @@ public class MainFrame extends JFrame {
     /** the list of the images representing the pieces of the game */
     private final ArrayList<Image> pieces = new ArrayList<>();
 
-
+    /** the name of the player's card */
     private String playerCard;
 
 
     /** represents the border used to indicate that the button can be selected */  //TODO da cancellare
-    private final static Border WHITEBORDER = new LineBorder(Color.WHITE, 3);
-
+/*    private final static Border WHITEBORDER = new LineBorder(Color.WHITE, 3);
+*/
     /** represents the border used to indicate that the button has been selected */
     private final static Border REDBORDER = new LineBorder(Color.RED, 3);
 
@@ -56,7 +57,12 @@ public class MainFrame extends JFrame {
     /** represents the border used to indicate that the button can be selected */
     private final static Border YELLOWBORDER = new LineBorder(Color.YELLOW, 3);
 
-    private final static Border BASICBORDER = new LineBorder(new Color(0,0,0,0), 3);
+
+
+    /** represents the basic border of the control buttons */
+    private final static Border BASICBORDER = LineBorder.createBlackLineBorder();
+    /** represents the basic border of the board buttons */
+    private final static Border EMPTYBORDER = new LineBorder(new Color(0,0,0,0), 3);
 
 
     /** the x coordinate of the squareButton selected */
@@ -80,8 +86,9 @@ public class MainFrame extends JFrame {
 
     public FirstPlayerWindow firstPlayerWindow = new FirstPlayerWindow(this);
 
+    /** the number of players that play in the game */
     private int numberOfPlayers;
-
+    /** the hashmap used to translate the card's name into its number */
     private HashMap<String, String> cardMap = new HashMap<>();
 
 
@@ -117,8 +124,8 @@ public class MainFrame extends JFrame {
 
     /** boolean used for the implementation of the Selene card. If true,  */
     private boolean female = false;
-
-    private boolean isDome = false;
+    /** boolean used to indicate that the player wants to build a dome */
+    private boolean buildDome = false;
 
 
     public ArrayList<String> getCardList(){return cardList;}
@@ -154,6 +161,68 @@ public class MainFrame extends JFrame {
     }
 
 
+    /** the actionListener assigned to the square button. When the button is pressed, it sets the buildDome to true, set to false if it has already been done
+     */
+    private class Dome implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+
+            JButton button = (JButton) e.getSource();
+
+            if(button.getBorder().equals(BASICBORDER)) {
+                button.setBorder(REDBORDER);
+                buildDome = true;
+            }else if(button.getBorder().equals((REDBORDER))){
+                button.setBorder(BASICBORDER);
+                buildDome = false;
+            }
+
+
+        }
+    }
+
+
+
+    /** the actionListener assigned to the skip button. When the button is pressed, it communicates that the user wants to skip the specialphase
+     */
+    private class Skip implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+
+            try {
+                Sender.send("0", getClient().getServerSocket());
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
+
+            SwingWorker worker = new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+                    try {
+                        getController().play();
+                    } catch (IOException | InvocationTargetException | InterruptedException ioException) {
+                        ioException.printStackTrace();
+                    }
+                    return null;
+                }
+            };
+
+            worker.execute();
+
+            skipButton.setEnabled(false);
+            skipButton.setVisible(false);
+
+
+            for (int i = 0; i < Board.BOARDSIZEX; i++) {            //returns all the buttons to basic border
+                for (int j = 0; j < Board.BOARDSIZEY; j++) {
+                    squareList[i][j].setBorder(EMPTYBORDER);
+                }
+            }
+
+        }
+    }
+
 
 
 
@@ -173,13 +242,13 @@ public class MainFrame extends JFrame {
                         builder2Button.setBorder(YELLOWBORDER);
                     }
                     for(Square s : moves1)
-                        squareList[s.x][s.y].setBorder(BASICBORDER);
+                        squareList[s.x][s.y].setBorder(EMPTYBORDER);
                     part1 = true;
                     playingBuilder = null;
                 } else if (squareList[x][y].equals(builder2Button)) {
                     builder1Button.setBorder(YELLOWBORDER);
                     for(Square s: moves2)
-                        squareList[s.x][s.y].setBorder(BASICBORDER);
+                        squareList[s.x][s.y].setBorder(EMPTYBORDER);
                     part1 = true;
                     playingBuilder = null;
                 }
@@ -198,30 +267,13 @@ public class MainFrame extends JFrame {
                 }
 
                 for(Square s : moves1)
-                    squareList[s.x][s.y].setBorder(BASICBORDER);
+                    squareList[s.x][s.y].setBorder(EMPTYBORDER);
 
                 if(moves2 != null) {
                     for (Square s : moves2)
-                        squareList[s.x][s.y].setBorder(BASICBORDER);
+                        squareList[s.x][s.y].setBorder(EMPTYBORDER);
                 }
 
-
-                /*
-
-                if (squareList[x][y].equals(builder1Button)) {      // repaints the possible workers
-                    if(builder2Button != null){
-                        builder2Button.setBorder(YELLOWBORDER);
-                    }
-                    for(Square s : moves1)
-                        squareList[s.x][s.y].setBorder(BASICBORDER);
-                    part1 = true;
-                    playingBuilder = null;
-                } else if (squareList[x][y].equals(builder2Button)) {
-                    builder1Button.setBorder(YELLOWBORDER);
-                    for(Square s: moves2)
-                        squareList[s.x][s.y].setBorder(BASICBORDER);
-
-                 */
                 part1 = true;
                 playingBuilder = null;
             }
@@ -244,16 +296,16 @@ public class MainFrame extends JFrame {
                 squareSelected = false;
 
                 if(part1) {                                             //choose possible move
-                    squareList[x][y].setBorder(BASICBORDER);
+                    squareList[x][y].setBorder(EMPTYBORDER);
                     playingBuilder = squareList[x][y].getSquare().getBuilder();
 
                     if(squareList[x][y].equals(builder1Button)){
                         if(builder2Button != null) {
-                            builder2Button.setBorder(BASICBORDER);
+                            builder2Button.setBorder(EMPTYBORDER);
                         }
                         paintPossibleSquares(moves1);
                     }else {
-                        builder1Button.setBorder(BASICBORDER);
+                        builder1Button.setBorder(EMPTYBORDER);
                         paintPossibleSquares(moves2);
                     }
                     part1 = false;
@@ -262,7 +314,7 @@ public class MainFrame extends JFrame {
                 }else {
 
 
-                    if(setup) {
+                    if(setup) {                                   //setup phase
 
                         Square square = new Square(x, y);
                         try {
@@ -272,7 +324,7 @@ public class MainFrame extends JFrame {
                         }
 
 
-                    }else{
+                    }else{                                             //normal phase
 
                         Moves container = createContainer(new Square(x,y));
 
@@ -285,18 +337,28 @@ public class MainFrame extends JFrame {
                         playingBuilder = null;
                         moves1 = null;
                         moves2 = null;
+                        buildDome = false;
+                        female = false;
+                        domeButton.setEnabled(false);
+                        domeButton.setBorder(BASICBORDER);
+                        domeButton.setVisible(false);
+
+                        skipButton.setEnabled(false);
+                        skipButton.setVisible(false);
+
+                        squareSelected = false;
 
                     }
 
 
                     for (int i = 0; i < Board.BOARDSIZEX; i++) {            //returns all the buttons to basic border
                         for (int j = 0; j < Board.BOARDSIZEY; j++) {
-                            squareList[i][j].setBorder(BASICBORDER);
+                            squareList[i][j].setBorder(EMPTYBORDER);
                         }
                     }
 
 
-                    SwingWorker worker = new SwingWorker() {
+                    SwingWorker worker = new SwingWorker() {                             // waits for next step
                         @Override
                         protected Object doInBackground() throws Exception {
                             if (setup) {
@@ -318,7 +380,7 @@ public class MainFrame extends JFrame {
 
                     worker.execute();
 
-                    squareSelected = false;
+
 
                 }
 
@@ -416,23 +478,28 @@ public class MainFrame extends JFrame {
         add(controlPanel, BorderLayout.SOUTH);
 
 
-        JButton undoButton = new JButton("Undo");
-        undoButton.addActionListener(new Undo());
-        controlPanel.add(undoButton, BorderLayout.SOUTH);
-
         JButton confirmButton = new JButton(("Confirm"));
         confirmButton.addActionListener(new Confirm());
         controlPanel.add(confirmButton, BorderLayout.SOUTH);
 
 
+        JButton undoButton = new JButton("Undo");
+        undoButton.addActionListener(new Undo());
+        controlPanel.add(undoButton, BorderLayout.SOUTH);
+
+
         domeButton = new JButton("DOME");
         domeButton.setVisible(false);
+        domeButton.setBorder(BASICBORDER);
+        domeButton.addActionListener(new Dome());
         controlPanel.add(domeButton, BorderLayout.SOUTH);
 
 
         skipButton = new JButton("SKIP");
-        domeButton.setVisible(false);
-        controlPanel.add(domeButton, BorderLayout.SOUTH);
+        skipButton.setVisible(false);
+        //skipButton.setBorder(BASICBORDER);
+        skipButton.addActionListener(new Skip());
+        controlPanel.add(skipButton, BorderLayout.SOUTH);
 
         cardPanel = new JPanel(new BorderLayout());
         cardPanel.setSize(180, 500);
@@ -604,12 +671,14 @@ public class MainFrame extends JFrame {
 
         int level = button.getSquare().getLevel();
 
-        if(level != 4) {
-            if (level == 0) {
-                button.setIcon(null);
-            } else
-                button.setIcon(new ImageIcon(blocks.get(level)));
-        }
+        if(level == 4)
+            level = level - 1;
+
+        if (level == 0) {
+            button.setIcon(null);
+        } else
+            button.setIcon(new ImageIcon(blocks.get(level)));
+
 
         int value = button.getSquare().getValue();
 
@@ -721,19 +790,10 @@ public class MainFrame extends JFrame {
 
     public Moves createContainer(Square move){
 
-        Moves container = new Moves(null, null, null, null, false, false);
-        container.setBuilder1(playingBuilder);
-
         ArrayList<Square> chosen = new ArrayList<>();
         chosen.add(move);
 
-        container.setMoves1(chosen);
-
-        container.setIsDome(isDome);
-
-        container.setFemale(female);
-
-        return container;
+        return  new Moves(playingBuilder, chosen, null, null, buildDome, false);
 
     }
 

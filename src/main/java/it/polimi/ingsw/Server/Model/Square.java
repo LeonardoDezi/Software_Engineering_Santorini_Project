@@ -21,7 +21,8 @@ public class Square {
     /**If the square does not contain a worker, level will represent the number of constructions placed in the square,
      * otherwise it represents the level where the worker is placed.
      * Ground Level = 0, First Level = 1, Second Level = 2, Third Level = 3
-     * We define construction as either a block or a dome
+     * We define construction as a block. Dome is not considered a construction.
+     * However, a complete tower will have level = 4
      */
     private int level;
 
