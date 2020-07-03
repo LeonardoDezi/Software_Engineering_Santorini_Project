@@ -29,6 +29,7 @@ import static it.polimi.ingsw.Server.Controller.GameInitializer.*;
 import static it.polimi.ingsw.Server.Model.Player.SEX1;
 import static it.polimi.ingsw.Server.Model.Player.SEX2;
 import static it.polimi.ingsw.Server.SantoriniApp.*;
+import static java.awt.BorderLayout.CENTER;
 
 /** this class represents the main Frame where the game is played */
 public class MainFrame extends JFrame {
@@ -47,9 +48,6 @@ public class MainFrame extends JFrame {
     private String playerCard;
 
 
-    /** represents the border used to indicate that the button can be selected */  //TODO da cancellare
-/*    private final static Border WHITEBORDER = new LineBorder(Color.WHITE, 3);
-*/
     /** represents the border used to indicate that the button has been selected */
     private final static Border REDBORDER = new LineBorder(Color.RED, 3);
 
@@ -57,7 +55,8 @@ public class MainFrame extends JFrame {
     /** represents the border used to indicate that the button can be selected */
     private final static Border YELLOWBORDER = new LineBorder(Color.YELLOW, 3);
 
-
+    /** represents the image of the player's card */
+    private JLabel cardLabel;
 
     /** represents the basic border of the control buttons */
     private final static Border BASICBORDER = LineBorder.createBlackLineBorder();
@@ -106,6 +105,13 @@ public class MainFrame extends JFrame {
 
     public JButton skipButton;
 
+    public JTextArea messageArea;
+
+     /**
+     * boolean used to manage Selene's behaviour. If true, then the playing worker is male
+     * and the player can choose whether to normally build with the playing worker or
+     * to build a dome with the female one
+     */
     private boolean specialDomeMove = false;
 
 
@@ -122,8 +128,7 @@ public class MainFrame extends JFrame {
 
     private Builder playingBuilder;
 
-    /** boolean used for the implementation of the Selene card. If true,  */
-    private boolean female = false;
+
     /** boolean used to indicate that the player wants to build a dome */
     private boolean buildDome = false;
 
@@ -157,6 +162,8 @@ public class MainFrame extends JFrame {
                 squareSelected = true;
 
             }
+
+
         }
     }
 
@@ -338,7 +345,7 @@ public class MainFrame extends JFrame {
                         moves1 = null;
                         moves2 = null;
                         buildDome = false;
-                        female = false;
+                        specialDomeMove= false;
                         domeButton.setEnabled(false);
                         domeButton.setBorder(BASICBORDER);
                         domeButton.setVisible(false);
@@ -380,7 +387,12 @@ public class MainFrame extends JFrame {
 
                     worker.execute();
 
-
+                    messageArea.setVisible(false);
+                    cardPanel.remove(cardLabel);
+                    revalidate();
+                    repaint();
+                    cardPanel.add(cardLabel, CENTER);
+                    pack();
 
                 }
 
@@ -497,13 +509,22 @@ public class MainFrame extends JFrame {
 
         skipButton = new JButton("SKIP");
         skipButton.setVisible(false);
-        //skipButton.setBorder(BASICBORDER);
         skipButton.addActionListener(new Skip());
         controlPanel.add(skipButton, BorderLayout.SOUTH);
 
         cardPanel = new JPanel(new BorderLayout());
         cardPanel.setSize(180, 500);
         add(cardPanel, BorderLayout.EAST);
+
+        messageArea = new JTextArea();
+        messageArea.setOpaque(false);
+        messageArea.setEditable(false);
+        messageArea.setLineWrap(true);
+        messageArea.setWrapStyleWord(true);
+        messageArea.setSize(180,180);
+        messageArea.setFont(new Font("Diogenes", Font.BOLD, 14));
+        messageArea.setVisible(false);
+        cardPanel.add(messageArea, BorderLayout.PAGE_START);
 
 
 
@@ -591,8 +612,8 @@ public class MainFrame extends JFrame {
         int W = img.getWidth();
         int H = img.getHeight();
 
-        JLabel label = new JLabel(new ImageIcon(getScaledImage(img, W / 8, H / 8)));
-        cardPanel.add(label, BorderLayout.CENTER);
+        cardLabel = new JLabel(new ImageIcon(getScaledImage(img, W / 8, H / 8)));
+        cardPanel.add(cardLabel, CENTER);
         pack();
 
     }
@@ -622,8 +643,7 @@ public class MainFrame extends JFrame {
 
 
          */
-        revalidate();
-        repaint();
+        pack();
 
     }
 
@@ -749,8 +769,21 @@ public class MainFrame extends JFrame {
 
     public void setMoves(Moves moves){
 
-        if(moves.getFemale()) {                    //if the chosenCard is selene
+        if(moves.getFemale()) {                    //special Selene condition: first worker = male, second worker = female
             specialDomeMove = true;
+            cardLabel.setVisible(false);
+            revalidate();
+            repaint();
+            pack();
+            messageArea.setVisible(true);
+            messageArea.setText("SELENE: you can either normally build with your male worker or build domes with your female one");
+            //cardPanel.remove(cardLabel);
+            cardLabel.setVisible(true);
+            revalidate();
+            repaint();
+            pack();
+            cardPanel.add(cardLabel, CENTER);
+            pack();
         }
 
         Builder builder1 = moves.getBuilder1();

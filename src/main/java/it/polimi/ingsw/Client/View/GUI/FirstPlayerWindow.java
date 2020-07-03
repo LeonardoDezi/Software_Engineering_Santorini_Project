@@ -142,7 +142,14 @@ public class FirstPlayerWindow extends JFrame {
         //radioPanel.add(threePlayersButton);
         mainPanel.add(radioPanel, BorderLayout.CENTER);
 */
-        JLabel title = new JLabel(" Scegli il numero di giocatori della partita");
+
+        JTextArea title = new JTextArea();
+        title.setOpaque(false);
+        title.setEditable(false);
+        title.setLineWrap(true);
+        title.setWrapStyleWord(true);
+        title.setFont(new Font("Diogenes", Font.BOLD, 14));
+        title.setText("Choose the first player");
         title.setFont(new Font("Diogenes", Font.BOLD, 13));
         mainPanel.add(title, BorderLayout.PAGE_START);
 
