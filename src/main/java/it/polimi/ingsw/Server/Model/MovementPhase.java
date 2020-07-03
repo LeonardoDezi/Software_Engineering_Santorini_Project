@@ -86,7 +86,7 @@ public class MovementPhase extends Phase {
         }else{    //entrambi i worker sono incapaci di muoversi
 
             Player nextPlayer = game.getNextPlayer(player);
-            game.removePlayer(player);  //TODO  verificare che non ci siano problemi quando rimuoviamo un giocatore
+            game.removePlayer(player);
 
             if(game.getPlayerList().size() == 1) {   //è rimasto solo un giocatore
                 game.setWinningPlayer(game.playerList.get(0));

@@ -268,17 +268,11 @@ public class NetInterface {
         return stringToSquare(message);
     }
 
-    public void sendMessage(Integer messageType, Client client) throws IOException { //TODO implement the method with the message hashmap
+    public void sendMessage(String playerID, String playerColour, String playerCard) throws IOException {
         Socket socket;
-        String message = new String("5@" + messageType.toString());
-        if(client == null){
-            for(int i=0; i<game.numberOfPlayers;i++){
-                socket = clients.get(i).getSocket();
-                Sender.send(message, socket);
-            }
-        }
-        else{
-            socket=client.getSocket();
+        String message = new String("5@" + playerID + "@" + playerColour + "@" + playerCard);
+        for(int i=0; i<game.numberOfPlayers;i++) {
+            socket = clients.get(i).getSocket();
             Sender.send(message, socket);
         }
     }

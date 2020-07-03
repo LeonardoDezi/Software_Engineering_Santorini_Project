@@ -4,8 +4,8 @@ import it.polimi.ingsw.Client.Client;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.io.IOException;
 
 import static java.awt.BorderLayout.*;
 
@@ -49,7 +49,7 @@ public class StartWindow extends JFrame {
 
                 mainFrame.setClient(new Client(ipAddress, 8080));
                 mainFrame.getClient().startClient(username, mainFrame);
-                mainFrame.waitingDialog.setVisible(true);
+
 
             }
         }
@@ -65,6 +65,21 @@ public class StartWindow extends JFrame {
 
 
         this.mainFrame = frame;
+
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    IntroFrame.exit(mainFrame);
+                } catch (IOException ioException) {
+                    System.exit(1);
+                }
+            }
+        };
+        this.addWindowListener(exitListener);
+
+
 
         setResizable(false);
 

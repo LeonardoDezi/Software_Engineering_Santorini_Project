@@ -9,8 +9,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,6 +58,18 @@ public class CardPickingDialog extends JDialog {
         super(frame, "Player choice");
         this.frame = frame;
 
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    IntroFrame.exit(frame);
+                } catch (IOException ioException) {
+                    System.exit(1);
+                }
+            }
+        };
+        this.addWindowListener(exitListener);
 
         setResizable(false);
 

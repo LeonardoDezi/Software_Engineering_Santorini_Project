@@ -4,8 +4,7 @@ import it.polimi.ingsw.Client.GUIClientController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
@@ -65,6 +64,22 @@ public class NumberDialog extends JFrame {
 
         this.frame = frame;
 
+
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    IntroFrame.exit(frame);
+                } catch (IOException ioException) {
+                    System.exit(1);
+                }
+            }
+        };
+        this.addWindowListener(exitListener);
+
+
+
         setResizable(false);
 
 
@@ -111,7 +126,6 @@ public class NumberDialog extends JFrame {
             pack();
             setLocationRelativeTo(null);
 
-            //setVisible(true);
 
 
 
@@ -122,7 +136,7 @@ public class NumberDialog extends JFrame {
 
     public void setController(GUIClientController controller){
         this.controller = controller;
-        textField.setText("Il numero di giocatori è: " + frame.getNumberOfPlayers());
+        textField.setText("The number of players is " + frame.getNumberOfPlayers());
     }
 
 

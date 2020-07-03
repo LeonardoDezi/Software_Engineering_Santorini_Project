@@ -46,23 +46,23 @@ public class TurnManager {
 
         while(!(game.getGameEnded())) {
 
-              //TODO testare se succederà qualcosa se nel mentre rimuoviamo un giocatore?   cambierà la playerList di game?
+            builder1 = player.getBuilder(0);
 
-                builder1 = player.getBuilder(0);
+            builder2 = player.getBuilder(1);
 
-                builder2 = player.getBuilder(1);
+            Context context = new Context(netInterface);
+            context.setPhase(new SpecialPhase1(game, context, player, builder1, builder2));
 
-                Context context = new Context(netInterface);
-                context.setPhase(new SpecialPhase1(game, context, player, builder1, builder2));
+            while (!(game.getGameEnded()) && context.getPhase() != null)
+                context.request();
 
-                while (!(game.getGameEnded()) && context.getPhase() != null)
-                    context.request();
-
-                if (!game.getGameEnded())
-                    player = game.getNextPlayer(player);
+            if (!game.getGameEnded())
+                player = game.getNextPlayer(player);
 
 
         }
+
+
         if (game.getDisconnect()){
             game.disconnectClients();
         }

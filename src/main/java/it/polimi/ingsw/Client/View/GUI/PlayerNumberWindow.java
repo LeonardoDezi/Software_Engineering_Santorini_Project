@@ -6,9 +6,7 @@ import it.polimi.ingsw.Parser.Sender;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
@@ -82,7 +80,7 @@ public class PlayerNumberWindow extends JFrame {
      * associated to the radioButton*/
     private static class RadioButtonListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) {   //TODO inserire implementazione mancante
+        public void actionPerformed(ActionEvent e) {
             numberOfPlayers = e.getActionCommand();
         }
     }
@@ -99,6 +97,21 @@ public class PlayerNumberWindow extends JFrame {
         super("Player choice");
 
         this.mainFrame = frame;
+
+
+
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    IntroFrame.exit(frame);
+                } catch (IOException ioException) {
+                    System.exit(1);
+                }
+            }
+        };
+        this.addWindowListener(exitListener);
 
 
         setResizable(false);

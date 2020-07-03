@@ -2,8 +2,8 @@ package it.polimi.ingsw.Client.View.GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.io.IOException;
 
 import static java.awt.BorderLayout.PAGE_END;
 
@@ -38,8 +38,23 @@ public class FatalErrorWindow extends JFrame {
 
         this.frame = frame;
 
+        frame.waitingDialog.setVisible(false);
+
         setResizable(false);
 
+
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    IntroFrame.exit(frame);
+                } catch (IOException ioException) {
+                    System.exit(1);
+                }
+            }
+        };
+        this.addWindowListener(exitListener);
 
         ClassLoader cl = this.getClass().getClassLoader();
 
@@ -85,7 +100,6 @@ public class FatalErrorWindow extends JFrame {
         pack();
         setLocationRelativeTo(null);
 
-        setVisible(true);
 
 
 
