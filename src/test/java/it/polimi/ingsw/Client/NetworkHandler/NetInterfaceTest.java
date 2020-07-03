@@ -58,17 +58,7 @@ public class NetInterfaceTest {
 
     }
 
-    @Test
-    public void arrayToStringAndBack() {
-        String string = arrayListSquareToString(array);
-        ArrayList<Square> result = new ArrayList<Square>();
-        result = netInterface.stringToArrayListSquare(string);
-        assertEquals(result.get(0).x, array.get(0).x);
-        assertEquals(result.get(0).y, array.get(0).y);
-        assertEquals(result.get(3).x, array.get(3).x);
-        assertEquals(result.get(3).y, array.get(3).y);
 
-    }
 
     public String arrayListSquareToString(ArrayList<Square> moves) {
         if (moves.isEmpty()) {

@@ -1,0 +1,125 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Sender</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Parser</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Sender (it.polimi.ingsw.Parser)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Sender</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Parser;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.google.gson.Gson;
+<i>4</i>&nbsp;import com.google.gson.GsonBuilder;
+<i>5</i>&nbsp;import com.google.gson.JsonObject;
+<i>6</i>&nbsp;import com.google.gson.JsonParser;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.io.IOException;
+<i>9</i>&nbsp;import java.io.OutputStreamWriter;
+<i>10</i>&nbsp;import java.net.Socket;
+<i>11</i>&nbsp;import java.net.SocketException;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import static java.lang.Thread.sleep;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;/** this class sends the messages */
+<b class="nc"><i>16</i>&nbsp;public class Sender {</b>
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    /**
+<i>19</i>&nbsp;     * this method takes a string message and transforms it to a json message and sends it
+<i>20</i>&nbsp;     * @param m is the string message
+<i>21</i>&nbsp;     * @param socket is the socket to which is sending the message
+<i>22</i>&nbsp;     * @throws IOException if the connection ends
+<i>23</i>&nbsp;     */
+<i>24</i>&nbsp;    public static void send(String m, Socket socket) throws IOException {
+<i>25</i>&nbsp;        try {
+<i>26</i>&nbsp;
+<b class="nc"><i>27</i>&nbsp;            OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream(), &quot;UTF-8&quot;);</b>
+<b class="nc"><i>28</i>&nbsp;            Message message = new Message();</b>
+<b class="nc"><i>29</i>&nbsp;            message.setMessage(m);</b>
+<b class="nc"><i>30</i>&nbsp;            Gson gson = new GsonBuilder().serializeNulls().create();</b>
+<b class="nc"><i>31</i>&nbsp;            String string = gson.toJson(message);</b>
+<b class="nc"><i>32</i>&nbsp;            JsonObject jsonObject = JsonParser.parseString(string).getAsJsonObject();</b>
+<b class="nc"><i>33</i>&nbsp;            sleep(100);</b>
+<b class="nc"><i>34</i>&nbsp;            writer.write(jsonObject.toString() + &quot;\n&quot;);</b>
+<b class="nc"><i>35</i>&nbsp;            writer.flush();</b>
+<b class="nc"><i>36</i>&nbsp;        } catch (SocketException | InterruptedException e){</b>
+<i>37</i>&nbsp;           // System.out.println(&quot;Error sender&quot;);
+<b class="nc"><i>38</i>&nbsp;        }</b>
+<i>39</i>&nbsp;    }
+<i>40</i>&nbsp;}
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 23:44</div>
+</div>
+</body>
+</html>
