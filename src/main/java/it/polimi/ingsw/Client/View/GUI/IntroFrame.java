@@ -67,7 +67,13 @@ public class IntroFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent event){
             IntroFrame.this.dispose();
-            MainFrame frame = new MainFrame();
+            MainFrame frame = null;
+            try {
+                frame = new MainFrame();
+            } catch (IOException e) {
+                System.out.println("Error");
+                System.exit(-1);
+            }
             new StartWindow(frame);
         }
     }
@@ -120,6 +126,14 @@ public class IntroFrame extends JFrame {
         setLocationRelativeTo(null);
 
 
+    }
+
+
+    public static void exit(MainFrame frame) throws IOException {
+        if(frame.getClient() != null)
+            frame.getClient().getServerSocket().close();
+        frame.dispose();
+        System.exit(1);
     }
 
 

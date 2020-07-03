@@ -110,17 +110,20 @@ public class Client {
         try {
             serverSocket = new Socket(ip, port);
         } catch (IOException e) {
-            new FatalErrorWindow(frame);
+            frame.waitingDialog.setVisible(false);
+            frame.fatalErrorWindow.setVisible(true);
             return;
         }
 
 
         Client.username = text;
 
+
         try {
             Sender.send(username, serverSocket);
+            frame.waitingDialog.setVisible(true);
         }catch(IOException e){
-            frame.waitingDialog.setVisible(false);
+            //frame.waitingDialog.setVisible(false);
             new FatalErrorWindow(frame);
             return;
         }

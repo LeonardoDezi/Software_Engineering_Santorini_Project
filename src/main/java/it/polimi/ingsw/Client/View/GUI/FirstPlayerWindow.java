@@ -6,9 +6,7 @@ import it.polimi.ingsw.Parser.Sender;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
@@ -100,6 +98,21 @@ public class FirstPlayerWindow extends JFrame {
         this.mainFrame = frame;
 
 
+
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    IntroFrame.exit(frame);
+                } catch (IOException ioException) {
+                    System.exit(1);
+                }
+            }
+        };
+        this.addWindowListener(exitListener);
+
+
         setResizable(false);
         JLayeredPane pane = this.getLayeredPane();
 
@@ -117,31 +130,6 @@ public class FirstPlayerWindow extends JFrame {
         mainPanel.setOpaque(false);
         mainPanel.setLayout(new BorderLayout(50, 50));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(40, 10, 20, 10));
-
-        /*
-        twoPlayersButton.setMnemonic(KeyEvent.VK_2);
-        threePlayersButton.setMnemonic(KeyEvent.VK_3);
-
-        twoPlayersButton.setActionCommand("2");
-        threePlayersButton.setActionCommand("3");
-
-        ButtonGroup group = new ButtonGroup();
-        group.add(twoPlayersButton);
-        group.add(threePlayersButton);
-
-
-        twoPlayersButton.addActionListener(new RadioButtonListener());
-        threePlayersButton.addActionListener(new RadioButtonListener());
-
-         */
-/*        JPanel radioPanel = new JPanel(new GridLayout(3,0));
-        //JPanel radioPanel = new JPanel(new GridLayout(0,2));
-        radioPanel.setBackground(Color.WHITE);
-        radioPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        //radioPanel.add(twoPlayersButton);
-        //radioPanel.add(threePlayersButton);
-        mainPanel.add(radioPanel, BorderLayout.CENTER);
-*/
 
         JTextArea title = new JTextArea();
         title.setOpaque(false);
@@ -167,12 +155,6 @@ public class FirstPlayerWindow extends JFrame {
         mainPanel.add(confirmButton, PAGE_END);
 
 
-
-    /*
-        JButton confirmButton = new JButton("Go");
-        confirmButton.addActionListener(new ConfirmListener());
-        mainPanel.add(confirmButton, BorderLayout.PAGE_END);
-    */
         pane.add(mainPanel, Integer.valueOf(2));
         pack();
         setLocationRelativeTo(null);

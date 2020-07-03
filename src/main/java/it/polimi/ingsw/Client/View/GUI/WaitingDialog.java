@@ -2,21 +2,18 @@ package it.polimi.ingsw.Client.View.GUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.io.IOException;
 
 public class WaitingDialog extends JFrame{
-    //private static final long serialVersionUID = 1L;
 
     private JPanel mainPanel;
     private JLabel jLabel;
+    private MainFrame frame;
 
     private final static String newline = "\n";
 
 
-
-
-    //private View view;
 
     private class ConfirmListener implements ActionListener {
         @Override
@@ -26,10 +23,25 @@ public class WaitingDialog extends JFrame{
     }
 
 
-    public WaitingDialog() {
+    public WaitingDialog(MainFrame frame) {
         super( "Waiting");
+        this.frame = frame;
 
-        //this.view = view;
+
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    IntroFrame.exit(frame);
+                } catch (IOException ioException) {
+                    System.exit(1);
+                }
+            }
+        };
+        this.addWindowListener(exitListener);
+
+
 
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(50, 50));

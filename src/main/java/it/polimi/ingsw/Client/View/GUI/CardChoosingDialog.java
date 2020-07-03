@@ -6,8 +6,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,7 +56,7 @@ public class CardChoosingDialog extends JDialog {
     /** creates a new cardChoosingDialog
      * @param frame is the mainFrame
      */
-    public CardChoosingDialog(MainFrame frame) {
+    public CardChoosingDialog(MainFrame frame) throws IOException {
 
         super(frame, "Player choice");
         this.frame = frame;
@@ -65,6 +64,21 @@ public class CardChoosingDialog extends JDialog {
         setResizable(false);
 
         this.setSize(new Dimension(850, 490));
+
+
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    IntroFrame.exit(frame);
+                } catch (IOException ioException) {
+                    System.exit(1);
+                }
+            }
+        };
+        this.addWindowListener(exitListener);
+
 
 
         ClassLoader cl = this.getClass().getClassLoader();

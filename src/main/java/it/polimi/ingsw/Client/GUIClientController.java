@@ -155,27 +155,13 @@ public class GUIClientController {
      }
 
 
-    /*public void play(Socket socket) throws IOException {
-        Moves moves = new Moves(null, null, null, null, false, false);
+     public void win() throws IOException {
+         frame.stillPlaying = false;
+         frame.getClient().getServerSocket().close();
+         frame.outcomeDialog.setVisible(true);
+         frame.outcomeDialog.messageArea.setText("Congratulations! You have won! Would you like to play again?");
+     }
 
-        Moves envelope;
-        if (moves.getSkippable()) {
-            System.out.println("Do you want to perform special card effect? y/n");
-            if (!returnBoolean()) {
-            //   Sender.send("0", client.getServerSocket());
-            } else {
-                envelope = chooseMove(moves);
-            //    netInterface.sendMoves(envelope, client.getServerSocket());
-            }
-        } else if (moves.getFemale()) {
-          //  envelope = getSpecialBuild(moves);
-           // netInterface.sendMoves(envelope, client.getServerSocket());
-            envelope = chooseMove(moves);
-            //netInterface.sendMoves(envelope, client.getServerSocket());
-        }
-
-        moves =netInterface.getMoves(socket);
-    }  */
 
 
 

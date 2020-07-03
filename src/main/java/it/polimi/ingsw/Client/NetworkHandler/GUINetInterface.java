@@ -40,9 +40,11 @@ public class GUINetInterface {
         if (moves.getUpdate()){
             moves.setUpdate(false);
         }
-
-        if (values[0].equals("-1")) {                                 //values[0]
+        if (values[0].equals("0")) {
             return null;
+        }
+        if (values[0].equals("-1")) {                                 //values[0]
+            //clientController.disconnected();
         }
 
 
@@ -172,8 +174,13 @@ public class GUINetInterface {
             //TODO print on the screen the message received
             moves = null;
         }
-        if (values[0].equals("6")) { //the client loses
-            clientController.lost();
+        if (values[0].equals("66")) { //the client loses
+            String winnerID;
+            winnerID = values[1];
+            //clientController.lost(winnerID);
+        }
+        if(values[0].equals("73")){ //the client wins
+            clientController.win();
         }
         if (values[0].equals("99")){
             Builder worker1;

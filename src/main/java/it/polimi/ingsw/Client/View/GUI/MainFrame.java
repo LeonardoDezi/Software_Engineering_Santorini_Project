@@ -14,8 +14,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -73,7 +72,7 @@ public class MainFrame extends JFrame {
     /** indicates if a square has been selected */
     private boolean squareSelected = false;
 
-    public WaitingDialog waitingDialog = new WaitingDialog();
+    public WaitingDialog waitingDialog = new WaitingDialog(this);
 
     public CardChoosingDialog cardChoosingDialog = new CardChoosingDialog(this);
 
@@ -84,6 +83,10 @@ public class MainFrame extends JFrame {
     public NumberDialog numberDialog = new NumberDialog(this);
 
     public FirstPlayerWindow firstPlayerWindow = new FirstPlayerWindow(this);
+
+    public OutcomeDialog outcomeDialog = new OutcomeDialog(this);
+
+    public FatalErrorWindow fatalErrorWindow = new FatalErrorWindow(this);
 
     /** the number of players that play in the game */
     private int numberOfPlayers;
@@ -437,7 +440,7 @@ public class MainFrame extends JFrame {
 
 
     /** creates a new MainFrame */
-    public MainFrame() {
+    public MainFrame() throws IOException {
 
         super("SANTORINI");
 
@@ -445,6 +448,21 @@ public class MainFrame extends JFrame {
         this.setup = true;
 
         this.stillPlaying = true;
+
+
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                try {
+                    getClient().getServerSocket().close();
+                    dispose();
+                } catch (IOException ioException) {
+                    System.exit(1);
+                }
+            }
+        };
+        this.addWindowListener(exitListener);
 
 
         JLayeredPane pane = getLayeredPane();
