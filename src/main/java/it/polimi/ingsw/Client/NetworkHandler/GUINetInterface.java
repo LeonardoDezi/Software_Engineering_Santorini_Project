@@ -173,7 +173,7 @@ public class GUINetInterface {
             String playerID = values[1];
             String playerColour = values[2];
             String playerCard = values[3];
-            clientController.printMatchInfo(playerID, playerColour, playerCard);
+    //        clientController.printMatchInfo(playerID, playerColour, playerCard);
             moves = null;
         }
         if (values[0].equals("66")) { //the client loses

@@ -175,7 +175,7 @@ public class NetInterface {
             String playerColour = values[2];
             String playerCard = values[3];
             clientController.printMatchInfo(playerID, playerColour, playerCard);
-            moves = null;
+            moves.setUpdate(true);
         }
         if (values[0].equals("66")) { //the client loses
             String winnerID;

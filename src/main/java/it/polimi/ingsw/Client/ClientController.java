@@ -1,6 +1,7 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Client.NetworkHandler.NetInterface;
+import it.polimi.ingsw.Client.View.CLI.Colour;
 import it.polimi.ingsw.Parser.Sender;
 import it.polimi.ingsw.Client.View.CLI.CliBoard;
 import it.polimi.ingsw.Client.View.ClientBoard;
@@ -49,8 +50,7 @@ public class ClientController {
     /** represents the boolean that tells if the player is building a dome */
     private boolean dome;
 
-
-    private HashMap<Integer,String > messages;
+    public HashMap<String, String> colourSelection;
 
     /**
      * create and initialize the client controller
@@ -58,15 +58,16 @@ public class ClientController {
     public ClientController(Client client) {
         this.client = client;
         stillPlaying = true;
-        messageMap();
+        colorMap();
     }
 
-    private void messageMap() {
-        messages = new HashMap<>();
-
-        messages.put(0,"");
-
+    public void colorMap(){
+        colourSelection = new HashMap<>();
+        colourSelection.put("red", Colour.ANSI_RED);
+        colourSelection.put("blue", Colour.ANSI_BLUE);
+        colourSelection.put("white", Colour.RESET);
     }
+
 
     /**
      * this method loops until all the players are ready to play
@@ -698,5 +699,11 @@ public class ClientController {
     public void wrongUserName() {
         System.out.println("Username already taken, please insert another one");
         this.disconnected();
+    }
+
+    public void printMatchInfo(String playerID, String playerColour, String playerCard) {
+
+        String colour = colourSelection.get(playerColour);
+        System.out.println("Current Player: " + colour +playerID +Colour.RESET+ "\n" + "Card: " + playerCard);
     }
 }
