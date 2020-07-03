@@ -1,0 +1,312 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: OutcomeDialog</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Client.View.GUI</a> ]
+</div>
+
+<h1>Coverage Summary for Class: OutcomeDialog (it.polimi.ingsw.Client.View.GUI)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">OutcomeDialog</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (53/ 53)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">OutcomeDialog$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16,7%
+  </span>
+  <span class="absValue">
+    (1/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">OutcomeDialog$No</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (4/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">OutcomeDialog$Yes</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    9,1%
+  </span>
+  <span class="absValue">
+    (1/ 11)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    77,8%
+  </span>
+  <span class="absValue">
+    (7/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    78,7%
+  </span>
+  <span class="absValue">
+    (59/ 75)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Client.View.GUI;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import javax.swing.*;
+<i>4</i>&nbsp;import java.awt.*;
+<i>5</i>&nbsp;import java.awt.event.*;
+<i>6</i>&nbsp;import java.io.IOException;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import static java.awt.BorderLayout.PAGE_END;
+<i>9</i>&nbsp;import static java.awt.BorderLayout.SOUTH;
+<i>10</i>&nbsp;
+<b class="fc"><i>11</i>&nbsp;public class OutcomeDialog extends JDialog {</b>
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    /**
+<i>14</i>&nbsp;     * the name of the file containing the background image
+<i>15</i>&nbsp;     */
+<b class="fc"><i>16</i>&nbsp;    protected static final String IMAGENAME = new String(&quot;startDialog.png&quot;);</b>
+<i>17</i>&nbsp;    /**
+<i>18</i>&nbsp;     * the name of the file containing the yes icon
+<i>19</i>&nbsp;     */
+<b class="fc"><i>20</i>&nbsp;    protected static final String YES = new String(&quot;Yes.png&quot;);</b>
+<i>21</i>&nbsp;    /**
+<i>22</i>&nbsp;     * the name of the file containing the yes icon
+<i>23</i>&nbsp;     */
+<b class="fc"><i>24</i>&nbsp;    protected static final String NO = new String(&quot;No.png&quot;);</b>
+<i>25</i>&nbsp;    /**
+<i>26</i>&nbsp;     * the frame where the game has been played
+<i>27</i>&nbsp;     */
+<i>28</i>&nbsp;    private MainFrame frame;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    public JTextArea messageArea;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    /**
+<i>34</i>&nbsp;     * the actionListener assigned to the start button. When the button is pressed, it closes
+<i>35</i>&nbsp;     * the startDialog, sends the username to the server and creates a waitingDialog
+<i>36</i>&nbsp;     */
+<b class="fc"><i>37</i>&nbsp;    private class Yes implements ActionListener {</b>
+<i>38</i>&nbsp;        @Override
+<i>39</i>&nbsp;        public void actionPerformed(ActionEvent e) {
+<b class="nc"><i>40</i>&nbsp;            frame.dispose();</b>
+<b class="nc"><i>41</i>&nbsp;            OutcomeDialog.this.dispose();</b>
+<b class="nc"><i>42</i>&nbsp;            MainFrame frame = null;</b>
+<i>43</i>&nbsp;            try {
+<b class="nc"><i>44</i>&nbsp;                frame = new MainFrame();</b>
+<b class="nc"><i>45</i>&nbsp;            } catch (IOException ioException) {</b>
+<b class="nc"><i>46</i>&nbsp;                System.out.println(&quot;ERROR&quot;);</b>
+<b class="nc"><i>47</i>&nbsp;                System.exit(-1);</b>
+<b class="nc"><i>48</i>&nbsp;            }</b>
+<b class="nc"><i>49</i>&nbsp;            new StartWindow(frame);</b>
+<b class="nc"><i>50</i>&nbsp;        }</b>
+<i>51</i>&nbsp;    }
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    /**
+<i>55</i>&nbsp;     * the actionListener assigned to the start button. When the button is pressed, it closes
+<i>56</i>&nbsp;     * the startDialog, sends the username to the server and creates a waitingDialog
+<i>57</i>&nbsp;     */
+<b class="fc"><i>58</i>&nbsp;    private class No implements ActionListener {</b>
+<i>59</i>&nbsp;        @Override
+<i>60</i>&nbsp;        public void actionPerformed(ActionEvent e) {
+<b class="fc"><i>61</i>&nbsp;            frame.dispose();</b>
+<b class="fc"><i>62</i>&nbsp;            OutcomeDialog.this.dispose();</b>
+<b class="fc"><i>63</i>&nbsp;            System.exit(0);</b>
+<b class="nc"><i>64</i>&nbsp;        }</b>
+<i>65</i>&nbsp;    }
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    /**
+<i>69</i>&nbsp;     * creates a new StartDialog
+<i>70</i>&nbsp;     *
+<i>71</i>&nbsp;     * @param frame is the mainFrame on which the game will be played
+<i>72</i>&nbsp;     */
+<i>73</i>&nbsp;    public OutcomeDialog(MainFrame frame) {
+<i>74</i>&nbsp;
+<b class="fc"><i>75</i>&nbsp;        super(frame);</b>
+<b class="fc"><i>76</i>&nbsp;        this.frame = frame;</b>
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;
+<b class="fc"><i>80</i>&nbsp;        WindowListener exitListener = new WindowAdapter() {</b>
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;            @Override
+<i>83</i>&nbsp;            public void windowClosing(WindowEvent e) {
+<i>84</i>&nbsp;                try {
+<b class="nc"><i>85</i>&nbsp;                    IntroFrame.exit(frame);</b>
+<b class="nc"><i>86</i>&nbsp;                } catch (IOException ioException) {</b>
+<b class="nc"><i>87</i>&nbsp;                    System.exit(1);</b>
+<b class="nc"><i>88</i>&nbsp;                }</b>
+<b class="nc"><i>89</i>&nbsp;            }</b>
+<i>90</i>&nbsp;        };
+<b class="fc"><i>91</i>&nbsp;        this.addWindowListener(exitListener);</b>
+<i>92</i>&nbsp;
+<b class="fc"><i>93</i>&nbsp;        setResizable(false);</b>
+<i>94</i>&nbsp;
+<b class="fc"><i>95</i>&nbsp;        ClassLoader cl = this.getClass().getClassLoader();</b>
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;
+<b class="fc"><i>98</i>&nbsp;        Image img = IntroFrame.getImage(cl, IMAGENAME);</b>
+<b class="fc"><i>99</i>&nbsp;        img = IntroFrame.getScaledImage(img, 400, 300);</b>
+<b class="fc"><i>100</i>&nbsp;        JLabel imageLabel = new JLabel(new ImageIcon(img));</b>
+<i>101</i>&nbsp;
+<i>102</i>&nbsp;
+<b class="fc"><i>103</i>&nbsp;        add(imageLabel);</b>
+<i>104</i>&nbsp;
+<b class="fc"><i>105</i>&nbsp;        JLayeredPane pane = this.getLayeredPane();</b>
+<i>106</i>&nbsp;
+<b class="fc"><i>107</i>&nbsp;        JPanel mainPanel = new JPanel();</b>
+<b class="fc"><i>108</i>&nbsp;        mainPanel.setSize(400, 300);</b>
+<b class="fc"><i>109</i>&nbsp;        mainPanel.setOpaque(false);</b>
+<b class="fc"><i>110</i>&nbsp;        mainPanel.setLayout(new BorderLayout(50, 50));  //50</b>
+<b class="fc"><i>111</i>&nbsp;        mainPanel.setBorder(BorderFactory.createEmptyBorder(60, 50, 40, 20));</b>
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;
+<b class="fc"><i>114</i>&nbsp;        messageArea = new JTextArea();</b>
+<b class="fc"><i>115</i>&nbsp;        messageArea.setOpaque(false);</b>
+<b class="fc"><i>116</i>&nbsp;        messageArea.setEditable(false);</b>
+<b class="fc"><i>117</i>&nbsp;        messageArea.setLineWrap(true);</b>
+<b class="fc"><i>118</i>&nbsp;        messageArea.setWrapStyleWord(true);</b>
+<b class="fc"><i>119</i>&nbsp;        messageArea.setFont(new Font(&quot;Diogenes&quot;, Font.BOLD, 14));</b>
+<b class="fc"><i>120</i>&nbsp;        mainPanel.add(messageArea, BorderLayout.CENTER);</b>
+<i>121</i>&nbsp;
+<i>122</i>&nbsp;
+<b class="fc"><i>123</i>&nbsp;        img = IntroFrame.getImage(cl, YES);</b>
+<b class="fc"><i>124</i>&nbsp;        img = IntroFrame.getScaledImage(img, 110, 45);</b>
+<i>125</i>&nbsp;
+<b class="fc"><i>126</i>&nbsp;        JButton yesButton = new JButton();</b>
+<b class="fc"><i>127</i>&nbsp;        yesButton.setDisabledIcon(new ImageIcon(img));</b>
+<b class="fc"><i>128</i>&nbsp;        yesButton.setIcon(new ImageIcon(img));</b>
+<b class="fc"><i>129</i>&nbsp;        yesButton.setContentAreaFilled(false);</b>
+<b class="fc"><i>130</i>&nbsp;        yesButton.setBorderPainted(false);</b>
+<b class="fc"><i>131</i>&nbsp;        yesButton.addActionListener(new Yes());</b>
+<i>132</i>&nbsp;
+<i>133</i>&nbsp;
+<b class="fc"><i>134</i>&nbsp;        img = IntroFrame.getImage(cl, NO);</b>
+<b class="fc"><i>135</i>&nbsp;        img = IntroFrame.getScaledImage(img, 110, 45);</b>
+<i>136</i>&nbsp;
+<b class="fc"><i>137</i>&nbsp;        JButton noButton = new JButton();</b>
+<b class="fc"><i>138</i>&nbsp;        noButton.setDisabledIcon(new ImageIcon(img));</b>
+<b class="fc"><i>139</i>&nbsp;        noButton.setIcon(new ImageIcon(img));</b>
+<b class="fc"><i>140</i>&nbsp;        noButton.setContentAreaFilled(false);</b>
+<b class="fc"><i>141</i>&nbsp;        noButton.setBorderPainted(false);</b>
+<b class="fc"><i>142</i>&nbsp;        noButton.addActionListener(new No());</b>
+<i>143</i>&nbsp;
+<b class="fc"><i>144</i>&nbsp;        JPanel buttonPanel = new JPanel();</b>
+<b class="fc"><i>145</i>&nbsp;        buttonPanel.add(yesButton);</b>
+<b class="fc"><i>146</i>&nbsp;        buttonPanel.add(noButton);</b>
+<b class="fc"><i>147</i>&nbsp;        buttonPanel.setOpaque(false);</b>
+<b class="fc"><i>148</i>&nbsp;        mainPanel.add(buttonPanel, PAGE_END);</b>
+<i>149</i>&nbsp;
+<i>150</i>&nbsp;
+<b class="fc"><i>151</i>&nbsp;        pane.add(mainPanel, Integer.valueOf(2));</b>
+<b class="fc"><i>152</i>&nbsp;        pack();</b>
+<b class="fc"><i>153</i>&nbsp;        setLocationRelativeTo(null);</b>
+<i>154</i>&nbsp;
+<b class="fc"><i>155</i>&nbsp;        setVisible(false);</b>
+<i>156</i>&nbsp;
+<i>157</i>&nbsp;
+<b class="fc"><i>158</i>&nbsp;    }</b>
+<i>159</i>&nbsp;}
+<i>160</i>&nbsp;
+<i>161</i>&nbsp;
+<i>162</i>&nbsp;
+<i>163</i>&nbsp;
+<i>164</i>&nbsp;
+<i>165</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 21:08</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.Client.View.GUI</OriginalElement>
+  <nodes>
+    <node x="0.0" y="1665.0">it.polimi.ingsw.Client.View.GUI.CardPickingDialog.Undo</node>
+    <node x="1305.0" y="432.0">it.polimi.ingsw.Client.View.GUI.CardChoosingDialog.Undo</node>
+    <node x="793.0" y="1621.0">it.polimi.ingsw.Client.View.GUI.PlayerNumberWindow.ConfirmListener</node>
+    <node x="1330.0" y="1343.0">it.polimi.ingsw.Client.View.GUI.IntroFrame</node>
+    <node x="0.0" y="1244.0">it.polimi.ingsw.Client.View.GUI.MainFrame.Dome</node>
+    <node x="0.0" y="1976.0">it.polimi.ingsw.Client.View.GUI.FirstPlayerWindow.ConfirmListener</node>
+    <node x="256.0" y="1976.0">it.polimi.ingsw.Client.View.GUI.FirstPlayerWindow.RadioButtonListener</node>
+    <node x="1116.0" y="1764.0">it.polimi.ingsw.Client.View.GUI.WaitingDialog</node>
+    <node x="1049.0" y="1621.0">it.polimi.ingsw.Client.View.GUI.PlayerNumberWindow.RadioButtonListener</node>
+    <node x="256.0" y="1244.0">it.polimi.ingsw.Client.View.GUI.MainFrame.Undo</node>
+    <node x="1636.0" y="1764.0">it.polimi.ingsw.Client.View.GUI.BoardPanel</node>
+    <node x="1385.0" y="1764.0">it.polimi.ingsw.Client.View.GUI.FatalErrorWindow</node>
+    <node x="1074.0" y="1934.0">it.polimi.ingsw.Client.View.GUI.WaitingDialog.ConfirmListener</node>
+    <node x="537.0" y="1956.0">it.polimi.ingsw.Client.View.GUI.OutcomeDialog.Yes</node>
+    <node x="512.0" y="1244.0">it.polimi.ingsw.Client.View.GUI.MainFrame.SquareListener</node>
+    <node x="1944.0" y="1579.0">it.polimi.ingsw.Client.View.GUI.StartWindow.ConfirmListener</node>
+    <node x="121.0" y="1764.0">it.polimi.ingsw.Client.View.GUI.FirstPlayerWindow</node>
+    <node x="1355.0" y="1912.0">it.polimi.ingsw.Client.View.GUI.FatalErrorWindow.ConfirmListener</node>
+    <node x="1356.0" y="1599.0">it.polimi.ingsw.Client.View.GUI.IntroFrame.ButtonListener</node>
+    <node x="1561.0" y="432.0">it.polimi.ingsw.Client.View.GUI.CardChoosingDialog.CardChooser</node>
+    <node x="1817.0" y="432.0">it.polimi.ingsw.Client.View.GUI.CardChoosingDialog.Confirm</node>
+    <node x="484.0" y="0.0">it.polimi.ingsw.Client.View.GUI.MainFrame</node>
+    <node x="1961.5" y="1343.0">it.polimi.ingsw.Client.View.GUI.StartWindow</node>
+    <node x="793.0" y="1956.0">it.polimi.ingsw.Client.View.GUI.OutcomeDialog.No</node>
+    <node x="1901.0" y="1764.0">it.polimi.ingsw.Client.View.GUI.SquareButton</node>
+    <node x="768.0" y="1244.0">it.polimi.ingsw.Client.View.GUI.MainFrame.Skip</node>
+    <node x="266.5" y="1343.0">it.polimi.ingsw.Client.View.GUI.CardPickingDialog</node>
+    <node x="1024.0" y="1244.0">it.polimi.ingsw.Client.View.GUI.MainFrame.Confirm</node>
+    <node x="1571.5" y="0.0">it.polimi.ingsw.Client.View.GUI.CardChoosingDialog</node>
+    <node x="256.0" y="1665.0">it.polimi.ingsw.Client.View.GUI.CardPickingDialog.Confirm</node>
+    <node x="697.0" y="1764.0">it.polimi.ingsw.Client.View.GUI.OutcomeDialog</node>
+    <node x="512.0" y="1665.0">it.polimi.ingsw.Client.View.GUI.CardPickingDialog.CardChooser</node>
+    <node x="1663.0" y="1599.0">it.polimi.ingsw.Client.View.GUI.NumberDialog.ConfirmListener</node>
+    <node x="928.0" y="1343.0">it.polimi.ingsw.Client.View.GUI.PlayerNumberWindow</node>
+    <node x="1678.0" y="1343.0">it.polimi.ingsw.Client.View.GUI.NumberDialog</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.Client.View.GUI.MainFrame.Undo" target="it.polimi.ingsw.Client.View.GUI.MainFrame">
+      <point x="0.0" y="-27.0" />
+      <point x="374.0" y="1224.0" />
+      <point x="571.6" y="1224.0" />
+      <point x="-58.39999999999998" y="597.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.PlayerNumberWindow.RadioButtonListener" target="it.polimi.ingsw.Client.View.GUI.PlayerNumberWindow">
+      <point x="0.0" y="-27.0" />
+      <point x="1167.0" y="1596.0" />
+      <point x="1094.5" y="1596.0" />
+      <point x="55.5" y="114.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.MainFrame.Skip" target="it.polimi.ingsw.Client.View.GUI.MainFrame">
+      <point x="0.0" y="-27.0" />
+      <point x="886.0" y="1224.0" />
+      <point x="688.4" y="1224.0" />
+      <point x="58.39999999999998" y="597.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.OutcomeDialog.Yes" target="it.polimi.ingsw.Client.View.GUI.OutcomeDialog">
+      <point x="0.0" y="-27.0" />
+      <point x="655.0" y="1931.0" />
+      <point x="740.0" y="1931.0" />
+      <point x="-43.0" y="71.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.IntroFrame.ButtonListener" target="it.polimi.ingsw.Client.View.GUI.IntroFrame">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="103.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.OutcomeDialog.No" target="it.polimi.ingsw.Client.View.GUI.OutcomeDialog">
+      <point x="0.0" y="-27.0" />
+      <point x="911.0" y="1931.0" />
+      <point x="826.0" y="1931.0" />
+      <point x="43.0" y="71.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.FirstPlayerWindow.RadioButtonListener" target="it.polimi.ingsw.Client.View.GUI.FirstPlayerWindow">
+      <point x="0.0" y="-27.0" />
+      <point x="374.0" y="1951.0" />
+      <point x="308.5" y="1951.0" />
+      <point x="62.5" y="81.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.CardPickingDialog.Undo" target="it.polimi.ingsw.Client.View.GUI.CardPickingDialog">
+      <point x="0.0" y="-27.0" />
+      <point x="118.0" y="1640.0" />
+      <point x="302.3333333333333" y="1640.0" />
+      <point x="-71.66666666666669" y="136.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.CardChoosingDialog.Undo" target="it.polimi.ingsw.Client.View.GUI.CardChoosingDialog">
+      <point x="0.0" y="-27.0" />
+      <point x="1423.0" y="407.0" />
+      <point x="1607.3333333333333" y="407.0" />
+      <point x="-71.66666666666674" y="191.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.MainFrame.Dome" target="it.polimi.ingsw.Client.View.GUI.MainFrame">
+      <point x="0.0" y="-27.0" />
+      <point x="118.0" y="1214.0" />
+      <point x="513.2" y="1214.0" />
+      <point x="-116.79999999999995" y="597.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.MainFrame.SquareListener" target="it.polimi.ingsw.Client.View.GUI.MainFrame">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="597.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.CardPickingDialog.CardChooser" target="it.polimi.ingsw.Client.View.GUI.CardPickingDialog">
+      <point x="0.0" y="-27.0" />
+      <point x="630.0" y="1640.0" />
+      <point x="445.6666666666667" y="1640.0" />
+      <point x="71.66666666666669" y="136.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.StartWindow.ConfirmListener" target="it.polimi.ingsw.Client.View.GUI.StartWindow">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="93.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.CardChoosingDialog.Confirm" target="it.polimi.ingsw.Client.View.GUI.CardChoosingDialog">
+      <point x="0.0" y="-27.0" />
+      <point x="1935.0" y="407.0" />
+      <point x="1750.6666666666667" y="407.0" />
+      <point x="71.66666666666674" y="191.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.CardChoosingDialog.CardChooser" target="it.polimi.ingsw.Client.View.GUI.CardChoosingDialog">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="191.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.NumberDialog.ConfirmListener" target="it.polimi.ingsw.Client.View.GUI.NumberDialog">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="103.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.CardPickingDialog.Confirm" target="it.polimi.ingsw.Client.View.GUI.CardPickingDialog">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="136.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.FirstPlayerWindow.ConfirmListener" target="it.polimi.ingsw.Client.View.GUI.FirstPlayerWindow">
+      <point x="0.0" y="-27.0" />
+      <point x="118.0" y="1951.0" />
+      <point x="183.5" y="1951.0" />
+      <point x="-62.5" y="81.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.FatalErrorWindow.ConfirmListener" target="it.polimi.ingsw.Client.View.GUI.FatalErrorWindow">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.WaitingDialog.ConfirmListener" target="it.polimi.ingsw.Client.View.GUI.WaitingDialog">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="60.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.MainFrame.Confirm" target="it.polimi.ingsw.Client.View.GUI.MainFrame">
+      <point x="0.0" y="-27.0" />
+      <point x="1142.0" y="1214.0" />
+      <point x="746.8" y="1214.0" />
+      <point x="116.79999999999995" y="597.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.GUI.PlayerNumberWindow.ConfirmListener" target="it.polimi.ingsw.Client.View.GUI.PlayerNumberWindow">
+      <point x="0.0" y="-27.0" />
+      <point x="911.0" y="1596.0" />
+      <point x="983.5" y="1596.0" />
+      <point x="-55.5" y="114.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="265.0" y="268.5" />
+  <SelectedNodes>
+    <node>it.polimi.ingsw.Client.View.GUI.IntroFrame</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -11,18 +11,33 @@ import java.net.Socket;
 import java.util.ArrayList;
 import static java.lang.Integer.parseInt;
 
+/**
+ * this class represents the Client side communication center.
+ */
 public class GUINetInterface {
-
+    /** represents the moves associated to the first worker. */
     private ArrayList<Square> moves1;
+    /** represents the moves associated to the second worker. */
     private ArrayList<Square> moves2;
+    /** represents the first worker on the board. */
     private Builder builder1;
+    /** represents the second worker on the board. */
     private Builder builder2;
+    /** represent the Controller in the Client side. */
     private GUIClientController clientController;
+    /** represent the moves that a player can make and give back to the server,
+     * and the other way around, meaning the moves performed by other players send
+     * by the server. */
     private Moves moves = new Moves(builder1, moves1, builder2, moves2, false, false);
+    /** represent the first square in which the player can move or an other player has moved. */
     private Square firstSquare;
+    /**  represent the second square in which the player can move or an other player has moved. */
     private Square secondSquare;
 
-
+    /**
+     * creates a new NetInterface .
+     * @param clientController is the Client side Controller of the player.
+     */
     public GUINetInterface(GUIClientController clientController) {
         this.clientController = clientController;
     }
@@ -353,6 +368,12 @@ public class GUINetInterface {
         Sender.send(message, socket);
     }
 
+    /**
+     * sends the move performed by the player to the server.
+     * @param envelope is the move.
+     * @param socket is the server socket.
+     * @throws IOException exception.
+     */
     public void sendMoves(Moves envelope, Socket socket) throws IOException {
         if(envelope == null){
             Sender.send("0", socket);
@@ -366,6 +387,12 @@ public class GUINetInterface {
         }
     }
 
+    /**
+     * sends the square chosen by the player to the server.
+     * @param square is the chosen square.
+     * @param socket is the server socket.
+     * @throws IOException exception.
+     */
     public void sendSquare(Square square, Socket socket) throws IOException {
 
         String message = squareToString(square);
@@ -482,6 +509,12 @@ public class GUINetInterface {
         return card;
     }
 
+    /**
+     * sends the player chosen to begin to play.
+     * @param player is the chosen player.
+     * @param serverSocket is the server socket.
+     * @throws IOException exception
+     */
     public void sendFirstPlayer(String player, Socket serverSocket) throws IOException {
         Sender.send(player, serverSocket);
     }

@@ -67,12 +67,7 @@ public class IntroFrame extends JFrame {
         public void actionPerformed(ActionEvent event){
             IntroFrame.this.dispose();
             MainFrame frame = null;
-            try {
-                frame = new MainFrame();
-            } catch (IOException e) {
-                System.out.println("Error");
-                System.exit(-1);
-            }
+            frame = new MainFrame();
             new StartWindow(frame);
         }
     }

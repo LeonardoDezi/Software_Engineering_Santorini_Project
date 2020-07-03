@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.Server</OriginalElement>
+  <nodes>
+    <node x="334.7323412698412" y="764.0">it.polimi.ingsw.Server.ServerClientHandler</node>
+    <node x="322.2595238095237" y="1144.0">it.polimi.ingsw.Server.SantoriniApp</node>
+    <node x="420.23234126984124" y="466.0">it.polimi.ingsw.Server.Lobby</node>
+    <node x="306.23234126984124" y="0.0">it.polimi.ingsw.Server.Client</node>
+    <node x="56.0" y="76.0">it.polimi.ingsw.Server.Model</node>
+    <node x="42.63888888888886" y="564.0">it.polimi.ingsw.Server.Controller</node>
+    <node x="151.25952380952378" y="304.0">it.polimi.ingsw.Server.VirtualView</node>
+    <node x="39.232341269841186" y="786.0">it.polimi.ingsw.Server.GameMaster</node>
+    <node x="322.2595238095237" y="954.0">it.polimi.ingsw.Server.Server</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.Server.GameMaster" target="it.polimi.ingsw.Server.Client">
+      <point x="109.59999999999997" y="-48.0" />
+      <point x="285.83234126984115" y="734.0" />
+      <point x="367.7595238095238" y="734.0" />
+      <point x="367.7595238095238" y="264.0" />
+      <point x="391.73234126984124" y="264.0" />
+      <point x="-9.5" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model" target="it.polimi.ingsw.Server.Model">
+      <point x="-56.0" y="26.0" />
+      <point x="68.0" y="158.0" />
+      <point x="26.0" y="158.0" />
+      <point x="26.0" y="108.5" />
+      <point x="-68.0" y="6.5" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model" target="it.polimi.ingsw.Server.Controller">
+      <point x="0.0" y="26.0" />
+      <point x="124.0" y="274.0" />
+      <point x="99.75952380952378" y="274.0" />
+      <point x="99.75952380952378" y="436.0" />
+      <point x="114.63888888888886" y="436.0" />
+      <point x="-16.0" y="-26.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Lobby" target="it.polimi.ingsw.Server.Client">
+      <point x="-72.66666666666669" y="-124.0" />
+      <point x="456.56567460317456" y="446.0" />
+      <point x="486.9585317460317" y="446.0" />
+      <point x="486.9585317460317" y="284.0" />
+      <point x="448.73234126984124" y="284.0" />
+      <point x="47.500000000000014" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Server" target="it.polimi.ingsw.Server.Lobby">
+      <point x="74.0" y="-70.0" />
+      <point x="488.7595238095237" y="934.0" />
+      <point x="583.2769841269841" y="934.0" />
+      <point x="583.2769841269841" y="744.0" />
+      <point x="610.9823412698413" y="744.0" />
+      <point x="81.75" y="124.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Controller" target="it.polimi.ingsw.Server.Controller">
+      <point x="-44.0" y="26.0" />
+      <point x="86.63888888888886" y="646.0" />
+      <point x="12.638888888888857" y="646.0" />
+      <point x="12.638888888888857" y="577.0" />
+      <point x="-88.0" y="-13.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.SantoriniApp" target="it.polimi.ingsw.Server.Server">
+      <point x="-46.25" y="-71.0" />
+      <point x="-46.25" y="70.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Controller" target="it.polimi.ingsw.Server.Client">
+      <point x="64.0" y="-26.0" />
+      <point x="194.63888888888886" y="436.0" />
+      <point x="345.7595238095238" y="436.0" />
+      <point x="345.7595238095238" y="244.0" />
+      <point x="353.73234126984124" y="244.0" />
+      <point x="-47.5" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.VirtualView" target="it.polimi.ingsw.Server.VirtualView">
+      <point x="-36.8" y="26.0" />
+      <point x="206.45952380952377" y="386.0" />
+      <point x="121.25952380952378" y="386.0" />
+      <point x="121.25952380952378" y="317.0" />
+      <point x="-92.0" y="-13.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Server" target="it.polimi.ingsw.Server.GameMaster">
+      <point x="-74.0" y="-70.0" />
+      <point x="340.7595238095237" y="934.0" />
+      <point x="107.73234126984119" y="934.0" />
+      <point x="-68.5" y="48.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.VirtualView" target="it.polimi.ingsw.Server.Client">
+      <point x="81.77777777777777" y="-26.0" />
+      <point x="325.03730158730156" y="284.0" />
+      <point x="334.73234126984124" y="284.0" />
+      <point x="-66.5" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.ServerClientHandler" target="it.polimi.ingsw.Server.Client">
+      <point x="-74.99999999999994" y="-70.0" />
+      <point x="359.73234126984124" y="744.0" />
+      <point x="390.37222222222226" y="744.0" />
+      <point x="390.37222222222226" y="274.0" />
+      <point x="410.73234126984124" y="274.0" />
+      <point x="9.5" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Controller" target="it.polimi.ingsw.Server.VirtualView">
+      <point x="48.0" y="-26.0" />
+      <point x="178.63888888888886" y="426.0" />
+      <point x="316.8595238095238" y="426.0" />
+      <point x="73.60000000000002" y="26.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model" target="it.polimi.ingsw.Server.VirtualView">
+      <point x="64.0" y="26.0" />
+      <point x="188.0" y="224.0" />
+      <point x="284.1484126984127" y="224.0" />
+      <point x="40.888888888888914" y="-26.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.GameMaster" target="it.polimi.ingsw.Server.Controller">
+      <point x="-109.60000000000002" y="-48.0" />
+      <point x="66.63234126984116" y="744.0" />
+      <point x="115.9722222222222" y="744.0" />
+      <point x="-14.666666666666657" y="26.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Controller" target="it.polimi.ingsw.Server.Model">
+      <point x="0.0" y="-26.0" />
+      <point x="130.63888888888886" y="426.0" />
+      <point x="110.75952380952378" y="426.0" />
+      <point x="110.75952380952378" y="284.0" />
+      <point x="132.0" y="284.0" />
+      <point x="8.0" y="26.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.VirtualView" target="it.polimi.ingsw.Server.Model">
+      <point x="-20.444444444444457" y="-26.0" />
+      <point x="222.81507936507933" y="254.0" />
+      <point x="164.0" y="254.0" />
+      <point x="40.0" y="26.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.ServerClientHandler" target="it.polimi.ingsw.Server.Lobby">
+      <point x="75.00000000000006" y="-70.0" />
+      <point x="509.73234126984124" y="744.0" />
+      <point x="501.98234126984124" y="744.0" />
+      <point x="-27.25" y="124.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Server" target="it.polimi.ingsw.Server.ServerClientHandler">
+      <point x="0.0" y="-70.0" />
+      <point x="414.7595238095237" y="934.0" />
+      <point x="434.7323412698412" y="934.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="185.5" y="220.0" />
+  <SelectedNodes>
+    <node>it.polimi.ingsw.Server.Model</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

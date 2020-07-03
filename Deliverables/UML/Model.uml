@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.Server.Model</OriginalElement>
+  <nodes>
+    <node x="2506.295320051715" y="1518.0">it.polimi.ingsw.Server.Model.BasicRules</node>
+    <node x="3226.3446220065225" y="762.0">it.polimi.ingsw.Server.Model.Board</node>
+    <node x="655.8409931448543" y="4030.0">it.polimi.ingsw.Server.Model.Envelope</node>
+    <node x="1130.2183180115371" y="3932.0">it.polimi.ingsw.Server.Model.PlayerTest</node>
+    <node x="886.7952410884602" y="1120.0">it.polimi.ingsw.Server.Model.CardParameters</node>
+    <node x="1276.1436030349646" y="6210.0">it.polimi.ingsw.Server.Model.SpecialPhase2Test</node>
+    <node x="2983.8182023377385" y="3899.0">it.polimi.ingsw.Server.Model.BasicRulesTest</node>
+    <node x="2459.107488052024" y="4410.0">it.polimi.ingsw.Server.Model.SpecialPhase3</node>
+    <node x="900.7952410884601" y="1670.0">it.polimi.ingsw.Server.Model.Card</node>
+    <node x="621.2288136576751" y="474.0">it.polimi.ingsw.Server.Model.Builder</node>
+    <node x="1255.9183180115374" y="6850.0">it.polimi.ingsw.Server.Model.SpecialPhase1</node>
+    <node x="1240.1436030349646" y="5633.0">it.polimi.ingsw.Server.Model.SpecialPhase2</node>
+    <node x="3300.54170164688" y="4918.0">it.polimi.ingsw.Server.Model.SpecialPhase3Test</node>
+    <node x="1332.1962129250742" y="2988.0">it.polimi.ingsw.Server.Model.Player</node>
+    <node x="3555.2324880520246" y="6762.0">it.polimi.ingsw.Server.Model.MovementPhaseTest</node>
+    <node x="3421.8182023377385" y="3888.0">it.polimi.ingsw.Server.Model.BoardTest</node>
+    <node x="2730.3417016468798" y="4041.0">it.polimi.ingsw.Server.Model.Dealer</node>
+    <node x="2153.054856473076" y="3954.0">it.polimi.ingsw.Server.Model.WinPhaseTest</node>
+    <node x="859.8146895456834" y="0.0">it.polimi.ingsw.Server.Model.Square</node>
+    <node x="280.84455427527314" y="4052.0">it.polimi.ingsw.Server.Model.BuilderTest</node>
+    <node x="1412.2933180115374" y="7412.0">it.polimi.ingsw.Server.Model.SpecialPhase1Test</node>
+    <node x="1894.0548564730761" y="3932.0">it.polimi.ingsw.Server.Model.GameTest</node>
+    <node x="992.1436030349645" y="5578.0">it.polimi.ingsw.Server.Model.BuildingPhaseTest</node>
+    <node x="934.0592880821584" y="4962.0">it.polimi.ingsw.Server.Model.BuildingPhase</node>
+    <node x="3561.54170164688" y="6112.0">it.polimi.ingsw.Server.Model.MovementPhase</node>
+    <node x="2176.099667877802" y="1121.0">it.polimi.ingsw.Server.Model.WinPhase</node>
+    <node x="2782.107488052024" y="4465.0">it.polimi.ingsw.Server.Model.DealerTest</node>
+    <node x="2578.905033986169" y="2172.0">it.polimi.ingsw.Server.Model.Game</node>
+    <node x="3239.8182023377385" y="3987.0">it.polimi.ingsw.Server.Model.Phase</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1Test" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-99.75" y="-213.0" />
+      <point x="1426.5433180115374" y="7392.0" />
+      <point x="50.260869565217945" y="7392.0" />
+      <point x="50.260869565217945" y="4838.0" />
+      <point x="110.6028428093648" y="4838.0" />
+      <point x="110.6028428093648" y="4350.0" />
+      <point x="229.79104256958794" y="4350.0" />
+      <point x="229.79104256958794" y="642.0" />
+      <point x="623.4403521192137" y="642.0" />
+      <point x="-55.28846153846143" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.WinPhase" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="54.0" y="158.0" />
+      <point x="2374.099667877802" y="1488.0" />
+      <point x="2448.2847218589086" y="1488.0" />
+      <point x="2448.2847218589086" y="2072.0" />
+      <point x="2642.981957063092" y="2072.0" />
+      <point x="-54.92307692307713" y="-278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhase" target="it.polimi.ingsw.Server.Model.Envelope">
+      <point x="-63.125" y="-191.0" />
+      <point x="1022.4342880821584" y="4788.0" />
+      <point x="715.3409931448543" y="4788.0" />
+      <point x="0.0" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRules" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="34.833333333333485" y="-212.0" />
+      <point x="2750.1286533850484" y="1498.0" />
+      <point x="2808.795320051715" y="1498.0" />
+      <point x="2808.795320051715" y="394.0" />
+      <point x="949.0320808500314" y="394.0" />
+      <point x="17.217391304347984" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.WinPhase" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-90.0" y="158.0" />
+      <point x="2230.099667877802" y="1478.0" />
+      <point x="2067.7443973493455" y="1478.0" />
+      <point x="2067.7443973493455" y="2142.0" />
+      <point x="2038.6791799580415" y="2142.0" />
+      <point x="2038.6791799580415" y="2758.0" />
+      <point x="1502.0176414965026" y="2758.0" />
+      <point x="11.321428571428442" y="-190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2Test" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="25.666666666666742" y="-147.0" />
+      <point x="1417.3102697016311" y="6062.0" />
+      <point x="1762.31049863936" y="6062.0" />
+      <point x="1762.31049863936" y="3658.0" />
+      <point x="1454.467641496503" y="3658.0" />
+      <point x="-36.22857142857151" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2Test" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="77.0" y="-147.0" />
+      <point x="1468.6436030349646" y="6082.0" />
+      <point x="2431.344330157287" y="6082.0" />
+      <point x="2431.344330157287" y="2938.0" />
+      <point x="2682.247139249327" y="2938.0" />
+      <point x="-15.657894736842081" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1" target="it.polimi.ingsw.Server.Model.MovementPhase">
+      <point x="97.39285714285734" y="-202.0" />
+      <point x="1504.8111751543947" y="6672.0" />
+      <point x="3599.41670164688" y="6672.0" />
+      <point x="-113.625" y="245.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase3Test" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-71.5625" y="-235.0" />
+      <point x="3343.47920164688" y="4848.0" />
+      <point x="1862.486175154395" y="4848.0" />
+      <point x="1862.486175154395" y="3568.0" />
+      <point x="1535.9819272107884" y="3568.0" />
+      <point x="45.28571428571422" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.WinPhaseTest" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-94.58333333333348" y="-125.0" />
+      <point x="2171.9715231397427" y="3498.0" />
+      <point x="1581.2676414965026" y="3498.0" />
+      <point x="90.57142857142844" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1Test" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="71.25" y="-213.0" />
+      <point x="1597.5433180115374" y="7382.0" />
+      <point x="3934.7357805942484" y="7382.0" />
+      <point x="3934.7357805942484" y="2798.0" />
+      <point x="2813.773455038801" y="2798.0" />
+      <point x="115.86842105263167" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhase" target="it.polimi.ingsw.Server.Model.Phase">
+      <point x="138.875" y="-191.0" />
+      <point x="1224.4342880821584" y="4898.0" />
+      <point x="3114.6074880520246" y="4898.0" />
+      <point x="3114.6074880520246" y="4330.0" />
+      <point x="3296.5182023377383" y="4330.0" />
+      <point x="-24.300000000000182" y="92.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhaseTest" target="it.polimi.ingsw.Server.Model.MovementPhase">
+      <point x="-33.71428571428578" y="-290.0" />
+      <point x="3639.5182023377383" y="6692.0" />
+      <point x="3750.91670164688" y="6692.0" />
+      <point x="37.875" y="245.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Player" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-33.96428571428578" y="-190.0" />
+      <point x="1456.7319272107884" y="2918.0" />
+      <point x="1350.7442898481513" y="2918.0" />
+      <point x="1350.7442898481513" y="2152.0" />
+      <point x="1719.1192898481513" y="2152.0" />
+      <point x="1719.1192898481513" y="1100.0" />
+      <point x="1911.982385086247" y="1100.0" />
+      <point x="1911.982385086247" y="444.0" />
+      <point x="933.3799069369879" y="444.0" />
+      <point x="1.5652173913044862" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Dealer" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="77.20000000000005" y="-38.0" />
+      <point x="2904.0417016468796" y="3778.0" />
+      <point x="2858.850909104656" y="3778.0" />
+      <point x="2858.850909104656" y="2948.0" />
+      <point x="2719.8260866177484" y="2948.0" />
+      <point x="21.921052631579187" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Dealer" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-77.20000000000005" y="-38.0" />
+      <point x="2749.6417016468795" y="3478.0" />
+      <point x="1599.3819272107885" y="3478.0" />
+      <point x="108.68571428571431" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1Test" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="99.75" y="-213.0" />
+      <point x="1626.0433180115374" y="7392.0" />
+      <point x="4162.518389289901" y="7392.0" />
+      <point x="4162.518389289901" y="224.0" />
+      <point x="1002.2494721543794" y="224.0" />
+      <point x="70.43478260869597" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhase" target="it.polimi.ingsw.Server.Model.SpecialPhase2">
+      <point x="-75.75" y="-245.0" />
+      <point x="3637.29170164688" y="6022.0" />
+      <point x="1492.6436030349646" y="6022.0" />
+      <point x="101.0" y="147.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.PlayerTest" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-23.666666666666742" y="-147.0" />
+      <point x="1213.0516513448706" y="3648.0" />
+      <point x="1228.7672751961368" y="3648.0" />
+      <point x="1228.7672751961368" y="672.0" />
+      <point x="698.6326598115213" y="672.0" />
+      <point x="19.90384615384619" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1" target="it.polimi.ingsw.Server.Model.Envelope">
+      <point x="-32.46428571428578" y="-202.0" />
+      <point x="1374.9540322972516" y="6692.0" />
+      <point x="136.54786759951276" y="6692.0" />
+      <point x="136.54786759951276" y="5558.0" />
+      <point x="158.54786759951276" y="5558.0" />
+      <point x="158.54786759951276" y="4888.0" />
+      <point x="463.18227424749193" y="4888.0" />
+      <point x="463.18227424749193" y="4380.0" />
+      <point x="667.7409931448544" y="4380.0" />
+      <point x="-47.59999999999991" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.WinPhase" target="it.polimi.ingsw.Server.Model.Board">
+      <point x="96.0" y="-158.0" />
+      <point x="2416.099667877802" y="1050.0" />
+      <point x="3234.4696220065225" y="1050.0" />
+      <point x="-89.375" y="114.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRules" target="it.polimi.ingsw.Server.Model.Board">
+      <point x="104.5" y="-212.0" />
+      <point x="2819.795320051715" y="1060.0" />
+      <point x="3250.7196220065225" y="1060.0" />
+      <point x="-73.125" y="114.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Board" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="73.125" y="-114.0" />
+      <point x="3396.9696220065225" y="742.0" />
+      <point x="3375.0919046152185" y="742.0" />
+      <point x="3375.0919046152185" y="364.0" />
+      <point x="958.4233851978574" y="364.0" />
+      <point x="26.608695652173992" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Phase" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="-20.25" y="-92.0" />
+      <point x="3300.5682023377385" y="2888.0" />
+      <point x="2757.405033986169" y="2888.0" />
+      <point x="59.5" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhase" target="it.polimi.ingsw.Server.Model.SpecialPhase1">
+      <point x="-37.875" y="245.0" />
+      <point x="3675.16670164688" y="6682.0" />
+      <point x="1526.4540322972516" y="6682.0" />
+      <point x="119.03571428571422" y="-202.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhase" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-12.625" y="-191.0" />
+      <point x="1072.9342880821584" y="4818.0" />
+      <point x="1104.29524108846" y="4818.0" />
+      <point x="1104.29524108846" y="702.0" />
+      <point x="685.3634290422904" y="702.0" />
+      <point x="6.634615384615245" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase3Test" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="42.9375" y="-235.0" />
+      <point x="3457.97920164688" y="4878.0" />
+      <point x="3735.2202730754516" y="4878.0" />
+      <point x="3735.2202730754516" y="2848.0" />
+      <point x="2782.4576655651167" y="2848.0" />
+      <point x="84.55263157894751" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Square" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-4.695652173913004" y="102.0" />
+      <point x="927.1190373717704" y="444.0" />
+      <point x="693.1038136576751" y="444.0" />
+      <point x="14.375" y="-49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2Test" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-51.333333333333485" y="-147.0" />
+      <point x="1340.3102697016311" y="6072.0" />
+      <point x="101.81438127090314" y="6072.0" />
+      <point x="101.81438127090314" y="4868.0" />
+      <point x="186.3678929765888" y="4868.0" />
+      <point x="186.3678929765888" y="4380.0" />
+      <point x="270.34455427527314" y="4380.0" />
+      <point x="270.34455427527314" y="672.0" />
+      <point x="636.7095828884442" y="672.0" />
+      <point x="-42.019230769230944" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRules" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-190.0" y="212.0" />
+      <point x="2525.295320051715" y="2152.0" />
+      <point x="2049.6791799580415" y="2152.0" />
+      <point x="2049.6791799580415" y="2768.0" />
+      <point x="1524.66049863936" y="2768.0" />
+      <point x="33.96428571428578" y="-190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRulesTest" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-59.0" y="-180.0" />
+      <point x="3042.8182023377385" y="3438.0" />
+      <point x="1635.6104986393598" y="3438.0" />
+      <point x="144.9142857142856" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRules" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-34.833333333333485" y="-212.0" />
+      <point x="2680.4619867183815" y="1458.0" />
+      <point x="2474.599667877802" y="1458.0" />
+      <point x="2474.599667877802" y="1010.0" />
+      <point x="1900.982385086247" y="1010.0" />
+      <point x="1900.982385086247" y="602.0" />
+      <point x="729.5941982730599" y="602.0" />
+      <point x="50.865384615384755" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.PlayerTest" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="0.0" y="-147.0" />
+      <point x="1236.7183180115371" y="3678.0" />
+      <point x="1354.8390700679315" y="3678.0" />
+      <point x="-135.8571428571429" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Phase" target="it.polimi.ingsw.Server.Model.Board">
+      <point x="60.75" y="-92.0" />
+      <point x="3381.5682023377385" y="3818.0" />
+      <point x="4022.7357805942484" y="3818.0" />
+      <point x="4022.7357805942484" y="1080.0" />
+      <point x="3364.4696220065225" y="1080.0" />
+      <point x="40.625" y="114.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.GameTest" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="0.0" y="-147.0" />
+      <point x="2013.5548564730761" y="3508.0" />
+      <point x="1971.424856665075" y="3508.0" />
+      <point x="1971.424856665075" y="2122.0" />
+      <point x="2036.9943973493457" y="2122.0" />
+      <point x="2036.9943973493457" y="1020.0" />
+      <point x="2227.645954125903" y="1020.0" />
+      <point x="2227.645954125903" y="434.0" />
+      <point x="936.5103417195965" y="434.0" />
+      <point x="4.695652173913004" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.DealerTest" target="it.polimi.ingsw.Server.Model.Dealer">
+      <point x="-23.25" y="-114.0" />
+      <point x="2851.857488052024" y="4290.0" />
+      <point x="2875.0917016468798" y="4290.0" />
+      <point x="48.25" y="38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2Test" target="it.polimi.ingsw.Server.Model.SpecialPhase2">
+      <point x="-25.666666666666742" y="-147.0" />
+      <point x="1365.9769363682976" y="6062.0" />
+      <point x="1290.6436030349646" y="6062.0" />
+      <point x="-101.0" y="147.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2" target="it.polimi.ingsw.Server.Model.Envelope">
+      <point x="12.625" y="-147.0" />
+      <point x="1404.2686030349646" y="5408.0" />
+      <point x="1315.6217880821584" y="5408.0" />
+      <point x="1315.6217880821584" y="4768.0" />
+      <point x="823.6952410884603" y="4768.0" />
+      <point x="823.6952410884603" y="4390.0" />
+      <point x="739.1409931448545" y="4390.0" />
+      <point x="23.800000000000182" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhase" target="it.polimi.ingsw.Server.Model.Envelope">
+      <point x="-97.39285714285734" y="-245.0" />
+      <point x="3615.6488445040222" y="6032.0" />
+      <point x="463.18227424749193" y="6032.0" />
+      <point x="463.18227424749193" y="4898.0" />
+      <point x="507.18227424749193" y="4898.0" />
+      <point x="507.18227424749193" y="4390.0" />
+      <point x="691.5409931448542" y="4390.0" />
+      <point x="-23.800000000000182" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BoardTest" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="60.66666666666697" y="-191.0" />
+      <point x="3573.4848690044055" y="3858.0" />
+      <point x="4069.8662153768573" y="3858.0" />
+      <point x="4069.8662153768573" y="344.0" />
+      <point x="964.6842547630749" y="344.0" />
+      <point x="32.86956521739148" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase3Test" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="100.1875" y="-235.0" />
+      <point x="3515.22920164688" y="4898.0" />
+      <point x="4120.127084942075" y="4898.0" />
+      <point x="4120.127084942075" y="284.0" />
+      <point x="983.466863458727" y="284.0" />
+      <point x="51.6521739130435" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Card" target="it.polimi.ingsw.Server.Model.CardParameters">
+      <point x="44.75" y="-60.0" />
+      <point x="1035.04524108846" y="1498.0" />
+      <point x="1042.0452410884602" y="1498.0" />
+      <point x="51.75" y="159.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase3" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="-12.625" y="-169.0" />
+      <point x="2597.982488052024" y="2968.0" />
+      <point x="2701.0366129335375" y="2968.0" />
+      <point x="3.1315789473683253" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhaseTest" target="it.polimi.ingsw.Server.Model.BuildingPhase">
+      <point x="-25.333333333333258" y="-202.0" />
+      <point x="1080.8102697016311" y="5518.0" />
+      <point x="984.5592880821584" y="5518.0" />
+      <point x="-101.0" y="191.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.DealerTest" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="23.25" y="-114.0" />
+      <point x="2898.357488052024" y="4290.0" />
+      <point x="2933.8417016468798" y="4290.0" />
+      <point x="2933.8417016468798" y="2938.0" />
+      <point x="2726.089244512485" y="2938.0" />
+      <point x="28.184210526315837" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRulesTest" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="-11.800000000000182" y="-180.0" />
+      <point x="3090.0182023377383" y="3788.0" />
+      <point x="3096.3182023377385" y="3788.0" />
+      <point x="3096.3182023377385" y="2918.0" />
+      <point x="2738.615560301959" y="2918.0" />
+      <point x="40.71052631578959" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhase" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="63.125" y="-191.0" />
+      <point x="1148.6842880821584" y="4868.0" />
+      <point x="2401.554856473076" y="4868.0" />
+      <point x="2401.554856473076" y="2898.0" />
+      <point x="2657.1945076703796" y="2898.0" />
+      <point x="-40.71052631578959" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhase" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="75.75" y="-245.0" />
+      <point x="3788.79170164688" y="6062.0" />
+      <point x="4123.257519724684" y="6062.0" />
+      <point x="4123.257519724684" y="274.0" />
+      <point x="986.5972982413359" y="274.0" />
+      <point x="54.78260869565247" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhaseTest" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-101.33333333333326" y="-202.0" />
+      <point x="1004.8102697016312" y="5548.0" />
+      <point x="39.260869565217945" y="5548.0" />
+      <point x="39.260869565217945" y="284.0" />
+      <point x="877.0320808500314" y="284.0" />
+      <point x="-54.782608695652016" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Game" target="it.polimi.ingsw.Server.Model.Board">
+      <point x="73.23076923076906" y="-278.0" />
+      <point x="2771.1358032169383" y="2132.0" />
+      <point x="2934.795320051715" y="2132.0" />
+      <point x="2934.795320051715" y="1080.0" />
+      <point x="3283.2196220065225" y="1080.0" />
+      <point x="-40.625" y="114.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhase" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="32.46428571428578" y="-245.0" />
+      <point x="3745.5059873611654" y="6092.0" />
+      <point x="3741.4834309701882" y="6092.0" />
+      <point x="3741.4834309701882" y="2838.0" />
+      <point x="2788.7208234598534" y="2838.0" />
+      <point x="90.81578947368416" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase3" target="it.polimi.ingsw.Server.Model.Envelope">
+      <point x="-138.875" y="-169.0" />
+      <point x="2471.732488052024" y="4380.0" />
+      <point x="762.9409931448542" y="4380.0" />
+      <point x="47.59999999999991" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhase" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-138.875" y="-191.0" />
+      <point x="946.6842880821584" y="4818.0" />
+      <point x="148.9448160535121" y="4818.0" />
+      <point x="148.9448160535121" y="334.0" />
+      <point x="892.6842547630749" y="334.0" />
+      <point x="-39.13043478260852" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Game" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-90.81578947368416" y="278.0" />
+      <point x="2607.089244512485" y="2818.0" />
+      <point x="1637.8747843536457" y="2818.0" />
+      <point x="147.17857142857133" y="-190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Envelope" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="9.916666666666515" y="-49.0" />
+      <point x="725.2576598115209" y="3648.0" />
+      <point x="716.4243264781878" y="3648.0" />
+      <point x="716.4243264781878" y="722.0" />
+      <point x="676.5172751961366" y="722.0" />
+      <point x="-2.2115384615385665" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhaseTest" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="76.0" y="-202.0" />
+      <point x="1182.1436030349646" y="5518.0" />
+      <point x="2407.8180143678132" y="5518.0" />
+      <point x="2407.8180143678132" y="2908.0" />
+      <point x="2663.4576655651167" y="2908.0" />
+      <point x="-34.44736842105249" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRulesTest" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="106.19999999999982" y="-180.0" />
+      <point x="3208.0182023377383" y="3848.0" />
+      <point x="4066.7357805942484" y="3848.0" />
+      <point x="4066.7357805942484" y="354.0" />
+      <point x="961.553819980466" y="354.0" />
+      <point x="29.73913043478251" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Envelope" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="29.75" y="-49.0" />
+      <point x="745.0909931448543" y="3668.0" />
+      <point x="1345.7819272107886" y="3668.0" />
+      <point x="-144.9142857142856" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-10.821428571428442" y="-202.0" />
+      <point x="1396.596889440109" y="6682.0" />
+      <point x="923.5592880821584" y="6682.0" />
+      <point x="923.5592880821584" y="4838.0" />
+      <point x="1362.77546086868" y="4838.0" />
+      <point x="1362.77546086868" y="3718.0" />
+      <point x="1391.0676414965028" y="3718.0" />
+      <point x="-99.62857142857138" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.GameTest" target="it.polimi.ingsw.Server.Model.Card">
+      <point x="-34.14285714285734" y="-147.0" />
+      <point x="1979.4119993302188" y="3518.0" />
+      <point x="1659.6962129250742" y="3518.0" />
+      <point x="1659.6962129250742" y="2142.0" />
+      <point x="1005.2119077551267" y="2142.0" />
+      <point x="14.916666666666629" y="60.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-75.75" y="-202.0" />
+      <point x="1331.6683180115374" y="6712.0" />
+      <point x="86.39130434782646" y="6712.0" />
+      <point x="86.39130434782646" y="4848.0" />
+      <point x="170.9448160535121" y="4848.0" />
+      <point x="170.9448160535121" y="4360.0" />
+      <point x="254.92147735219646" y="4360.0" />
+      <point x="254.92147735219646" y="652.0" />
+      <point x="627.8634290422904" y="652.0" />
+      <point x="-50.865384615384755" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhaseTest" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-67.42857142857156" y="-290.0" />
+      <point x="3605.803916623453" y="6622.0" />
+      <point x="1822.371889440109" y="6622.0" />
+      <point x="1822.371889440109" y="3608.0" />
+      <point x="1499.753355782217" y="3608.0" />
+      <point x="9.057142857142708" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhaseTest" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="33.71428571428578" y="-290.0" />
+      <point x="3706.94677376631" y="6712.0" />
+      <point x="3875.04170164688" y="6712.0" />
+      <point x="3875.04170164688" y="2828.0" />
+      <point x="2794.9839813545905" y="2828.0" />
+      <point x="97.07894736842127" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuilderTest" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="28.59999999999991" y="-27.0" />
+      <point x="380.94455427527305" y="3868.0" />
+      <point x="370.0545920459533" y="3868.0" />
+      <point x="370.0545920459533" y="692.0" />
+      <point x="645.555736734598" y="692.0" />
+      <point x="-33.17307692307713" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BoardTest" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-80.88888888888869" y="-191.0" />
+      <point x="3431.92931344885" y="3418.0" />
+      <point x="1644.6676414965027" y="3418.0" />
+      <point x="153.97142857142853" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BoardTest" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="0.0" y="-191.0" />
+      <point x="3512.8182023377385" y="2868.0" />
+      <point x="2769.931349775643" y="2868.0" />
+      <point x="72.02631578947376" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Phase" target="it.polimi.ingsw.Server.Model.BasicRules">
+      <point x="20.25" y="-92.0" />
+      <point x="3341.0682023377385" y="3788.0" />
+      <point x="3967.7357805942484" y="3788.0" />
+      <point x="3967.7357805942484" y="1982.0" />
+      <point x="2829.295320051715" y="1982.0" />
+      <point x="114.0" y="212.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase3" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="88.375" y="-169.0" />
+      <point x="2698.982488052024" y="4370.0" />
+      <point x="4083.9966501594663" y="4370.0" />
+      <point x="4083.9966501594663" y="324.0" />
+      <point x="970.9451243282924" y="324.0" />
+      <point x="39.13043478260897" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Envelope" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="49.583333333333485" y="-49.0" />
+      <point x="764.9243264781878" y="3728.0" />
+      <point x="2262.800097652158" y="3728.0" />
+      <point x="2262.800097652158" y="2828.0" />
+      <point x="2613.3524024072217" y="2828.0" />
+      <point x="-84.55263157894751" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="37.875" y="-147.0" />
+      <point x="1429.5186030349646" y="5498.0" />
+      <point x="1693.1229986393603" y="5498.0" />
+      <point x="1693.1229986393603" y="3678.0" />
+      <point x="1436.353355782217" y="3678.0" />
+      <point x="-54.342857142857156" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase3" target="it.polimi.ingsw.Server.Model.Phase">
+      <point x="37.875" y="-169.0" />
+      <point x="2648.482488052024" y="4310.0" />
+      <point x="3264.1182023377387" y="4310.0" />
+      <point x="-56.69999999999982" y="92.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Player" target="it.polimi.ingsw.Server.Model.Card">
+      <point x="-147.17857142857156" y="-190.0" />
+      <point x="1343.5176414965026" y="2968.0" />
+      <point x="945.5452410884602" y="2968.0" />
+      <point x="-44.75" y="60.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.GameTest" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="34.14285714285734" y="-147.0" />
+      <point x="2047.6977136159335" y="3758.0" />
+      <point x="2363.3823836255333" y="3758.0" />
+      <point x="2363.3823836255333" y="2858.0" />
+      <point x="2632.1418760914326" y="2858.0" />
+      <point x="-65.76315789473665" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="32.46428571428578" y="-202.0" />
+      <point x="1439.8826037258232" y="6642.0" />
+      <point x="2448.607488052024" y="6642.0" />
+      <point x="2448.607488052024" y="2958.0" />
+      <point x="2694.773455038801" y="2958.0" />
+      <point x="-3.1315789473683253" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhase" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-32.46428571428578" y="-245.0" />
+      <point x="3680.577415932594" y="6002.0" />
+      <point x="1842.429032297252" y="6002.0" />
+      <point x="1842.429032297252" y="3588.0" />
+      <point x="1517.867641496503" y="3588.0" />
+      <point x="27.171428571428578" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-37.875" y="-147.0" />
+      <point x="1353.7686030349646" y="5428.0" />
+      <point x="518.1822742474919" y="5428.0" />
+      <point x="518.1822742474919" y="742.0" />
+      <point x="667.6711213499827" y="742.0" />
+      <point x="-11.057692307692378" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRules" target="it.polimi.ingsw.Server.Model.WinPhase">
+      <point x="-174.16666666666652" y="-212.0" />
+      <point x="2541.1286533850484" y="1478.0" />
+      <point x="2410.099667877802" y="1478.0" />
+      <point x="90.0" y="158.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Game" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-36.615384615384755" y="-278.0" />
+      <point x="2661.2896493707844" y="2062.0" />
+      <point x="2495.795320051715" y="2062.0" />
+      <point x="2495.795320051715" y="404.0" />
+      <point x="945.9016460674225" y="404.0" />
+      <point x="14.086956521739012" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhase" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-140.67857142857156" y="-245.0" />
+      <point x="3572.3631302183085" y="6052.0" />
+      <point x="147.54786759951276" y="6052.0" />
+      <point x="147.54786759951276" y="4878.0" />
+      <point x="197.3678929765888" y="4878.0" />
+      <point x="197.3678929765888" y="4390.0" />
+      <point x="434.34455427527314" y="4390.0" />
+      <point x="434.34455427527314" y="702.0" />
+      <point x="649.9788136576751" y="702.0" />
+      <point x="-28.75" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRulesTest" target="it.polimi.ingsw.Server.Model.BasicRules">
+      <point x="59.0" y="-180.0" />
+      <point x="3160.8182023377385" y="3778.0" />
+      <point x="3956.7357805942484" y="3778.0" />
+      <point x="3956.7357805942484" y="1992.0" />
+      <point x="2791.295320051715" y="1992.0" />
+      <point x="76.0" y="212.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuilderTest" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="57.19999999999999" y="-27.0" />
+      <point x="409.5445542752732" y="3658.0" />
+      <point x="1336.7247843536456" y="3658.0" />
+      <point x="-153.97142857142853" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BoardTest" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-40.44444444444434" y="-191.0" />
+      <point x="3472.373757893294" y="3398.0" />
+      <point x="2060.6791799580415" y="3398.0" />
+      <point x="2060.6791799580415" y="2112.0" />
+      <point x="1708.1192898481513" y="2112.0" />
+      <point x="1708.1192898481513" y="612.0" />
+      <point x="725.1711213499827" y="612.0" />
+      <point x="46.44230769230762" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Game" target="it.polimi.ingsw.Server.Model.BasicRules">
+      <point x="0.0" y="-278.0" />
+      <point x="2697.905033986169" y="2042.0" />
+      <point x="2601.295320051715" y="2042.0" />
+      <point x="-114.0" y="212.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase3" target="it.polimi.ingsw.Server.Model.Board">
+      <point x="63.125" y="-169.0" />
+      <point x="2673.732488052024" y="4360.0" />
+      <point x="4055.7357805942484" y="4360.0" />
+      <point x="4055.7357805942484" y="1050.0" />
+      <point x="3413.2196220065225" y="1050.0" />
+      <point x="89.375" y="114.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.GameTest" target="it.polimi.ingsw.Server.Model.Board">
+      <point x="102.42857142857156" y="-147.0" />
+      <point x="2115.9834279016477" y="3798.0" />
+      <point x="4000.7357805942484" y="3798.0" />
+      <point x="4000.7357805942484" y="1100.0" />
+      <point x="3331.9696220065225" y="1100.0" />
+      <point x="8.125" y="114.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuilderTest" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-28.59999999999991" y="-27.0" />
+      <point x="323.74455427527323" y="3858.0" />
+      <point x="215.66060778697897" y="3858.0" />
+      <point x="215.66060778697897" y="374.0" />
+      <point x="905.2059938935095" y="374.0" />
+      <point x="-26.608695652173992" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Player" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="56.60714285714289" y="-190.0" />
+      <point x="1547.3033557822173" y="2778.0" />
+      <point x="2582.0366129335375" y="2778.0" />
+      <point x="-115.86842105263167" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhaseTest" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="25.333333333333258" y="-202.0" />
+      <point x="1131.4769363682976" y="5478.0" />
+      <point x="1612.895103725823" y="5478.0" />
+      <point x="1612.895103725823" y="3698.0" />
+      <point x="1418.2390700679316" y="3698.0" />
+      <point x="-72.4571428571428" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-138.875" y="-147.0" />
+      <point x="1252.7686030349646" y="5468.0" />
+      <point x="64.39130434782646" y="5468.0" />
+      <point x="64.39130434782646" y="304.0" />
+      <point x="883.2929504152485" y="304.0" />
+      <point x="-48.52173913043498" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.WinPhaseTest" target="it.polimi.ingsw.Server.Model.WinPhase">
+      <point x="-18.916666666666515" y="-125.0" />
+      <point x="2247.6381898064096" y="3718.0" />
+      <point x="2222.7847467749652" y="3718.0" />
+      <point x="2222.7847467749652" y="1488.0" />
+      <point x="2266.099667877802" y="1488.0" />
+      <point x="-54.0" y="158.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRulesTest" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-35.40000000000009" y="-180.0" />
+      <point x="3066.418202337738" y="3428.0" />
+      <point x="1670.6962129250742" y="3428.0" />
+      <point x="1670.6962129250742" y="632.0" />
+      <point x="716.3249675038289" y="632.0" />
+      <point x="37.59615384615381" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase3" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-63.125" y="-169.0" />
+      <point x="2547.482488052024" y="4350.0" />
+      <point x="1871.5433180115378" y="4350.0" />
+      <point x="1871.5433180115378" y="3558.0" />
+      <point x="1545.0390700679313" y="3558.0" />
+      <point x="54.342857142857156" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.GameTest" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="-102.42857142857156" y="-147.0" />
+      <point x="1911.1262850445046" y="3538.0" />
+      <point x="1563.1533557822172" y="3538.0" />
+      <point x="72.4571428571428" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhaseTest" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="101.14285714285734" y="-290.0" />
+      <point x="3774.3753451948814" y="6742.0" />
+      <point x="4159.387954507292" y="6742.0" />
+      <point x="4159.387954507292" y="234.0" />
+      <point x="999.1190373717704" y="234.0" />
+      <point x="67.304347826087" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="88.375" y="-147.0" />
+      <point x="1480.0186030349646" y="5538.0" />
+      <point x="2425.0811722625504" y="5538.0" />
+      <point x="2425.0811722625504" y="2928.0" />
+      <point x="2675.9839813545905" y="2928.0" />
+      <point x="-21.921052631578732" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhase" target="it.polimi.ingsw.Server.Model.Phase">
+      <point x="-10.821428571428442" y="-245.0" />
+      <point x="3702.2202730754516" y="4330.0" />
+      <point x="3377.5182023377383" y="4330.0" />
+      <point x="56.69999999999982" y="92.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.MovementPhase" target="it.polimi.ingsw.Server.Model.BasicRules">
+      <point x="54.10714285714266" y="-245.0" />
+      <point x="3767.1488445040222" y="6052.0" />
+      <point x="3978.7357805942484" y="6052.0" />
+      <point x="3978.7357805942484" y="1972.0" />
+      <point x="2867.295320051715" y="1972.0" />
+      <point x="152.0" y="212.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhase" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="37.875" y="-191.0" />
+      <point x="1123.4342880821584" y="4858.0" />
+      <point x="1465.6165322972515" y="4858.0" />
+      <point x="1465.6165322972515" y="3708.0" />
+      <point x="1409.1819272107887" y="3708.0" />
+      <point x="-81.51428571428573" y="190.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase3" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-113.625" y="-169.0" />
+      <point x="2496.982488052024" y="4370.0" />
+      <point x="1108.7183180115371" y="4370.0" />
+      <point x="1108.7183180115371" y="692.0" />
+      <point x="689.7865059653675" y="692.0" />
+      <point x="11.057692307692378" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1Test" target="it.polimi.ingsw.Server.Model.SpecialPhase1">
+      <point x="-42.75" y="-213.0" />
+      <point x="1483.5433180115374" y="7372.0" />
+      <point x="1331.6683180115374" y="7372.0" />
+      <point x="-75.75" y="202.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2" target="it.polimi.ingsw.Server.Model.BuildingPhase">
+      <point x="-12.625" y="-147.0" />
+      <point x="1379.0186030349646" y="5418.0" />
+      <point x="1186.5592880821584" y="5418.0" />
+      <point x="101.0" y="191.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Game" target="it.polimi.ingsw.Server.Model.Dealer">
+      <point x="15.657894736842081" y="278.0" />
+      <point x="2713.5629287230113" y="2958.0" />
+      <point x="2847.850909104656" y="2958.0" />
+      <point x="2847.850909104656" y="3788.0" />
+      <point x="2865.4417016468797" y="3788.0" />
+      <point x="38.59999999999991" y="-38.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-140.67857142857156" y="-202.0" />
+      <point x="1266.7397465829658" y="6742.0" />
+      <point x="0.0" y="6742.0" />
+      <point x="0.0" y="234.0" />
+      <point x="861.3799069369879" y="234.0" />
+      <point x="-70.43478260869551" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.PlayerTest" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="71.0" y="-147.0" />
+      <point x="1307.7183180115371" y="3738.0" />
+      <point x="2269.0632555468956" y="3738.0" />
+      <point x="2269.0632555468956" y="2838.0" />
+      <point x="2619.615560301959" y="2838.0" />
+      <point x="-78.2894736842104" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhaseTest" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-50.666666666666515" y="-202.0" />
+      <point x="1055.476936368298" y="5528.0" />
+      <point x="474.18227424749193" y="5528.0" />
+      <point x="474.18227424749193" y="722.0" />
+      <point x="658.8249675038289" y="722.0" />
+      <point x="-19.90384615384619" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Player" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-79.25" y="-190.0" />
+      <point x="1411.4462129250742" y="2938.0" />
+      <point x="1328.7442898481513" y="2938.0" />
+      <point x="1328.7442898481513" y="652.0" />
+      <point x="707.4788136576751" y="652.0" />
+      <point x="28.75" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.WinPhase" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-96.0" y="-158.0" />
+      <point x="2224.099667877802" y="1030.0" />
+      <point x="2400.480102660411" y="1030.0" />
+      <point x="2400.480102660411" y="424.0" />
+      <point x="939.6407765022054" y="424.0" />
+      <point x="7.826086956521976" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRulesTest" target="it.polimi.ingsw.Server.Model.Board">
+      <point x="82.59999999999991" y="-180.0" />
+      <point x="3184.418202337738" y="3808.0" />
+      <point x="4011.7357805942484" y="3808.0" />
+      <point x="4011.7357805942484" y="1090.0" />
+      <point x="3348.2196220065225" y="1090.0" />
+      <point x="24.375" y="114.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Game" target="it.polimi.ingsw.Server.Model.Card">
+      <point x="-91.53846153846143" y="-278.0" />
+      <point x="2606.3665724477078" y="2092.0" />
+      <point x="1064.8785744217935" y="2092.0" />
+      <point x="74.58333333333326" y="60.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase3Test" target="it.polimi.ingsw.Server.Model.SpecialPhase3">
+      <point x="-14.3125" y="-235.0" />
+      <point x="3400.72920164688" y="4828.0" />
+      <point x="2711.607488052024" y="4828.0" />
+      <point x="101.0" y="169.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BasicRules" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="0.0" y="212.0" />
+      <point x="2715.295320051715" y="2012.0" />
+      <point x="2752.8281109092463" y="2012.0" />
+      <point x="54.92307692307713" y="-278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1" target="it.polimi.ingsw.Server.Model.Phase">
+      <point x="75.75" y="-202.0" />
+      <point x="1483.1683180115374" y="6662.0" />
+      <point x="3551.04170164688" y="6662.0" />
+      <point x="3551.04170164688" y="4340.0" />
+      <point x="3361.3182023377385" y="4340.0" />
+      <point x="40.5" y="92.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Builder" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-14.375" y="-49.0" />
+      <point x="664.3538136576751" y="434.0" />
+      <point x="923.9886025891615" y="434.0" />
+      <point x="-7.826086956521976" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1" target="it.polimi.ingsw.Server.Model.BasicRules">
+      <point x="140.67857142857156" y="-202.0" />
+      <point x="1548.096889440109" y="6732.0" />
+      <point x="3989.7357805942484" y="6732.0" />
+      <point x="3989.7357805942484" y="1962.0" />
+      <point x="2905.295320051715" y="1962.0" />
+      <point x="190.0" y="212.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Envelope" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-29.75" y="-49.0" />
+      <point x="685.5909931448543" y="3638.0" />
+      <point x="240.79104256958794" y="3638.0" />
+      <point x="240.79104256958794" y="394.0" />
+      <point x="911.466863458727" y="394.0" />
+      <point x="-20.347826086956502" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.PlayerTest" target="it.polimi.ingsw.Server.Model.Card">
+      <point x="-47.33333333333337" y="-147.0" />
+      <point x="1189.3849846782039" y="3608.0" />
+      <point x="934.5452410884602" y="3608.0" />
+      <point x="934.5452410884602" y="2152.0" />
+      <point x="915.7119077551267" y="2152.0" />
+      <point x="-74.58333333333337" y="60.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BoardTest" target="it.polimi.ingsw.Server.Model.Board">
+      <point x="40.44444444444434" y="-191.0" />
+      <point x="3553.262646782183" y="3838.0" />
+      <point x="4044.7357805942484" y="3838.0" />
+      <point x="4044.7357805942484" y="1060.0" />
+      <point x="3396.9696220065225" y="1060.0" />
+      <point x="73.125" y="114.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.Board" target="it.polimi.ingsw.Server.Model.Builder">
+      <point x="-73.125" y="-114.0" />
+      <point x="3250.7196220065225" y="592.0" />
+      <point x="734.0172751961366" y="592.0" />
+      <point x="55.28846153846143" y="49.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2Test" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-102.66666666666674" y="-147.0" />
+      <point x="1288.9769363682976" y="6092.0" />
+      <point x="25.130434782608972" y="6092.0" />
+      <point x="25.130434782608972" y="264.0" />
+      <point x="870.771211284814" y="264.0" />
+      <point x="-61.043478260869506" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase2" target="it.polimi.ingsw.Server.Model.Phase">
+      <point x="138.875" y="-147.0" />
+      <point x="1530.5186030349646" y="5558.0" />
+      <point x="3290.04170164688" y="5558.0" />
+      <point x="3290.04170164688" y="4350.0" />
+      <point x="3328.918202337738" y="4350.0" />
+      <point x="8.099999999999909" y="92.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.WinPhaseTest" target="it.polimi.ingsw.Server.Model.Game">
+      <point x="94.58333333333348" y="-125.0" />
+      <point x="2361.1381898064096" y="3788.0" />
+      <point x="2395.2916985783395" y="3788.0" />
+      <point x="2395.2916985783395" y="2888.0" />
+      <point x="2650.931349775643" y="2888.0" />
+      <point x="-46.973684210526244" y="278.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.BuildingPhase" target="it.polimi.ingsw.Server.Model.SpecialPhase3">
+      <point x="88.375" y="-191.0" />
+      <point x="1173.9342880821584" y="4878.0" />
+      <point x="2509.607488052024" y="4878.0" />
+      <point x="-101.0" y="169.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.PlayerTest" target="it.polimi.ingsw.Server.Model.Square">
+      <point x="-94.66666666666674" y="-147.0" />
+      <point x="1142.0516513448706" y="3628.0" />
+      <point x="243.92147735219646" y="3628.0" />
+      <point x="243.92147735219646" y="404.0" />
+      <point x="914.5972982413355" y="404.0" />
+      <point x="-17.217391304347984" y="102.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Server.Model.SpecialPhase1Test" target="it.polimi.ingsw.Server.Model.Player">
+      <point x="14.25" y="-213.0" />
+      <point x="1540.5433180115374" y="7362.0" />
+      <point x="1802.314746582966" y="7362.0" />
+      <point x="1802.314746582966" y="3628.0" />
+      <point x="1481.6390700679312" y="3628.0" />
+      <point x="-9.057142857142935" y="190.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.30000000000000004" x="1342.3048780487802" y="414.6666666666665" />
+  <SelectedNodes>
+    <node>it.polimi.ingsw.Server.Model.BasicRules</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

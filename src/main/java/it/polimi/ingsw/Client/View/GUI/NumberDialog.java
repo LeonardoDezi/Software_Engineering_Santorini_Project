@@ -22,16 +22,16 @@ public class NumberDialog extends JFrame {
 
     private MainFrame frame;
 
-    private int numberOfPlayers;
 
     private GUIClientController controller;
 
+    /** represents the title of the window */
     private JTextArea textField;
 
 
 
     /** the actionListener assigned to the start button. When the button is pressed, it closes
-     * the startDialog, sends the username to the server and creates a waitingDialog */
+     * the numberDialog, sends the username to the server and creates a waitingDialog */
     private class ConfirmListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -59,7 +59,7 @@ public class NumberDialog extends JFrame {
         }
     }
 
-
+/** constructor of numberDialog */
     public NumberDialog(MainFrame frame){
 
         this.frame = frame;
@@ -133,7 +133,7 @@ public class NumberDialog extends JFrame {
 
 
 
-
+/** sets the controller and displays the number of players */
     public void setController(GUIClientController controller){
         this.controller = controller;
         textField.setText("The number of players is " + frame.getNumberOfPlayers());

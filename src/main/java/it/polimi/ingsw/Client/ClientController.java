@@ -61,6 +61,7 @@ public class ClientController {
         colorMap();
     }
 
+    /** initializes the hashmap of the player's colours */
     public void colorMap(){
         colourSelection = new HashMap<>();
         colourSelection.put("red", Colour.ANSI_RED);

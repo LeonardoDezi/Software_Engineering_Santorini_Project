@@ -1,6 +1,6 @@
 it.polimi.ingsw.Client
 it.polimi.ingsw.Client.NetworkHandler
-it.polimi.ingsw.Client.View
+it.polimi.ingsw.Client.View.CLI
 it.polimi.ingsw.Client.View.GUI
 it.polimi.ingsw.Observer
 it.polimi.ingsw.Parser

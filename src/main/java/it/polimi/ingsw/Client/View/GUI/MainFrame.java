@@ -113,28 +113,40 @@ public class MainFrame extends JFrame {
     /** if true, it indicates that the board is still in setup mode and the actual game hasn't started yet */
     public boolean setup;
 
+    /** if true, the client is stillPlaying and still connected to the server */
     public boolean stillPlaying = true;
 
+    /** when pressed, the player will build a dome */
     public JButton domeButton;
 
+    /** when pressed, the player will skip a phase */
     public JButton skipButton;
 
+    /** displays messages regarding the current phase */
     public JTextArea messageArea;
 
+    /** displays the information regarding the player who is currently playing */
     public JTextArea stateArea;
 
-
+    /** displays the player's card */
     private JPanel cardPanel;
 
+    /** represents the button where the player's first worker is placed */
     private SquareButton builder1Button;
+
+    /** represents the button where the player's second worker is placed */
     private SquareButton builder2Button;
 
+    /** the list of moves that the player's first worker can make */
     private ArrayList<Square> moves1;
+
+    /** the list of moves that the player's second worker can make */
     private ArrayList<Square> moves2;
 
     /** indicates that we are in the phase where the user has to choose a worker */
     private boolean part1 = false;
 
+    /** represents the worker that will make the move */
     private Builder playingBuilder;
 
 
@@ -152,7 +164,6 @@ public class MainFrame extends JFrame {
     /** the actionListener assigned to the square button. When the button is pressed, if the move has not been chosen
      * sets squareSelected to true and gets the coordinates of the SquareButton
      */
-
     private class SquareListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
@@ -166,7 +177,7 @@ public class MainFrame extends JFrame {
 
             if(button.getBorder().equals(YELLOWBORDER)){
                 button.setBorder(REDBORDER);
-                x = button.getXvalue();                     //new button to REDBORDER
+                x = button.getXvalue();                     // sets the new button to REDBORDER
                 y = button.getYvalue();
                 squareSelected = true;
 
@@ -186,10 +197,10 @@ public class MainFrame extends JFrame {
             JButton button = (JButton) e.getSource();
 
             if(button.getBorder().equals(BASICBORDER)) {
-                button.setBorder(REDBORDER);
+                button.setBorder(REDBORDER);                                   //red = true
                 buildDome = true;
             }else if(button.getBorder().equals((REDBORDER))){
-                button.setBorder(BASICBORDER);
+                button.setBorder(BASICBORDER);                                  //basic = false
                 buildDome = false;
             }
 
@@ -208,17 +219,19 @@ public class MainFrame extends JFrame {
             try {
                 Sender.send("0", getClient().getServerSocket());
             } catch (IOException ioException) {
-                ioException.printStackTrace();
+                fatalErrorWindow.setVisible(true);
+                MainFrame.this.setVisible(false);
             }
 
 
             SwingWorker worker = new SwingWorker() {
                 @Override
-                protected Object doInBackground() throws Exception {
+                protected Object doInBackground(){
                     try {
                         getController().play();
                     } catch (IOException | InvocationTargetException | InterruptedException ioException) {
-                        ioException.printStackTrace();
+                        fatalErrorWindow.setVisible(true);
+                        MainFrame.this.setVisible(false);
                     }
                     return null;
                 }
@@ -305,6 +318,9 @@ public class MainFrame extends JFrame {
 
 
 
+    /** the actionListener assigned to the confirm button. When the button is pressed, it can display the worker's possible moves,
+     * select a worker or send the selected move
+     */
     private class Confirm implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -339,7 +355,8 @@ public class MainFrame extends JFrame {
                         try {
                             getController().getNetInterface().sendSquare(square, getClient().getServerSocket());
                         } catch (IOException ioException) {
-                            ioException.printStackTrace();
+                            fatalErrorWindow.setVisible(true);
+                            MainFrame.this.setVisible(false);
                         }
 
 
@@ -350,7 +367,8 @@ public class MainFrame extends JFrame {
                         try {
                             getController().getNetInterface().sendMoves(container, getClient().getServerSocket());
                         } catch (IOException ioException) {
-                            ioException.printStackTrace();
+                            fatalErrorWindow.setVisible(true);
+                            MainFrame.this.setVisible(false);
                         }
 
                         playingBuilder = null;
@@ -389,13 +407,15 @@ public class MainFrame extends JFrame {
                                 try {
                                     getController().getNetInterface().getMatchSetup(getClient().getServerSocket(), getController());
                                 } catch (IOException | InterruptedException | InvocationTargetException ioException) {
-                                    ioException.printStackTrace();
+                                    fatalErrorWindow.setVisible(true);
+                                    MainFrame.this.setVisible(false);
                                 }
                             } else {
                                 try {
                                     getController().play();
                                 } catch (IOException | InvocationTargetException | InterruptedException ioException) {
-                                    ioException.printStackTrace();
+                                    fatalErrorWindow.setVisible(true);
+                                    MainFrame.this.setVisible(false);
                                 }
                             }
                             return null;
@@ -417,9 +437,7 @@ public class MainFrame extends JFrame {
 
 
 
-
-
-
+    /** fills cardMap with the cards's name and number */
     public void map(){
         cardMap.put("Apollo", "1");
         cardMap.put("Artemis", "2");
@@ -443,13 +461,14 @@ public class MainFrame extends JFrame {
     public void setController(GUIClientController controller){ this.controller = controller;}
     public GUIClientController getController(){ return  this.controller;}
 
+    /** returns the number associated to the card's name */
     public String translate(String name){ return cardMap.get(name);}
 
     public void setPlayerCard(String name){ this.playerCard = name;}
 
 
     /** creates a new MainFrame */
-    public MainFrame() throws IOException {
+    public MainFrame(){
 
         super("SANTORINI");
 
@@ -465,7 +484,7 @@ public class MainFrame extends JFrame {
             public void windowClosing(WindowEvent e) {
                 try {
                     getClient().getServerSocket().close();
-                    dispose();
+                    MainFrame.this.dispose();
                 } catch (IOException ioException) {
                     System.exit(1);
                 }
@@ -638,7 +657,7 @@ public class MainFrame extends JFrame {
     }
 
 
-    /** display the card chosen by the player */
+    /** displays the card chosen by the player */
     public void displayCard(){
 
         ClassLoader cl = this.getClass().getClassLoader();
@@ -664,7 +683,7 @@ public class MainFrame extends JFrame {
 
 
 
-
+    /** paints yellow the possible squares where the player can place its workers */
     public void paintPossibleSquares(ArrayList<Square> list){
 
         for(Square s : list){
@@ -674,13 +693,11 @@ public class MainFrame extends JFrame {
             squareList[a][b].setEnabled(true);
         }
 
-        //part1 = true;
-
         pack();
 
     }
 
-
+    /** updates the board with the values of the given square */
     public void updateBoard(Square square) throws IOException, InvocationTargetException, InterruptedException {
 
         int a = square.x;
@@ -696,6 +713,7 @@ public class MainFrame extends JFrame {
 
     }
 
+    /** updates the board with the values of the given squares */
     public void updateBoard(Square firstSquare, Square secondSquare) throws InterruptedException, IOException, InvocationTargetException {
 
         int a = firstSquare.x;
@@ -717,7 +735,7 @@ public class MainFrame extends JFrame {
     }
 
 
-
+    /** repaints a square according to the move received by the server */
     public void repaintSquare(SquareButton button){
 
         JLabel label;
@@ -780,6 +798,8 @@ public class MainFrame extends JFrame {
 
     }
 
+
+    /** returns the JLabel associated to the worker based on its colour and sex */
     public JLabel getPiece(String colour, String sex){
 
         if(colour.equals(COLOUR1)) {
@@ -803,7 +823,7 @@ public class MainFrame extends JFrame {
         return null;
     }
 
-
+/** memorizes the workers and the possible moves received by the server and sets the border of the workers that can be used to yellow */
     public void setMoves(Moves moves){
 
         if(moves.getFemale()) {                    //special Selene condition: first worker = male, second worker = female
@@ -845,7 +865,7 @@ public class MainFrame extends JFrame {
 
     }
 
-
+    /** creates the container with the move chosen by the player, in order to be sent to the server */
     public Moves createContainer(Square move){
 
         ArrayList<Square> chosen = new ArrayList<>();

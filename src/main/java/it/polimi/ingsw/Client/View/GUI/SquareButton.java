@@ -4,13 +4,19 @@ import it.polimi.ingsw.Server.Model.Square;
 
 import javax.swing.*;
 
+/** this class represents the button of the board */
 public class SquareButton extends JButton {
 
+    /** the square associated to the squarebutton */
     Square square;
 
+    /** the label on top of the squareButton. It can be either a dome or a worker */
     JLabel topLabel;
 
+    /** the x coordinate */
     private int x;
+
+    /** the y coordinate */
     private int y;
 
     public SquareButton(int x, int y){
@@ -18,12 +24,12 @@ public class SquareButton extends JButton {
         this.y = y;
     }
 
-
+    /** returns the x coordinate */
     public int getXvalue(){
         return this.x;
     }
 
-
+    /** returns the y coordinate */
     public int getYvalue(){
         return this.y;
     }

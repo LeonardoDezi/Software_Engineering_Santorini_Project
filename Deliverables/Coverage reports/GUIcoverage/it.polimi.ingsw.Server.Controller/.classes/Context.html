@@ -1,0 +1,129 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Context</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Server.Controller</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Context (it.polimi.ingsw.Server.Controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Context</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Server.Controller;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Server.Model.Phase;
+<i>4</i>&nbsp;import it.polimi.ingsw.Server.VirtualView.NetInterface;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.IOException;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/** this class represents the class Context in a State Pattern */
+<i>9</i>&nbsp;public class Context {
+<i>10</i>&nbsp;    /** the phase which the turn is currently executing */
+<i>11</i>&nbsp;    private Phase currentPhase;
+<i>12</i>&nbsp;    /** the interface used by the server to communicate with the clients */
+<i>13</i>&nbsp;    private final NetInterface netInterface;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * creates a new Context
+<i>17</i>&nbsp;     * @param netInterface is the interface used by the server to communicate with the clients
+<i>18</i>&nbsp;     * */
+<b class="nc"><i>19</i>&nbsp;    public Context(NetInterface netInterface){</b>
+<b class="nc"><i>20</i>&nbsp;        this.netInterface = netInterface;</b>
+<i>21</i>&nbsp;    }
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * sets the currentPhase
+<i>25</i>&nbsp;      * @param phase is the phase that is to be set as currentPhase
+<i>26</i>&nbsp;     */
+<b class="nc"><i>27</i>&nbsp;    public void setPhase(Phase phase) { currentPhase = phase; }</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * gets the currentPhase
+<i>31</i>&nbsp;     * @return the currentPhase saved in the context
+<i>32</i>&nbsp;     */
+<b class="nc"><i>33</i>&nbsp;    public Phase getPhase(){ return currentPhase; }</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    /**
+<i>36</i>&nbsp;     * calls the handle() method of the current phase
+<i>37</i>&nbsp;     */
+<b class="nc"><i>38</i>&nbsp;    public void request() throws IOException { currentPhase.handle(); }</b>
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    /**
+<i>41</i>&nbsp;     * gets the netInterface
+<i>42</i>&nbsp;     * @return the netInterface saved in the context
+<i>43</i>&nbsp;     */
+<b class="nc"><i>44</i>&nbsp;    public NetInterface getNetInterface(){ return this.netInterface;}</b>
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 20:55</div>
+</div>
+</body>
+</html>

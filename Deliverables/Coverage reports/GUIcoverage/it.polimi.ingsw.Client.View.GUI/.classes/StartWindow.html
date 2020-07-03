@@ -1,0 +1,284 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: StartWindow</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Client.View.GUI</a> ]
+</div>
+
+<h1>Coverage Summary for Class: StartWindow (it.polimi.ingsw.Client.View.GUI)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StartWindow</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (51/ 51)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">StartWindow$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16,7%
+  </span>
+  <span class="absValue">
+    (1/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">StartWindow$ConfirmListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/ 8)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    85,7%
+  </span>
+  <span class="absValue">
+    (6/ 7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92,3%
+  </span>
+  <span class="absValue">
+    (60/ 65)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Client.View.GUI;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Client.Client;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import javax.swing.*;
+<i>6</i>&nbsp;import java.awt.*;
+<i>7</i>&nbsp;import java.awt.event.*;
+<i>8</i>&nbsp;import java.io.IOException;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;import static java.awt.BorderLayout.*;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;/** this class represents the window where the user can enter its username */
+<b class="fc"><i>14</i>&nbsp;public class StartWindow extends JFrame {</b>
+<i>15</i>&nbsp;    /** the textArea where the user will write its username */
+<i>16</i>&nbsp;    private final JTextArea usernameTextField;
+<i>17</i>&nbsp;    /** the textArea where the user will write the ip address */
+<i>18</i>&nbsp;    private final JTextArea ipTextField;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;    /** the text representing the user&#39;s username */
+<i>21</i>&nbsp;    private String username;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /** the text representing the ip address */
+<i>24</i>&nbsp;    private String ipAddress;
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;    /** the frame where the game will be played*/
+<i>27</i>&nbsp;    private MainFrame mainFrame;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    /** the name of the file containing the background image */
+<b class="fc"><i>31</i>&nbsp;    protected static final String IMAGENAME = new String(&quot;startDialog.png&quot;);</b>
+<i>32</i>&nbsp;    /** the name of the file containing the start button icon */
+<b class="fc"><i>33</i>&nbsp;    protected static final String BUTTONNAME = new String(&quot;Start.png&quot;);</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    /** the actionListener assigned to the start button. When the button is pressed, it closes
+<i>38</i>&nbsp;     * the startDialog and sends the username and the ip address to the server and sets visible the waiting dialog */
+<b class="fc"><i>39</i>&nbsp;    private class ConfirmListener implements ActionListener {</b>
+<i>40</i>&nbsp;        @Override
+<i>41</i>&nbsp;        public void actionPerformed(ActionEvent event){
+<i>42</i>&nbsp;
+<b class="fc"><i>43</i>&nbsp;            username = usernameTextField.getText();</b>
+<b class="fc"><i>44</i>&nbsp;            ipAddress = ipTextField.getText();</b>
+<i>45</i>&nbsp;
+<b class="fc"><i>46</i>&nbsp;            if(!(username.isEmpty()) &amp;&amp; !(ipAddress.isEmpty())) {</b>
+<i>47</i>&nbsp;
+<b class="fc"><i>48</i>&nbsp;                StartWindow.this.dispose();</b>
+<i>49</i>&nbsp;
+<b class="fc"><i>50</i>&nbsp;                mainFrame.setClient(new Client(ipAddress, 8080));</b>
+<b class="fc"><i>51</i>&nbsp;                mainFrame.getClient().startClient(username, mainFrame);</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;            }
+<b class="fc"><i>55</i>&nbsp;        }</b>
+<i>56</i>&nbsp;    }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    /**
+<i>61</i>&nbsp;     * creates a new StartDialog
+<i>62</i>&nbsp;     * */
+<i>63</i>&nbsp;    public StartWindow(MainFrame frame) {
+<b class="fc"><i>64</i>&nbsp;        super(&quot;Player choice&quot;);</b>
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;
+<b class="fc"><i>67</i>&nbsp;        this.mainFrame = frame;</b>
+<i>68</i>&nbsp;
+<b class="fc"><i>69</i>&nbsp;        WindowListener exitListener = new WindowAdapter() {</b>
+<i>70</i>&nbsp;
+<i>71</i>&nbsp;            @Override
+<i>72</i>&nbsp;            public void windowClosing(WindowEvent e) {
+<i>73</i>&nbsp;                try {
+<b class="nc"><i>74</i>&nbsp;                    IntroFrame.exit(mainFrame);</b>
+<b class="nc"><i>75</i>&nbsp;                } catch (IOException ioException) {</b>
+<b class="nc"><i>76</i>&nbsp;                    System.exit(1);</b>
+<b class="nc"><i>77</i>&nbsp;                }</b>
+<b class="nc"><i>78</i>&nbsp;            }</b>
+<i>79</i>&nbsp;        };
+<b class="fc"><i>80</i>&nbsp;        this.addWindowListener(exitListener);</b>
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;
+<i>83</i>&nbsp;
+<b class="fc"><i>84</i>&nbsp;        setResizable(false);</b>
+<i>85</i>&nbsp;
+<i>86</i>&nbsp;
+<b class="fc"><i>87</i>&nbsp;        ClassLoader cl = this.getClass().getClassLoader();</b>
+<i>88</i>&nbsp;
+<b class="fc"><i>89</i>&nbsp;        Image img = IntroFrame.getImage(cl, IMAGENAME);</b>
+<b class="fc"><i>90</i>&nbsp;        img = IntroFrame.getScaledImage(img, 300, 300);</b>
+<b class="fc"><i>91</i>&nbsp;        JLabel imageLabel = new JLabel(new ImageIcon(img));</b>
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;
+<b class="fc"><i>94</i>&nbsp;        add(imageLabel);</b>
+<i>95</i>&nbsp;
+<b class="fc"><i>96</i>&nbsp;        JLayeredPane pane = this.getLayeredPane();</b>
+<i>97</i>&nbsp;
+<b class="fc"><i>98</i>&nbsp;        JPanel mainPanel = new JPanel();</b>
+<b class="fc"><i>99</i>&nbsp;        mainPanel.setSize(300,300);</b>
+<b class="fc"><i>100</i>&nbsp;        mainPanel.setOpaque(false);</b>
+<b class="fc"><i>101</i>&nbsp;        mainPanel.setLayout(new BorderLayout(50, 50));</b>
+<b class="fc"><i>102</i>&nbsp;        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));</b>
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;
+<b class="fc"><i>105</i>&nbsp;        JTextArea textField = new JTextArea();</b>
+<b class="fc"><i>106</i>&nbsp;        textField.setOpaque(false);</b>
+<b class="fc"><i>107</i>&nbsp;        textField.setEditable(false);</b>
+<b class="fc"><i>108</i>&nbsp;        textField.setLineWrap(true);</b>
+<b class="fc"><i>109</i>&nbsp;        textField.setWrapStyleWord(true);</b>
+<b class="fc"><i>110</i>&nbsp;        textField.setFont(new Font(&quot;Diogenes&quot;, Font.BOLD, 14));</b>
+<b class="fc"><i>111</i>&nbsp;        textField.setText(&quot;Welcome! Please enter your username and the IP address&quot;);</b>
+<b class="fc"><i>112</i>&nbsp;        mainPanel.add(textField, PAGE_START);</b>
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;
+<b class="fc"><i>115</i>&nbsp;        JPanel textPanel = new JPanel();</b>
+<b class="fc"><i>116</i>&nbsp;        textPanel.setLayout(new BorderLayout(20, 20));</b>
+<b class="fc"><i>117</i>&nbsp;        textPanel.setOpaque(false);</b>
+<i>118</i>&nbsp;
+<b class="fc"><i>119</i>&nbsp;        usernameTextField = new JTextArea();</b>
+<b class="fc"><i>120</i>&nbsp;        usernameTextField.setBorder(BorderFactory.createLineBorder(Color.BLACK));</b>
+<b class="fc"><i>121</i>&nbsp;        textPanel.add(usernameTextField , BorderLayout.PAGE_START);</b>
+<i>122</i>&nbsp;
+<b class="fc"><i>123</i>&nbsp;        ipTextField = new JTextArea();</b>
+<b class="fc"><i>124</i>&nbsp;        ipTextField.setBorder(BorderFactory.createLineBorder(Color.BLACK));</b>
+<b class="fc"><i>125</i>&nbsp;        textPanel.add(ipTextField, PAGE_END);</b>
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;
+<b class="fc"><i>128</i>&nbsp;        mainPanel.add(textPanel, CENTER);</b>
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;
+<i>131</i>&nbsp;
+<i>132</i>&nbsp;
+<b class="fc"><i>133</i>&nbsp;        img = IntroFrame.getImage(cl, BUTTONNAME);</b>
+<b class="fc"><i>134</i>&nbsp;        img = IntroFrame.getScaledImage(img, 110, 45);</b>
+<i>135</i>&nbsp;
+<b class="fc"><i>136</i>&nbsp;        JButton confirmButton = new JButton();</b>
+<b class="fc"><i>137</i>&nbsp;        confirmButton.setDisabledIcon(new ImageIcon(img));</b>
+<b class="fc"><i>138</i>&nbsp;        confirmButton.setIcon(new ImageIcon(img));</b>
+<b class="fc"><i>139</i>&nbsp;        confirmButton.setContentAreaFilled(false);</b>
+<b class="fc"><i>140</i>&nbsp;        confirmButton.setBorderPainted(false);</b>
+<b class="fc"><i>141</i>&nbsp;        confirmButton.addActionListener(new ConfirmListener());</b>
+<b class="fc"><i>142</i>&nbsp;        mainPanel.add(confirmButton, SOUTH);</b>
+<i>143</i>&nbsp;
+<i>144</i>&nbsp;
+<b class="fc"><i>145</i>&nbsp;        pane.add(mainPanel, Integer.valueOf(2));</b>
+<b class="fc"><i>146</i>&nbsp;        pack();</b>
+<b class="fc"><i>147</i>&nbsp;        setLocationRelativeTo(null);</b>
+<i>148</i>&nbsp;
+<b class="fc"><i>149</i>&nbsp;        setVisible(true);</b>
+<i>150</i>&nbsp;
+<b class="fc"><i>151</i>&nbsp;    }</b>
+<i>152</i>&nbsp;
+<i>153</i>&nbsp;
+<i>154</i>&nbsp;}
+<i>155</i>&nbsp;
+<i>156</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 20:55</div>
+</div>
+</body>
+</html>

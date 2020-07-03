@@ -102,6 +102,10 @@ public class Client {
         return username;
     }
 
+
+    /**
+     * starts the client application
+     */
     public void startClient(String text, MainFrame frame) {
 
         this.serverSocket = new Socket();

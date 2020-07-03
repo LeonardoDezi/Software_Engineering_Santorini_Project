@@ -40,12 +40,7 @@ public class OutcomeDialog extends JDialog {
             frame.dispose();
             OutcomeDialog.this.dispose();
             MainFrame frame = null;
-            try {
-                frame = new MainFrame();
-            } catch (IOException ioException) {
-                System.out.println("ERROR");
-                System.exit(-1);
-            }
+            frame = new MainFrame();
             new StartWindow(frame);
         }
     }

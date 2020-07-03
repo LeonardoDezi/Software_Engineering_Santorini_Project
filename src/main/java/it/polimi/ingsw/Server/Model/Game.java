@@ -253,6 +253,7 @@ public class Game {
 
     }
 
+    /** returns the next player according to playerList's order */
     public Player getNextPlayer(Player player){
         int index = playerList.indexOf(player) + 1;
 

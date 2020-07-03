@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.Client</OriginalElement>
+  <nodes>
+    <node x="10.5" y="1116.0">it.polimi.ingsw.Client.ClientController</node>
+    <node x="90.66815476190479" y="818.0">it.polimi.ingsw.Client.Client</node>
+    <node x="161.10357142857143" y="268.0">it.polimi.ingsw.Client.GUIClientController</node>
+    <node x="94.02172619047622" y="0.0">it.polimi.ingsw.Client.Moves</node>
+    <node x="510.6035714285714" y="0.0">it.polimi.ingsw.Client.View</node>
+    <node x="243.53303571428572" y="2192.0">it.polimi.ingsw.Client.NetworkHandler</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.Client.NetworkHandler" target="it.polimi.ingsw.Client.NetworkHandler">
+      <point x="-52.0" y="26.0" />
+      <point x="295.5330357142857" y="2264.0" />
+      <point x="223.53303571428572" y="2264.0" />
+      <point x="223.53303571428572" y="2231.0" />
+      <point x="-104.0" y="13.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.GUIClientController" target="it.polimi.ingsw.Client.Client">
+      <point x="-13.399999999999977" y="245.0" />
+      <point x="281.7035714285714" y="798.0" />
+      <point x="301.2681547619048" y="798.0" />
+      <point x="93.6" y="-124.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.Client" target="it.polimi.ingsw.Client.GUIClientController">
+      <point x="-93.60000000000002" y="-124.0" />
+      <point x="114.06815476190476" y="788.0" />
+      <point x="174.50357142857143" y="788.0" />
+      <point x="-120.60000000000001" y="245.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.ClientController" target="it.polimi.ingsw.Client.NetworkHandler">
+      <point x="116.25" y="498.0" />
+      <point x="281.75" y="2132.0" />
+      <point x="321.53303571428575" y="2132.0" />
+      <point x="-25.99999999999997" y="-26.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.GUIClientController" target="it.polimi.ingsw.Client.NetworkHandler">
+      <point x="93.80000000000007" y="245.0" />
+      <point x="388.90357142857147" y="798.0" />
+      <point x="391.5720238095238" y="798.0" />
+      <point x="43.33333333333334" y="-26.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.NetworkHandler" target="it.polimi.ingsw.Client.Moves">
+      <point x="-95.33333333333326" y="-26.0" />
+      <point x="252.19970238095246" y="2172.0" />
+      <point x="0.0" y="2172.0" />
+      <point x="0.0" y="228.0" />
+      <point x="108.60505952380953" y="228.0" />
+      <point x="-72.91666666666669" y="104.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.NetworkHandler" target="it.polimi.ingsw.Client.GUIClientController">
+      <point x="8.666666666666686" y="-26.0" />
+      <point x="356.19970238095243" y="2162.0" />
+      <point x="369.5720238095238" y="2162.0" />
+      <point x="369.5720238095238" y="788.0" />
+      <point x="335.30357142857144" y="788.0" />
+      <point x="40.200000000000045" y="245.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.ClientController" target="it.polimi.ingsw.Client.Moves">
+      <point x="-129.16666666666663" y="-498.0" />
+      <point x="36.33333333333337" y="1091.0" />
+      <point x="49.72172619047623" y="1091.0" />
+      <point x="49.72172619047623" y="238.0" />
+      <point x="137.77172619047622" y="238.0" />
+      <point x="-43.75" y="104.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.Client" target="it.polimi.ingsw.Client.ClientController">
+      <point x="29.25" y="124.0" />
+      <point x="236.9181547619048" y="1091.0" />
+      <point x="243.0" y="1091.0" />
+      <point x="77.5" y="-498.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.NetworkHandler" target="it.polimi.ingsw.Client.ClientController">
+      <point x="-77.99999999999994" y="-26.0" />
+      <point x="269.5330357142858" y="2162.0" />
+      <point x="49.25" y="2162.0" />
+      <point x="-116.25" y="498.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.GUIClientController" target="it.polimi.ingsw.Client.Moves">
+      <point x="0.0" y="-245.0" />
+      <point x="295.1035714285714" y="248.0" />
+      <point x="196.10505952380956" y="248.0" />
+      <point x="14.583333333333343" y="104.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.ClientController" target="it.polimi.ingsw.Client.Client">
+      <point x="-25.833333333333314" y="-498.0" />
+      <point x="139.66666666666669" y="1091.0" />
+      <point x="119.91815476190479" y="1091.0" />
+      <point x="-87.75" y="124.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="523.5" y="267.0" />
+  <SelectedNodes>
+    <node>it.polimi.ingsw.Client.ClientController</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

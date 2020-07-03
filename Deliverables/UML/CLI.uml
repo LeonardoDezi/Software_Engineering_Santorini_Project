@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.Client.View.CLI</OriginalElement>
+  <nodes>
+    <node x="71.88888888888889" y="768.0">it.polimi.ingsw.Client.View.CLI.ClientBoard</node>
+    <node x="143.29861111111111" y="0.0">it.polimi.ingsw.Client.View.CLI.Colour</node>
+    <node x="0.0" y="192.0">it.polimi.ingsw.Client.View.CLI.Pawn</node>
+    <node x="106.4513888888889" y="1000.0">it.polimi.ingsw.Client.View.CLI.CliBoard</node>
+    <node x="19.972222222222257" y="404.0">it.polimi.ingsw.Client.View.CLI.Cell</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.Client.View.CLI.Cell" target="it.polimi.ingsw.Client.View.CLI.Pawn">
+      <point x="-80.66666666666671" y="-157.0" />
+      <point x="60.30555555555554" y="379.0" />
+      <point x="52.5" y="379.0" />
+      <point x="-52.5" y="81.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.CLI.CliBoard" target="it.polimi.ingsw.Client.View.CLI.Colour">
+      <point x="50.5" y="-27.0" />
+      <point x="257.9513888888889" y="975.0" />
+      <point x="272.47222222222223" y="975.0" />
+      <point x="272.47222222222223" y="167.0" />
+      <point x="268.2986111111111" y="167.0" />
+      <point x="50.0" y="71.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.CLI.ClientBoard" target="it.polimi.ingsw.Client.View.CLI.Cell">
+      <point x="-18.875" y="-91.0" />
+      <point x="128.51388888888889" y="743.0" />
+      <point x="110.72222222222226" y="743.0" />
+      <point x="-30.25" y="157.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.CLI.CliBoard" target="it.polimi.ingsw.Client.View.CLI.ClientBoard">
+      <point x="-50.5" y="-27.0" />
+      <point x="156.9513888888889" y="975.0" />
+      <point x="147.38888888888889" y="975.0" />
+      <point x="0.0" y="91.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.CLI.Cell" target="it.polimi.ingsw.Client.View.CLI.ClientBoard">
+      <point x="90.75" y="157.0" />
+      <point x="231.72222222222226" y="743.0" />
+      <point x="204.01388888888889" y="743.0" />
+      <point x="56.625" y="-91.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.CLI.Cell" target="it.polimi.ingsw.Client.View.CLI.Colour">
+      <point x="80.66666666666666" y="-157.0" />
+      <point x="221.6388888888889" y="379.0" />
+      <point x="226.3125" y="379.0" />
+      <point x="226.3125" y="167.0" />
+      <point x="218.29861111111111" y="167.0" />
+      <point x="0.0" y="71.0" />
+    </edge>
+    <edge source="it.polimi.ingsw.Client.View.CLI.Pawn" target="it.polimi.ingsw.Client.View.CLI.Colour">
+      <point x="0.0" y="-81.0" />
+      <point x="105.0" y="167.0" />
+      <point x="168.29861111111111" y="167.0" />
+      <point x="-50.0" y="71.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="126.5" y="123.0" />
+  <SelectedNodes>
+    <node>it.polimi.ingsw.Client.View.CLI.ClientBoard</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

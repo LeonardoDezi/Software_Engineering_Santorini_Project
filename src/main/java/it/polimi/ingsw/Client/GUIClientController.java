@@ -16,25 +16,32 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import static it.polimi.ingsw.Server.Controller.GameInitializer.COLOUR1;
-
+/**
+ * represents the controller in the client side
+ */
 public class GUIClientController {
+    /** represents the netInterface on the client side linked to the controller */
     private GUINetInterface netInterface = new GUINetInterface(this);
+    /** represent the client to which the controller is linked */
     private Client client;
+    /** represents the possible cards available to the player */
     public ArrayList<Card> possibleCards = new ArrayList<Card>();
-    private ClientBoard clientBoard = new ClientBoard();
-    private Integer numberOfPlayers;
 
+    /** the main frame where the game is played */
     private MainFrame frame;
 
 
     public MainFrame getFrame(){return this.frame;}
 
+    /**
+     * create and initialize the client controller
+     */
     public GUIClientController(Client client, MainFrame frame) {
         this.client = client;
         this.frame = frame;
     }
 
-
+    /** method invoked during the setup phase to get information from the server */
     public void matchSetup(Socket socket) throws IOException, InterruptedException, InvocationTargetException {
         if(frame.stillPlaying){
             netInterface.getMatchSetup(socket, this);
@@ -43,7 +50,7 @@ public class GUIClientController {
 
 
 
-
+/** opens the playerNumberWindow and makes the user choose the number of players for the game */
     public void chooseNumberOfPlayers() {
 
 
@@ -58,7 +65,7 @@ public class GUIClientController {
 
     }
 
-
+/** opens the cards choosing dialog and makes the player choose the cards for the game */
     public void dealerChoice(){
 
 
@@ -85,7 +92,6 @@ public class GUIClientController {
 
     /**
      * calls the method to ask the player which card he wants to choose from the cards chosen by the Challenger.
-     * throws IOException
      */
     public void playerChoice(){
 
@@ -107,7 +113,7 @@ public class GUIClientController {
 
 
     /**
-     * starts the game phase for the client and keeps spinning until the end of the game.
+     * starts the game phase for the client, who calls this method every time the client has to get information from the server.
      */
      public void play() throws IOException, InvocationTargetException, InterruptedException {
          Moves moves = netInterface.getMoves(client.getServerSocket());
@@ -130,15 +136,11 @@ public class GUIClientController {
                      frame.setMoves(moves);
                  }
              });
-         }//else{
-
-            // disconnected();
-
-         //}
+         }
 
      }
 
-
+/** method invoked when the player has won */
      public void win() throws IOException {
          frame.stillPlaying = false;
          frame.getClient().getServerSocket().close();   //close socket connection
@@ -146,6 +148,7 @@ public class GUIClientController {
          frame.outcomeDialog.setVisible(true);
      }
 
+    /** method invoked when the player has lost */
      public void lose(String winnerID) throws IOException {
          frame.stillPlaying = false;
          frame.getClient().getServerSocket().close();
@@ -157,6 +160,7 @@ public class GUIClientController {
          frame.outcomeDialog.setVisible(true);
      }
 
+    /** method invoked when the player has been disconnected */
     public void disconnected() throws IOException {
         frame.stillPlaying = false;
         frame.getClient().getServerSocket().close();   //close socket connection
@@ -172,7 +176,6 @@ public class GUIClientController {
          * @param numberOfPlayers is the number of players in game.
          */
         public void setNumberOfPlayers(Integer numberOfPlayers) throws InvocationTargetException, InterruptedException {
-            this.numberOfPlayers = numberOfPlayers;
             frame.setNumberOfPlayers(numberOfPlayers);
             frame.numberDialog.setController(this);
             frame.waitingDialog.setVisible(false);
@@ -181,30 +184,26 @@ public class GUIClientController {
 
 
         /**
-         * asks the Challenger to choose
+         * asks the Challenger to choose the first player that will start the game
          * @param players
          * @throws IOException
          */
-        public void chooseBeginner(ArrayList<String> players) throws IOException, InvocationTargetException, InterruptedException {
+        public void chooseBeginner(ArrayList<String> players) {
 
-            SwingUtilities.invokeLater(new Runnable() {           //invoke and wait
+            SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     frame.waitingDialog.setVisible(false);
                     frame.firstPlayerWindow.displayNames(players);
                     frame.firstPlayerWindow.setVisible(true);
-                    //new FirstPlayerWindow(frame);
                 }
             });
 
         }
 
         /**
-         *
-         * @param freeSquares
-         * @param number
-         * @throws IOException
+         * shows the mainframe with the possible squares where the player can place its workers
          */
-        public void placeBuilder(ArrayList<Square> freeSquares, int number) throws IOException, InvocationTargetException, InterruptedException {
+        public void placeBuilder(ArrayList<Square> freeSquares, int number){
 
             frame.waitingDialog.setVisible(false);
             frame.displayCard();
@@ -215,22 +214,7 @@ public class GUIClientController {
         }
 
 
-
-        public Square getPosition() throws IOException {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String[] inputs = reader.readLine().split(",");
-            int[] array = new int[inputs.length];
-            for (int i=0; i<array.length; i++){
-                array[i] = Integer.parseInt(inputs[i]);
-            }
-            int x = array[1]-1;
-            int y = array[0]-1;
-            return new Square(x, y);
-        }
-
-
-
-
+    /** prints on the mainFrame the information regarding the current player */
     public void printMatchInfo(String playerID, String playerColour, String playerCard) throws InterruptedException, IOException, InvocationTargetException {
 
         if(playerColour.equals(COLOUR1))

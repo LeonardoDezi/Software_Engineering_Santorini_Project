@@ -1,0 +1,291 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: NumberDialog</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Client.View.GUI</a> ]
+</div>
+
+<h1>Coverage Summary for Class: NumberDialog (it.polimi.ingsw.Client.View.GUI)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">NumberDialog</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (42/ 42)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">NumberDialog$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    16,7%
+  </span>
+  <span class="absValue">
+    (1/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NumberDialog$ConfirmListener</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">NumberDialog$ConfirmListener$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    40%
+  </span>
+  <span class="absValue">
+    (4/ 10)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    90%
+  </span>
+  <span class="absValue">
+    (9/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    82,5%
+  </span>
+  <span class="absValue">
+    (52/ 63)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Client.View.GUI;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Client.GUIClientController;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import javax.swing.*;
+<i>6</i>&nbsp;import java.awt.*;
+<i>7</i>&nbsp;import java.awt.event.*;
+<i>8</i>&nbsp;import java.io.IOException;
+<i>9</i>&nbsp;import java.lang.reflect.InvocationTargetException;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import static java.awt.BorderLayout.PAGE_END;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;
+<b class="fc"><i>15</i>&nbsp;public class NumberDialog extends JFrame {</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    /** the name of the file containing the background image */
+<b class="fc"><i>18</i>&nbsp;    protected static final String IMAGENAME = new String(&quot;startDialog.png&quot;);</b>
+<i>19</i>&nbsp;    /** the name of the file containing the start button icon */
+<b class="fc"><i>20</i>&nbsp;    protected static final String BUTTONNAME = new String(&quot;Ok.png&quot;);</b>
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    private MainFrame frame;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    private int numberOfPlayers;
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    private GUIClientController controller;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    private JTextArea textField;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;
+<i>33</i>&nbsp;    /** the actionListener assigned to the start button. When the button is pressed, it closes
+<i>34</i>&nbsp;     * the startDialog, sends the username to the server and creates a waitingDialog */
+<b class="fc"><i>35</i>&nbsp;    private class ConfirmListener implements ActionListener {</b>
+<i>36</i>&nbsp;        @Override
+<i>37</i>&nbsp;        public void actionPerformed(ActionEvent e) {
+<b class="fc"><i>38</i>&nbsp;            NumberDialog.this.dispose();</b>
+<i>39</i>&nbsp;
+<b class="fc"><i>40</i>&nbsp;            SwingWorker worker = new SwingWorker() {</b>
+<i>41</i>&nbsp;                @Override
+<i>42</i>&nbsp;                protected Object doInBackground() throws Exception {
+<i>43</i>&nbsp;                    try {
+<b class="fc"><i>44</i>&nbsp;                        controller.matchSetup(frame.getClient().getServerSocket());</b>
+<b class="nc"><i>45</i>&nbsp;                    } catch (IOException ioException) {</b>
+<b class="nc"><i>46</i>&nbsp;                        ioException.printStackTrace();</b>
+<b class="nc"><i>47</i>&nbsp;                    } catch (InterruptedException interruptedException) {</b>
+<b class="nc"><i>48</i>&nbsp;                        interruptedException.printStackTrace();</b>
+<b class="nc"><i>49</i>&nbsp;                    } catch (InvocationTargetException invocationTargetException) {</b>
+<b class="nc"><i>50</i>&nbsp;                        invocationTargetException.printStackTrace();</b>
+<b class="fc"><i>51</i>&nbsp;                    }</b>
+<b class="fc"><i>52</i>&nbsp;                    return null;</b>
+<i>53</i>&nbsp;                }
+<i>54</i>&nbsp;            };
+<i>55</i>&nbsp;
+<b class="fc"><i>56</i>&nbsp;            worker.execute();</b>
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;
+<b class="fc"><i>59</i>&nbsp;        }</b>
+<i>60</i>&nbsp;    }
+<i>61</i>&nbsp;
+<i>62</i>&nbsp;
+<b class="fc"><i>63</i>&nbsp;    public NumberDialog(MainFrame frame){</b>
+<i>64</i>&nbsp;
+<b class="fc"><i>65</i>&nbsp;        this.frame = frame;</b>
+<i>66</i>&nbsp;
+<i>67</i>&nbsp;
+<b class="fc"><i>68</i>&nbsp;        WindowListener exitListener = new WindowAdapter() {</b>
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;            @Override
+<i>71</i>&nbsp;            public void windowClosing(WindowEvent e) {
+<i>72</i>&nbsp;                try {
+<b class="nc"><i>73</i>&nbsp;                    IntroFrame.exit(frame);</b>
+<b class="nc"><i>74</i>&nbsp;                } catch (IOException ioException) {</b>
+<b class="nc"><i>75</i>&nbsp;                    System.exit(1);</b>
+<b class="nc"><i>76</i>&nbsp;                }</b>
+<b class="nc"><i>77</i>&nbsp;            }</b>
+<i>78</i>&nbsp;        };
+<b class="fc"><i>79</i>&nbsp;        this.addWindowListener(exitListener);</b>
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;
+<b class="fc"><i>83</i>&nbsp;        setResizable(false);</b>
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;
+<b class="fc"><i>86</i>&nbsp;        ClassLoader cl = this.getClass().getClassLoader();</b>
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;
+<b class="fc"><i>89</i>&nbsp;        Image img = IntroFrame.getImage(cl, IMAGENAME);</b>
+<b class="fc"><i>90</i>&nbsp;        img = IntroFrame.getScaledImage(img, 300, 300);</b>
+<b class="fc"><i>91</i>&nbsp;        JLabel imageLabel = new JLabel(new ImageIcon(img));</b>
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;
+<b class="fc"><i>94</i>&nbsp;        add(imageLabel);</b>
+<i>95</i>&nbsp;
+<b class="fc"><i>96</i>&nbsp;        JLayeredPane pane = this.getLayeredPane();</b>
+<i>97</i>&nbsp;
+<b class="fc"><i>98</i>&nbsp;        JPanel mainPanel = new JPanel();</b>
+<b class="fc"><i>99</i>&nbsp;        mainPanel.setSize(300,300);</b>
+<b class="fc"><i>100</i>&nbsp;        mainPanel.setOpaque(false);</b>
+<b class="fc"><i>101</i>&nbsp;        mainPanel.setLayout(new BorderLayout(50, 50));  //50</b>
+<b class="fc"><i>102</i>&nbsp;        mainPanel.setBorder(BorderFactory.createEmptyBorder(100, 20, 40, 20));</b>
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;
+<b class="fc"><i>105</i>&nbsp;            img = IntroFrame.getImage(cl, BUTTONNAME);</b>
+<b class="fc"><i>106</i>&nbsp;            img = IntroFrame.getScaledImage(img, 110, 45);</b>
+<i>107</i>&nbsp;
+<b class="fc"><i>108</i>&nbsp;            JButton confirmButton = new JButton();</b>
+<b class="fc"><i>109</i>&nbsp;            confirmButton.setDisabledIcon(new ImageIcon(img));</b>
+<b class="fc"><i>110</i>&nbsp;            confirmButton.setIcon(new ImageIcon(img));</b>
+<b class="fc"><i>111</i>&nbsp;            confirmButton.setContentAreaFilled(false);</b>
+<b class="fc"><i>112</i>&nbsp;            confirmButton.setBorderPainted(false);</b>
+<b class="fc"><i>113</i>&nbsp;            confirmButton.addActionListener(new ConfirmListener());</b>
+<b class="fc"><i>114</i>&nbsp;            mainPanel.add(confirmButton, PAGE_END);</b>
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;
+<b class="fc"><i>117</i>&nbsp;            textField = new JTextArea();</b>
+<b class="fc"><i>118</i>&nbsp;            textField.setOpaque(false);</b>
+<b class="fc"><i>119</i>&nbsp;            textField.setEditable(false);</b>
+<b class="fc"><i>120</i>&nbsp;            textField.setLineWrap(true);</b>
+<b class="fc"><i>121</i>&nbsp;            textField.setWrapStyleWord(true);</b>
+<b class="fc"><i>122</i>&nbsp;            textField.setFont(new Font(&quot;Diogenes&quot;, Font.BOLD, 14));</b>
+<b class="fc"><i>123</i>&nbsp;            mainPanel.add(textField, BorderLayout.CENTER);</b>
+<i>124</i>&nbsp;
+<b class="fc"><i>125</i>&nbsp;            pane.add(mainPanel, Integer.valueOf(2));</b>
+<b class="fc"><i>126</i>&nbsp;            pack();</b>
+<b class="fc"><i>127</i>&nbsp;            setLocationRelativeTo(null);</b>
+<i>128</i>&nbsp;
+<i>129</i>&nbsp;
+<i>130</i>&nbsp;
+<i>131</i>&nbsp;
+<b class="fc"><i>132</i>&nbsp;        }</b>
+<i>133</i>&nbsp;
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;
+<i>136</i>&nbsp;
+<i>137</i>&nbsp;    public void setController(GUIClientController controller){
+<b class="fc"><i>138</i>&nbsp;        this.controller = controller;</b>
+<b class="fc"><i>139</i>&nbsp;        textField.setText(&quot;The number of players is &quot; + frame.getNumberOfPlayers());</b>
+<b class="fc"><i>140</i>&nbsp;    }</b>
+<i>141</i>&nbsp;
+<i>142</i>&nbsp;
+<i>143</i>&nbsp;
+<i>144</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 20:55</div>
+</div>
+</body>
+</html>

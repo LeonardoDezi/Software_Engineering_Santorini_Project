@@ -1,0 +1,179 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Moves</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Client</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Moves (it.polimi.ingsw.Client)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Moves</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/ 17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (31/ 31)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Client;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Server.Model.Builder;
+<i>4</i>&nbsp;import it.polimi.ingsw.Server.Model.Square;
+<i>5</i>&nbsp;
+<i>6</i>&nbsp;import java.io.BufferedReader;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public class Moves {
+<i>10</i>&nbsp;    private ArrayList&lt;Square&gt; moves1;
+<i>11</i>&nbsp;    private ArrayList&lt;Square&gt; moves2;
+<i>12</i>&nbsp;    private Builder builder1;
+<i>13</i>&nbsp;    private  Builder builder2;
+<i>14</i>&nbsp;    private boolean isDome;
+<i>15</i>&nbsp;    private boolean female;
+<i>16</i>&nbsp;    private boolean skippable;
+<i>17</i>&nbsp;    private boolean update;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * class used to comunicate to the client all the available moves of the actual phase.
+<i>21</i>&nbsp;     * @param builder1 is the first builder.
+<i>22</i>&nbsp;     * @param moves1 all the places where the first builder can move or build.
+<i>23</i>&nbsp;     * @param builder2 is the second builder.
+<i>24</i>&nbsp;     * @param moves2 all the places where the second builder can move or build.
+<i>25</i>&nbsp;     * @param isDome boolean that indicates if the player can build a dome thanks to a god power.
+<i>26</i>&nbsp;     * @param female to indicate that the female worker has a special effect.
+<i>27</i>&nbsp;     */
+<b class="fc"><i>28</i>&nbsp;    public Moves(Builder builder1, ArrayList&lt;Square&gt; moves1, Builder builder2, ArrayList&lt;Square&gt; moves2, boolean isDome, boolean female){</b>
+<b class="fc"><i>29</i>&nbsp;        this.builder1 = builder1;</b>
+<b class="fc"><i>30</i>&nbsp;        this.builder2 = builder2;</b>
+<b class="fc"><i>31</i>&nbsp;        this.moves1 = moves1;</b>
+<b class="fc"><i>32</i>&nbsp;        this.moves2 = moves2;</b>
+<b class="fc"><i>33</i>&nbsp;        setIsDome(isDome);</b>
+<b class="fc"><i>34</i>&nbsp;        this.female = female;</b>
+<b class="fc"><i>35</i>&nbsp;    }</b>
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    /**
+<i>38</i>&nbsp;     * returns the first builder of the class.
+<i>39</i>&nbsp;     * @return the first builder of the class.
+<i>40</i>&nbsp;     */
+<b class="fc"><i>41</i>&nbsp;    public Builder getBuilder1(){return builder1;}</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    /**
+<i>44</i>&nbsp;     * sets the informations of the first builder of the class.
+<i>45</i>&nbsp;     * @param builder1 the builder that is going to be set as first builder.
+<i>46</i>&nbsp;     */
+<i>47</i>&nbsp;    public void setBuilder1(Builder builder1){
+<b class="fc"><i>48</i>&nbsp;        this.builder1 = builder1;</b>
+<b class="fc"><i>49</i>&nbsp;    }</b>
+<i>50</i>&nbsp;
+<b class="fc"><i>51</i>&nbsp;    public Builder getBuilder2(){return builder2;}</b>
+<i>52</i>&nbsp;
+<i>53</i>&nbsp;    public void setBuilder2(Builder builder2){
+<b class="fc"><i>54</i>&nbsp;        this.builder2 = builder2;</b>
+<b class="fc"><i>55</i>&nbsp;    }</b>
+<i>56</i>&nbsp;
+<b class="fc"><i>57</i>&nbsp;    public ArrayList&lt;Square&gt; getMoves1(){ return moves1;}</b>
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    public void setMoves1(ArrayList&lt;Square&gt; moves1){
+<b class="fc"><i>60</i>&nbsp;        this.moves1 = moves1;</b>
+<b class="fc"><i>61</i>&nbsp;    }</b>
+<i>62</i>&nbsp;
+<b class="fc"><i>63</i>&nbsp;    public ArrayList&lt;Square&gt; getMoves2(){ return moves2;}</b>
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    public void setMoves2(ArrayList&lt;Square&gt; moves2){
+<b class="fc"><i>66</i>&nbsp;        this.moves2 = moves2;</b>
+<b class="fc"><i>67</i>&nbsp;    }</b>
+<i>68</i>&nbsp;
+<b class="fc"><i>69</i>&nbsp;    public boolean getIsDome(){return isDome;}</b>
+<i>70</i>&nbsp;
+<b class="fc"><i>71</i>&nbsp;    public void setIsDome(boolean isDome){this.isDome = isDome;}</b>
+<i>72</i>&nbsp;
+<i>73</i>&nbsp;    public boolean getFemale(){
+<b class="fc"><i>74</i>&nbsp;        return female;</b>
+<i>75</i>&nbsp;    }
+<i>76</i>&nbsp;
+<i>77</i>&nbsp;    public void setFemale(boolean female){
+<b class="fc"><i>78</i>&nbsp;        this.female = female;</b>
+<b class="fc"><i>79</i>&nbsp;    }</b>
+<i>80</i>&nbsp;
+<i>81</i>&nbsp;    public void setSkippable(boolean skippable){
+<b class="fc"><i>82</i>&nbsp;        this.skippable=skippable;</b>
+<b class="fc"><i>83</i>&nbsp;    }</b>
+<i>84</i>&nbsp;
+<i>85</i>&nbsp;    public void setUpdate(boolean update){
+<b class="fc"><i>86</i>&nbsp;        this.update=update;</b>
+<b class="fc"><i>87</i>&nbsp;    }</b>
+<i>88</i>&nbsp;
+<i>89</i>&nbsp;    public boolean getUpdate(){
+<b class="fc"><i>90</i>&nbsp;        return update;</b>
+<i>91</i>&nbsp;    }
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;    public boolean getSkippable(){
+<b class="fc"><i>94</i>&nbsp;        return skippable;</b>
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 21:08</div>
+</div>
+</body>
+</html>

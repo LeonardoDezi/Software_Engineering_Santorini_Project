@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>it.polimi.ingsw.Client.NetworkHandler</OriginalElement>
+  <nodes>
+    <node x="359.0" y="0.0">it.polimi.ingsw.Client.NetworkHandler.GUINetInterface</node>
+    <node x="0.5" y="630.0">it.polimi.ingsw.Client.NetworkHandler.NetInterfaceTest</node>
+    <node x="0.0" y="0.0">it.polimi.ingsw.Client.NetworkHandler.NetInterface</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="it.polimi.ingsw.Client.NetworkHandler.NetInterfaceTest" target="it.polimi.ingsw.Client.NetworkHandler.NetInterface">
+      <point x="-78.25" y="-191.0" />
+      <point x="-78.5" y="290.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="210.5" y="219.0" />
+  <SelectedNodes>
+    <node>it.polimi.ingsw.Client.NetworkHandler.GUINetInterface</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

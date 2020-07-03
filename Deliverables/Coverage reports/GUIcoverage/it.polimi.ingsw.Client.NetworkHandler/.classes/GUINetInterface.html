@@ -1,0 +1,572 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GUINetInterface</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Client.NetworkHandler</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GUINetInterface (it.polimi.ingsw.Client.NetworkHandler)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GUINetInterface</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88,2%
+  </span>
+  <span class="absValue">
+    (15/ 17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    64,7%
+  </span>
+  <span class="absValue">
+    (161/ 249)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Client.NetworkHandler;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import it.polimi.ingsw.Client.GUIClientController;
+<i>4</i>&nbsp;import it.polimi.ingsw.Client.Moves;
+<i>5</i>&nbsp;import it.polimi.ingsw.Parser.Receiver;
+<i>6</i>&nbsp;import it.polimi.ingsw.Parser.Sender;
+<i>7</i>&nbsp;import it.polimi.ingsw.Server.Model.*;
+<i>8</i>&nbsp;import java.io.IOException;
+<i>9</i>&nbsp;import java.lang.reflect.InvocationTargetException;
+<i>10</i>&nbsp;import java.net.Socket;
+<i>11</i>&nbsp;import java.util.ArrayList;
+<i>12</i>&nbsp;import static java.lang.Integer.parseInt;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;public class GUINetInterface {
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    private ArrayList&lt;Square&gt; moves1;
+<i>17</i>&nbsp;    private ArrayList&lt;Square&gt; moves2;
+<i>18</i>&nbsp;    private Builder builder1;
+<i>19</i>&nbsp;    private Builder builder2;
+<i>20</i>&nbsp;    private GUIClientController clientController;
+<b class="fc"><i>21</i>&nbsp;    private Moves moves = new Moves(builder1, moves1, builder2, moves2, false, false);</b>
+<i>22</i>&nbsp;    private Square firstSquare;
+<i>23</i>&nbsp;    private Square secondSquare;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;
+<b class="fc"><i>26</i>&nbsp;    public GUINetInterface(GUIClientController clientController) {</b>
+<b class="fc"><i>27</i>&nbsp;        this.clientController = clientController;</b>
+<b class="fc"><i>28</i>&nbsp;    }</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    /**
+<i>31</i>&nbsp;     * method used during the game to show the player what possibility has to choose and wait for the choice
+<i>32</i>&nbsp;     *
+<i>33</i>&nbsp;     * @param socket is the Server socket.
+<i>34</i>&nbsp;     * @return the move chosen by the player depending on the phase of the game
+<i>35</i>&nbsp;     */
+<i>36</i>&nbsp;    public Moves getMoves(Socket socket) throws IOException, InvocationTargetException, InterruptedException {
+<b class="fc"><i>37</i>&nbsp;        String availableMoves = Receiver.receive(socket);</b>
+<b class="fc"><i>38</i>&nbsp;        String[] values = availableMoves.split(&quot;@&quot;);</b>
+<i>39</i>&nbsp;
+<b class="fc"><i>40</i>&nbsp;        if (moves.getUpdate()){</b>
+<b class="fc"><i>41</i>&nbsp;            moves.setUpdate(false);</b>
+<i>42</i>&nbsp;        }
+<b class="fc"><i>43</i>&nbsp;        if (values[0].equals(&quot;0&quot;)) {</b>
+<b class="nc"><i>44</i>&nbsp;            return null;</b>
+<i>45</i>&nbsp;        }
+<b class="fc"><i>46</i>&nbsp;        if (values[0].equals(&quot;-1&quot;)) {                                 //values[0]</b>
+<b class="nc"><i>47</i>&nbsp;            clientController.disconnected();</b>
+<i>48</i>&nbsp;        }
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;
+<b class="fc"><i>51</i>&nbsp;        if (values[0].equals(&quot;1&quot;)) {                                  //values[0]</b>
+<i>52</i>&nbsp;
+<b class="fc"><i>53</i>&nbsp;            if(values[1].equals(&quot;null&quot;)){              //values[1]</b>
+<b class="fc"><i>54</i>&nbsp;                moves.setMoves1(null);</b>
+<b class="fc"><i>55</i>&nbsp;                moves.setBuilder1(null);</b>
+<i>56</i>&nbsp;            }
+<i>57</i>&nbsp;            else{
+<b class="fc"><i>58</i>&nbsp;                moves1 = stringToArrayListSquare(values[1]);</b>
+<b class="fc"><i>59</i>&nbsp;                builder1 = stringToBuilder(values[2]);</b>
+<b class="fc"><i>60</i>&nbsp;                moves.setMoves1(moves1);</b>
+<b class="fc"><i>61</i>&nbsp;                moves.setBuilder1(builder1);</b>
+<i>62</i>&nbsp;            }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;
+<b class="fc"><i>65</i>&nbsp;            if(values[3].equals(&quot;true&quot;)){            //values[3]</b>
+<b class="nc"><i>66</i>&nbsp;                moves.setSkippable(true);</b>
+<i>67</i>&nbsp;            }
+<i>68</i>&nbsp;            else{
+<b class="fc"><i>69</i>&nbsp;                moves.setSkippable(false);</b>
+<i>70</i>&nbsp;            }
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;
+<b class="fc"><i>73</i>&nbsp;            if(values[4].equals(&quot;null&quot;)){             //values[4]</b>
+<b class="nc"><i>74</i>&nbsp;                moves.setMoves2(null);</b>
+<b class="nc"><i>75</i>&nbsp;                moves.setBuilder2(null);</b>
+<i>76</i>&nbsp;            }
+<i>77</i>&nbsp;            else{
+<b class="fc"><i>78</i>&nbsp;                moves2 = stringToArrayListSquare(values[4]);</b>
+<b class="fc"><i>79</i>&nbsp;                builder2 = stringToBuilder(values[5]);</b>
+<b class="fc"><i>80</i>&nbsp;                moves.setMoves2(moves2);</b>
+<b class="fc"><i>81</i>&nbsp;                moves.setBuilder2(builder2);</b>
+<i>82</i>&nbsp;            }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;
+<b class="fc"><i>85</i>&nbsp;            moves.setIsDome(false);</b>
+<b class="fc"><i>86</i>&nbsp;            moves.setFemale(false);</b>
+<i>87</i>&nbsp;
+<i>88</i>&nbsp;        }                                                               //values[0]
+<i>89</i>&nbsp;
+<i>90</i>&nbsp;
+<b class="fc"><i>91</i>&nbsp;        if (values[0].equals(&quot;2&quot;)) {                                    //values[0]</b>
+<b class="nc"><i>92</i>&nbsp;            if(values[1].equals(&quot;null&quot;)){</b>
+<b class="nc"><i>93</i>&nbsp;                moves.setMoves1(null);</b>
+<b class="nc"><i>94</i>&nbsp;                moves.setBuilder1(null);</b>
+<i>95</i>&nbsp;            }
+<i>96</i>&nbsp;            else{
+<b class="nc"><i>97</i>&nbsp;                moves1 = stringToArrayListSquare(values[1]);</b>
+<b class="nc"><i>98</i>&nbsp;                builder1 = stringToBuilder(values[2]);</b>
+<b class="nc"><i>99</i>&nbsp;                moves.setMoves1(moves1);</b>
+<b class="nc"><i>100</i>&nbsp;                moves.setBuilder1(builder1);</b>
+<i>101</i>&nbsp;            }
+<b class="nc"><i>102</i>&nbsp;            if(values[3].equals(&quot;true&quot;)){</b>
+<b class="nc"><i>103</i>&nbsp;                moves.setSkippable(true);</b>
+<i>104</i>&nbsp;            }
+<i>105</i>&nbsp;            else {
+<b class="nc"><i>106</i>&nbsp;                moves.setSkippable(false);</b>
+<i>107</i>&nbsp;            }
+<b class="nc"><i>108</i>&nbsp;            moves.setMoves2(null);</b>
+<b class="nc"><i>109</i>&nbsp;            moves.setBuilder2(null);</b>
+<b class="nc"><i>110</i>&nbsp;            moves.setIsDome(false);</b>
+<b class="nc"><i>111</i>&nbsp;            moves.setFemale(false);</b>
+<i>112</i>&nbsp;        }
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;
+<b class="fc"><i>115</i>&nbsp;        if (values[0].equals(&quot;3&quot;)) {</b>
+<b class="fc"><i>116</i>&nbsp;            if(values[1].equals(&quot;null&quot;)){</b>
+<b class="nc"><i>117</i>&nbsp;                moves.setMoves1(null);</b>
+<b class="nc"><i>118</i>&nbsp;                moves.setBuilder1(null);</b>
+<b class="nc"><i>119</i>&nbsp;                moves.setIsDome(false);</b>
+<i>120</i>&nbsp;            }
+<i>121</i>&nbsp;            else{
+<b class="fc"><i>122</i>&nbsp;                moves1 = stringToArrayListSquare(values[1]);</b>
+<b class="fc"><i>123</i>&nbsp;                builder1 = stringToBuilder(values[2]);</b>
+<b class="fc"><i>124</i>&nbsp;                moves.setMoves1(moves1);</b>
+<b class="fc"><i>125</i>&nbsp;                moves.setBuilder1(builder1);</b>
+<b class="fc"><i>126</i>&nbsp;                boolean isDome = stringToBool(values[3]);</b>
+<b class="fc"><i>127</i>&nbsp;                moves.setIsDome(isDome);</b>
+<b class="fc"><i>128</i>&nbsp;                if(values[4].equals(&quot;true&quot;)){</b>
+<b class="nc"><i>129</i>&nbsp;                    moves.setSkippable(true);</b>
+<i>130</i>&nbsp;                }
+<i>131</i>&nbsp;                else{
+<b class="fc"><i>132</i>&nbsp;                    moves.setSkippable(false);</b>
+<i>133</i>&nbsp;                }
+<i>134</i>&nbsp;            }
+<b class="fc"><i>135</i>&nbsp;            moves.setMoves2(null);</b>
+<b class="fc"><i>136</i>&nbsp;            moves.setBuilder2(null);</b>
+<b class="fc"><i>137</i>&nbsp;            moves.setFemale(false);</b>
+<i>138</i>&nbsp;        }
+<b class="fc"><i>139</i>&nbsp;        if (values[0].equals(&quot;4&quot;)) {</b>
+<b class="nc"><i>140</i>&nbsp;            if(values[1].equals(&quot;null&quot;)){</b>
+<b class="nc"><i>141</i>&nbsp;                moves.setMoves1(null);</b>
+<b class="nc"><i>142</i>&nbsp;                moves.setBuilder1(null);</b>
+<b class="nc"><i>143</i>&nbsp;                moves.setIsDome(false);</b>
+<i>144</i>&nbsp;            }
+<i>145</i>&nbsp;            else{
+<b class="nc"><i>146</i>&nbsp;                moves1 = stringToArrayListSquare(values[1]);</b>
+<b class="nc"><i>147</i>&nbsp;                builder1 = stringToBuilder(values[2]);</b>
+<b class="nc"><i>148</i>&nbsp;                moves.setMoves1(moves1);</b>
+<b class="nc"><i>149</i>&nbsp;                moves.setBuilder1(builder1);</b>
+<b class="nc"><i>150</i>&nbsp;                moves.setIsDome(false);</b>
+<i>151</i>&nbsp;            }
+<b class="nc"><i>152</i>&nbsp;            if(values[3].equals(&quot;true&quot;)){</b>
+<b class="nc"><i>153</i>&nbsp;                moves.setSkippable(true);</b>
+<i>154</i>&nbsp;            }
+<i>155</i>&nbsp;            else{
+<b class="nc"><i>156</i>&nbsp;                moves.setSkippable(false);</b>
+<i>157</i>&nbsp;            }
+<b class="nc"><i>158</i>&nbsp;            if(values[4].equals(&quot;null&quot;)){</b>
+<b class="nc"><i>159</i>&nbsp;                moves.setBuilder2(null);</b>
+<b class="nc"><i>160</i>&nbsp;                moves.setMoves2(null);</b>
+<b class="nc"><i>161</i>&nbsp;                moves.setFemale(false);</b>
+<i>162</i>&nbsp;            }
+<i>163</i>&nbsp;            else{
+<b class="nc"><i>164</i>&nbsp;                moves2 = stringToArrayListSquare(values[4]);</b>
+<b class="nc"><i>165</i>&nbsp;                builder2 = stringToBuilder(values[5]);</b>
+<b class="nc"><i>166</i>&nbsp;                boolean female = stringToBool(values[6]);</b>
+<b class="nc"><i>167</i>&nbsp;                moves.setMoves2(moves2);</b>
+<b class="nc"><i>168</i>&nbsp;                moves.setBuilder2(builder2);</b>
+<b class="nc"><i>169</i>&nbsp;                moves.setFemale(female);</b>
+<i>170</i>&nbsp;            }
+<i>171</i>&nbsp;        }
+<b class="fc"><i>172</i>&nbsp;        if (values[0].equals(&quot;5&quot;)) { //text message</b>
+<b class="fc"><i>173</i>&nbsp;            String playerID = values[1];</b>
+<b class="fc"><i>174</i>&nbsp;            String playerColour = values[2];</b>
+<b class="fc"><i>175</i>&nbsp;            String playerCard = values[3];</b>
+<b class="fc"><i>176</i>&nbsp;            clientController.printMatchInfo(playerID, playerColour, playerCard);</b>
+<i>177</i>&nbsp;        }
+<b class="fc"><i>178</i>&nbsp;        if (values[0].equals(&quot;66&quot;)) { //the client loses</b>
+<i>179</i>&nbsp;            String winnerID;
+<b class="fc"><i>180</i>&nbsp;            winnerID = values[1];</b>
+<b class="fc"><i>181</i>&nbsp;            clientController.lose(winnerID);</b>
+<i>182</i>&nbsp;        }
+<b class="fc"><i>183</i>&nbsp;        if(values[0].equals(&quot;73&quot;)){ //the client wins</b>
+<b class="nc"><i>184</i>&nbsp;            clientController.win();</b>
+<i>185</i>&nbsp;        }
+<b class="fc"><i>186</i>&nbsp;        if (values[0].equals(&quot;99&quot;)){</b>
+<i>187</i>&nbsp;            Builder worker1;
+<i>188</i>&nbsp;            Builder worker2;
+<b class="fc"><i>189</i>&nbsp;            String[] square = values[1].split(&quot;:&quot;);</b>
+<b class="fc"><i>190</i>&nbsp;            Square firstSquare = stringToFullSquare(square);</b>
+<i>191</i>&nbsp;
+<i>192</i>&nbsp;
+<b class="fc"><i>193</i>&nbsp;            if(values[2].equals(&quot;1&quot;)){</b>
+<b class="fc"><i>194</i>&nbsp;                worker1 = null;</b>
+<b class="fc"><i>195</i>&nbsp;                firstSquare.setBuilder(worker1);</b>
+<i>196</i>&nbsp;            }
+<i>197</i>&nbsp;            else{
+<b class="nc"><i>198</i>&nbsp;                String[] builderInfo = values[2].split(&quot;,&quot;);</b>
+<b class="nc"><i>199</i>&nbsp;                worker1 = new Builder(firstSquare, builderInfo[0], builderInfo[1]);</b>
+<b class="nc"><i>200</i>&nbsp;                firstSquare.setBuilder(worker1);</b>
+<i>201</i>&nbsp;            }
+<i>202</i>&nbsp;
+<b class="fc"><i>203</i>&nbsp;            if(values[3].equals(&quot;2&quot;)){</b>
+<b class="fc"><i>204</i>&nbsp;                String[] square2 = values[4].split(&quot;:&quot;);</b>
+<b class="fc"><i>205</i>&nbsp;                Square secondSquare = stringToFullSquare(square2);</b>
+<b class="fc"><i>206</i>&nbsp;                if(values[5].equals(&quot;1&quot;)){</b>
+<b class="nc"><i>207</i>&nbsp;                    worker2 = null;</b>
+<b class="nc"><i>208</i>&nbsp;                    secondSquare.setBuilder(worker2);</b>
+<i>209</i>&nbsp;                }
+<i>210</i>&nbsp;                else{
+<b class="fc"><i>211</i>&nbsp;                    String[] secondBuilderInfo = values[5].split(&quot;,&quot;);</b>
+<b class="fc"><i>212</i>&nbsp;                    worker2 = new Builder(secondSquare, secondBuilderInfo[0], secondBuilderInfo[1]);</b>
+<b class="fc"><i>213</i>&nbsp;                    secondSquare.setBuilder(worker2);</b>
+<i>214</i>&nbsp;                }
+<b class="fc"><i>215</i>&nbsp;                moves.setUpdate(true);</b>
+<b class="fc"><i>216</i>&nbsp;                clientController.getFrame().updateBoard(firstSquare, secondSquare);</b>
+<b class="fc"><i>217</i>&nbsp;            }</b>
+<i>218</i>&nbsp;            else{
+<b class="fc"><i>219</i>&nbsp;                moves.setUpdate(true);</b>
+<b class="fc"><i>220</i>&nbsp;                clientController.getFrame().updateBoard(firstSquare);</b>
+<i>221</i>&nbsp;            }
+<i>222</i>&nbsp;
+<i>223</i>&nbsp;        }
+<b class="fc"><i>224</i>&nbsp;        return moves;</b>
+<i>225</i>&nbsp;    }
+<i>226</i>&nbsp;
+<i>227</i>&nbsp;    /**
+<i>228</i>&nbsp;     * Converts a String to a Square including the &quot;value&quot; and &quot;level&quot; attributes.
+<i>229</i>&nbsp;     * @param square2 is a String[] formatted as &quot;x,y:level,value&quot;.
+<i>230</i>&nbsp;     * @return the full Square with the attributes.
+<i>231</i>&nbsp;     */
+<i>232</i>&nbsp;    private Square stringToFullSquare(String[] square2) {
+<b class="fc"><i>233</i>&nbsp;        String[] coord2 = square2[0].split(&quot;,&quot;);</b>
+<b class="fc"><i>234</i>&nbsp;        String[] attributes2 = square2[1].split(&quot;,&quot;);</b>
+<b class="fc"><i>235</i>&nbsp;        Square square = new Square(parseInt(coord2[0]), parseInt(coord2[1]));</b>
+<b class="fc"><i>236</i>&nbsp;        square.setLevel(parseInt(attributes2[0]));</b>
+<b class="fc"><i>237</i>&nbsp;        square.setValue(parseInt(attributes2[1]));</b>
+<b class="fc"><i>238</i>&nbsp;        return square;</b>
+<i>239</i>&nbsp;    }
+<i>240</i>&nbsp;
+<i>241</i>&nbsp;    /**
+<i>242</i>&nbsp;     * method used to setup the match by getting the cards, the available squares to place the builders and to decide who will be the first player.
+<i>243</i>&nbsp;     * @param socket is the serverSocket.
+<i>244</i>&nbsp;     * @param controller is the controller of the player.
+<i>245</i>&nbsp;     */
+<i>246</i>&nbsp;    public void getMatchSetup(Socket socket, GUIClientController controller) throws IOException, InterruptedException, InvocationTargetException {
+<b class="fc"><i>247</i>&nbsp;        String availableMoves = Receiver.receive(socket);</b>
+<b class="fc"><i>248</i>&nbsp;        String[] values = availableMoves.split(&quot;@&quot;);</b>
+<b class="fc"><i>249</i>&nbsp;        if(values[0].equals(&quot;-1&quot;)){</b>
+<b class="nc"><i>250</i>&nbsp;            controller.disconnected();</b>
+<i>251</i>&nbsp;        }
+<b class="fc"><i>252</i>&nbsp;        if (values[0].equals(&quot;7&quot;)) {//dealer has to choose all the cards</b>
+<b class="nc"><i>253</i>&nbsp;            controller.dealerChoice();</b>
+<i>254</i>&nbsp;        }
+<b class="fc"><i>255</i>&nbsp;        if (values[0].equals(&quot;8&quot;)) {//player has to choose the card</b>
+<b class="fc"><i>256</i>&nbsp;            String[] cards = values[1].split(&quot;:&quot;);</b>
+<i>257</i>&nbsp;            Card card;
+<b class="fc"><i>258</i>&nbsp;            for (int i = 0; i &lt; cards.length; i++) {</b>
+<b class="fc"><i>259</i>&nbsp;                card = stringToCard(cards[i]);</b>
+<b class="fc"><i>260</i>&nbsp;                card.setNumber(i+1);</b>
+<b class="fc"><i>261</i>&nbsp;                controller.possibleCards.add(card);</b>
+<i>262</i>&nbsp;            }
+<b class="fc"><i>263</i>&nbsp;            controller.playerChoice();</b>
+<i>264</i>&nbsp;        }
+<b class="fc"><i>265</i>&nbsp;        if (values[0].equals(&quot;9&quot;)) {//player has to choose where to place the builder</b>
+<b class="fc"><i>266</i>&nbsp;            String places = values[1];</b>
+<b class="fc"><i>267</i>&nbsp;            Integer builderNumber = parseInt(values[2]);</b>
+<b class="fc"><i>268</i>&nbsp;            ArrayList&lt;Square&gt; freeSquares = stringToArrayListSquare(places);</b>
+<b class="fc"><i>269</i>&nbsp;            controller.placeBuilder(freeSquares, builderNumber);</b>
+<i>270</i>&nbsp;        }
+<b class="fc"><i>271</i>&nbsp;        if (values[0].equals(&quot;10&quot;)) { //la partita comincia</b>
+<b class="fc"><i>272</i>&nbsp;            controller.getFrame().setup = false;</b>
+<b class="fc"><i>273</i>&nbsp;            controller.play();</b>
+<i>274</i>&nbsp;        }
+<b class="fc"><i>275</i>&nbsp;        if (values[0].equals(&quot;11&quot;)) {</b>
+<b class="nc"><i>276</i>&nbsp;            controller.chooseNumberOfPlayers();</b>
+<i>277</i>&nbsp;        }
+<b class="fc"><i>278</i>&nbsp;        if (values[0].equals(&quot;12&quot;)){</b>
+<b class="fc"><i>279</i>&nbsp;            String number = values[1];</b>
+<b class="fc"><i>280</i>&nbsp;            Integer numberOfPlayers = parseInt(number);</b>
+<b class="fc"><i>281</i>&nbsp;            controller.setNumberOfPlayers(numberOfPlayers);</b>
+<i>282</i>&nbsp;        }
+<i>283</i>&nbsp;
+<b class="fc"><i>284</i>&nbsp;        if (values[0].equals(&quot;13&quot;)){   //choose the beginner</b>
+<b class="nc"><i>285</i>&nbsp;            String received = values[1];</b>
+<b class="nc"><i>286</i>&nbsp;            String[] names = received.split(&quot;:&quot;);</b>
+<b class="nc"><i>287</i>&nbsp;            ArrayList&lt;String&gt; playerIDs = new ArrayList&lt;String&gt;();</b>
+<b class="nc"><i>288</i>&nbsp;            int j = 0;</b>
+<b class="nc"><i>289</i>&nbsp;            for(int i=0; i&lt;names.length; i++){</b>
+<b class="nc"><i>290</i>&nbsp;                j=i+1;</b>
+<b class="nc"><i>291</i>&nbsp;                playerIDs.add(names[i]);</b>
+<b class="nc"><i>292</i>&nbsp;                System.out.println(j + &quot;for &quot; + names[i] + &quot;\n&quot;);</b>
+<i>293</i>&nbsp;            }
+<b class="nc"><i>294</i>&nbsp;            controller.chooseBeginner(playerIDs);</b>
+<i>295</i>&nbsp;        }
+<b class="fc"><i>296</i>&nbsp;        if (values[0].equals(&quot;99&quot;)){   //updateboard</b>
+<i>297</i>&nbsp;            Builder worker1;
+<i>298</i>&nbsp;            Builder worker2;
+<b class="fc"><i>299</i>&nbsp;            String[] square = values[1].split(&quot;:&quot;);</b>
+<b class="fc"><i>300</i>&nbsp;            firstSquare = stringToFullSquare(square);</b>
+<b class="fc"><i>301</i>&nbsp;            if(!values[2].equals(&quot;1&quot;)){</b>
+<b class="fc"><i>302</i>&nbsp;                String[] builderInfo = values[2].split(&quot;,&quot;);</b>
+<b class="fc"><i>303</i>&nbsp;                worker1 = new Builder(firstSquare, builderInfo[0], builderInfo[1]);</b>
+<b class="fc"><i>304</i>&nbsp;                firstSquare.setBuilder(worker1);</b>
+<b class="fc"><i>305</i>&nbsp;            }</b>
+<i>306</i>&nbsp;            else{
+<b class="nc"><i>307</i>&nbsp;                worker1 = null;</b>
+<b class="nc"><i>308</i>&nbsp;                firstSquare.setBuilder(worker1);</b>
+<i>309</i>&nbsp;            }
+<b class="fc"><i>310</i>&nbsp;            if(values[3].equals(&quot;2&quot;)){</b>
+<b class="nc"><i>311</i>&nbsp;                String[] square2 = values[4].split(&quot;:&quot;);</b>
+<b class="nc"><i>312</i>&nbsp;                secondSquare = stringToFullSquare(square2);</b>
+<b class="nc"><i>313</i>&nbsp;                if(!values[5].equals(&quot;1&quot;)){</b>
+<b class="nc"><i>314</i>&nbsp;                    String[] secondBuilderInfo = values[5].split(&quot;,&quot;);</b>
+<b class="nc"><i>315</i>&nbsp;                    worker2 = new Builder(secondSquare, secondBuilderInfo[0], secondBuilderInfo[1]);</b>
+<b class="nc"><i>316</i>&nbsp;                    secondSquare.setBuilder(worker2);</b>
+<b class="nc"><i>317</i>&nbsp;                }</b>
+<i>318</i>&nbsp;                else{
+<b class="nc"><i>319</i>&nbsp;                    worker2 = null;</b>
+<b class="nc"><i>320</i>&nbsp;                    secondSquare.setBuilder(worker2);</b>
+<i>321</i>&nbsp;                }
+<b class="nc"><i>322</i>&nbsp;                controller.getFrame().updateBoard(firstSquare, secondSquare);</b>
+<b class="nc"><i>323</i>&nbsp;            }</b>
+<i>324</i>&nbsp;            else {
+<b class="fc"><i>325</i>&nbsp;                controller.getFrame().updateBoard(firstSquare);</b>
+<i>326</i>&nbsp;            }
+<i>327</i>&nbsp;
+<i>328</i>&nbsp;        }
+<i>329</i>&nbsp;
+<b class="fc"><i>330</i>&nbsp;    }</b>
+<i>331</i>&nbsp;
+<i>332</i>&nbsp;    /**
+<i>333</i>&nbsp;     * sends the cards chosen by the Dealer to the server
+<i>334</i>&nbsp;     * @param choosenCards is the ArrayList that contains all the cards.
+<i>335</i>&nbsp;     * @param socket is the server socket.
+<i>336</i>&nbsp;     */
+<i>337</i>&nbsp;    public void sendCard(ArrayList&lt;Integer&gt; choosenCards, Socket socket) throws IOException {
+<b class="nc"><i>338</i>&nbsp;        String message = new String();</b>
+<b class="nc"><i>339</i>&nbsp;        for(int i=0; i&lt;choosenCards.size(); i++){</b>
+<b class="nc"><i>340</i>&nbsp;            message = message + Integer.toString(choosenCards.get(i)) + &quot;,&quot;;</b>
+<i>341</i>&nbsp;        }
+<b class="nc"><i>342</i>&nbsp;        Sender.send(message,socket);</b>
+<b class="nc"><i>343</i>&nbsp;    }</b>
+<i>344</i>&nbsp;
+<i>345</i>&nbsp;    /**
+<i>346</i>&nbsp;     * sends the card chosen by the player to the server.
+<i>347</i>&nbsp;     * @param card is the choosen card.
+<i>348</i>&nbsp;     * @param socket is the server socket.
+<i>349</i>&nbsp;     */
+<i>350</i>&nbsp;    public void sendCard(Integer card, Socket socket) throws IOException {
+<b class="fc"><i>351</i>&nbsp;        card = card-1;</b>
+<b class="fc"><i>352</i>&nbsp;        String message = Integer.toString(card);</b>
+<b class="fc"><i>353</i>&nbsp;        Sender.send(message, socket);</b>
+<b class="fc"><i>354</i>&nbsp;    }</b>
+<i>355</i>&nbsp;
+<i>356</i>&nbsp;    public void sendMoves(Moves envelope, Socket socket) throws IOException {
+<b class="fc"><i>357</i>&nbsp;        if(envelope == null){</b>
+<b class="nc"><i>358</i>&nbsp;            Sender.send(&quot;0&quot;, socket);</b>
+<i>359</i>&nbsp;        }
+<b class="fc"><i>360</i>&nbsp;        if (envelope != null) {</b>
+<b class="fc"><i>361</i>&nbsp;            Square square = envelope.getMoves1().get(0);</b>
+<b class="fc"><i>362</i>&nbsp;            Builder builder = envelope.getBuilder1();</b>
+<b class="fc"><i>363</i>&nbsp;            Boolean dome = envelope.getIsDome();</b>
+<b class="fc"><i>364</i>&nbsp;            String coordinates = squareToString(square) + builderToString(builder) + booleanToString(dome);</b>
+<b class="fc"><i>365</i>&nbsp;            Sender.send(coordinates, socket);</b>
+<i>366</i>&nbsp;        }
+<b class="fc"><i>367</i>&nbsp;    }</b>
+<i>368</i>&nbsp;
+<i>369</i>&nbsp;    public void sendSquare(Square square, Socket socket) throws IOException {
+<i>370</i>&nbsp;
+<b class="fc"><i>371</i>&nbsp;        String message = squareToString(square);</b>
+<b class="fc"><i>372</i>&nbsp;        Sender.send(message,socket);</b>
+<b class="fc"><i>373</i>&nbsp;    }</b>
+<i>374</i>&nbsp;
+<i>375</i>&nbsp;    /**
+<i>376</i>&nbsp;     * converts a builder object to a string containing the coordinates of the position on the board.
+<i>377</i>&nbsp;     * @param builder is the builder that is needed to have converted.
+<i>378</i>&nbsp;     * @return a string containing the builder.
+<i>379</i>&nbsp;     */
+<i>380</i>&nbsp;    public String builderToString(Builder builder){
+<b class="fc"><i>381</i>&nbsp;        Square position = builder.getPosition();</b>
+<b class="fc"><i>382</i>&nbsp;        return squareToString(position);</b>
+<i>383</i>&nbsp;    }
+<i>384</i>&nbsp;
+<i>385</i>&nbsp;    /**
+<i>386</i>&nbsp;     * converts a Square object to a String containing the coordinates
+<i>387</i>&nbsp;     * @param square is the square that is going to be converted
+<i>388</i>&nbsp;     * @return a string with the x and y coordinates of the square separated by &quot;,&quot;
+<i>389</i>&nbsp;     */
+<i>390</i>&nbsp;    public String squareToString(Square square){
+<b class="fc"><i>391</i>&nbsp;        return square.x + &quot;,&quot; + square.y + &quot;@&quot;;</b>
+<i>392</i>&nbsp;    }
+<i>393</i>&nbsp;
+<i>394</i>&nbsp;    /**
+<i>395</i>&nbsp;     * converts back a string with the coordinates of the position of a builder to a builder object usable by the controller.
+<i>396</i>&nbsp;     * @param string the string with the coordinates x and y separated by &quot;,&quot;.
+<i>397</i>&nbsp;     * @return a builder object.
+<i>398</i>&nbsp;     */
+<i>399</i>&nbsp;    public Builder stringToBuilder(String string){
+<b class="fc"><i>400</i>&nbsp;        String[] builderInfo = string.split(&quot;:&quot;);</b>
+<b class="fc"><i>401</i>&nbsp;        Square square = stringToSquare(builderInfo[0]);</b>
+<b class="fc"><i>402</i>&nbsp;        return new Builder(square, builderInfo[1], builderInfo[2]);</b>
+<i>403</i>&nbsp;    }
+<i>404</i>&nbsp;
+<i>405</i>&nbsp;    /**
+<i>406</i>&nbsp;     * reads an integer from a string a converts it to a boolean. &#39;0&#39; is false &#39;1&#39; is true.
+<i>407</i>&nbsp;     * @param string is the string from where to read
+<i>408</i>&nbsp;     * @return true if the number in the string is &#39;1&#39;, false if it is &#39;0&#39;.
+<i>409</i>&nbsp;     */
+<i>410</i>&nbsp;    public Boolean stringToBool(String string){
+<i>411</i>&nbsp;        int x;
+<b class="fc"><i>412</i>&nbsp;        x=parseInt(string);</b>
+<b class="fc"><i>413</i>&nbsp;        return x == 1;</b>
+<i>414</i>&nbsp;    }
+<i>415</i>&nbsp;
+<i>416</i>&nbsp;    /**
+<i>417</i>&nbsp;     * converts a string containing coordinates x and y separated by &quot;,&quot; to a Square with x and y coordinates.
+<i>418</i>&nbsp;     * @param string is the string that contains the coordinates
+<i>419</i>&nbsp;     * @return a Square with x and y coordinates and all the other values set to 0.
+<i>420</i>&nbsp;     */
+<i>421</i>&nbsp;    public Square stringToSquare(String string){
+<b class="fc"><i>422</i>&nbsp;        StringBuilder partial = new StringBuilder(string);</b>
+<b class="fc"><i>423</i>&nbsp;        if(string.length()&gt;3){</b>
+<i>424</i>&nbsp;            try{
+<b class="nc"><i>425</i>&nbsp;                partial.delete(3,6);</b>
+<i>426</i>&nbsp;            }
+<b class="nc"><i>427</i>&nbsp;            catch (StringIndexOutOfBoundsException e){</b>
+<b class="nc"><i>428</i>&nbsp;                partial.delete(3,4);</b>
+<b class="nc"><i>429</i>&nbsp;            }</b>
+<i>430</i>&nbsp;        }
+<b class="fc"><i>431</i>&nbsp;        string=partial.toString();</b>
+<b class="fc"><i>432</i>&nbsp;        String[] coordinates = string.split(&quot;,&quot;);</b>
+<i>433</i>&nbsp;        int x;
+<i>434</i>&nbsp;        int y;
+<b class="fc"><i>435</i>&nbsp;        x = parseInt(coordinates[0]);</b>
+<b class="fc"><i>436</i>&nbsp;        y = parseInt(coordinates[1]);</b>
+<b class="fc"><i>437</i>&nbsp;        return new Square(x, y);</b>
+<i>438</i>&nbsp;    }
+<i>439</i>&nbsp;
+<i>440</i>&nbsp;    /**
+<i>441</i>&nbsp;     * converts a string containing the coordinates of an indefinite number of squares to an Arraylist with those Squares.
+<i>442</i>&nbsp;     * @param value is the Arraylist formatted as x and y coordinates separated by &quot;,&quot; and Squares separated by &quot;:&quot;.
+<i>443</i>&nbsp;     * @return the ArrayList of Squares.
+<i>444</i>&nbsp;     */
+<i>445</i>&nbsp;    public ArrayList&lt;Square&gt; stringToArrayListSquare(String value){
+<b class="fc"><i>446</i>&nbsp;        ArrayList&lt;Square&gt; possiblemoves = new ArrayList&lt;Square&gt;();</b>
+<b class="fc"><i>447</i>&nbsp;        StringBuilder lastRemove = new StringBuilder(value);</b>
+<b class="fc"><i>448</i>&nbsp;        lastRemove.delete(value.length()-1, value.length());</b>
+<b class="fc"><i>449</i>&nbsp;        value = lastRemove.toString();</b>
+<b class="fc"><i>450</i>&nbsp;        String[] squares = value.split(&quot;:&quot;);</b>
+<b class="fc"><i>451</i>&nbsp;        for(int i=0; i&lt;squares.length; i++){</b>
+<b class="fc"><i>452</i>&nbsp;            Square square = stringToSquare(squares[i]);</b>
+<b class="fc"><i>453</i>&nbsp;            possiblemoves.add(square);</b>
+<i>454</i>&nbsp;        }
+<b class="fc"><i>455</i>&nbsp;        return possiblemoves;</b>
+<i>456</i>&nbsp;    }
+<i>457</i>&nbsp;
+<i>458</i>&nbsp;    /**
+<i>459</i>&nbsp;     * is used to set the message to signal that the player can also build a dome.
+<i>460</i>&nbsp;     * @param isDome if is true the player has the possibility to build a dome.
+<i>461</i>&nbsp;     * @return String:&quot;1&quot; if isDome is tru, String:&quot;0&quot; if the boolean is false.
+<i>462</i>&nbsp;     */
+<i>463</i>&nbsp;    public String booleanToString(Boolean isDome){
+<b class="fc"><i>464</i>&nbsp;        if(isDome){</b>
+<b class="fc"><i>465</i>&nbsp;            return &quot;1&quot;;</b>
+<i>466</i>&nbsp;        }
+<b class="fc"><i>467</i>&nbsp;        return &quot;0&quot;;</b>
+<i>468</i>&nbsp;    }
+<i>469</i>&nbsp;
+<i>470</i>&nbsp;    /**
+<i>471</i>&nbsp;     * converts a String containing the name and description of a card to a card object.
+<i>472</i>&nbsp;     * @param string a string containing name and description of a card separated by &quot;_&quot;.
+<i>473</i>&nbsp;     * @return the card object with name and description set.
+<i>474</i>&nbsp;     */
+<i>475</i>&nbsp;    public Card stringToCard(String string){
+<b class="fc"><i>476</i>&nbsp;        String[] parts = string.split(&quot;_&quot;);</b>
+<b class="fc"><i>477</i>&nbsp;        String name = parts[0];</b>
+<b class="fc"><i>478</i>&nbsp;        String description = parts[1];</b>
+<b class="fc"><i>479</i>&nbsp;        Card card = new Card();</b>
+<b class="fc"><i>480</i>&nbsp;        card.name=name;</b>
+<b class="fc"><i>481</i>&nbsp;        card.setDescription(description);</b>
+<b class="fc"><i>482</i>&nbsp;        return card;</b>
+<i>483</i>&nbsp;    }
+<i>484</i>&nbsp;
+<i>485</i>&nbsp;    public void sendFirstPlayer(String player, Socket serverSocket) throws IOException {
+<b class="nc"><i>486</i>&nbsp;        Sender.send(player, serverSocket);</b>
+<b class="nc"><i>487</i>&nbsp;    }</b>
+<i>488</i>&nbsp;
+<i>489</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 20:55</div>
+</div>
+</body>
+</html>

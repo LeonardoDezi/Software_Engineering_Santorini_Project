@@ -8,10 +8,7 @@ import java.io.IOException;
 public class WaitingDialog extends JFrame{
 
     private JPanel mainPanel;
-    private JLabel jLabel;
     private MainFrame frame;
-
-    private final static String newline = "\n";
 
 
 

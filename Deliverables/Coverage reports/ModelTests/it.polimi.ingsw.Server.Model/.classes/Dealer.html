@@ -1,0 +1,126 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Dealer</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Server.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Dealer (it.polimi.ingsw.Server.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Dealer</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Server.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * represents the Challenger of the game.
+<i>5</i>&nbsp; * It will decide the cards used during the match, and the first player who is going to start
+<i>6</i>&nbsp; * @version 1.5
+<i>7</i>&nbsp; * @since 1.0
+<i>8</i>&nbsp; */
+<i>9</i>&nbsp;public class Dealer extends Player {
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    /** creates the Challenger.
+<i>12</i>&nbsp;     * @param name is the name that identifies the Challenger.
+<i>13</i>&nbsp;     * @param colour is the colour that will be associated to the Challenger
+<i>14</i>&nbsp;     * @param game is the game that the Challenger is playing
+<i>15</i>&nbsp;     * @param clientID is the id that will be associated to the Challenger
+<i>16</i>&nbsp;     */
+<i>17</i>&nbsp;    public Dealer(String name, String colour, Game game, Integer clientID) {
+<b class="fc"><i>18</i>&nbsp;        super(name, colour, game, clientID);</b>
+<b class="fc"><i>19</i>&nbsp;    }</b>
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    /** is used to select the cards that will be used in a three-player game
+<i>22</i>&nbsp;     * @param card1 is the first card selected
+<i>23</i>&nbsp;     * @param card2 is the second card selected
+<i>24</i>&nbsp;     * @param card3 is the third card selected
+<i>25</i>&nbsp;     */
+<i>26</i>&nbsp;    public void drawCards (int card1, int card2, int card3){
+<i>27</i>&nbsp;
+<b class="fc"><i>28</i>&nbsp;        game.addChosenCard(card1);</b>
+<b class="fc"><i>29</i>&nbsp;        game.addChosenCard(card2);</b>
+<b class="fc"><i>30</i>&nbsp;        game.addChosenCard(card3);</b>
+<i>31</i>&nbsp;
+<b class="fc"><i>32</i>&nbsp;    }</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    /** is used to select the cards that will be used in a two-player game
+<i>35</i>&nbsp;     * @param card1 is the first card selected
+<i>36</i>&nbsp;     * @param card2 is the second card selected
+<i>37</i>&nbsp;     */
+<i>38</i>&nbsp;    public void drawCards(int card1, int card2){
+<b class="fc"><i>39</i>&nbsp;        game.addChosenCard(card1);</b>
+<b class="fc"><i>40</i>&nbsp;        game.addChosenCard(card2);</b>
+<b class="fc"><i>41</i>&nbsp;    }</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 21:08</div>
+</div>
+</body>
+</html>

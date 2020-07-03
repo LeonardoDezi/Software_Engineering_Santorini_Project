@@ -1,0 +1,126 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: BoardPanel</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Client.View.GUI</a> ]
+</div>
+
+<h1>Coverage Summary for Class: BoardPanel (it.polimi.ingsw.Client.View.GUI)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BoardPanel</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    91,7%
+  </span>
+  <span class="absValue">
+    (11/ 12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Client.View.GUI;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import javax.imageio.ImageIO;
+<i>4</i>&nbsp;import javax.swing.*;
+<i>5</i>&nbsp;import java.awt.*;
+<i>6</i>&nbsp;import java.awt.image.BufferedImage;
+<i>7</i>&nbsp;import java.io.IOException;
+<i>8</i>&nbsp;import java.net.URL;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/** this class represents the panel containing the board where the game will be played */
+<i>11</i>&nbsp;public class BoardPanel extends JPanel {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    private BufferedImage img;
+<i>14</i>&nbsp;
+<b class="fc"><i>15</i>&nbsp;    public BoardPanel(){</b>
+<i>16</i>&nbsp;
+<b class="fc"><i>17</i>&nbsp;        ClassLoader cl = this.getClass().getClassLoader();</b>
+<b class="fc"><i>18</i>&nbsp;        URL url = cl.getResource(&quot;SantoriniBoard.png&quot;);</b>
+<b class="fc"><i>19</i>&nbsp;        img = null;</b>
+<i>20</i>&nbsp;        try {
+<b class="fc"><i>21</i>&nbsp;            img = ImageIO.read(url);</b>
+<b class="nc"><i>22</i>&nbsp;        } catch (IOException e) {</b>
+<i>23</i>&nbsp;
+<b class="fc"><i>24</i>&nbsp;        }</b>
+<i>25</i>&nbsp;
+<b class="fc"><i>26</i>&nbsp;    }</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public Dimension getPreferredSize() {
+<b class="fc"><i>32</i>&nbsp;        return new Dimension(653, 653);</b>
+<i>33</i>&nbsp;    }
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    @Override
+<i>37</i>&nbsp;    public void paintComponent(Graphics g) {
+<b class="fc"><i>38</i>&nbsp;        super.paintComponent(g);</b>
+<b class="fc"><i>39</i>&nbsp;        g.drawImage(img, 0 ,0, 683, 683, this);   //683</b>
+<b class="fc"><i>40</i>&nbsp;    }</b>
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 21:08</div>
+</div>
+</body>
+</html>

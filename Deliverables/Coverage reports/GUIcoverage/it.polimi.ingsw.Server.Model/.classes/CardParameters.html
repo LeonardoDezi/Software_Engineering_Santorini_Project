@@ -1,0 +1,158 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CardParameters</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">it.polimi.ingsw.Server.Model</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CardParameters (it.polimi.ingsw.Server.Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CardParameters</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package it.polimi.ingsw.Server.Model;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * represents the parameters of a card.
+<i>5</i>&nbsp; * The parameters will be used during a game to decide the correct behaviour and the actions permitted to the
+<i>6</i>&nbsp; * card&#39;s owner
+<i>7</i>&nbsp; */
+<b class="nc"><i>8</i>&nbsp;public class CardParameters {</b>
+<i>9</i>&nbsp;    /**
+<i>10</i>&nbsp;     * represents the special effect of the card when defining the moves during specialPhase1. if null, the card has no special effect
+<i>11</i>&nbsp;     */
+<i>12</i>&nbsp;    protected String specialPhase1Moves;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    /**
+<i>15</i>&nbsp;     * represents the special effect of the card when defining the actions during specialPhase1. if null, the card has no special effect
+<i>16</i>&nbsp;     */
+<i>17</i>&nbsp;    protected String specialPhase1Action;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    /**
+<i>20</i>&nbsp;     * represents the special effect of the card when defining the moves during movementPhase. if null, the card has no special effect
+<i>21</i>&nbsp;     */
+<i>22</i>&nbsp;    protected String movementPhaseMoves;
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;    /**
+<i>25</i>&nbsp;     * represents the special effect of the card when defining the actions during movementPhase. if null, the card has no special effect
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    protected String movementPhaseAction;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * represents the special effect of the card when defining the moves during specialPhase2. if null, the card has no special effect
+<i>31</i>&nbsp;     */
+<i>32</i>&nbsp;    protected String specialPhase2Moves;
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    /**
+<i>35</i>&nbsp;     * represents the special effect of the card when defining the actions during specialPhase2. if null, the card has no special effect
+<i>36</i>&nbsp;     */
+<i>37</i>&nbsp;    protected String specialPhase2Action;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    /**
+<i>40</i>&nbsp;     * represents the special effect of the card when defining the moves during buildingPhase. if null, the card has no special effect
+<i>41</i>&nbsp;     */
+<i>42</i>&nbsp;    protected String buildingPhaseMoves;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    /**
+<i>45</i>&nbsp;     * represents the special effect of the card when defining the actions during buildingPhase. if null, the card has no special effect
+<i>46</i>&nbsp;     */
+<i>47</i>&nbsp;    protected String buildingPhaseAction;
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    /**
+<i>50</i>&nbsp;     * represents the possibility of the owner&#39;s card to build a dome during its turn, even if the result is not a completed tower
+<i>51</i>&nbsp;     */
+<i>52</i>&nbsp;    protected boolean buildDome;
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;    /**
+<i>55</i>&nbsp;     * represents the special effect of the card when defining the moves during specialPhase3. if null, the card has no special effect
+<i>56</i>&nbsp;     */
+<i>57</i>&nbsp;    protected String specialPhase3Moves;
+<i>58</i>&nbsp;
+<i>59</i>&nbsp;    /**
+<i>60</i>&nbsp;     * represents the special effect of the card when defining the actions during specialPhase3. if null, the card has no special effect
+<i>61</i>&nbsp;     */
+<i>62</i>&nbsp;    protected String specialPhase3Action;
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;    /**
+<i>65</i>&nbsp;     * represents the special effect of the card regarding winning movements. if null, the card has no special effect
+<i>66</i>&nbsp;     */
+<i>67</i>&nbsp;    protected String winMovement;
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;    /**
+<i>70</i>&nbsp;     * represents the special effect of the card regarding winning building actions. if null, the card has no special effect
+<i>71</i>&nbsp;     */
+<i>72</i>&nbsp;    protected String winBuilding;
+<i>73</i>&nbsp;
+<i>74</i>&nbsp;}
+<i>75</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-07-03 20:55</div>
+</div>
+</body>
+</html>
