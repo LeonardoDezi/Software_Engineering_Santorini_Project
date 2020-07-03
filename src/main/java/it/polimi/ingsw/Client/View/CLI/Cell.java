@@ -1,6 +1,4 @@
-package it.polimi.ingsw.Client.View;
-
-import it.polimi.ingsw.Client.View.CLI.Colour;
+package it.polimi.ingsw.Client.View.CLI;
 
 import java.util.HashMap;
 

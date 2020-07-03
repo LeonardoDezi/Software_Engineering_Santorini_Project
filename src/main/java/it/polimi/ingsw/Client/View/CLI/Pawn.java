@@ -1,6 +1,4 @@
-package it.polimi.ingsw.Client.View;
-
-import it.polimi.ingsw.Client.View.CLI.Colour;
+package it.polimi.ingsw.Client.View.CLI;
 
 import java.util.HashMap;
 
@@ -8,7 +6,7 @@ import java.util.HashMap;
  * this class represents the pawns of the game
  */
 public class Pawn {
-    
+
     /** represents the colour of pawn by player */
     private String colour;
 
@@ -24,7 +22,6 @@ public class Pawn {
      * @param sex is the pawn sex
      */
     public Pawn(String colour, String sex){
-    //    this.position = position;
         this.colour = colour;
         this.sex = sex;
         maps();

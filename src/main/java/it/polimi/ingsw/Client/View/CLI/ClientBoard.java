@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Client.View;
+package it.polimi.ingsw.Client.View.CLI;
 
 /**
  * represents the Board in the Client side

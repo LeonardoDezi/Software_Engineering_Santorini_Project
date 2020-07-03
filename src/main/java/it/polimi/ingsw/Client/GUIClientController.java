@@ -1,9 +1,8 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Client.NetworkHandler.GUINetInterface;
-import it.polimi.ingsw.Client.View.ClientBoard;
+import it.polimi.ingsw.Client.View.CLI.ClientBoard;
 import it.polimi.ingsw.Client.View.GUI.*;
-import it.polimi.ingsw.Server.Model.Builder;
 import it.polimi.ingsw.Server.Model.Card;
 import it.polimi.ingsw.Server.Model.Square;
 
@@ -17,7 +16,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import static it.polimi.ingsw.Server.Controller.GameInitializer.COLOUR1;
-import static it.polimi.ingsw.Server.Controller.GameInitializer.COLOUR2;
 
 public class GUIClientController {
     private GUINetInterface netInterface = new GUINetInterface(this);

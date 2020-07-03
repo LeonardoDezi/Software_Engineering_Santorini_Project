@@ -4,8 +4,8 @@ import it.polimi.ingsw.Client.NetworkHandler.NetInterface;
 import it.polimi.ingsw.Client.View.CLI.Colour;
 import it.polimi.ingsw.Parser.Sender;
 import it.polimi.ingsw.Client.View.CLI.CliBoard;
-import it.polimi.ingsw.Client.View.ClientBoard;
-import it.polimi.ingsw.Client.View.Pawn;
+import it.polimi.ingsw.Client.View.CLI.ClientBoard;
+import it.polimi.ingsw.Client.View.CLI.Pawn;
 import it.polimi.ingsw.Server.Model.*;
 
 import java.io.BufferedReader;
