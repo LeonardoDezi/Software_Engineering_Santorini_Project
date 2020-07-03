@@ -6,6 +6,9 @@ import it.polimi.ingsw.Client.View.GUI.IntroFrame;
 import javax.swing.*;
 import java.io.*;
 
+/**
+ * executable of the program.
+ */
 public class SantoriniApp {
 
     /**
@@ -28,6 +31,9 @@ public class SantoriniApp {
     }
 
 
+    /**
+     * starts the gui.
+     */
     private static void runGui() {
         System.out.println("starting gui");
         SwingUtilities.invokeLater(new Runnable() {
