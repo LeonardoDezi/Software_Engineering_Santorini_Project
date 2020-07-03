@@ -20,25 +20,25 @@ public class CliBoard {
         String midLine = " │ ";
         String endLine = " ║";
         System.out.println("  1    2    3    4    5");
-        System.out.println(firstLine);
+        System.out.println(Colour.ANSI_CYAN + firstLine + Colour.RESET);
 
         for(int i=0; i<5; i++){
-            System.out.print(startLine);
+            System.out.print(Colour.ANSI_CYAN + startLine + Colour.RESET);
             for(int j=0; j<5; j++){
                 System.out.print(clientBoard.getCell(i,j).drawCell(i,j) + Colour.RESET);
                 if(j != 4) {
-                    System.out.print(midLine);
+                    System.out.print(Colour.ANSI_CYAN + midLine + Colour.RESET);
                 }
             }
-            System.out.print(endLine);
+            System.out.print(Colour.ANSI_CYAN + endLine + Colour.RESET);
             int x =i+1;
-            System.out.println("  " + x);
+            System.out.println("  " + Colour.RESET + x );
             if(i != 4){
-                System.out.println(inline);
+                System.out.println(Colour.ANSI_CYAN + inline + Colour.RESET);
             }
         }
 
-        System.out.println(lastLine);
+        System.out.println(Colour.ANSI_CYAN + lastLine + Colour.RESET);
 
     }
 

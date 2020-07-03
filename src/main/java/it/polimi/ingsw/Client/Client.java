@@ -5,15 +5,12 @@ import it.polimi.ingsw.Parser.Sender;
 
 import javax.swing.*;
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 
 /**
  * represents the client that connects to the game
  */
 public class Client {
-
-    private int clientID;
 
     /** represents the players username */
     private static String username;
@@ -144,11 +141,9 @@ public class Client {
 
         worker.execute();
 
-
     }
 
     public GUIClientController getController(){ return this.guiClientController;}
-
 
 
 }

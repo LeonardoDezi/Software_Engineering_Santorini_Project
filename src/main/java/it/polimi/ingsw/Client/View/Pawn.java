@@ -8,9 +8,7 @@ import java.util.HashMap;
  * this class represents the pawns of the game
  */
 public class Pawn {
-
-   // private Cell position;
-
+    
     /** represents the colour of pawn by player */
     private String colour;
 

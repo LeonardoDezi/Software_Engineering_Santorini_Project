@@ -694,13 +694,19 @@ public class ClientController {
     }
 
     /**
-     *
+     * this method is called if the username is not available.
      */
     public void wrongUserName() {
         System.out.println("Username already taken, please insert another one");
         this.disconnected();
     }
 
+    /**
+     * this method prints the match's player during its turn, their colour and card.
+     * @param playerID is the player name.
+     * @param playerColour is the player colour.
+     * @param playerCard is the the player chosen deity.
+     */
     public void printMatchInfo(String playerID, String playerColour, String playerCard) {
 
         String colour = colourSelection.get(playerColour);
