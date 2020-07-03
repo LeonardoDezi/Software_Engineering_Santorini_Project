@@ -6,11 +6,24 @@ import it.polimi.ingsw.Server.Controller.GameInitializer;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * this class manages the multiple games initialization.
+ */
 public class GameMaster implements Observer {
-private ArrayList<GameInitializer> gameInitializers = new ArrayList<GameInitializer>();
 
+    /**
+     * list of games waiting for players.
+     */
+    private ArrayList<GameInitializer> gameInitializers = new ArrayList<GameInitializer>();
+
+    /**
+     * update method from the observer pattern, receives the newly connected clients.
+     * @param newClient is the newly connected client.
+     * @return "1" if the client is correctly added to the game, "0" otherwise.
+     * @throws IOException from the methods called.
+     */
     @Override
-    public Integer update(Client newClient) throws IOException, InterruptedException {
+    public Integer update(Client newClient) throws IOException{
 
         if (gameInitializers.size()==0){
             GameInitializer gameInitializer = new GameInitializer(newClient);

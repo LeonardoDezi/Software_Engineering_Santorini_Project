@@ -1,6 +1,5 @@
 package it.polimi.ingsw.Server.VirtualView;
 
-import it.polimi.ingsw.Parser.Message;
 import it.polimi.ingsw.Parser.Receiver;
 import it.polimi.ingsw.Parser.Sender;
 import it.polimi.ingsw.Server.Client;
@@ -10,7 +9,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import static java.lang.Integer.numberOfLeadingZeros;
 import static java.lang.Integer.parseInt;
 
 public class NetInterface {
@@ -26,15 +24,9 @@ public class NetInterface {
     }
 
     public void setGame(Game game){
-    //    if(!alreadyExecuted){
-            this.game=game;
-     //   }
-      //  alreadyExecuted=true;
+        this.game=game;
     }
 
-    /*public void testSetFirstPlayer(){
-        currentPlayer = new Player("Giocatore", "green", game, 1);
-    }*/
 
     /**
      * sends to a specific client all the available moves with both builders and waits for the player response on whitch to use.
@@ -355,8 +347,6 @@ public class NetInterface {
         return "0@";
     }
 
-
-
     /**
      * converts back a string with the coordinates of the position of a builder to a builder object usable by the controller.
      * @param string the string with the coordinates x and y separated by ",".
@@ -438,6 +428,12 @@ public class NetInterface {
         return new Square(x, y);
     }
 
+    /**
+     * send to the clients the updated squares on the board.
+     * @param square1 is the first square that has changed.
+     * @param square2 is the second square that has changed.
+     * @throws IOException from sender and receiver methods.
+     */
     public void updateBoard(Square square1, Square square2) throws IOException {
         Socket socket;
         String message = new String("99@");
@@ -454,6 +450,11 @@ public class NetInterface {
         }
     }
 
+    /**
+     * transforms a square to a string.
+     * @param square is the chosen square.
+     * @return the string that represent che chosen square.
+     */
     public String boardSquare(Square square){
         StringBuilder string = new StringBuilder();
         string.append(square.x);
@@ -477,6 +478,12 @@ public class NetInterface {
         return  message;
     }
 
+    /**
+     * asks the challenger the number of players in game.
+     * @param client is the challenger.
+     * @return the number of players that has been choosen.
+     * @throws IOException from sender and receiver methods.
+     */
     public Integer getNumberOfPlayers(Client client) throws IOException {
         Sender.send("11@", client.getSocket());
         String recieved = Receiver.receive(client.getSocket());
@@ -490,6 +497,10 @@ public class NetInterface {
         return numberOfPlayers;
     }
 
+    /**
+     * sends the number of players in the game to all clients.
+     * @throws IOException from sender.
+     */
     public void sendNumber() throws IOException {
         for(int i=0; i<clients.size(); i++){
             Sender.send("12@"+String.valueOf(numberOfPlayers), clients.get(i).getSocket());
@@ -500,6 +511,13 @@ public class NetInterface {
         this.numberOfPlayers = x;
     }
 
+    /**
+     * asks to the challenger which player has to begin the match.
+     * @param dealer is the challenger.
+     * @param players is the list of all players in game.
+     * @return the chosen player.
+     * @throws IOException from sender and receiver.
+     */
     public Player askFirstPlayer(Client dealer, ArrayList<Player> players) throws IOException {
         StringBuilder partial = new StringBuilder("13@");
         for(int i=0; i< players.size(); i++){
@@ -524,7 +542,12 @@ public class NetInterface {
         return players.get(0);
     }
 
-
+    /**
+     * sends to the player that lost the "lose" message.
+     * @param player is the loser.
+     * @param winnerID is the winner name.
+     * @throws IOException from sender method.
+     */
     public void loseMethod(Player player, String winnerID) throws IOException {
         Client loser = findClient(player);
         String loseMessage = new String("66@"+winnerID);
@@ -536,6 +559,11 @@ public class NetInterface {
 
     }
 
+    /**
+     * send to the player that won the "win" message.
+     * @param player is the winner.
+     * @throws IOException from sender method.
+     */
     public void winner(Player player) throws IOException {
         Client winnerClient = findClient(player);
         try{
@@ -545,7 +573,12 @@ public class NetInterface {
         }
     }
 
-    public Client findClient(Player player) throws IOException {
+    /**
+     * method used to find the client associated to the player.
+     * @param player is the player to search.
+     * @return the player's client.
+     */
+    public Client findClient(Player player) {
         for(int i=0; i< clients.size(); i++){
             if(clients.get(i).clientID == player.clientID){
                return clients.get(i);

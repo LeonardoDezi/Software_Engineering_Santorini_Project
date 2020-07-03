@@ -8,10 +8,13 @@ import it.polimi.ingsw.Server.Model.Card;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * this class reads the json file of all the cards
+ */
 public class ParserManager {
 
+    /** list of all the cards */
     private ArrayList<Card> cards;
 
     public Card getCard(int num) {
@@ -26,6 +29,7 @@ public class ParserManager {
         return cards.size();
     }
 
+    /** method used to read the json file of the cards and add them to the cards ArrayList   */
     public void uploadCards() {
 
         Gson gson = new GsonBuilder().serializeNulls().create();

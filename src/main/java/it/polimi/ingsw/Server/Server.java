@@ -3,21 +3,31 @@ package it.polimi.ingsw.Server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * this class represents the Server
+ */
 public class Server {
 
     private int port;
     public Lobby lobby;
     private GameMaster gameMaster;
 
+    /**
+     * creates and initialize the server.
+     * @param port is the server port.
+     */
     public Server(int port) {
         this.port = port;
     }
 
-    public void startServer() throws IOException {
+    /**
+     * this method starts the server application with the lobby.
+     */
+    public void startServer() {
 
             //It creates threads when necessary, otherwise it re-uses existing one when possible
             ExecutorService executor = Executors.newCachedThreadPool();

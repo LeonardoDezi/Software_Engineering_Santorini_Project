@@ -12,7 +12,15 @@ import java.net.SocketException;
 
 import static java.lang.Thread.sleep;
 
+/** this class sends the messages */
 public class Sender {
+
+    /**
+     * this method takes a string message and transforms it to a json message and sends it
+     * @param m is the string message
+     * @param socket is the socket to which is sending the message
+     * @throws IOException if the connection ends
+     */
     public static void send(String m, Socket socket) throws IOException {
         try {
 

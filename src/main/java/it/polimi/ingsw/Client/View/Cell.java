@@ -79,7 +79,7 @@ public class Cell {
             }
 
             if (z.value == 2) {
-                r = Colour.ANSI_BLUE + buildings.get(4) ;
+                r = Colour.ANSI_BLUE + buildings.get(4) + levels.get(level) ;
                 return r;
             }
         }
@@ -98,7 +98,7 @@ public class Cell {
             }
 
             if (value == 2) {
-                r = Colour.ANSI_GREEN + buildings.get(4);
+                r = Colour.ANSI_GREEN + buildings.get(4) + levels.get(level);
             }
         }
 
@@ -114,7 +114,7 @@ public class Cell {
         buildings.put(1,"\u2460 ");
         buildings.put(2,"\u2461 ");
         buildings.put(3,"\u2462 ");
-        buildings.put(4, "\u23fa ");
+        buildings.put(4, "\u23fa");
 
         levels.put(0,"\u2080");
         levels.put(1,"\u2081");

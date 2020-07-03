@@ -8,15 +8,7 @@ import it.polimi.ingsw.Server.VirtualView.NetInterface;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static it.polimi.ingsw.Server.SantoriniApp.*;
-
-
-
-//sendMessage("Sei il dealer. scegli tre carte) ???
-//ArrayList<Integer> cards = netInterface.getCards(player?);
-//int chosenCard = netInterface.getChosenCard(possibleCard, player);
-//messaggio per confermare che la carta è stata scelta?
-
+/** this class creates a new game and sets it up */
 public class GameInitializer implements Runnable {
 
     private Client firstPlayer;
@@ -28,6 +20,11 @@ public class GameInitializer implements Runnable {
     public static final String COLOUR2 = "blue";
     public static final String COLOUR3 = "white";
 
+    /**
+     * creates and initializes the class.
+     * @param client is the first client of the game.
+     * @throws IOException from method getUsername().
+     */
     public GameInitializer(Client client) throws IOException {
         this.firstPlayer = client;
         firstPlayerName = firstPlayer.getUsername();
@@ -69,7 +66,7 @@ public class GameInitializer implements Runnable {
      * Adds a new player to the game and links it to the users client.
      * @param client is the new client logged for the match.
      * @return "1" if the operation is successful.
-     * @throws IOException
+     * @throws IOException from sender or receiver.
      */
     public int addPlayer(Client client) throws IOException {
         int outcome;
@@ -118,7 +115,7 @@ public class GameInitializer implements Runnable {
 
     /**
      * Sets as first player the player that is going to be the first to move.
-     * @throws IOException
+     * @throws IOException for remove player method.
      */
     public void setPlayers() throws IOException {
 
@@ -134,7 +131,7 @@ public class GameInitializer implements Runnable {
 
     /**
      * Makes the Challenger choose the GodCards that are going to be used for the match and the other players choose the one that they want.
-     * @throws IOException
+     * @throws IOException from the netInterface.
      */
     public void dealCards() throws IOException {
 
@@ -184,7 +181,7 @@ public class GameInitializer implements Runnable {
 
     /**
      * Makes each Player choose where he wants to place its Workers.
-     * @throws IOException
+     * @throws IOException from netInterface.
      */
     public void setBuilders() throws IOException {
         ArrayList<Square> possibleSquares;
@@ -219,7 +216,7 @@ public class GameInitializer implements Runnable {
 
     /**
      * Starts the game.
-     * @throws IOException
+     * @throws IOException from letsPlay() method.
      */
     public void startGame() throws IOException {
         TurnManager myGameManager = new TurnManager(game, netInterface);
@@ -230,7 +227,10 @@ public class GameInitializer implements Runnable {
         return game;
     }
 
-    //TODO da fare
+    /**
+     * Disconnects all the clients of this game from the server
+     * @throws IOException from method disconnectClients().
+     */
     public void disconnectAll() throws IOException {
         game.disconnectClients();
     }

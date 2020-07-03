@@ -7,6 +7,9 @@ import java.io.*;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * this class is the representation of the client in the server side
+ */
 public class Client implements Observer{
     private static AtomicInteger clientCount = new AtomicInteger(0);
     private Socket socket;
@@ -14,6 +17,11 @@ public class Client implements Observer{
     private String username;
     private int numberOfPlayers;
 
+    /**
+     * creates and initialize the class.
+     * @param socket the socket on which the client is connected.
+     * @throws IOException from receive method.
+     */
     public Client(Socket socket) throws IOException {
         this.clientID = clientCount.incrementAndGet();
         this.socket = socket;
@@ -23,7 +31,7 @@ public class Client implements Observer{
 
 
     @Override
-    public Integer update(Client client) { //TODO write the update method to update all the boards
+    public Integer update(Client client) {
         return 0;
     }
 
@@ -31,7 +39,7 @@ public class Client implements Observer{
         return socket;
     }
 
-    public String getUsername() throws IOException {
+    public String getUsername() {
         return username;
     }
 }

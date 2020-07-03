@@ -8,7 +8,11 @@ import java.io.*;
 
 public class SantoriniApp {
 
-    public static void main( String[] args ) throws IOException {
+    /**
+     * main method of the program.
+     * @param args input arguments.
+     */
+    public static void main( String[] args )  {
 
         if (args.length > 0) {
             String option = args[0];
@@ -23,23 +27,27 @@ public class SantoriniApp {
         }
     }
 
+
     private static void runGui() {
         System.out.println("starting gui");
         SwingUtilities.invokeLater(new Runnable() {
             public void run() { createAndShowGUI(); }});
     }
 
+    /**
+     * starts the server
+     */
     private static void runServer(){
         System.out.println("starting server");
             Server server = new Server(8080);
-        try {
+
             server.startServer();
-        } catch(IOException e) {
-            System.err.println(e.getMessage());
-         }
         }
 
 
+    /**
+     * starts the cli
+     */
     public static void runCli(){
         System.out.println("starting cli");
         System.out.println("insert Server ip or url");
