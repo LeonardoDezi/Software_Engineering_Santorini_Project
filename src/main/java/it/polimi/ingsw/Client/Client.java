@@ -59,6 +59,8 @@ public class Client {
 
         username = getUsername();
 
+        System.out.println("Wait for the other players...");
+
         Sender.send(username, serverSocket);
 
         ClientController clientController = new ClientController(this);

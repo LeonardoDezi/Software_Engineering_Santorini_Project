@@ -56,7 +56,6 @@ public class GameInitializer implements Runnable {
         Dealer player1 = new Dealer(firstPlayerName, COLOUR1, game, clientID);
         int outcome = game.addPlayer(player1);  //testare che non ci dia problemi quando facciamo addPlayer
         if (outcome == 0) {
-            //TODO send to the client "error in match creation, please retry"
             return;
         }
         return;

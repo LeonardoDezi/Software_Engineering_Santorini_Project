@@ -114,7 +114,7 @@ public class Cell {
         buildings.put(1,"\u2460 ");
         buildings.put(2,"\u2461 ");
         buildings.put(3,"\u2462 ");
-        buildings.put(4, "\u23fa");
+        buildings.put(4, "\u24b9");
 
         levels.put(0,"\u2080");
         levels.put(1,"\u2081");

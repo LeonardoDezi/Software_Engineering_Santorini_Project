@@ -88,6 +88,7 @@ public class ClientController {
         System.out.println("Choose "+ this.numberOfPlayers +" cards for the game");
         ArrayList<Integer> chosenCards = this.chosenCards();
         netInterface.sendCard(chosenCards, client.getServerSocket());
+        System.out.println("Wait for the other players to choose");
     }
 
     /**
@@ -105,7 +106,7 @@ public class ClientController {
         else {
             netInterface.sendCard(card, client.getServerSocket());
         }
-
+        System.out.println("Wait for the other players to choose");
     }
 
     /**
@@ -203,8 +204,7 @@ public class ClientController {
         selected.add(chosen);
 
         if (returnBuilder(builderSquare,moves).getSex().equals("Female")){
-            System.out.println("Do you want to build a Dome? y/n");
-            dome = returnBoolean();
+            dome = true;
         }
 
         return new Moves(returnBuilder(builderSquare,moves),selected,null,null,dome,false);
@@ -338,6 +338,7 @@ public class ClientController {
     public void setNumberOfPlayers(Integer numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
         System.out.println("Number of Players in game: " + numberOfPlayers);
+        System.out.println("Wait for the other players to star playing");
     }
 
     /**
@@ -686,7 +687,9 @@ public class ClientController {
 
         }
 
+        System.out.println("Wait for the other players...");
         return Integer.toString(number);
+
     }
 
     /**
