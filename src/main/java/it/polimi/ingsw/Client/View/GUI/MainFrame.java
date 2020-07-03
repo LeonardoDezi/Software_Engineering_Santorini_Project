@@ -32,7 +32,6 @@ import static it.polimi.ingsw.Server.SantoriniApp.*;
 /** this class represents the main Frame where the game is played */
 public class MainFrame extends JFrame {
 
-    //TODO ancora non ho pensato a come scegliere i worker
 
     /** represents the list of all the squares of the board*/
     private SquareButton[][]  squareList;
@@ -46,8 +45,6 @@ public class MainFrame extends JFrame {
 
     private String playerCard;
 
-    /** the label representing the player's card */
-   // private JLabel playerCard = new JLabel();
 
     /** represents the border used to indicate that the button can be selected */  //TODO da cancellare
     private final static Border WHITEBORDER = new LineBorder(Color.WHITE, 3);
@@ -68,8 +65,8 @@ public class MainFrame extends JFrame {
     /** the y coordinate of the squareButton selected */
     private int y;
 
-    /** indicates if a move has been chosen */
-    private boolean moveChosen = false;
+    /** indicates if a square has been selected */
+    private boolean squareSelected = false;
 
     public WaitingDialog waitingDialog = new WaitingDialog();
 
@@ -113,6 +110,7 @@ public class MainFrame extends JFrame {
     private ArrayList<Square> moves1;
     private ArrayList<Square> moves2;
 
+    /** indicates that we are in the phase where the user has to choose a worker */
     private boolean part1 = false;
 
     private Builder playingBuilder;
@@ -131,23 +129,25 @@ public class MainFrame extends JFrame {
 
 
     /** the actionListener assigned to the square button. When the button is pressed, if the move has not been chosen
-     * sets moveChosen to true and gets the coordinates of the SquareButton
+     * sets squareSelected to true and gets the coordinates of the SquareButton
      */
 
     private class SquareListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
 
-            if(moveChosen){
+            SquareButton button = (SquareButton) e.getSource();
+
+            if(squareSelected && button.getBorder().equals(YELLOWBORDER)){
                 squareList[x][y].setBorder(YELLOWBORDER);   // set the previous button to YELLOWBORDER
             }
 
-            SquareButton button = (SquareButton) e.getSource();
+
             if(button.getBorder().equals(YELLOWBORDER)){
                 button.setBorder(REDBORDER);
                 x = button.getXvalue();                     //new button to REDBORDER
                 y = button.getYvalue();
-                moveChosen = true;
+                squareSelected = true;
 
             }
         }
@@ -164,7 +164,7 @@ public class MainFrame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if(moveChosen) {
+            if(squareSelected) {
 
                 squareList[x][y].setBorder(YELLOWBORDER);
 
@@ -183,6 +183,47 @@ public class MainFrame extends JFrame {
                     part1 = true;
                     playingBuilder = null;
                 }
+
+                squareSelected = false;
+            }
+
+
+            if(!(part1)){
+
+
+                builder1Button.setBorder(YELLOWBORDER);
+
+                if(builder2Button != null){
+                    builder2Button.setBorder(YELLOWBORDER);
+                }
+
+                for(Square s : moves1)
+                    squareList[s.x][s.y].setBorder(BASICBORDER);
+
+                if(moves2 != null) {
+                    for (Square s : moves2)
+                        squareList[s.x][s.y].setBorder(BASICBORDER);
+                }
+
+
+                /*
+
+                if (squareList[x][y].equals(builder1Button)) {      // repaints the possible workers
+                    if(builder2Button != null){
+                        builder2Button.setBorder(YELLOWBORDER);
+                    }
+                    for(Square s : moves1)
+                        squareList[s.x][s.y].setBorder(BASICBORDER);
+                    part1 = true;
+                    playingBuilder = null;
+                } else if (squareList[x][y].equals(builder2Button)) {
+                    builder1Button.setBorder(YELLOWBORDER);
+                    for(Square s: moves2)
+                        squareList[s.x][s.y].setBorder(BASICBORDER);
+
+                 */
+                part1 = true;
+                playingBuilder = null;
             }
 
             revalidate();
@@ -198,9 +239,9 @@ public class MainFrame extends JFrame {
     private class Confirm implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (moveChosen) {
+            if (squareSelected) {
 
-                moveChosen = false;
+                squareSelected = false;
 
                 if(part1) {                                             //choose possible move
                     squareList[x][y].setBorder(BASICBORDER);
@@ -216,7 +257,7 @@ public class MainFrame extends JFrame {
                         paintPossibleSquares(moves2);
                     }
                     part1 = false;
-                    moveChosen = true;
+                    squareSelected = false;
 
                 }else {
 
@@ -248,7 +289,7 @@ public class MainFrame extends JFrame {
                     }
 
 
-                    for (int i = 0; i < Board.BOARDSIZEX; i++) {
+                    for (int i = 0; i < Board.BOARDSIZEX; i++) {            //returns all the buttons to basic border
                         for (int j = 0; j < Board.BOARDSIZEY; j++) {
                             squareList[i][j].setBorder(BASICBORDER);
                         }
@@ -277,11 +318,11 @@ public class MainFrame extends JFrame {
 
                     worker.execute();
 
+                    squareSelected = false;
+
                 }
 
-
             }
-
 
         }
 
@@ -451,7 +492,7 @@ public class MainFrame extends JFrame {
             InputStream url = cl.getResourceAsStream(item + ".png");
             BufferedImage img = null;
             try {
-                img = ImageIO.read(url);     //TODO togliere il try/catch
+                img = ImageIO.read(url);
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
@@ -495,10 +536,10 @@ public class MainFrame extends JFrame {
     public void paintPossibleSquares(ArrayList<Square> list){
 
         for(Square s : list){
-            int x = s.x;
-            int y = s.y;
-            squareList[x][y].setBorder(YELLOWBORDER);
-            squareList[x][y].setEnabled(true);
+            int a = s.x;
+            int b = s.y;
+            squareList[a][b].setBorder(YELLOWBORDER);
+            squareList[a][b].setEnabled(true);
         }
 
         /*
