@@ -56,7 +56,7 @@ public class SantoriniApp {
      */
     public static void runCli(){
         System.out.println("starting cli");
-        System.out.println("insert Server ip or url");
+        System.out.println("insert Server ip");
 
         String ip = new String();
         try{

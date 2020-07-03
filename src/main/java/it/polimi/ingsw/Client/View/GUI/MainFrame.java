@@ -72,24 +72,33 @@ public class MainFrame extends JFrame {
     /** indicates if a square has been selected */
     private boolean squareSelected = false;
 
+    /** the waiting dialog used during the execution of the program */
     public WaitingDialog waitingDialog = new WaitingDialog(this);
 
+    /** the cardChoosing dialog used during the execution of the program */
     public CardChoosingDialog cardChoosingDialog = new CardChoosingDialog(this);
 
+    /** the player number window used during the execution of the program */
     public PlayerNumberWindow playerNumberWindow = new PlayerNumberWindow(this);
 
+    /** the card picking dialog dialog used during the execution of the program */
     public CardPickingDialog cardPickingDialog = new CardPickingDialog(this);
 
+    /** the number dialog used during the execution of the program */
     public NumberDialog numberDialog = new NumberDialog(this);
 
+    /** the first player dialog used during the execution of the program */
     public FirstPlayerWindow firstPlayerWindow = new FirstPlayerWindow(this);
 
+    /** the outcome dialog used during the execution of the program */
     public OutcomeDialog outcomeDialog = new OutcomeDialog(this);
 
+    /** the fatal error window used during the execution of the program */
     public FatalErrorWindow fatalErrorWindow = new FatalErrorWindow(this);
 
     /** the number of players that play in the game */
     private int numberOfPlayers;
+
     /** the hashmap used to translate the card's name into its number */
     private HashMap<String, String> cardMap = new HashMap<>();
 
@@ -98,8 +107,10 @@ public class MainFrame extends JFrame {
 
     private GUIClientController controller;
 
+    /** represents the list of cards chosen for this game */
     private ArrayList<String> cardList = new ArrayList<>();
 
+    /** if true, it indicates that the board is still in setup mode and the actual game hasn't started yet */
     public boolean setup;
 
     public boolean stillPlaying = true;
@@ -742,8 +753,12 @@ public class MainFrame extends JFrame {
             Builder builder = button.getSquare().getBuilder();
             label = getPiece(builder.getColour(), builder.getSex());
 
+            if(button.getTopLabel() != null)
+                button.remove(button.getTopLabel());
+
             button.setTopLabel(label);
-            button.add(label);   //TODO fare Apollo
+
+            button.add(label);
             label.setAlignmentX((float) 0.5);
 
 

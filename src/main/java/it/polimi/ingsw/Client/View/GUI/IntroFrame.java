@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Client.View.GUI;
 
-import it.polimi.ingsw.Client.Client;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+
 /** this class represents the introductory frame shown to the user when the GUI is started */
 public class IntroFrame extends JFrame {
     
@@ -128,7 +127,7 @@ public class IntroFrame extends JFrame {
 
     }
 
-
+    /** closes the connection to the server, gets rid of the main frame and ends the program */
     public static void exit(MainFrame frame) throws IOException {
         if(frame.getClient() != null)
             frame.getClient().getServerSocket().close();

@@ -1,9 +1,5 @@
 package it.polimi.ingsw.Client.View.GUI;
 
-import it.polimi.ingsw.Client.GUIClientController;
-import it.polimi.ingsw.Parser.Sender;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,27 +14,23 @@ import static java.awt.BorderLayout.PAGE_END;
 
 /** this class represents the dialog where the Challenger chooses how many players will participate in the game */
 public class FirstPlayerWindow extends JFrame {
+
     /** the name of the file containing the go button icon */
     protected static final String BUTTONNAME = new String("Avanti.png");
 
-
-
-
-
-
+    /** the mainFrame where the game will be played */
     private MainFrame mainFrame;
 
-
+    /** represents the main panel of the window */
     private JPanel mainPanel;
 
-
+    /** represents the player chosen as first player */
     private static String firstPlayerName;
 
 
 
-
     /** the actionListener assigned to the button. When the button is pressed, it closes
-     * the startDialog, sends the number of players to the server and creates a waitingDialog */
+     * the window, sends firstPlayerName to the server and sets visible a waitingDialog */
     private class ConfirmListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -90,7 +82,7 @@ public class FirstPlayerWindow extends JFrame {
 
 
     /**
-     * creates a new playerNumber Dialog
+     * creates a new FirstPlayerWindow
      */
     public FirstPlayerWindow(MainFrame frame) {
         super("Player choice");
@@ -162,6 +154,7 @@ public class FirstPlayerWindow extends JFrame {
 
     }
 
+    /** displays the names of the players connected to the server for this game */
     public void displayNames(ArrayList<String> playerList){
 
         ButtonGroup group = new ButtonGroup();

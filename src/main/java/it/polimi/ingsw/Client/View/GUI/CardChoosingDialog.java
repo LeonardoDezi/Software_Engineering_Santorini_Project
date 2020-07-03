@@ -49,14 +49,14 @@ public class CardChoosingDialog extends JDialog {
     /** the number of players that will play the game */
     private int numberOfPlayers;
 
-
+    /** represents the title of the dialog */
     private JTextArea title;
 
 
     /** creates a new cardChoosingDialog
      * @param frame is the mainFrame
      */
-    public CardChoosingDialog(MainFrame frame) throws IOException {
+    public CardChoosingDialog(MainFrame frame){
 
         super(frame, "Player choice");
         this.frame = frame;
@@ -288,6 +288,7 @@ public class CardChoosingDialog extends JDialog {
         }
     }
 
+    /** sets the number of players inside the mainFrame and in the dialog's title */
     public void setNumberOfPlayers(){
         numberOfPlayers = frame.getNumberOfPlayers();
         title.setText("CHOOSE "+ numberOfPlayers + " CARDS");

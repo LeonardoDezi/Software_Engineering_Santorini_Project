@@ -6,7 +6,7 @@ import java.awt.event.*;
 import java.io.IOException;
 
 import static java.awt.BorderLayout.PAGE_END;
-
+/** this class represents the window displayed when the client can't access the server */
 public class FatalErrorWindow extends JFrame {
 
 
@@ -19,8 +19,8 @@ public class FatalErrorWindow extends JFrame {
 
 
 
-    /** the actionListener assigned to the start button. When the button is pressed, it closes
-     * the startDialog, sends the username to the server and creates a waitingDialog */
+    /** the actionListener assigned to the ok button. When pressed, it generates
+     * a new StartWindow*/
     private class ConfirmListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -32,7 +32,7 @@ public class FatalErrorWindow extends JFrame {
 
 
 
-
+    /** creates a new FatalErrorWindow */
     public FatalErrorWindow(MainFrame frame) {
         super();
 

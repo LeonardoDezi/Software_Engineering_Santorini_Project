@@ -1,10 +1,6 @@
 package it.polimi.ingsw.Client.View.GUI;
 
-import it.polimi.ingsw.Client.Client;
-import it.polimi.ingsw.Client.GUIClientController;
-import it.polimi.ingsw.Client.NetworkHandler.GUINetInterface;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -12,10 +8,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static it.polimi.ingsw.Client.View.GUI.IntroFrame.getScaledImage;
 import static it.polimi.ingsw.Client.View.GUI.StartWindow.IMAGENAME;

@@ -11,7 +11,7 @@ import java.net.URL;
 public class BoardPanel extends JPanel {
 
     private BufferedImage img;
-
+    /** the constructor of the panel */
     public BoardPanel(){
 
         ClassLoader cl = this.getClass().getClassLoader();
