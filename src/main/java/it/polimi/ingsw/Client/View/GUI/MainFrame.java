@@ -110,12 +110,7 @@ public class MainFrame extends JFrame {
 
     public JTextArea messageArea;
 
-     /**
-     * boolean used to manage Selene's behaviour. If true, then the playing worker is male
-     * and the player can choose whether to normally build with the playing worker or
-     * to build a dome with the female one
-     */
-    private boolean specialDomeMove = false;
+    public JTextArea stateArea;
 
 
     private JPanel cardPanel;
@@ -269,23 +264,24 @@ public class MainFrame extends JFrame {
 
             if(!(part1)){
 
+                if(builder1Button != null && builder2Button != null) {    //necessary in order to not have a nullPointerException during the placement of the builders
+                    builder1Button.setBorder(YELLOWBORDER);
 
-                builder1Button.setBorder(YELLOWBORDER);
+                    if (builder2Button != null) {
+                        builder2Button.setBorder(YELLOWBORDER);
+                    }
 
-                if(builder2Button != null){
-                    builder2Button.setBorder(YELLOWBORDER);
-                }
-
-                for(Square s : moves1)
-                    squareList[s.x][s.y].setBorder(EMPTYBORDER);
-
-                if(moves2 != null) {
-                    for (Square s : moves2)
+                    for (Square s : moves1)
                         squareList[s.x][s.y].setBorder(EMPTYBORDER);
-                }
 
-                part1 = true;
-                playingBuilder = null;
+                    if (moves2 != null) {
+                        for (Square s : moves2)
+                            squareList[s.x][s.y].setBorder(EMPTYBORDER);
+                    }
+
+                    part1 = true;
+                    playingBuilder = null;
+                }
             }
 
             revalidate();
@@ -315,7 +311,9 @@ public class MainFrame extends JFrame {
                         }
                         paintPossibleSquares(moves1);
                     }else {
-                        builder1Button.setBorder(EMPTYBORDER);
+                        if(builder1Button != null) {
+                            builder1Button.setBorder(EMPTYBORDER);
+                        }
                         paintPossibleSquares(moves2);
                     }
                     part1 = false;
@@ -348,7 +346,12 @@ public class MainFrame extends JFrame {
                         moves1 = null;
                         moves2 = null;
                         buildDome = false;
-                        specialDomeMove= false;
+                        /**
+                         * boolean used to manage Selene's behaviour. If true, then the playing worker is male
+                         * and the player can choose whether to normally build with the playing worker or
+                         * to build a dome with the female one
+                         */
+
                         domeButton.setEnabled(false);
                         domeButton.setBorder(BASICBORDER);
                         domeButton.setVisible(false);
@@ -390,12 +393,7 @@ public class MainFrame extends JFrame {
 
                     worker.execute();
 
-                    messageArea.setVisible(false);
-                    cardPanel.remove(cardLabel);
-                    revalidate();
-                    repaint();
-                    cardPanel.add(cardLabel, CENTER);
-                    pack();
+                    messageArea.setText(null);
 
                 }
 
@@ -471,6 +469,8 @@ public class MainFrame extends JFrame {
 
         map();
 
+        cardPanel = new JPanel(new BorderLayout());
+
         createBlocks();
         createPieces();
 
@@ -530,20 +530,35 @@ public class MainFrame extends JFrame {
         skipButton.addActionListener(new Skip());
         controlPanel.add(skipButton, BorderLayout.SOUTH);
 
-        cardPanel = new JPanel(new BorderLayout());
-        cardPanel.setSize(180, 500);
-        add(cardPanel, BorderLayout.EAST);
+        stateArea = new JTextArea();
+        stateArea.setOpaque(true);
+        stateArea.setEditable(false);
+        stateArea.setLineWrap(true);
+        stateArea.setWrapStyleWord(true);
+        stateArea.setSize(270,180);
+        stateArea.setBorder(EMPTYBORDER);
+        stateArea.setFont(new Font("Diogenes", Font.BOLD, 14));
+        stateArea.setVisible(true);
+
+
 
         messageArea = new JTextArea();
-        messageArea.setOpaque(false);
+        messageArea.setOpaque(true);
         messageArea.setEditable(false);
         messageArea.setLineWrap(true);
         messageArea.setWrapStyleWord(true);
-        messageArea.setSize(180,180);
+        messageArea.setSize(270,180);
+        messageArea.setBorder(EMPTYBORDER);
         messageArea.setFont(new Font("Diogenes", Font.BOLD, 14));
-        messageArea.setVisible(false);
+        messageArea.setVisible(true);
+
+        cardPanel.add(stateArea, BorderLayout.NORTH);
         cardPanel.add(messageArea, BorderLayout.PAGE_START);
 
+        pack();
+
+        cardPanel.setSize(250, 500);
+        add(cardPanel, BorderLayout.EAST);
 
 
         pack();
@@ -648,19 +663,8 @@ public class MainFrame extends JFrame {
             squareList[a][b].setEnabled(true);
         }
 
-        /*
-        JTextArea textField = new JTextArea();
-        textField.setText("FATAL ERROR: impossibile proseguire la partita");
-        textField.setOpaque(false);
-        textField.setEditable(false);
-        textField.setLineWrap(true);
-        textField.setWrapStyleWord(true);
-        textField.setFont(new Font("Diogenes", Font.BOLD, 14));
-        textField.setText("FATAL ERROR: impossibile proseguire la partita");
-        add(textField, BorderLayout.EAST);
+        //part1 = true;
 
-
-         */
         pack();
 
     }
@@ -788,20 +792,10 @@ public class MainFrame extends JFrame {
     public void setMoves(Moves moves){
 
         if(moves.getFemale()) {                    //special Selene condition: first worker = male, second worker = female
-            specialDomeMove = true;
-            cardLabel.setVisible(false);
-            revalidate();
-            repaint();
-            pack();
+
             messageArea.setVisible(true);
             messageArea.setText("SELENE: you can either normally build with your male worker or build domes with your female one");
-            //cardPanel.remove(cardLabel);
-            cardLabel.setVisible(true);
-            revalidate();
-            repaint();
-            pack();
-            cardPanel.add(cardLabel, CENTER);
-            pack();
+
         }
 
         Builder builder1 = moves.getBuilder1();
@@ -833,8 +827,6 @@ public class MainFrame extends JFrame {
         moves2 = moves.getMoves2();
 
         part1 = true;
-        revalidate();
-        repaint();
 
     }
 

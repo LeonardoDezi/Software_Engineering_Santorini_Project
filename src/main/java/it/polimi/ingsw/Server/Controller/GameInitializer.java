@@ -196,6 +196,9 @@ public class GameInitializer implements Runnable {
             square1 = game.getBoard().getSquare(square1.x, square1.y);
             game.deployBuilder(player, square1);
 
+            if(game.getDisconnect())
+                break;
+
             possibleSquares = game.getBasic().getFreeSquares();
             Square square2 = netInterface.getBuilderPlacement(possibleSquares, player.clientID, 2);
             if (square2.x == 20){

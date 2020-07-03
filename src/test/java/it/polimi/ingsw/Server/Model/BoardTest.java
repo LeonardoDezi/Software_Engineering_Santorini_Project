@@ -146,7 +146,7 @@ public class BoardTest {
         assertEquals(0, board.fullMap[2][4].getLevel());
         assertEquals(0, board.fullMap[2][4].getValue());
         board.build(position, true);
-        assertEquals(1, board.fullMap[2][4].getLevel());
+        assertEquals(0, board.fullMap[2][4].getLevel());
         assertEquals(2, board.fullMap[2][4].getValue());
         assertEquals(num, board.completedTowers);   // controlla che il valore di completedTowers non sia cambiato
     }

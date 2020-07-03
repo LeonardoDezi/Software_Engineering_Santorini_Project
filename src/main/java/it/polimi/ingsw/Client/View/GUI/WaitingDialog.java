@@ -27,6 +27,8 @@ public class WaitingDialog extends JFrame{
         super( "Waiting");
         this.frame = frame;
 
+        setResizable(false);
+
 
         WindowListener exitListener = new WindowAdapter() {
 

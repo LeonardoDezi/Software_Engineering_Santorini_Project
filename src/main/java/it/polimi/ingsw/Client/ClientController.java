@@ -129,7 +129,7 @@ public class ClientController {
      * @param socket is the socket used to talk with the server.
      */
     public void play(Socket socket) throws IOException {
-       // stillPlaying=true;
+
         Moves moves = new Moves(null, null, null, null, false, false);
         moves.setUpdate(true);
         while(stillPlaying){

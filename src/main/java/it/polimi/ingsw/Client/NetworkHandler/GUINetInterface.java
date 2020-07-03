@@ -173,8 +173,7 @@ public class GUINetInterface {
             String playerID = values[1];
             String playerColour = values[2];
             String playerCard = values[3];
-    //        clientController.printMatchInfo(playerID, playerColour, playerCard);
-            moves = null;
+            clientController.printMatchInfo(playerID, playerColour, playerCard);
         }
         if (values[0].equals("66")) { //the client loses
             String winnerID;
@@ -214,11 +213,11 @@ public class GUINetInterface {
                     secondSquare.setBuilder(worker2);
                 }
                 moves.setUpdate(true);
-                clientController.updateBoard(firstSquare, secondSquare);
+                clientController.getFrame().updateBoard(firstSquare, secondSquare);
             }
             else{
                 moves.setUpdate(true);
-                clientController.updateBoard(firstSquare);
+                clientController.getFrame().updateBoard(firstSquare);
             }
 
         }
@@ -248,7 +247,7 @@ public class GUINetInterface {
         String availableMoves = Receiver.receive(socket);
         String[] values = availableMoves.split("@");
         if(values[0].equals("-1")){
-            clientController.disconnected();
+            controller.disconnected();
         }
         if (values[0].equals("7")) {//dealer has to choose all the cards
             controller.dealerChoice();
@@ -292,7 +291,7 @@ public class GUINetInterface {
                 playerIDs.add(names[i]);
                 System.out.println(j + "for " + names[i] + "\n");
             }
-            clientController.chooseBeginner(playerIDs);
+            controller.chooseBeginner(playerIDs);
         }
         if (values[0].equals("99")){   //updateboard
             Builder worker1;
@@ -320,10 +319,10 @@ public class GUINetInterface {
                     worker2 = null;
                     secondSquare.setBuilder(worker2);
                 }
-                clientController.updateBoard(firstSquare, secondSquare);
+                controller.getFrame().updateBoard(firstSquare, secondSquare);
             }
             else {
-                clientController.updateBoard(firstSquare);
+                controller.getFrame().updateBoard(firstSquare);
             }
 
         }

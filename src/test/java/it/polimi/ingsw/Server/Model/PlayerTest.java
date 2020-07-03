@@ -41,9 +41,8 @@ public class PlayerTest {
     /** checks that when the player is created, the list of associated workers is empty */
     @Test
     public void checkEmptyBuilders(){
-        exception.expect(ArrayIndexOutOfBoundsException.class);
         Builder builder = player1.getBuilder(0);
-        assertTrue(player1.builders.isEmpty());
+        assertNull(builder);
     }
 
 

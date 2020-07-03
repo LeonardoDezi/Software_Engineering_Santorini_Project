@@ -16,6 +16,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import static it.polimi.ingsw.Server.Controller.GameInitializer.COLOUR1;
+import static it.polimi.ingsw.Server.Controller.GameInitializer.COLOUR2;
+
 public class GUIClientController {
     private GUINetInterface netInterface = new GUINetInterface(this);
     private Client client;
@@ -148,7 +151,7 @@ public class GUIClientController {
      public void lose(String winnerID) throws IOException {
          frame.stillPlaying = false;
          frame.getClient().getServerSocket().close();
-         if(!(winnerID.equals("null"))){
+         if((winnerID.equals("null"))){
              frame.outcomeDialog.messageArea.setText("Sorry, you lost. Would you like to play again?");
          }else
              frame.outcomeDialog.messageArea.setText("Sorry, you lost.\n" + winnerID + " has won.");
@@ -159,6 +162,7 @@ public class GUIClientController {
     public void disconnected() throws IOException {
         frame.stillPlaying = false;
         frame.getClient().getServerSocket().close();   //close socket connection
+        frame.waitingDialog.setVisible(false);
         frame.outcomeDialog.messageArea.setText("Sorry, you have been disconnected to the server. Would you like to play again?");
         frame.outcomeDialog.setVisible(true);
     }
@@ -212,24 +216,7 @@ public class GUIClientController {
 
         }
 
-        //TODO cancellare?
-        public void updateBoard(Square firstSquare, Square secondSquare) throws InterruptedException, IOException, InvocationTargetException {
-            frame.updateBoard(firstSquare, secondSquare);
-        }
 
-
-        //TODO cancellare?
-        public void updateBoard(Square firstSquare) throws InterruptedException, IOException, InvocationTargetException {
-            frame.updateBoard(firstSquare);
-        }
-
-        private void resetBoard(){
-            for (int i=0; i<5; i++){
-                for (int j=0; j<5; j++){
-                    clientBoard.getCell(i,j).setColour(0);
-                }
-            }
-        }
 
         public Square getPosition() throws IOException {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -243,73 +230,17 @@ public class GUIClientController {
             return new Square(x, y);
         }
 
-        public ArrayList<Square> chosenBuilder(Moves moves, Square builderSquare){
-
-            if (builderSquare.x == moves.getBuilder1().getPosition().x && builderSquare.y == moves.getBuilder1().getPosition().y){
-                for (int i=0; i<moves.getMoves1().size(); i++){
-                    for (int j=0; j<5; j++){
-                        for (int k=0; k<5; k++){
-                            if (clientBoard.getCell(j, k).getX() == moves.getMoves1().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves1().get(i).y){
-                                clientBoard.getCell(j, k).setColour(1);
-                            }
-                        }
-                    }
-                }
-                return moves.getMoves1();
-            }
-
-            if (builderSquare.x == moves.getBuilder2().getPosition().x && builderSquare.y == moves.getBuilder2().getPosition().y){
-                for (int i=0; i<moves.getMoves2().size(); i++){
-                    for (int j=0; j<5; j++){
-                        for (int k=0; k<5; k++){
-                            if (clientBoard.getCell(j, k).getX() == moves.getMoves2().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves2().get(i).y){
-                                clientBoard.getCell(j, k).setColour(1);
-                            }
-                        }
-                    }
-                }
-                return moves.getMoves2();
-            }
-            return null;
-        }
-
-        public boolean searchArray(ArrayList<Square> possibleMoves, Square chosen){
-            for(int i=0; i<possibleMoves.size(); i++){
-                if(chosen.x == possibleMoves.get(i).x && chosen.y == possibleMoves.get(i).y){
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public Builder returnBuilder(Square builderSquare, Moves moves){
-            if(builderSquare.x == moves.getBuilder1().getPosition().x && builderSquare.y == moves.getBuilder1().getPosition().y){
-                return moves.getBuilder1();
-            }
-            if (builderSquare.x == moves.getBuilder2().getPosition().x && builderSquare.y == moves.getBuilder2().getPosition().y){
-                return moves.getBuilder2();
-            }
-            else
-                return null;
-
-        }
-
-        public boolean returnBoolean() throws IOException{
-
-            String flag;
-
-            BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-            flag = bufferRead.readLine();
-
-            if (flag.equals("y") || flag.equals("yes")){
-                return true;
-            }
-            return false;
-
-        }
 
 
 
+    public void printMatchInfo(String playerID, String playerColour, String playerCard) throws InterruptedException, IOException, InvocationTargetException {
 
+        if(playerColour.equals(COLOUR1))
+            playerColour = "Yellow";
 
+        frame.stateArea.setText("Current player: " + playerID + "\n" + "Current player's colour: " +playerColour + "\n"
+                                    + "Current player's deity: " + playerCard);
+
+        play();
+    }
 }
