@@ -17,3 +17,15 @@
 | Advanced Gods | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 
 <!--
+
+
+How to run the program:
+ Start the jar file with "--server " as argument to start the server.
+ Start the jar file with any other argument to start the cli client.
+ Start the jar file without any argument to start the gui client.
+ 
+ 
+ WARNING: before executing the unity tests, comment the following lines:
+ Game.deployBuilder : (line 182)
+ Board.build and Board.move:     (line 95 and 73)
+ Player.removeBuilder (line 139)
