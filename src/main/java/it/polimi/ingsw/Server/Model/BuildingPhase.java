@@ -61,7 +61,7 @@ public class BuildingPhase extends Phase {
             }else if(player.getBuilderSize() ==2){      //if the playing worker is a male and the player has two workers
                 Builder female = player.getFemale();
                 ArrayList<Square> moves2 = basicRules.getBuildingRange(female);
-                received = context.getNetInterface().getBothBuildMove(moves1, playingBuilder, moves2, female, true, player,false);   //TODO usiamo canBuildADome per indicare che la femmina può costruire solo cupole. Ricordarselo quando si implementa getBothBuildMove
+                received = context.getNetInterface().getBothBuildMove(moves1, playingBuilder, moves2, female, true, player,false);
             }else  //if the player has only one worker and it's a male
                 received =context.getNetInterface().getBuildMove(moves1, playingBuilder, false, player,false);   //il worker è maschio e non può costruire cupole
 

@@ -47,7 +47,7 @@ public class SpecialPhase2 extends Phase {
 
         ArrayList<Square> moves1 = getMoves(playingBuilder, position);
 
-        if(!(moves1.isEmpty())) {    // il giocatore può fare mosse
+        if(!(moves1.isEmpty())) {    // the player can make moves
 
             Envelope received = context.getNetInterface().getMovementMove(moves1, playingBuilder, player, true);
 
@@ -105,14 +105,14 @@ public class SpecialPhase2 extends Phase {
 
     /** returns a list of all the places where the playing worker can be moved, except for the place where the worker used to be before movementPhase */
     public void doubleNotSameMove(){
-        //position è l'ultima posizione in cui si trovava la pedina
+        //position is the last position where the worker used to be
         possibleMoves = basicRules.proximity(playingBuilder);
         possibleMoves = basicRules.removeBuilderSquare(possibleMoves);
         possibleMoves = basicRules.removeTooHighPlaces(possibleMoves, playingBuilder);
         possibleMoves = basicRules.removeDomeSquare(possibleMoves);
 
         for(int i =0; i<possibleMoves.size(); i++) {
-            if (possibleMoves.get(i).equals(position)) {   //rimuove l'ultima casella in cui si trovava
+            if (possibleMoves.get(i).equals(position)) {   //removes the last position where it used to be
                 possibleMoves.remove(i);
                 i--;
             }
@@ -127,7 +127,7 @@ public class SpecialPhase2 extends Phase {
     public void actionMethod(Builder builder, Square position){
 
         this.playingBuilder = builder;
-        //ora position sarà lo square di destinazione
+        //now position will be the destination
         this.position = position;
 
         actionCommands.get(player.getCard().parameters.specialPhase2Action).run();

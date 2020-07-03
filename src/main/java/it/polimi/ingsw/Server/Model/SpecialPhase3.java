@@ -49,7 +49,7 @@ public class SpecialPhase3 extends Phase {
         ArrayList<Square> moves1 = getMoves(playingBuilder);
         boolean buildDome = player.getCard().getParameters().buildDome;
 
-        if(!(moves1.isEmpty())) {   // il giocatore può fare mosse
+        if(!(moves1.isEmpty())) {   // the player can make moves
 
             Envelope received = context.getNetInterface().getBuildMove(moves1, playingBuilder, buildDome, player, true);
 
@@ -124,7 +124,7 @@ public class SpecialPhase3 extends Phase {
     public void notPerimeter(){
         for(int i =0; i < possibleMoves.size(); i++) {
             Square pos = possibleMoves.get(i);
-            if (pos.x == 0 || pos.y == 0 || pos.x == Board.BOARDSIZEX - 1 || pos.y == Board.BOARDSIZEY -1 ) {   //casella perimetrale
+            if (pos.x == 0 || pos.y == 0 || pos.x == Board.BOARDSIZEX - 1 || pos.y == Board.BOARDSIZEY -1 ) {   //perimeter
                 possibleMoves.remove(i);
                 i--;
             }

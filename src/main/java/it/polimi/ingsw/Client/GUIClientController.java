@@ -1,11 +1,8 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Client.NetworkHandler.GUINetInterface;
-import it.polimi.ingsw.Client.View.CLI.CliBoard;
 import it.polimi.ingsw.Client.View.ClientBoard;
 import it.polimi.ingsw.Client.View.GUI.*;
-import it.polimi.ingsw.Client.View.Pawn;
-import it.polimi.ingsw.Parser.Sender;
 import it.polimi.ingsw.Server.Model.Builder;
 import it.polimi.ingsw.Server.Model.Card;
 import it.polimi.ingsw.Server.Model.Square;
@@ -24,9 +21,6 @@ public class GUIClientController {
     private Client client;
     public ArrayList<Card> possibleCards = new ArrayList<Card>();
     private ClientBoard clientBoard = new ClientBoard();
-    private Square builderSquare;
-    private ArrayList<Square> possibleMoves;
-    private boolean dome;
     private Integer numberOfPlayers;
 
     private MainFrame frame;
@@ -44,28 +38,15 @@ public class GUIClientController {
         if(frame.stillPlaying){
             netInterface.getMatchSetup(socket, this);
         }
-        //else if(disconnect) {
-
-      //  }
-
     }
 
 
 
 
-    /*
-    public void matchSetup(Socket socket) throws IOException, InterruptedException, InvocationTargetException {
-        setup = true;
-        while(setup){
-            netInterface.getMatchSetup(socket, this);
-        }
-    }
-    */
-
-    public void chooseNumberOfPlayers() throws IOException, InterruptedException, InvocationTargetException {
+    public void chooseNumberOfPlayers() {
 
 
-        SwingUtilities.invokeLater(new Runnable() {   //invokeandWait
+        SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 frame.waitingDialog.setVisible(false);
                 frame.playerNumberWindow.setVisible(true);
@@ -77,7 +58,7 @@ public class GUIClientController {
     }
 
 
-    public void dealerChoice() throws InterruptedException {
+    public void dealerChoice(){
 
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -105,14 +86,14 @@ public class GUIClientController {
      * calls the method to ask the player which card he wants to choose from the cards chosen by the Challenger.
      * throws IOException
      */
-    public void playerChoice() throws IOException, InvocationTargetException, InterruptedException {
+    public void playerChoice(){
 
         for (int i = 0; i < possibleCards.size(); i++) {
             String cardName = possibleCards.get(i).getName();
             frame.getCardList().add(cardName);
         }
 
-        SwingUtilities.invokeLater(new Runnable() {     //INVOKE AND WAIT
+        SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 frame.waitingDialog.setVisible(false);
                 frame.cardPickingDialog.displayCards();
@@ -131,7 +112,7 @@ public class GUIClientController {
          Moves moves = netInterface.getMoves(client.getServerSocket());
 
          if(frame.stillPlaying) {
-             SwingUtilities.invokeAndWait(new Runnable() {           //TODO invoke and wait
+             SwingUtilities.invokeAndWait(new Runnable() {
                  public void run() {
 
                      if (moves.getSkippable()) {
@@ -148,114 +129,41 @@ public class GUIClientController {
                      frame.setMoves(moves);
                  }
              });
-         }else{
+         }//else{
 
-         }
+            // disconnected();
+
+         //}
 
      }
 
 
      public void win() throws IOException {
          frame.stillPlaying = false;
-         frame.getClient().getServerSocket().close();
-         frame.outcomeDialog.setVisible(true);
+         frame.getClient().getServerSocket().close();   //close socket connection
          frame.outcomeDialog.messageArea.setText("Congratulations! You have won! Would you like to play again?");
+         frame.outcomeDialog.setVisible(true);
      }
 
+     public void lose(String winnerID) throws IOException {
+         frame.stillPlaying = false;
+         frame.getClient().getServerSocket().close();
+         if(!(winnerID.equals("null"))){
+             frame.outcomeDialog.messageArea.setText("Sorry, you lost. Would you like to play again?");
+         }else
+             frame.outcomeDialog.messageArea.setText("Sorry, you lost.\n" + winnerID + " has won.");
+
+         frame.outcomeDialog.setVisible(true);
+     }
+
+    public void disconnected() throws IOException {
+        frame.stillPlaying = false;
+        frame.getClient().getServerSocket().close();   //close socket connection
+        frame.outcomeDialog.messageArea.setText("Sorry, you have been disconnected to the server. Would you like to play again?");
+        frame.outcomeDialog.setVisible(true);
+    }
 
 
-
-        /**
-         * Shows on the screen all the possible moves that the player can do and waits for the choice.
-         * @param moves all the moves that the player can do.
-         * @return the single move chosen by the player with the builder that is going to do that move.
-         */
-        public Moves chooseMove(Moves moves) throws IOException {
-            if(moves.getMoves1() != null){
-                for (int i=0; i<moves.getMoves1().size(); i++){
-                    for (int j=0; j<5; j++){
-                        for (int k=0; k<5; k++){
-                            if (clientBoard.getCell(j, k).getX() == moves.getMoves1().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves1().get(i).y){
-                                clientBoard.getCell(j, k).setColour(1);
-                            }
-                        }
-                    }
-                }
-            }
-            if(moves.getMoves2() != null){
-                for (int i=0; i<moves.getMoves2().size(); i++){
-                    for (int j=0; j<5; j++){
-                        for (int k=0; k<5; k++){
-                            if (clientBoard.getCell(j, k).getX() == moves.getMoves2().get(i).x && clientBoard.getCell(j, k).getY() == moves.getMoves2().get(i).y) {
-                                clientBoard.getCell(j, k).setColour(1);
-                            }
-                        }
-                    }
-                }
-            }
-            CliBoard.drawBoard(clientBoard);
-            this.resetBoard();
-
-            if (moves.getMoves2() != null){
-                System.out.println("Pick a worker: position (x,y)");
-
-                builderSquare = getPosition();
-                possibleMoves = chosenBuilder(moves,builderSquare);
-
-                while (possibleMoves == null){
-                    System.out.println("Invalid pick, chose more wisely");
-                    builderSquare = getPosition();
-                    possibleMoves = chosenBuilder(moves,builderSquare);
-
-                }
-                CliBoard.drawBoard(clientBoard);
-
-                this.resetBoard();
-
-            }else {
-                builderSquare = moves.getBuilder1().getPosition();
-                possibleMoves = chosenBuilder(moves,builderSquare);
-
-                CliBoard.drawBoard(clientBoard);
-
-                this.resetBoard();
-            }
-
-
-            System.out.println("Select move: (x,y)");
-            if(moves.getIsDome()){
-                System.out.println("You can build a dome by your god's card power");
-            }
-
-            Square chosen = getPosition();
-
-            while(!searchArray(possibleMoves,chosen)){
-                System.out.println("Invalid pick, chose more wisely");
-                chosen = getPosition();
-            }
-
-            ArrayList<Square> selected = new ArrayList<Square>();
-            selected.add(chosen);
-
-            if(moves.getIsDome()){
-                System.out.println("Do you want to build a Dome? y/n");
-                dome = returnBoolean();
-            }
-            else {
-                dome = false;
-            }
-
-            Moves chosenMove = new Moves(returnBuilder(builderSquare,moves),selected,null,null,dome,false);
-
-            return  chosenMove;
-        }
-
-        /**
-         * sets the stillPlaying flag to false to end the game.
-         */
-        public void lost(){
-            frame.stillPlaying=false;
-        }
 
         /**
          * sets the number of players of the game locally.
@@ -267,21 +175,6 @@ public class GUIClientController {
             frame.numberDialog.setController(this);
             frame.waitingDialog.setVisible(false);
             frame.numberDialog.setVisible(true);
-        }
-
-        /**
-         * shows on screen all the 15 cards and waits for the Challenger choice.
-         * @return the 2 or 3 chosen cards.
-         * @throws IOException
-         */
-        public ArrayList<Integer> chosenCards() throws IOException {
-            ArrayList<Integer> chosenCards = new ArrayList<Integer>();
-            for (int i = 0; i<numberOfPlayers; i++){
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                int card = Integer.parseInt(reader.readLine());
-                chosenCards.add(i,card);
-            }
-            return chosenCards;
         }
 
 
@@ -300,11 +193,7 @@ public class GUIClientController {
                     //new FirstPlayerWindow(frame);
                 }
             });
-/*
-            String chosenOne = players.get(player-1);
-            netInterface.sendFirstPlayer(chosenOne,client.getServerSocket());
 
- */
         }
 
         /**
@@ -320,17 +209,6 @@ public class GUIClientController {
             frame.paintPossibleSquares(freeSquares);
             frame.setVisible(true);
 
-            /*
-            SwingUtilities.invokeAndWait(new Runnable() {   //invokeLater
-                @Override
-                public void run() {
-                    frame.waitingDialog.setVisible(false);
-                    frame.displayCard();
-                    frame.placeBuilder(freeSquares);
-                    frame.setVisible(true);
-                }
-            });
-            */
 
         }
 
@@ -429,20 +307,6 @@ public class GUIClientController {
             return false;
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

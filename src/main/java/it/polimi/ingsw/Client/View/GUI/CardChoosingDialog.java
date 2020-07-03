@@ -165,7 +165,7 @@ public class CardChoosingDialog extends JDialog {
             InputStream url = cl.getResourceAsStream(item + ".png");
             BufferedImage img = null;
             try {
-                img = ImageIO.read(url);     //TODO togliere il try/catch
+                img = ImageIO.read(url);
             } catch (IOException e) {
                 e.printStackTrace();
                 return;

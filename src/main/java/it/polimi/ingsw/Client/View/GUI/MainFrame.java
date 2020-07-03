@@ -488,7 +488,7 @@ public class MainFrame extends JFrame {
             for (int j = 0; j < Board.BOARDSIZEY; j++) {
                 squareList[i][j] = new SquareButton(i,j);
                 squareList[i][j].setContentAreaFilled(false);
-                squareList[i][j].setBorderPainted(true);    //TODO rivedere
+                squareList[i][j].setBorderPainted(true);
                 squareList[i][j].setEnabled(true);
                 squareList[i][j].addActionListener(new SquareListener());
 
@@ -621,7 +621,7 @@ public class MainFrame extends JFrame {
         URL url = cl.getResource(cardNumber + ".png");
 
         try {
-            img = ImageIO.read(url);     //TODO togliere il try/catch
+            img = ImageIO.read(url);
         } catch (IOException e) {
             e.printStackTrace();
             return;
@@ -739,7 +739,7 @@ public class MainFrame extends JFrame {
             label = getPiece(builder.getColour(), builder.getSex());
 
             button.setTopLabel(label);
-            button.add(label);   //TODO sostituirà con quello precedente?
+            button.add(label);   //TODO fare Apollo
             label.setAlignmentX((float) 0.5);
 
 

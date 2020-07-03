@@ -81,7 +81,7 @@ public class FirstPlayerWindow extends JFrame {
      * associated to the radioButton*/
     private static class RadioButtonListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) {   //TODO inserire implementazione mancante
+        public void actionPerformed(ActionEvent e) {
             firstPlayerName = e.getActionCommand();
         }
     }

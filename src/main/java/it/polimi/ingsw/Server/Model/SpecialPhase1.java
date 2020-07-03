@@ -47,11 +47,13 @@ public class SpecialPhase1 extends Phase {
     /** method used by the phase to develop the part of the game logic assigned. In the State Pattern, it represents the main method that has to be implemented */
     public void handle() throws IOException {
 
+        context.getNetInterface().sendMessage(player.playerID, player.getColour(), player.getCard().getName());
+
 
         ArrayList<Square> moves1 = getMoves(builder1);
         ArrayList<Square> moves2 = getMoves(builder2);
 
-        if(!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // il giocatore può fare mosse
+        if(!(moves1.isEmpty()) || !(moves2.isEmpty())) {   // the player can make moves
 
             Envelope received = context.getNetInterface().getBothMovementMove(moves1, builder1, moves2, builder2, player,true);
 
@@ -96,8 +98,8 @@ public class SpecialPhase1 extends Phase {
      */
     public ArrayList<Square> getMoves (Builder builder){
 
-        if(builder == null)   // nel caso di builder non esistente
-            return new ArrayList<>();     //ritorna lista vuota
+        if(builder == null)   // in case the worker doesn't exist return empty list
+            return new ArrayList<>();
 
         this.playingBuilder = builder;
         movesCommands.get(player.getCard().parameters.specialPhase1Moves).run();
@@ -126,7 +128,7 @@ public class SpecialPhase1 extends Phase {
                     int positionX = position.x;
                     int positionY = position.y;
 
-                    int a = 2 * builderX - positionX;   //coordinate della casella opposta
+                    int a = 2 * builderX - positionX;   //opposite square coordinates
                     int b = 2 * builderY - positionY;
 
                     try{
@@ -149,7 +151,7 @@ public class SpecialPhase1 extends Phase {
 
 
     /** restores the parameter maxHeight of basicRules to BasicRules.BASICMAXHEIGHT */
-    public void restore(){   //se athena aveva modificato maxHeight questo lo ristabilirà
+    public void restore(){   //if Athena modified maxHeight, this method will restore it
         basicRules.setMaxHeight(BasicRules.BASICMAXHEIGHT);
         possibleMoves = new ArrayList<>();
     }
@@ -175,10 +177,10 @@ public class SpecialPhase1 extends Phase {
             catch (IOException e){
                 e.printStackTrace();
             }
-            basicRules.setPreviousMaxHeight( basicRules.getMaxHeight());   //necessario in quanto maxHeight potrebbe essere != 1
+            basicRules.setPreviousMaxHeight( basicRules.getMaxHeight());   //necessary since maxHeight could be != 1
             basicRules.setMaxHeight(0);
 
-            if(!(playingBuilder.equals(builder1))) {     //la fase successiva deve necessariamente essere eseguita dal worker che ha fatto la mossa speciale
+            if(!(playingBuilder.equals(builder1))) {     //the next phase must necessarily be made by the worker who made the move
                 builder1 = builder2;
                 builder2 = null;
             }
@@ -213,7 +215,7 @@ public class SpecialPhase1 extends Phase {
         }
 
 
-        if(!(playingBuilder.equals(builder1))) {     //la fase successiva deve necessariamente essere eseguita dal worker che ha fatto la mossa speciale
+        if(!(playingBuilder.equals(builder1))) {     //the next phase must necessarily be made by the worker who made the move
             builder1 = builder2;
             builder2 = null;
         }

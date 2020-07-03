@@ -44,7 +44,7 @@ public class GUINetInterface {
             return null;
         }
         if (values[0].equals("-1")) {                                 //values[0]
-            //clientController.disconnected();
+            clientController.disconnected();
         }
 
 
@@ -170,14 +170,16 @@ public class GUINetInterface {
             }
         }
         if (values[0].equals("5")) { //text message
-            Integer messageType = parseInt(values[1]);
-            //TODO print on the screen the message received
+            String playerID = values[1];
+            String playerColour = values[2];
+            String playerCard = values[3];
+            clientController.printMatchInfo(playerID, playerColour, playerCard);
             moves = null;
         }
         if (values[0].equals("66")) { //the client loses
             String winnerID;
             winnerID = values[1];
-            //clientController.lost(winnerID);
+            clientController.lose(winnerID);
         }
         if(values[0].equals("73")){ //the client wins
             clientController.win();
@@ -246,7 +248,7 @@ public class GUINetInterface {
         String availableMoves = Receiver.receive(socket);
         String[] values = availableMoves.split("@");
         if(values[0].equals("-1")){
-          //  clientController.disconnected(); //TODO crea disconnected
+            clientController.disconnected();
         }
         if (values[0].equals("7")) {//dealer has to choose all the cards
             controller.dealerChoice();

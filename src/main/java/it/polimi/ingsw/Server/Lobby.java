@@ -79,7 +79,6 @@ public class Lobby extends Observable {
      */
     public void update(Client client) throws IOException, InterruptedException {
         for( int i = 0; i<observers.size(); i++){
-            System.out.println(observers.size());
             Integer status = observers.get(i).update(client);
 
             if(status == 0){

@@ -3,7 +3,7 @@ package it.polimi.ingsw.Server.Model;
 import java.io.IOException;
 import java.util.ArrayList;
 
-//TODO decidere cosa fare per removeBuilder
+
 
 /**
  * represents a player.
@@ -62,7 +62,7 @@ public class Player {
      * @return the list of cards that can still be chosen by the other players
      */
 
-    public ArrayList<Card> chooseCard(ArrayList<Card> possibleCards, int cardPosition){   //cardPosition è la posizione della carta nell'array
+    public ArrayList<Card> chooseCard(ArrayList<Card> possibleCards, int cardPosition){
         if(card == null) {
             this.card = possibleCards.get(cardPosition);
             possibleCards.remove(cardPosition);
